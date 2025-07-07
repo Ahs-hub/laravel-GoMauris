@@ -1,7 +1,3 @@
-body {
-    background-color: black;
-    color: white;
-}
 .title{
     width: 100%;
     height:100vh;
@@ -296,14 +292,6 @@ padding: 5rem 0;
 /*#endregion Service Cards */
 
 /*#region Tour Cards */
-.tour-card {
-    background: var(--white);
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-}
-
 .tour-card:hover {
     transform: translateY(-5px);
 }
