@@ -33,4 +33,8 @@ class Tour extends Model
     {
         return $this->hasMany(ActivityPhoto::class);
     }
+    public function blockedDates()
+    {
+        return $this->hasMany(TourBlockedDate::class);
+    }
 }

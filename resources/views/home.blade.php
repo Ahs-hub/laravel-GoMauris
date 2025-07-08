@@ -330,6 +330,10 @@
         </div>
     </section> -->
     
-    <script src="{{ asset('js/style.js') }}"></script>
+    @if (app()->environment('production'))
+        <script src="{{ secure_asset('js/style.js') }}"></script>
+    @else
+        <script src="{{ asset('js/style.js') }}"></script>
+    @endif
 
 @endsection

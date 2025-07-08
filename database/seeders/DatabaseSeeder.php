@@ -19,5 +19,12 @@ class DatabaseSeeder extends Seeder
             TourCategorySeeder::class,
             TourSeeder::class,
         ]);
+
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('password123'),
+            'role' => 'admin',
+        ]);
     }
 }

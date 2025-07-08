@@ -7,9 +7,36 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\DB;
 
+//admin connection
+use App\Http\Controllers\AuthController;
+
+use App\Http\Controllers\Admin\TourBlockedDateController;
+
 // Route::get('/', function () {
 //     return view('home');
 // })->name('home');
+
+//admin login to form 
+// Show login form
+Route::get('/admin/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
+
+// Handle login POST
+Route::post('/admin/login', [AuthController::class, 'login']);
+
+// Protected dashboard (only logged-in users can access)
+Route::middleware('auth')->get('/admin/dashboard', function () {
+    return view('admin.adminpanel');
+})->name('admin.dashboard');
+
+
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/tours/blocked-dates/{id}', [TourBlockedDateController::class, 'getBlockedDates']);
+    Route::post('/tours/block-dates', [TourBlockedDateController::class, 'saveBlockedDates']);
+});
+
+// In web.php (with auth middleware) show tour in admin panel
+// Route::get('/admin/tours/block-dates', [TourBlockedDateController::class, 'showBlockTourDatesPage'])->middleware('auth');
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 

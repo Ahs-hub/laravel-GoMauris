@@ -152,8 +152,8 @@
                             <div class="custom-date-button">
                                 <span>                            
                                 <i class='bx bx-user'></i>
-                                <span>Participant</span>
-    
+                                <span>Participan</span>
+                                 <span> x 3</span>    
                                 </span>
     
                                 <i class='bx bx-chevron-down'></i>
@@ -165,7 +165,7 @@
                             <div class="custom-date-button">
                                 <span>
                                     <i class='bx bx-calendar'></i>
-                                    <span>Choose Date</span>
+                                    <span>Date</span>
     
                                 </span>
     
@@ -202,6 +202,79 @@
                 </div>
             </div>
         </div>
+        
+        <div id="check-availability-app">
+            <div class="tour-info" style="background-color:#2c3e50; color:white;">
+                <div class="form-header">
+                    <h2>Select participants and date</h2>
+                </div>
+
+                <div style="display: flex; flex-direction: row; gap:10px">
+                    <!-- Participants button -->
+                    <div class="date-button-wrapper">
+                        <div class="custom-date-button">
+                            <span>
+                                <i class='bx bx-user'></i>
+                                <span>Participant</span> <span>x 3</span>
+                            </span>
+                            <i class='bx bx-chevron-down'></i>
+                        </div>
+                    </div>
+
+                    <!-- Date picker (no auto check) -->
+                    <div class="date-button-wrapper">
+                        <div class="custom-date-button">
+                             <span>
+                                <i class='bx bx-calendar'></i>
+                                <span v-if="selectedDate">Date: @{{ formatFullDate(selectedDate) }}</span>
+                                <span v-else>Date</span>
+                            </span>
+                            <i class='bx bx-chevron-down'></i>
+                            <input type="date" class="custom-date-input" v-model="selectedDate">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Button to check availability -->
+                <button class="btn btn-primary w-100 mb-3 mt-3" style="border-radius:100px;" @click="checkDateAvailability">
+                    Check availability
+                </button>
+
+                <!-- Not available message -->
+                <div v-if="selectedDate && !showForm && checked" class="alert alert-danger mt-3">
+                    Booking not available on <strong>@{{ selectedDate }}</strong><br>
+                    <small class="text-white">Available dates this month:</small>
+                    <ul class="text-white">
+                        <!-- <li v-for="date in availableDates" :key="date">@{{ date }}</li> -->
+                        <li v-for="date in availableDates" :key="date">@{{ getDayFromDate(date) }}</li>
+                         
+                    </ul>
+                </div>
+
+                <!-- Booking form if available -->
+                <div v-if="showForm && checked" class="mt-3">
+                    <form method="POST" action="/book-tour">
+                        @csrf
+                        <input type="hidden" name="tour_id" :value="tourId">
+                        <input type="hidden" name="date" :value="selectedDate">
+
+                        <div class="mb-2">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+
+                        <button class="btn btn-light w-100 mt-3" type="submit">Book Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
     <!-- Gallery Modal -->
@@ -253,6 +326,87 @@
         </div>
     </div>
     
-    <script src="{{ asset('js/style.js') }}"></script>
+
+    @if (app()->environment('production'))
+        <script src="{{ secure_asset('js/style.js') }}"></script>
+    @else
+        <script src="{{ asset('js/style.js') }}"></script>
+    @endif
+
+    <!-- Vue + Axios -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+    const { createApp } = Vue;
+
+    createApp({
+        data() {
+            return {
+                selectedDate: '',
+                blockedDates: [],
+                availableDates: [],
+                showForm: false,
+                checked: false,
+                tourId: {{ $tour->id }},
+            };
+        },
+        methods: {
+            fetchBlockedDates() {
+                axios.get(`/admin/tours/blocked-dates/${this.tourId}`)
+                    .then(res => {
+                        this.blockedDates = res.data.blocked_dates || [];
+                    });
+            },
+            checkDateAvailability() {
+                if (!this.selectedDate) return;
+                this.checked = true;
+
+                const isBlocked = this.blockedDates.includes(this.selectedDate);
+                if (isBlocked) {
+                    this.showForm = false;
+                    this.getAvailableDatesInMonth(this.selectedDate);
+                } else {
+                    this.showForm = true;
+                    this.availableDates = [];
+                }
+            },
+            getDayFromDate(dateStr) {
+                const date = new Date(dateStr);
+                return date.getDate(); // returns only the day number
+            },
+            formatFullDate(dateStr) {
+                const date = new Date(dateStr + 'T00:00:00'); // ensures it's parsed correctly
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            },
+            getAvailableDatesInMonth(dateStr) {
+                const selected = new Date(dateStr);
+                const year = selected.getFullYear();
+                const month = selected.getMonth();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                this.availableDates = [];
+
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const d = new Date(year, month, day);
+                    const iso = d.toISOString().split('T')[0];
+                    if (!this.blockedDates.includes(iso)) {
+                        this.availableDates.push(iso);
+                    }
+                }
+            }
+        },
+        mounted() {
+            this.fetchBlockedDates();
+        }
+    }).mount("#check-availability-app");
+    </script>
+
+
 
 @endsection
+

@@ -442,3 +442,41 @@
 }
 /*#endregion photo-galery-container    */
 
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .service-item {
+        margin-bottom: 30px;
+    }
+    
+    .search-box {
+        padding: 15px;
+    }
+    
+    .filter-btn {
+        margin: 5px;
+        padding: 10px 20px;
+    }
+    .hero {
+        padding-top: 100px;
+     }
+     .hero h1 {
+         font-size: 2.5rem;
+     }
+     
+     .hero p {
+         font-size: 1.1rem;
+     }
+     
+     .section-title {
+         font-size: 2rem;
+     }
+     .navbar{
+         position: fixed;
+     }
+    .phone-appear{
+     display: flex;
+    }
+}
