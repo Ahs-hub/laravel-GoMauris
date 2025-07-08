@@ -83,7 +83,7 @@
         </div>
         
         <!-- Tour Description and Booking Card Side by Side -->
-        <div class="row" >
+        <div class="row"  >
             <div class="col-lg-8">
                 <div class="tour-info">
                     <div class="tour-title">
@@ -140,7 +140,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tour-info" style="background-color:#2c3e50; color:white;">
+                <div class="tour-info" id="go-to-check-availability" style="background-color:#2c3e50; color:white;">
 
                     <div class="form-header">
                         <h2>Select participants and date</h2>
@@ -190,7 +190,8 @@
                         <div class="price-subtitle">per group up to 3</div>
                     </div>
                     
-                    <button class="btn btn-primary w-100 mb-3" >Book</button>
+                    
+                    <a href="#go-to-check-availability"><button class="btn btn-primary w-100 mb-3" >Book</button></a>
                     
                     <div class="reserve-info">
                         <div class="d-flex align-items-center">
