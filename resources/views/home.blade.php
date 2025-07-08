@@ -39,7 +39,7 @@
 
     
     <!-- Tours Section -->
-    <section id="tours" class="section-padding" style="background: var(--gray-light);">
+    {{--<section id="tours" class="section-padding" style="background: var(--gray-light);">
         <div class="container">
             <p class=".paragraph-text  text-center" style="margin-top:50px;">
                 Mauritius island is our homeland We'll show you Mauritius,
@@ -99,7 +99,7 @@
                 
             </button>
         </div>
-    </section>
+    </section>--}}
 
     <!-- Services Section -->
     <section id="services" class="section-padding">
