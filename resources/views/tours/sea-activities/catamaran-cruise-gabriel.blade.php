@@ -2,11 +2,55 @@
 @extends('layouts.mainlayout')
 
 @section('content')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     @if (app()->environment('production'))
         <link rel="stylesheet" href="{{ secure_asset('css/tourdetailed.css') }}">
     @else
         <link rel="stylesheet" href="{{ asset('css/tourdetailed.css') }}">
     @endif
+
+    <style>
+        .available-dates-container {
+        margin-top: 10px;
+        color: #fff;
+        }
+
+        .available-dates-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 6px;
+        }
+
+        .available-date {
+        padding: 6px 12px;
+        font-weight: 600;
+        cursor: default;
+        user-select: none;
+        }
+
+        .book-button {
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+        }
+        
+        .book-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+        }
+        
+
+    </style>
 
 
     <div class="container py-4">
@@ -84,6 +128,8 @@
         
         <!-- Tour Description and Booking Card Side by Side -->
         <div class="row"  >
+
+             <!-- Tour Description  and form-->
             <div class="col-lg-8">
                 <div class="tour-info">
                     <div class="tour-title">
@@ -140,45 +186,201 @@
                         </div>
                     </div>
                 </div>
-                <div class="tour-info" id="go-to-check-availability" style="background-color:#2c3e50; color:white;">
 
-                    <div class="form-header">
-                        <h2>Select participants and date</h2>
+                <!-- checking form -->
+                 
+                <div id="check-availability-app">
+                    <div class="tour-info" style="background-color:#2c3e50; color:white;">
+                        <div class="form-header">
+                            <!-- <h2>Select participants and date</h2> -->
+                            <h2>Select date</h2>
+                        </div>
 
-                    </div>
-                    <div style="display: flex; flex-direction: row; gap:10px">
+                        <div style="display: flex; flex-direction: row; gap:10px">
+                            <!-- Participants button -->
+                            <!-- <div class="date-button-wrapper">
+                                <div class="custom-date-button">
+                                    <span>
+                                        <i class='bx bx-user'></i>
+                                        <span>Participant</span> <span>x 3</span>
+                                    </span>
+                                    <i class='bx bx-chevron-down'></i>
+                                </div>
+                            </div> -->
 
-                        <div class="date-button-wrapper">
-                            <div class="custom-date-button">
-                                <span>                            
-                                <i class='bx bx-user'></i>
-                                <span>Participan</span>
-                                 <span> x 3</span>    
-                                </span>
-    
-                                <i class='bx bx-chevron-down'></i>
-                              <!-- <input type="date" class="custom-date-input" onchange="alert('Date: ' + this.value)"> -->
+                            <!-- Date picker (no auto check) -->
+                            <div class="date-button-wrapper" style="width:50%">
+                                <div class="custom-date-button">
+                                    <span>
+                                        <i class='bx bx-calendar'></i>
+                                        <span v-if="selectedDate">Date: @{{ formatFullDate(selectedDate) }}</span>
+                                        <span v-else>Date</span>
+                                    </span>
+                                    <i class='bx bx-chevron-down'></i>
+
+                                    <!-- With auto-check enabled -->
+                                    <input 
+                                        v-if="enableAutoCheck"
+                                        type="date" 
+                                        class="custom-date-input" 
+                                        v-model="selectedDate"
+                                        @change="checkDateAvailability"
+                                    />
+
+                                    <!-- Without auto-check -->
+                                    <input 
+                                        v-else
+                                        type="date" 
+                                        class="custom-date-input" 
+                                        v-model="selectedDate"
+                                    />
+
+
+                                </div>
                             </div>
-                          </div>
-    
-                        <div class="date-button-wrapper">
-                            <div class="custom-date-button">
-                                <span>
-                                    <i class='bx bx-calendar'></i>
-                                    <span>Date</span>
-    
+                        </div>
+
+                        <!-- Button to check availability -->
+                        <button class="btn btn-primary w-100 mb-3 mt-3" style="border-radius:100px;" 
+                            v-if="!enableAutoCheck" 
+                            @click="activateAutoCheck">
+                                Check availability
+                        </button>
+
+                        <!-- Not available message -->
+                        <div v-if="selectedDate && !showForm && checked" class=" mt-3">
+                            Booking not available on <strong>@{{ selectedDate }}</strong><br>
+                            <small class="text-white">Available dates this month:</small>
+                            <div class="available-dates-grid">
+                                <!-- <li v-for="date in availableDates" :key="date">@{{ date }}</li> -->
+                                <span v-for="date in availableDates" :key="date" class="available-date">
+                                    @{{ getDayFromDate(date) }}
                                 </span>
-    
-                              <i class='bx bx-chevron-down'></i>
-                              <input type="date" class="custom-date-input" onchange="alert('Date: ' + this.value)">
+                                
                             </div>
-                          </div>
-                        
+                        </div>
+                         
                     </div>
-   
-                    <button class="btn btn-primary w-100 mb-3" style="border-radius:100px;">Check availability</button>
-                  
+                     <!--form to fill -->
+                    <div class="tour-info" v-if="showForm && checked" style="color:#2c3e50; border: 2px solid var(--accent-color);">    
+                        <form @submit.prevent="submitForm">
+                            <div class="form-header text-center">
+                                <h5>Let us assist you with your catamaran cruise</h5>
+                                <h5>If you prefer WhatsApp, let's have a chat at <span style="color:var(--secondary-color); font-weight:500;">+23059550305</span></h5>
+                            </div>
+
+                            <h4 class="mt-4">Enter your tour details:</h4>
+
+                            <div class="row mb-3">
+                                <!-- Adults -->
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label">Adults <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" v-model="adults" min="1">
+                                </div>
+
+                                <!-- Children -->
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label">Children (0–10 yrs)</label>
+                                    <input type="number" class="form-control" v-model="children" min="0">
+                                </div>
+                            </div>
+
+                            <!-- Transport -->
+                            <div class="mb-3">
+                                <label class="form-label">Require Transport? <span class="required-field">*</span></label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="transport-yes" value="yes" v-model="transport_required">
+                                    <label class="form-check-label" for="transport-yes">Yes, please quote for it</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="transport-no" value="no" v-model="transport_required">
+                                    <label class="form-check-label" for="transport-no">No thanks, going on my own</label>
+                                </div>
+                            </div>
+
+                            <!-- Hotel Info -->
+                            <div class="mb-3">
+                                <label class="form-label">Hotel/Residence Name</label>
+                                <input type="text" class="form-control" v-model="hotel_name" placeholder="Enter hotel or residence name">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Hotel Room Number</label>
+                                <input type="text" class="form-control" v-model="room_number" placeholder="Room #">
+                                <small class="form-text text-muted">Required for hotel access by the driver. Leave blank if you will confirm this later by email.</small>
+                            </div>
+
+                            <!-- Lunch -->
+                            <div class="row mb-3">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Non-Veg Lunch Menu</label>
+                                    <input type="number" class="form-control" v-model="lunch_non_veg" min="0">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Veg Lunch Menu</label>
+                                    <input type="number" class="form-control" v-model="lunch_veg" min="0">
+                                </div>
+                            </div>
+
+                            <!-- Special Requests -->
+                            <div class="mb-4">
+                                <label class="form-label">Special Requests / Comments</label>
+                                <textarea class="form-control" v-model="special_requests" rows="3" placeholder="Any dietary requirements or comments..."></textarea>
+                            </div>
+
+                            <!-- Personal Info -->
+                            <div class="section-title" style="color:#2c3e50;">
+                                About you:
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Your Name <span class="required-field">*</span></label>
+                                    <input type="text" class="form-control" v-model="full_name" required placeholder="Enter your full name">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Your Email <span class="required-field">*</span></label>
+                                    <input type="email" class="form-control" v-model="email" required placeholder="Enter your email address">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Country <span class="required-field">*</span></label>
+                                    <select class="form-select" v-model="country" required>
+                                        <option value="">Select your country</option>
+                                        <option value="mauritius">Mauritius</option>
+                                        <option value="france">France</option>
+                                        <option value="uk">United Kingdom</option>
+                                        <option value="germany">Germany</option>
+                                        <option value="usa">United States</option>
+                                        <option value="canada">Canada</option>
+                                        <option value="australia">Australia</option>
+                                        <option value="south-africa">South Africa</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Mobile Number (WhatsApp) <span class="required-field">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bx bxl-whatsapp"></i></span>
+                                        <input type="tel" class="form-control" v-model="mobile_number" required placeholder="+230 5955 0305">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="book-button">
+                                    <i class="bx bx-calendar-check"></i>
+                                    Book 
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
+
+                 
             </div>
             
             <!-- Booking Card -->
@@ -186,94 +388,22 @@
                 <div class="booking-card">
                     <div class="mb-3">
                         <span class="text-muted">From</span>
-                        <div class="price">€98</div>
-                        <div class="price-subtitle">per group up to 3</div>
+                        <div class="price">€50</div>
+                        <div class="price-subtitle">per person</div>
                     </div>
                     
                     
-                    <a href="#go-to-check-availability"><button class="btn btn-primary w-100 mb-3" >Book</button></a>
+                    <a href="#check-availability-app"><button class="btn btn-primary w-100 mb-3" >Book</button></a>
                     
-                    <div class="reserve-info">
+              <!--  <div class="reserve-info">
                         <div class="d-flex align-items-center">
                             <i class='bx bx-check-circle'></i>
                             <small class="text-muted">Reserve now & pay later to book your spot and pay nothing today</small>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
-        
-        <div id="check-availability-app">
-            <div class="tour-info" style="background-color:#2c3e50; color:white;">
-                <div class="form-header">
-                    <h2>Select participants and date</h2>
-                </div>
-
-                <div style="display: flex; flex-direction: row; gap:10px">
-                    <!-- Participants button -->
-                    <div class="date-button-wrapper">
-                        <div class="custom-date-button">
-                            <span>
-                                <i class='bx bx-user'></i>
-                                <span>Participant</span> <span>x 3</span>
-                            </span>
-                            <i class='bx bx-chevron-down'></i>
-                        </div>
-                    </div>
-
-                    <!-- Date picker (no auto check) -->
-                    <div class="date-button-wrapper">
-                        <div class="custom-date-button">
-                             <span>
-                                <i class='bx bx-calendar'></i>
-                                <span v-if="selectedDate">Date: @{{ formatFullDate(selectedDate) }}</span>
-                                <span v-else>Date</span>
-                            </span>
-                            <i class='bx bx-chevron-down'></i>
-                            <input type="date" class="custom-date-input" v-model="selectedDate">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Button to check availability -->
-                <button class="btn btn-primary w-100 mb-3 mt-3" style="border-radius:100px;" @click="checkDateAvailability">
-                    Check availability
-                </button>
-
-                <!-- Not available message -->
-                <div v-if="selectedDate && !showForm && checked" class="alert alert-danger mt-3">
-                    Booking not available on <strong>@{{ selectedDate }}</strong><br>
-                    <small class="text-white">Available dates this month:</small>
-                    <ul class="text-white">
-                        <!-- <li v-for="date in availableDates" :key="date">@{{ date }}</li> -->
-                        <li v-for="date in availableDates" :key="date">@{{ getDayFromDate(date) }}</li>
-                         
-                    </ul>
-                </div>
-
-                <!-- Booking form if available -->
-                <div v-if="showForm && checked" class="mt-3">
-                    <form method="POST" action="/book-tour">
-                        @csrf
-                        <input type="hidden" name="tour_id" :value="tourId">
-                        <input type="hidden" name="date" :value="selectedDate">
-
-                        <div class="mb-2">
-                            <label class="form-label">Full Name</label>
-                            <input type="text" class="form-control" name="name" required>
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" name="email" required>
-                        </div>
-
-                        <button class="btn btn-light w-100 mt-3" type="submit">Book Now</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
 
     </div>
 
@@ -338,6 +468,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const { createApp } = Vue;
 
     createApp({
@@ -348,15 +479,42 @@
                 availableDates: [],
                 showForm: false,
                 checked: false,
-                tourId: {{ $tour->id }},
+                tourId: @json($tour->id),
+                enableAutoCheck: false, // flag to enable @change
+
+                
+                tour: @json($tour), // tour name
+
+                // All required fields
+                adults: 1,
+                children: 0,
+                transport_required: '',
+                hotel_name: '',
+                tour_date: '',
+                room_number: '',
+                lunch_non_veg: 0,
+                lunch_veg: 0,
+                special_requests: '',
+                full_name: '',
+                email: '',
+                country: '',
+                mobile_number: '',
             };
         },
         methods: {
             fetchBlockedDates() {
-                axios.get(`/admin/tours/blocked-dates/${this.tourId}`)
-                    .then(res => {
-                        this.blockedDates = res.data.blocked_dates || [];
-                    });
+                axios.get(`/api/public/tours/blocked-dates/${this.tourId}`)
+                .then(res => {
+                    this.blockedDates = res.data.blocked_dates || [];
+                })
+                .catch(err => {
+                    console.error("Error fetching blocked dates", err);
+                    this.blockedDates = [];
+                });
+            },
+            activateAutoCheck() {
+                this.enableAutoCheck = true;
+                this.checkDateAvailability(); // initial check
             },
             checkDateAvailability() {
                 if (!this.selectedDate) return;
@@ -398,15 +556,48 @@
                         this.availableDates.push(iso);
                     }
                 }
-            }
+            },
+             
+            async submitForm() {
+                try {
+                    console.log('Submitting tour_date:', this.selectedDate); // ✅ Add this
+                    
+                    await axios.post('/tour-bookings', {
+                        tour_type: this.tour.name, // or title, as per your DB
+                        tour_id: this.tour.id, // ✅ Include this!
+                        tour_date: this.selectedDate,
+                        adults: this.adults,
+                        children: this.children,
+                        transport_required: this.transport_required,
+                        hotel_name: this.hotel_name,
+                        room_number: this.room_number,
+                        lunch_non_veg: this.lunch_non_veg,
+                        lunch_veg: this.lunch_veg,
+                        special_requests: this.special_requests,
+                        full_name: this.full_name,
+                        email: this.email,
+                        country: this.country,
+                        mobile_number: this.mobile_number,
+                    });
+
+                    window.location.href = "/thank-you"; // redirect to success page
+                } catch (error) {
+                    alert('Something went wrong! Please try again.');
+                    if (error.response && error.response.data && error.response.data.message) {
+                        alert(error.response.data.message);
+                    } else {
+                        alert('Something went wrong! Please try again.');
+                    }
+                }
+            },
+
+
         },
         mounted() {
             this.fetchBlockedDates();
         }
     }).mount("#check-availability-app");
     </script>
-
-
 
 @endsection
 

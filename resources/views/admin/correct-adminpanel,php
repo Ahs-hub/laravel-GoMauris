@@ -35,17 +35,6 @@
         border: 2px solid red;
         border-radius: 50%;
     }
-    .edit-icon-date{
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        width: 10px;
-        height: 10px;
-        color:grey;
-    }
-    .edit-icon-date:hover{
-        color:blue;
-    }
     .empty-cell {
         background-color: transparent;
         border: none;
@@ -109,22 +98,10 @@
                                     'blocked-day': isBlocked(day.date)
                                 }
                             ]"
-                            @click="selectDate(day.date)"
-                          
+                            @click="day.date && toggleBlock(day.date)"
                         >
                             <span v-if="day.date">@{{ day.day }}</span>
-                       <!-- ✅ Only show the edit icon if day.date exists -->
-                        <div 
-                        v-if="day.date"
-                        class="edit-icon-date"
-                        role="button"
-                        tabindex="0"
-                        @click="toggleBlock(day.date)"
-                        >
-                        <i class='bx bx-edit'></i>
-                        </div>
-                           
-                            <!-- <div v-if="isBlocked(day.date)" class="dot-indicator"></div> -->
+                            <div v-if="isBlocked(day.date)" class="dot-indicator"></div>
                         </div>
                     </div>
 
@@ -135,7 +112,7 @@
             </div>
 
             <!-- Blocked Date Table -->
-            <!-- <div class="card shadow-sm mt-4">
+            <div class="card shadow-sm mt-4">
                 <div class="card-header bg-danger text-white">
                     <i class="bx bx-block me-2"></i> Blocked Dates for @{{ getSelectedTourName() }}
                 </div>
@@ -154,37 +131,7 @@
                     </table>
                     <div v-if="blockedDates.length === 0" class="text-muted">No blocked dates available.</div>
                 </div>
-            </div> -->
-
-            <div class="card shadow-sm mt-4" v-if="bookingsForSelectedDate.length > 0">
-                <div class="card-header bg-info text-white">
-                    <i class="bx bx-user me-2"></i> Bookings for @{{ formatDate(selectedDate) }}
-                </div>
-                <div class="card-body p-3">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Adults</th>
-                                <th>Children</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(booking, index) in bookingsForSelectedDate" :key="index">
-                                <td>@{{ booking.full_name }}</td>
-                                <td>@{{ booking.adults }}</td>
-                                <td>@{{ booking.children }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
-
-            <div v-else-if="selectedDate" class="mt-3 text-muted">
-                No bookings found for @{{ formatDate(selectedDate) }}.
-            </div>
-
-
         </div>
     </div>
 </div>
@@ -204,10 +151,6 @@ createApp({
             currentDate: new Date(),
             weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
             loading: false,
-
-            //search book date
-            bookingsForSelectedDate: [],
-            selectedDate: '',
         };
     },
     computed: {
@@ -307,27 +250,7 @@ createApp({
         getSelectedTourName() {
             const selected = this.tours.find(t => t.id == this.selectedTour);
             return selected ? selected.name : '';
-        },
-        
-        //search book date
-        async selectDate(date) {
-            if (!date || !this.selectedTour) return;
-
-            this.selectedDate = date;
-            this.loading = true;
-
-            try {
-                const res = await axios.get(`/admin/tours/bookings/${this.selectedTour}/${date}`);
-                this.bookingsForSelectedDate = res.data;
-            } catch (error) {
-                console.error(error);
-                this.bookingsForSelectedDate = [];
-            } finally {
-                this.loading = false;
-            }
         }
-
-
     },
     mounted() {
         this.fetchTours();

@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const cards = document.querySelectorAll(".tour-card");
         const searchInput = document.getElementById("searchInput");
 
+    // Only run filter logic if #searchInput exists
+    if (searchInput) {
         let selectedCategory = "all";
 
         function filterCards() {
@@ -64,166 +66,161 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Handle search input
         searchInput.addEventListener("input", filterCards);
+      }
     });
 //#endregion search tour
 
-//#region gallery swiper tour detailed
-    let gallerySwiper;
-            
-    // Initialize Swiper when modal is shown
-    document.getElementById('galleryModal').addEventListener('shown.bs.modal', function () {
-        if (!gallerySwiper) {
-            gallerySwiper = new Swiper('#gallerySwiper', {
-                // Basic settings
-                direction: 'horizontal',
-                loop: true,
-                centeredSlides: true,
+//#region Carousel (Home Carousel)
+    document.addEventListener('DOMContentLoaded', function () {
+        const homeSwiperEl = document.querySelector('.mySwiper');
+        if (homeSwiperEl) {
+            const homeSwiper = new Swiper('.mySwiper', {
                 slidesPerView: 1,
                 spaceBetween: 20,
-                
-                // Enable touch/swipe gestures
-                touchRatio: 1,
-                touchAngle: 45,
-                grabCursor: true,
-                
-                // Smooth transitions
-                speed: 800,
-                
-                // Keyboard control
-                keyboard: {
-                    enabled: true,
-                    onlyInViewport: true,
+                loop: true,
+                autoplay: {
+                    delay: 4000,
+                    disableOnInteraction: false,
                 },
-                
-                // Mouse wheel control
-                mousewheel: {
-                    enabled: true,
-                    sensitivity: 1,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
                 },
-                
-                // Navigation arrows
                 navigation: {
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev',
                 },
-                
-                // Pagination
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                    type: 'bullets',
-                },
-                
-                // Autoplay
-                autoplay: {
-                    delay: 6000,
-                    disableOnInteraction: false,
-                    pauseOnMouseEnter: true,
-                },
-                
-                // Effects
-                effect: 'slide',
-                
-                // Parallax effect
-                parallax: true,
-                
-                // Events
-                on: {
-                    slideChange: function () {
-                        updateCounter();
+                breakpoints: {
+                    640: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
                     },
-                    init: function () {
-                        updateCounter();
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 30,
                     },
-                    slideChangeTransitionStart: function () {
-                        // Add entrance animation
-                        const activeSlide = this.slides[this.activeIndex];
-                        const img = activeSlide.querySelector('img');
-                        const overlay = activeSlide.querySelector('.slide-overlay');
-                        
-                        if (img) {
-                            img.style.transform = 'scale(1.1)';
-                            setTimeout(() => {
-                                img.style.transform = 'scale(1)';
-                            }, 100);
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                        spaceBetween: 30,
+                    },
+                },
+            });
+
+            // Optional: Button interactions
+            document.querySelectorAll('.square-yellow-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const serviceName = this.closest('.car-card').querySelector('h5').textContent;
+                    alert(`Learn more about: ${serviceName}`);
+                });
+            });
+
+            const viewAllBtn = document.querySelector('.view-all-btn');
+            if (viewAllBtn) {
+                viewAllBtn.addEventListener('click', function () {
+                    alert('Redirecting to all services page...');
+                });
+            }
+        }
+    });
+//#endregion Carousel
+  
+//#region gallery swiper tour detailed
+
+document.addEventListener('DOMContentLoaded', function () {
+    let gallerySwiper;
+    const modal = document.getElementById('galleryModal');
+
+    if (modal) {
+        modal.addEventListener('shown.bs.modal', function () {
+            if (!gallerySwiper) {
+                gallerySwiper = new Swiper('#gallerySwiper', {
+                    direction: 'horizontal',
+                    loop: true,
+                    centeredSlides: true,
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                    speed: 800,
+                    grabCursor: true,
+                    keyboard: { enabled: true, onlyInViewport: true },
+                    mousewheel: { enabled: true, sensitivity: 1 },
+                    autoplay: {
+                        delay: 6000,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: true,
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                        type: 'bullets',
+                    },
+                    effect: 'slide',
+                    parallax: true,
+                    on: {
+                        slideChange: updateCounter,
+                        init: updateCounter,
+                        slideChangeTransitionStart() {
+                            const activeSlide = this.slides[this.activeIndex];
+                            const img = activeSlide.querySelector('img');
+                            if (img) {
+                                img.style.transform = 'scale(1.1)';
+                                setTimeout(() => {
+                                    img.style.transform = 'scale(1)';
+                                }, 100);
+                            }
                         }
                     }
-                }
-            });
-        }
-    });
+                });
+            } else {
+                gallerySwiper.autoplay.start();
+            }
+        });
 
-    // Pause autoplay when modal is hidden
-    document.getElementById('galleryModal').addEventListener('hidden.bs.modal', function () {
-        if (gallerySwiper) {
-            gallerySwiper.autoplay.stop();
-        }
-    });
+        modal.addEventListener('hidden.bs.modal', function () {
+            if (gallerySwiper) {
+                gallerySwiper.autoplay.stop();
+            }
+        });
 
-    // Resume autoplay when modal is shown
-    document.getElementById('galleryModal').addEventListener('shown.bs.modal', function () {
-        if (gallerySwiper) {
-            gallerySwiper.autoplay.start();
-        }
-    });
+        // Touch gesture support for swipe navigation
+        let touchStartX = 0;
+        let touchEndX = 0;
 
-    // Update photo counter
-    function updateCounter() {
-        if (gallerySwiper) {
-            const current = gallerySwiper.realIndex + 1;
-            const total = gallerySwiper.slides.length;
-            document.getElementById('currentSlide').textContent = current;
-            document.getElementById('totalSlides').textContent = total;
-        }
-    }
+        document.addEventListener('touchstart', function (e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
 
-    // Keyboard shortcuts
-    document.addEventListener('keydown', function(e) {
-        const modal = document.getElementById('galleryModal');
-        if (modal.classList.contains('show')) {
-            if (e.key === 'Escape') {
+        document.addEventListener('touchend', function (e) {
+            touchEndX = e.changedTouches[0].screenX;
+            const threshold = 50;
+            if (modal.classList.contains('show') && gallerySwiper) {
+                if (touchEndX < touchStartX - threshold) gallerySwiper.slideNext();
+                if (touchEndX > touchStartX + threshold) gallerySwiper.slidePrev();
+            }
+        });
+
+        // ESC closes modal
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.classList.contains('show')) {
                 bootstrap.Modal.getInstance(modal).hide();
             }
-        }
-    });
+        });
 
-    // Add touch gestures for mobile
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    document.addEventListener('touchstart', function(e) {
-        touchStartX = e.changedTouches[0].screenX;
-    });
-
-    document.addEventListener('touchend', function(e) {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    });
-
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const modal = document.getElementById('galleryModal');
-        
-        if (modal.classList.contains('show') && gallerySwiper) {
-            if (touchEndX < touchStartX - swipeThreshold) {
-                gallerySwiper.slideNext();
-            }
-            if (touchEndX > touchStartX + swipeThreshold) {
-                gallerySwiper.slidePrev();
-            }
+        // Update counter
+        function updateCounter() {
+            if (!gallerySwiper) return;
+            document.getElementById('currentSlide').textContent = gallerySwiper.realIndex + 1;
+            document.getElementById('totalSlides').textContent = gallerySwiper.slides.length - gallerySwiper.loopedSlides * 2;
         }
     }
+});
 
-    // Smooth entrance animation
-    window.addEventListener('load', function() {
-        const tourCard = document.querySelector('.tour-card');
-        tourCard.style.opacity = '0';
-        tourCard.style.transform = 'translateY(50px)';
-        
-        setTimeout(() => {
-            tourCard.style.transition = 'all 0.8s ease';
-            tourCard.style.opacity = '1';
-            tourCard.style.transform = 'translateY(0)';
-        }, 300);
-    });
 //#endregion gallery swiper tour detailed
+

@@ -22,14 +22,14 @@
         <div class="container">
             <div class="search-box">
                 <div class="row align-items-center">
-                    <div class="col-md-6">
+
                         <div class="input-group">
                             <span class="input-group-text bg-transparent border-0">
                                 <i class="bx bx-search"></i>
                             </span>
                             <input type="text" class="form-control border-0" placeholder="Search tours..." id="searchInput">
                         </div>
-                    </div>
+
                 </div>
             </div>
         </div>

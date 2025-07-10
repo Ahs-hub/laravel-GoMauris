@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\DB;
 
 //admin connection
 use App\Http\Controllers\AuthController;
-
 use App\Http\Controllers\Admin\TourBlockedDateController;
+
+
+use App\Http\Controllers\TourBookingController;
 
 // Route::get('/', function () {
 //     return view('home');
@@ -27,6 +29,9 @@ Route::post('/admin/login', [AuthController::class, 'login']);
 Route::middleware('auth')->get('/admin/dashboard', function () {
     return view('admin.adminpanel');
 })->name('admin.dashboard');
+
+//save booking tour
+// Route::post('/tour-bookings', [TourBookingController::class, 'store'])->name('tour.bookings.store');
 
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
@@ -60,6 +65,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+//Go to Contact page
+Route::get('/contact', function () {
+    return view('contactpage');
+})->name('contact');
+
 //tours
 Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
 
@@ -68,5 +78,14 @@ Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
 
 //go to correspond tour page
 Route::get('/tours/{slug}', [TourController::class, 'show'])->name('tours.show');
+
+//Save the tour in database
+Route::post('/tour-bookings', [TourBookingController::class, 'store']);
+Route::view('/thank-you', 'tours.thankyou')->name('tours.thankyou');
+
+//Search booktour to display in panel
+Route::get('/admin/tours/bookings/{tourId}/{date}', [TourBookingController::class, 'getBookingsForDate']);
+
+
 
 require __DIR__.'/auth.php';

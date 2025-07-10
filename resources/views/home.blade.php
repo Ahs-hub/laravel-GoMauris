@@ -117,7 +117,7 @@
                     <!-- Repeated Swiper Slides -->
                     <!-- Just showing 1 for example -->
                     <div class="swiper-slide">
-                        <div class="swiper-service-card" style="background-image: url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=250&fit=crop');">
+                        <div class="swiper-service-card" style="background-image: url('images/services/accomodation.jpg');">
                             <div class="swiper-service-overlay">
                                 <h5>Accomodation</h5>
                                 <p class="description">Reliable and comfortable airport pickup & drop-off.</p>
@@ -130,7 +130,7 @@
                     </div>
                     <!-- ... other slides repeated -->
                     <div class="swiper-slide">
-                        <div class="swiper-service-card" style="background-image: url('img/service/private_airport_transfer.jpg');">
+                        <div class="swiper-service-card" style="background-image: url('images/services/private_airport_transfer.jpg');">
                             <div class="swiper-service-overlay">
                                 <h5>Private Airport Transfer</h5>
                                 <p class="description">Reliable and comfortable airport pickup & drop-off.</p>
@@ -143,7 +143,7 @@
                     </div>
 
                     <div class="swiper-slide">
-                        <div class="swiper-service-card" style="background-image: url('img/service/luxury_airport_transfer.jpg');">
+                        <div class="swiper-service-card" style="background-image: url('images/services/luxury_airport_transfer.jpg');">
                             <div class="swiper-service-overlay">
                                 <h5>Luxury Airport Transfer</h5>
                                 <p class="description paragraph-text">Reliable and comfortable airport pickup & drop-off.</p>
@@ -156,7 +156,7 @@
                     </div>
 
                     <div class="swiper-slide">
-                        <div class="swiper-service-card" style="background-image: url('img/service/sightseeing_tour.jpg');">
+                        <div class="swiper-service-card" style="background-image: url('images/services/sightseeing_tour.jpg');">
                             <div class="swiper-service-overlay">
                                 <h5>Sightseeing tour</h5>
                                 <p class="description">Reliable and comfortable airport pickup & drop-off.</p>
@@ -169,7 +169,7 @@
                     </div>
 
                     <div class="swiper-slide">
-                        <div class="swiper-service-card" style="background-image: url('img/service/taxi_ride.jpg');">
+                        <div class="swiper-service-card" style="background-image: url('images/services/taxi_ride.jpg');">
                             <div class="swiper-service-overlay">
                                 <h5>Taxi ride</h5>
                                 <p class="description">Reliable and comfortable airport pickup & drop-off.</p>
@@ -180,6 +180,7 @@
                             </div>
                         </div>
                     </div>
+
 
 
                 </div>
@@ -329,11 +330,4 @@
             </div>
         </div>
     </section> -->
-    
-    @if (app()->environment('production'))
-        <script src="{{ secure_asset('js/style.js') }}"></script>
-    @else
-        <script src="{{ asset('js/style.js') }}"></script>
-    @endif
-
 @endsection

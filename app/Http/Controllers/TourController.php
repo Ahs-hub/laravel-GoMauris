@@ -39,4 +39,16 @@ class TourController extends Controller
         // Fallback if the view doesn't exist
         return view('tours.show', compact('tour'));
     }
+
+    // Return blocked dates without auth
+    public function getBlockedDatesPublic($id)
+    {
+        $tour = \App\Models\Tour::with('blockedDates')->findOrFail($id);
+    
+        $dates = $tour->blockedDates->pluck('date')->toArray(); // assuming `date` column
+    
+        return response()->json([
+            'blocked_dates' => $dates,
+        ]);
+    }
 }

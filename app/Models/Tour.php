@@ -37,4 +37,10 @@ class Tour extends Model
     {
         return $this->hasMany(TourBlockedDate::class);
     }
+    
+    // Relationship: A tour has many bookings
+    public function bookings()
+    {
+        return $this->hasMany(TourBooking::class);
+    }
 }

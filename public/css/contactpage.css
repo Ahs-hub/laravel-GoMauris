@@ -1,0 +1,108 @@
+.hero-section {
+    /* background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/contactback.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    color: var(--white);
+    padding: 120px 0 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-form {
+    /* background: var(--white);
+    border-radius: 20px; */
+    padding: 3rem;
+    /* box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); */
+}
+
+.form-control {
+    border: 2px solid var(--light-color);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 168, 204, 0.25);
+}
+
+.btn-primary {
+    /* background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); */
+    background-color: var(--primary-color);
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    padding: 12px 30px;
+    /* font-weight: 600; */
+    transition: all 0.3s ease;
+    /* box-shadow: 0 4px 15px rgba(0, 168, 204, 0.3); */
+}
+
+.btn-primary-custom {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 25px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 168, 204, 0.4);
+}
+
+.contact-info-card {
+    background: var(--white);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: 100%;
+}
+
+.contact-icon {
+    width: 60px;
+    height: 60px;
+    /* background: linear-gradient(135deg, var(--accent-color), var(--primary-color)); */
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    color: var(--white);
+    font-size: 1.5rem;
+}
+
+.services-section {
+    background: var(--gray-light);
+    padding: 80px 0;
+}
+
+.contact-section {
+    padding: 80px 0;
+ 
+}
+
+.section-title {
+    color: var(--dark-color);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.section-subtitle {
+    color: var(--gray-dark);
+    margin-bottom: 3rem;
+}
+
+.map-container {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}

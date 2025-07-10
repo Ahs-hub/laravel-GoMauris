@@ -98,13 +98,13 @@
                     </li> -->         
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
+                        <a class="nav-link" href="{{ route('contact') }}">Contact</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#langCurrencyModal">
                           <i class='bx bx-globe'></i> EN/EUR(€)
                         </a>
-                      </li>
+                    </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#event_planner">Event Planner</a>
                     </li> --> 
@@ -131,6 +131,87 @@
 
      @yield('content')
    
+
+    <!-- Profile Modal -->
+  <div class="modal fade " id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered ">
+      <div class="modal-content custom-modal ">
+        <div class="modal-body">
+          <h5 class="modal-title mb-4" id="profileModalLabel">Profile</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item profile-item">
+              <i class='bx bx-log-in-circle'></i> Log In or Sign In
+            </li>
+            <li class="list-group-item profile-item">
+              <i class='bx bx-support'></i> Support
+            </li>
+            <li class="list-group-item profile-item">
+              <i class='bx bx-mobile'></i> Download our App
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- Language & Currency Modal -->
+    <div class="modal fade" id="langCurrencyModal" tabindex="-1" aria-labelledby="langCurrencyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content lang-modal">
+
+                <!-- Modal Header with Tabs -->
+                <div class="modal-header border-0">
+                    <ul class="nav nav-tabs nav-fill w-100" id="langCurrencyTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="language-tab" data-bs-toggle="tab" data-bs-target="#language" type="button" role="tab">
+                                <i class='bx bx-globe'></i> Language
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="currency-tab" data-bs-toggle="tab" data-bs-target="#currency" type="button" role="tab">
+                                <i class='bx bx-dollar-circle'></i> Currency
+                            </button>
+                        </li>
+                    </ul>
+                    <button type="button" class="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <!-- Modal Body with Tab Content -->
+                <div class="modal-body tab-content">
+                    <!-- Language Tab -->
+                    <div class="tab-pane fade show active" id="language" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled lang-list">
+                                    <li class="active">English (United States) <i class='bx bx-check'></i></li>
+                                    <li>Russie</li>
+                                    <li>English (Australia)</li>
+                                    <li>Español (España)</li>
+                                    <li>Français</li>
+                                    <li>Chinese</li>
+                                    <li>Germany</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Currency Tab -->
+                    <div class="tab-pane fade" id="currency" role="tabpanel">
+                        <div class="row gx-5">
+                            <div class="col-md-4">
+                                <ul class="list-unstyled currency-list">
+                                    <li class="active">Euro <span>€</span> <i class='bx bx-check'></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- /.modal-body -->
+
+            </div> <!-- ✅ closing .modal-content -->
+        </div> <!-- /.modal-dialog -->
+    </div> <!-- /.modal -->
+
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
@@ -267,119 +348,19 @@
             </div>
         </div>
     </footer>
-
-
-    <!-- Profile Modal -->
-  <div class="modal fade " id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered ">
-      <div class="modal-content custom-modal ">
-        <div class="modal-body">
-          <h5 class="modal-title mb-4" id="profileModalLabel">Profile</h5>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item profile-item">
-              <i class='bx bx-log-in-circle'></i> Log In or Sign In
-            </li>
-            <li class="list-group-item profile-item">
-              <i class='bx bx-support'></i> Support
-            </li>
-            <li class="list-group-item profile-item">
-              <i class='bx bx-mobile'></i> Download our App
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-   <!-- Language & Currency Modal -->
-    <div class="modal fade" id="langCurrencyModal" tabindex="-1" aria-labelledby="langCurrencyModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content lang-modal">
-    
-            <!-- Modal Header with Tabs -->
-            <div class="modal-header border-0">
-            <ul class="nav nav-tabs nav-fill w-100" id="langCurrencyTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="language-tab" data-bs-toggle="tab" data-bs-target="#language" type="button" role="tab">
-                    <i class='bx bx-globe'></i> Language
-                </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                <button class="nav-link" id="currency-tab" data-bs-toggle="tab" data-bs-target="#currency" type="button" role="tab">
-                    <i class='bx bx-dollar-circle'></i> Currency
-                </button>
-                </li>
-            </ul>
-            <button type="button" class="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-    
-            <!-- Modal Body with Tab Content -->
-            <div class="modal-body tab-content">
-            <!-- Language Tab -->
-            <div class="tab-pane fade show active" id="language" role="tabpanel">
-                <div class="row">
-                <div class="col-md-6">
-                    <ul class="list-unstyled lang-list">
-                    <li class="active">English (United States) <i class='bx bx-check'></i></li>
-                    <li>Russie</li>
-                    <li>English (Australia)</li>
-                    <li>Español (España)</li>
-                    <li>Français</li>
-                    <li>Chinese</li>
-                    <li>Germany</li>
-                    </ul>
-                </div>
-                <!-- <div class="col-md-6">
-                    <ul class="list-unstyled lang-list">
-                    <li>Bahasa Indonesia</li>
-                    <li>Català</li>
-                    <li>Dansk</li>
-                    <li>Deutsch (Österreich)</li>
-                    <li>Eesti</li>
-                    <li>English (United Kingdom)</li>
-                    <li>Español (México)</li>
-                    <li>Hrvatski</li>
-                    </ul>
-                </div> -->
-                </div>
-            </div>
-    
-            <!-- Currency Tab -->
-            <div class="tab-pane fade" id="currency" role="tabpanel">
-                <div class="row gx-5">
-                <!-- Common Currencies -->
-                <div class="col-md-4">
-                    <ul class="list-unstyled currency-list">
-                    <!-- <li>Australian Dollar <span>A$</span></li> -->
-                    <li class="active">Euro <span>€</span> <i class='bx bx-check'></i></li>
-                    </ul>
-                </div>
-            
-                <!-- <div class="col-md-4">
-                    <ul class="list-unstyled currency-list">
-                    <li>British Pound <span>£</span></li>
-                    <li>Swiss Franc <span>CHF</span></li>
-                    <li>Canadian Dollar <span>C$</span></li>
-                    </ul>
-                </div> -->
-  
-
-            </div>
-    
-        </div>
-        </div>
-    </div>
   
     <!-- Bootstrap link -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
 
-    </script>
 
-    <!-- Your custom JS -->
-    <script src="script.js"></script>
+    @if (app()->environment('production'))
+        <script src="{{ secure_asset('js/style.js') }}"></script>
+    @else
+        <script src="{{ asset('js/style.js') }}"></script>
+    @endif
+
 </body>
 </html>
