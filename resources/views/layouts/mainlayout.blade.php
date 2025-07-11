@@ -88,7 +88,7 @@
                     </li>  
 
                     <li class="nav-item">
-                        <a class="nav-link" href="whislist.html">Wishlist</a>
+                        <a class="nav-link" href="{{ route('whislist') }}">Wishlist</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#about">About</a>

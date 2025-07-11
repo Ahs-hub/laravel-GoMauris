@@ -70,6 +70,11 @@ Route::get('/contact', function () {
     return view('contactpage');
 })->name('contact');
 
+//Go to Contact page
+Route::get('/whislist', function () {
+    return view('whislistpage');
+})->name('whislist');
+
 //tours
 Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
 

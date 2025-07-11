@@ -4,6 +4,10 @@
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Vue + Axios -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     @if (app()->environment('production'))
         <link rel="stylesheet" href="{{ secure_asset('css/tourdetailed.css') }}">
     @else
@@ -11,6 +15,10 @@
     @endif
 
     <style>
+        /* remove delay for vue  heart icon*/
+        [v-cloak] {
+        display: none;
+        }
         .available-dates-container {
         margin-top: 10px;
         color: #fff;
@@ -60,34 +68,40 @@
             <h1 class="main-title section-heading">Catamaran Cruise to Ile aux Cerfs Island</h1>
 
             <div class="d-flex flex-wrap justify-content-between align-items-center">
-            <!-- Rating Section -->
-            @if($tour->average_rating > 0)
-                <div class="rating-section">
-                    <div class="rating-stars">
-                        @for ($i = 1; $i <= 5; $i++)
-                            @if ($i <= floor($tour->average_rating))
-                                <i class='bx bxs-star'></i>
-                            @elseif ($i - $tour->average_rating <= 0.5)
-                                <i class='bx bxs-star-half'></i>
-                            @else
-                                <i class='bx bx-star'></i>
-                            @endif
-                        @endfor
+                <!-- Rating Section -->
+                @if($tour->average_rating > 0)
+                    <div class="rating-section">
+                        <div class="rating-stars">
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= floor($tour->average_rating))
+                                    <i class='bx bxs-star'></i>
+                                @elseif ($i - $tour->average_rating <= 0.5)
+                                    <i class='bx bxs-star-half'></i>
+                                @else
+                                    <i class='bx bx-star'></i>
+                                @endif
+                            @endfor
+                        </div>
+                        <span class="rating-text paragraph-text">{{ $tour->average_rating }} / 5</span>
+                        <span class="rating-reviews paragraph-text">  +{{ $tour->total_reviews }} Reviews</span>
                     </div>
-                    <span class="rating-text paragraph-text">{{ $tour->average_rating }} / 5</span>
-                    <span class="rating-reviews paragraph-text">  +{{ $tour->total_reviews }} Reviews</span>
-                </div>
-            @endif
+                @endif
 
                 <!-- Wishlist -->
-                <div class="d-flex align-items-center mt-2 mt-md-0">
-                    <i class='bx bx-heart me-2' style="font-size: 1.5rem;"></i>
-                    <a href="#" class="wishlist-link">Add to Wishlist</a>
+                <div class="wishlist-heart"
+                    data-tour-id="{{ $tour->id }}"
+                    data-tour-slug="{{ $tour->slug }}"
+                    data-tour-type="tour">
+                    <div @click="toggleWishlist" style="cursor: pointer;" class="d-flex align-items-center">
+                        <i :class="isInWishlist ? 'bx bxs-heart text-danger' : 'bx bx-heart'"
+                        style="font-size: 1.5rem; width: 1.5em; text-align: center;"></i>
+                        <span>Add to Wishlist</span>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
-
 
     <div class="container py-4">
         <!-- Gallery Section at Top -->
@@ -266,7 +280,7 @@
                         <form @submit.prevent="submitForm">
                             <div class="form-header text-center">
                                 <h5>Let us assist you with your catamaran cruise</h5>
-                                <h5>If you prefer WhatsApp, let's have a chat at <span style="color:var(--secondary-color); font-weight:500;">+23059550305</span></h5>
+                                <h5>If you prefer WhatsApp, let's have a chat at <span style="color:var(--secondary-color); font-weight:500;">+230 55040167</span></h5>
                             </div>
 
                             <h4 class="mt-4">Enter your tour details:</h4>
@@ -364,7 +378,7 @@
                                     <label class="form-label">Mobile Number (WhatsApp) <span class="required-field">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bx bxl-whatsapp"></i></span>
-                                        <input type="tel" class="form-control" v-model="mobile_number" required placeholder="+230 5955 0305">
+                                        <input type="tel" class="form-control" v-model="mobile_number" required placeholder="+230 55040167">
                                     </div>
                                 </div>
                             </div>
@@ -463,140 +477,185 @@
         <script src="{{ asset('js/style.js') }}"></script>
     @endif
 
-    <!-- Vue + Axios -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 
     <script>
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    const { createApp } = Vue;
+    //#region  check-availability and sent form
+        axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const { createApp } = Vue;
 
-    createApp({
-        data() {
-            return {
-                selectedDate: '',
-                blockedDates: [],
-                availableDates: [],
-                showForm: false,
-                checked: false,
-                tourId: @json($tour->id),
-                enableAutoCheck: false, // flag to enable @change
+        createApp({
+            data() {
+                return {
+                    selectedDate: '',
+                    blockedDates: [],
+                    availableDates: [],
+                    showForm: false,
+                    checked: false,
+                    tourId: @json($tour->id),
+                    enableAutoCheck: false, // flag to enable @change
 
-                
-                tour: @json($tour), // tour name
-
-                // All required fields
-                adults: 1,
-                children: 0,
-                transport_required: '',
-                hotel_name: '',
-                tour_date: '',
-                room_number: '',
-                lunch_non_veg: 0,
-                lunch_veg: 0,
-                special_requests: '',
-                full_name: '',
-                email: '',
-                country: '',
-                mobile_number: '',
-            };
-        },
-        methods: {
-            fetchBlockedDates() {
-                axios.get(`/api/public/tours/blocked-dates/${this.tourId}`)
-                .then(res => {
-                    this.blockedDates = res.data.blocked_dates || [];
-                })
-                .catch(err => {
-                    console.error("Error fetching blocked dates", err);
-                    this.blockedDates = [];
-                });
-            },
-            activateAutoCheck() {
-                this.enableAutoCheck = true;
-                this.checkDateAvailability(); // initial check
-            },
-            checkDateAvailability() {
-                if (!this.selectedDate) return;
-                this.checked = true;
-
-                const isBlocked = this.blockedDates.includes(this.selectedDate);
-                if (isBlocked) {
-                    this.showForm = false;
-                    this.getAvailableDatesInMonth(this.selectedDate);
-                } else {
-                    this.showForm = true;
-                    this.availableDates = [];
-                }
-            },
-            getDayFromDate(dateStr) {
-                const date = new Date(dateStr);
-                return date.getDate(); // returns only the day number
-            },
-            formatFullDate(dateStr) {
-                const date = new Date(dateStr + 'T00:00:00'); // ensures it's parsed correctly
-                return date.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-            },
-            getAvailableDatesInMonth(dateStr) {
-                const selected = new Date(dateStr);
-                const year = selected.getFullYear();
-                const month = selected.getMonth();
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-                this.availableDates = [];
-
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const d = new Date(year, month, day);
-                    const iso = d.toISOString().split('T')[0];
-                    if (!this.blockedDates.includes(iso)) {
-                        this.availableDates.push(iso);
-                    }
-                }
-            },
-             
-            async submitForm() {
-                try {
-                    console.log('Submitting tour_date:', this.selectedDate); // ✅ Add this
                     
-                    await axios.post('/tour-bookings', {
-                        tour_type: this.tour.name, // or title, as per your DB
-                        tour_id: this.tour.id, // ✅ Include this!
-                        tour_date: this.selectedDate,
-                        adults: this.adults,
-                        children: this.children,
-                        transport_required: this.transport_required,
-                        hotel_name: this.hotel_name,
-                        room_number: this.room_number,
-                        lunch_non_veg: this.lunch_non_veg,
-                        lunch_veg: this.lunch_veg,
-                        special_requests: this.special_requests,
-                        full_name: this.full_name,
-                        email: this.email,
-                        country: this.country,
-                        mobile_number: this.mobile_number,
-                    });
+                    tour: @json($tour), // tour name
 
-                    window.location.href = "/thank-you"; // redirect to success page
-                } catch (error) {
-                    alert('Something went wrong! Please try again.');
-                    if (error.response && error.response.data && error.response.data.message) {
-                        alert(error.response.data.message);
+                    // All required fields
+                    adults: 1,
+                    children: 0,
+                    transport_required: '',
+                    hotel_name: '',
+                    tour_date: '',
+                    room_number: '',
+                    lunch_non_veg: 0,
+                    lunch_veg: 0,
+                    special_requests: '',
+                    full_name: '',
+                    email: '',
+                    country: '',
+                    mobile_number: '',
+                };
+            },
+            methods: {
+                fetchBlockedDates() {
+                    axios.get(`/api/public/tours/blocked-dates/${this.tourId}`)
+                    .then(res => {
+                        this.blockedDates = res.data.blocked_dates || [];
+                    })
+                    .catch(err => {
+                        console.error("Error fetching blocked dates", err);
+                        this.blockedDates = [];
+                    });
+                },
+                activateAutoCheck() {
+                    this.enableAutoCheck = true;
+                    this.checkDateAvailability(); // initial check
+                },
+                checkDateAvailability() {
+                    if (!this.selectedDate) return;
+                    this.checked = true;
+
+                    const isBlocked = this.blockedDates.includes(this.selectedDate);
+                    if (isBlocked) {
+                        this.showForm = false;
+                        this.getAvailableDatesInMonth(this.selectedDate);
                     } else {
-                        alert('Something went wrong! Please try again.');
+                        this.showForm = true;
+                        this.availableDates = [];
                     }
+                },
+                getDayFromDate(dateStr) {
+                    const date = new Date(dateStr);
+                    return date.getDate(); // returns only the day number
+                },
+                formatFullDate(dateStr) {
+                    const date = new Date(dateStr + 'T00:00:00'); // ensures it's parsed correctly
+                    return date.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                },
+                getAvailableDatesInMonth(dateStr) {
+                    const selected = new Date(dateStr);
+                    const year = selected.getFullYear();
+                    const month = selected.getMonth();
+                    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                    this.availableDates = [];
+
+                    for (let day = 1; day <= daysInMonth; day++) {
+                        const d = new Date(year, month, day);
+                        const iso = d.toISOString().split('T')[0];
+                        if (!this.blockedDates.includes(iso)) {
+                            this.availableDates.push(iso);
+                        }
+                    }
+                },
+                
+                async submitForm() {
+                    try {
+                        console.log('Submitting tour_date:', this.selectedDate); // ✅ Add this
+                        
+                        await axios.post('/tour-bookings', {
+                            tour_type: this.tour.name, // or title, as per your DB
+                            tour_id: this.tour.id, // ✅ Include this!
+                            tour_date: this.selectedDate,
+                            adults: this.adults,
+                            children: this.children,
+                            transport_required: this.transport_required,
+                            hotel_name: this.hotel_name,
+                            room_number: this.room_number,
+                            lunch_non_veg: this.lunch_non_veg,
+                            lunch_veg: this.lunch_veg,
+                            special_requests: this.special_requests,
+                            full_name: this.full_name,
+                            email: this.email,
+                            country: this.country,
+                            mobile_number: this.mobile_number,
+                        });
+
+                        window.location.href = "/thank-you"; // redirect to success page
+                    } catch (error) {
+                        alert('Something went wrong! Please try again.');
+                        if (error.response && error.response.data && error.response.data.message) {
+                            alert(error.response.data.message);
+                        } else {
+                            alert('Something went wrong! Please try again.');
+                        }
+                    }
+                },
+
+
+            },
+            mounted() {
+                this.fetchBlockedDates();
+            }
+        }).mount("#check-availability-app");
+    //#endregion  check-availability and sent form
+
+    //#region    heart whislist vue.js
+        document.querySelectorAll('.wishlist-heart').forEach(el => {
+        const tourId = parseInt(el.dataset.tourId);
+        const tourSlug = el.dataset.tourSlug;
+        const tourType = el.dataset.tourType;
+
+        Vue.createApp({
+            data() {
+                return {
+                    wishlist: [],
+                    item: {
+                        id: tourId,
+                        slug: tourSlug,
+                        type: tourType
+                    }
+                };
+            },
+            mounted() {
+                const stored = localStorage.getItem('wishlist');
+                this.wishlist = stored ? JSON.parse(stored) : [];
+            },
+            computed: {
+                isInWishlist() {
+                    return this.wishlist
+                        .filter(item => item !== null)
+                        .some(item => item.id === this.item.id && item.type === this.item.type);
                 }
             },
+            methods: {
+                toggleWishlist() {
+                    if (this.isInWishlist) {
+                        this.wishlist = this.wishlist
+                            .filter(item => item !== null)
+                            .filter(item => !(item.id === this.item.id && item.type === this.item.type));
+                    } else {
+                        this.wishlist.push(this.item);
+                    }
+                    localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
+                }
+            }
+            }).mount(el);
+           });
 
-
-        },
-        mounted() {
-            this.fetchBlockedDates();
-        }
-    }).mount("#check-availability-app");
+    //#endregion heart whislist vue.js
     </script>
 
 @endsection

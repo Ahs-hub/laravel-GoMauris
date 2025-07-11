@@ -224,3 +224,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //#endregion gallery swiper tour detailed
 
+//#region    heart whislist vue.js
+document.querySelectorAll('#wishlist-heart-app').forEach(el => {
+    const tourId = parseInt(el.dataset.tourId);
+    
+    Vue.createApp({
+        data() {
+            return {
+                wishlist: [],
+                tourId: tourId
+            };
+        },
+        mounted() {
+            const stored = localStorage.getItem('wishlist');
+            this.wishlist = stored ? JSON.parse(stored) : [];
+        },
+        computed: {
+            isInWishlist() {
+                return this.wishlist.includes(this.tourId);
+            }
+        },
+        methods: {
+            toggleWishlist() {
+                if (this.isInWishlist) {
+                    this.wishlist = this.wishlist.filter(id => id !== this.tourId);
+                } else {
+                    this.wishlist.push(this.tourId);
+                }
+                localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
+            }
+        }
+    }).mount(el);
+}); 
+//#endregion heart whislist vue.js

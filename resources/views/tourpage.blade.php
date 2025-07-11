@@ -44,14 +44,16 @@
     </section>
 
 
-    <!-- Services Section -->
-    <section class="py-5">
-        <div class="container">
-            <div class="row" id="servicesContainer">
-                
+    
+    <!-- Tours Section -->
+    <section id="tours" class="section-padding">
 
-            @foreach ($tours as $tour)
+        <div class="container text-center my-5">        
+            <!-- Tour cards -->
+            <div class="row g-4">
+                @foreach ($tours as $tour)
                 <div class="col-md-3 tour-card" data-category="{{ $tour->category->slug }}">
+                <a href="{{ route('tours.show', $tour->slug) }}" style="text-decoration: none; color: inherit;">
                     <div class="card destination-card">
                         <img src="{{ asset($tour->main_image) }}" class="card-img-top" alt="{{ $tour->name }}">
                         <div class="card-body text-start">
@@ -70,10 +72,9 @@
                             <p><strong class="tour-price">${{ $tour->starting_price }}</strong> <span class="per-person">per person</span></p>
                         </div>
                     </div>
+                </a>
                 </div>
                 @endforeach
-                 
-
             </div>
         </div>
     </section>
@@ -123,10 +124,6 @@
         </div>
     </section>
 
-
-     
-
-
-     <script src="{{ asset('js/style.js') }}"></script>
+    <script src="{{ asset('js/style.js') }}"></script>
 
 @endsection
