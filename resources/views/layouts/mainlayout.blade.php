@@ -77,7 +77,7 @@
                         <a class="nav-link" href="{{ route('home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="servicepage.html">Services</a>
+                        <a class="nav-link" href="{{ route('service') }}">Services</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="fleetpage.html">Our Fleet</a>

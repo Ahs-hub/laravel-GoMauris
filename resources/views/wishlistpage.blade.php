@@ -22,17 +22,19 @@
 
     <!--Wishlist section-->
     <section id="wishlist-display-app" v-cloak>
-        <div v-if="filteredWishlist.length > 0" class="wishlist-items">
-            <div v-for="item in filteredWishlist" :key="item.id" class="wishlist-item">
-
-                <div class="wishlist-card">
+        <div v-if="filteredWishlist.length > 0" class=" wishlist-container">
+            <!-- Single grid for all wishlist items -->
+            <div class="wishlist-items">
+                
+                <!-- Each card -->
+                <div v-for="item in filteredWishlist" :key="item.id" class="wishlist-card">
                     <div class="card-image">
-                        <a :href="getTourUrl(item.slug)">
-                        <img :src="`/images/tours/${item.slug}/${item.slug}-1.jpg`" :alt="item.title">
-                        </a>
+                        <img :src="`${item.thumbnail}`" :alt="item.title">
                     </div>
                     <div class="card-body">
-                        <h5>@{{ item.title }}</h5>
+                        <a :href="getTourUrl(item.slug)" style="text-decoration: none;">
+                            <h5>@{{ item.title }}</h5> 
+                        </a>
                         <div class="card-price">€@{{ item.price }}/day</div>
                         <div class="type">@{{ item.type }}</div>
                     </div>
@@ -40,12 +42,11 @@
                         <i class='bx bx-x'></i>
                     </button>
                 </div>
-                
             </div>
 
             <!-- Clear All Button -->
             <div class="clear-wishlist-section">
-                <button @click="clearWishlist">
+                <button @click="clearWishlist" class="clear-btn">
                     <i class='bx bx-trash'></i> Clear Wishlist
                 </button>
             </div>

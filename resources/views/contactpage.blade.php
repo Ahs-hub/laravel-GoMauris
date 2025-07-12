@@ -45,27 +45,28 @@
             <div class="col-lg-8">
                 <div class="contact-form">
                     <h3 class="subheading fw-bold mb-4" >Send us a Message</h3>
-                    <form>
+                    <form method="POST" action="{{ route('contact.submit') }}">
+                       @csrf
                         <div class="row g-3">
                             <div class="col-md-6" style="color:rgb(49, 49, 49)">
                                 <label for="firstName" class="form-label fw-semibold">First Name</label>
-                                <input type="text" class="form-control" id="firstName" required>
+                                <input type="text" class="form-control" id="firstName" name="firstName" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="lastName" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">Last Name</label>
-                                <input type="text" class="form-control" id="lastName" required>
+                                <input type="text" class="form-control" id="lastName" name="lastName" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="email" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">Email Address</label>
-                                <input type="email" class="form-control" id="email" required>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="phone" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">Phone Number</label>
-                                <input type="tel" class="form-control" id="phone">
+                                <input type="tel" class="form-control" id="phone" name="phone">
                             </div>
                             <div class="col-12">
                                 <label for="service" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">Service Needed</label>
-                                <select class="form-control" id="service" required>
+                                <select class="form-control" id="service" name="service" required>
                                     <option value="">Select a service</option>
                                     <option value="chauffeur">Chauffeur Service</option>
                                     <option value="airport">Airport Transfer</option>
@@ -76,7 +77,7 @@
                             </div>
                             <div class="col-12">
                                 <label for="message" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">Message</label>
-                                <textarea class="form-control" id="message" rows="5" placeholder="Tell us about your requirements..."></textarea>
+                                <textarea class="form-control" id="message" rows="5" placeholder="Tell us about your requirements..." name="message"></textarea>
                             </div>
                             <div class="col-12 text-center">
                                 <button type="submit" class="btn btn-primary btn-lg rad-0">

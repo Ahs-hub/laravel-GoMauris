@@ -43,16 +43,6 @@
 .tour-card{
     margin-bottom: 50px;
 }
-
-.category-btn {
-    border-radius: 20px;
-    margin: 5px;
-    padding: 10px 20px;
-  }
-  .category-btn.active {
-    background-color: #00AEEF;
-    color: white;
-  }
   .destination-card {
     border-radius: 10px;
     overflow: hidden;

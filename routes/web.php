@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\TourBlockedDateController;
 use App\Http\Controllers\TourBookingController;
 use App\Http\Controllers\WishlistController;
 
+use App\Http\Controllers\ContactController;
+
 // Route::get('/', function () {
 //     return view('home');
 // })->name('home');
@@ -74,8 +76,18 @@ Route::get('/contact', function () {
 //Go to Wishlist page
 Route::get('/wishlist', [WishlistController::class, 'showWishlistPage'])->name('wishlist');
 
+//Go to Service page
+Route::get('/service', function () {
+    return view('servicepage');
+})->name('service'); 
+
 //tours
 Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
+
+Route::get('/north-coast', function () {
+    return view('north-coast-sightseeing');
+})->name('north-coast');
+
 
 //go to tour page
 Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
@@ -89,6 +101,9 @@ Route::view('/thank-you', 'tours.thankyou')->name('tours.thankyou');
 
 //Search booktour to display in panel
 Route::get('/admin/tours/bookings/{tourId}/{date}', [TourBookingController::class, 'getBookingsForDate']);
+
+//Send contact to email
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 
 

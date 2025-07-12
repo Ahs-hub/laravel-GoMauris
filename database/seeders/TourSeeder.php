@@ -16,7 +16,7 @@ class TourSeeder extends Seeder
 
         Tour::create([
             'name' => 'Catamaran Cruise to Ile Aux Gabriel Island',
-            'slug' => 'catamaran-cruise-gabriel-island',
+            'slug' => 'catamaran-cruise-gabriel',
             'description' => 'A full-day sea activity on a luxurious catamaran with BBQ and snorkeling.',
             'duration_minutes' => 420,
             'pickup_included' => true,
@@ -37,7 +37,7 @@ class TourSeeder extends Seeder
             'average_rating' => 4.5,
             'total_reviews' => 550,
             'tour_category_id' => $sightseeing->id,
-            'main_image' => 'images/tours/north-coast-sightseeing/north-coast-1.jpg',
+            'main_image' => 'images/tours/north-coast-sightseeing/north-coast-sightseeing-1.jpg',
         ]);
 
         Tour::create([
