@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\TourBlockedDateController;
 
 
 use App\Http\Controllers\TourBookingController;
+use App\Http\Controllers\WishlistController;
 
 // Route::get('/', function () {
 //     return view('home');
@@ -70,10 +71,8 @@ Route::get('/contact', function () {
     return view('contactpage');
 })->name('contact');
 
-//Go to Contact page
-Route::get('/whislist', function () {
-    return view('whislistpage');
-})->name('whislist');
+//Go to Wishlist page
+Route::get('/wishlist', [WishlistController::class, 'showWishlistPage'])->name('wishlist');
 
 //tours
 Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
