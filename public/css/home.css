@@ -257,7 +257,7 @@
   }
   
   .swiper-service-card:hover .swiper-service-overlay {
-    background: rgba(0, 0, 0, 0.75);
+    background: #035d8dd0;
   }
   
   .swiper-service-overlay .price-tag {

@@ -9,6 +9,26 @@
     @endif
     <!--<link rel="stylesheet" href="{{ secure_asset('css/home.css') }}"> -->
 
+    <style>
+        .masked-text {
+        font-size: 10rem;
+        font-weight: 800;
+        background: url('https://cdn.pixabay.com/photo/2015/06/19/21/24/avenue-815297_1280.jpg') center center no-repeat;
+        background-size: cover;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        display: inline-block;
+        text-transform: lowercase;
+        }
+
+        @media (max-width: 768px) {
+        .masked-text {
+            font-size: 3rem;
+        }
+        }
+    </style>
+
      <!-- Hero Section -->
      <section id="home" class="hero">
         <div class="video-background">
@@ -37,78 +57,15 @@
         </div>
     </section>
 
-    
-    <!-- Tours Section -->
-    <section id="tours" class="section-padding" style="background: var(--gray-light);">
-        <div class="container">
-            <p class=".paragraph-text  text-center" style="margin-top:50px;">
-                Mauritius island is our homeland We'll show you Mauritius,
-                better than anyone else!
-            </p>
-
-        </div>
-    
-        <div class="container text-center my-5">
-         
-            <!-- Category filter buttons -->
-            <div class="d-flex flex-wrap justify-content-center my-3">
-                <button class="btn button-text category-btn active" data-category="all">All Tours</button>
-
-                @foreach ($categories as $category)
-                    <button class="btn button-text category-btn" data-category="{{ $category->slug }}">
-                        {{ $category->name }}
-                    </button>
-                @endforeach
-            </div>
-
-            
-            <!-- Tour cards -->
-            <div class="row g-4">
-                @foreach ($tours as $tour)
-                <div class="col-md-3 tour-card" data-category="{{ $tour->category->slug }}">
-                <a href="{{ route('tours.show', $tour->slug) }}" style="text-decoration: none; color: inherit;">
-                    <div class="card destination-card">
-                        <img src="{{ asset($tour->main_image) }}" class="card-img-top" alt="{{ $tour->name }}">
-                        <div class="card-body text-start">
-                            <h5 class="card-title">{{ $tour->name }}</h5>
-                            <p class="card-time">{{ floor($tour->duration_minutes / 60) }} hours &nbsp;•&nbsp; {{ $tour->pickup_included ? 'Pickup Included' : '' }}</p>
-                            <div class="tour-rating mb-2">
-                                @for ($i = 0; $i < floor($tour->average_rating); $i++)
-                                    <i class="bx bxs-star"></i>
-                                @endfor
-                                @if ($tour->average_rating - floor($tour->average_rating) >= 0.5)
-                                    <i class="bx bxs-star-half"></i>
-                                @endif
-                                <span class="rating-text">{{ $tour->average_rating }} ({{ $tour->total_reviews }})</span>
-                            </div>
-                            <p class="from-text">From</p>
-                            <p><strong class="tour-price">€{{ $tour->starting_price }}</strong> <span class="per-person">per person</span></p>
-                        </div>
-                    </div>
-                </a>
-                </div>
-                @endforeach
-            </div>
-
-        </div>
-
-
-        <div class="text-center" style="margin-top: 100px;">
-            <button class="btn btn-primary btn-lg rad-0" onclick="window.location.href='{{ route('tours.index') }}'">
-                View All Tours →
-            </button>
-        </div>
-    </section>
-
     <!-- Services Section -->
     <section id="services" class="section-padding">
         <div class="container">
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-lg-8 mx-auto text-center">
                     <h2 class="section-heading">Your Trusted Guide to Mauritius</h2>
                     <p class="subheading " style="color: var(--gray-dark);">Our Service</p>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Swiper Container -->
             <div class="swiper mySwiper" >
@@ -192,7 +149,7 @@
                 <div class="swiper-button-prev" style="display:none;"></div>
             </div>
 
-            <p class=".paragraph-text  text-center" style="margin-top:50px;">
+            <p class=".paragraph-text  text-center" style="margin-top:50px; color:grey;">
                 Mauritius is a vibrant mosaic of cultures, where people of Indian, African, Chinese, 
                 and European heritage live together in harmony, creating a unique blend of traditions,
                 festivals, and flavors. From the lively rhythms of Sega music to colorful celebrations 
@@ -216,6 +173,110 @@
         </div>
         </div>
     </section>
+
+    <section id="about" class="section-padding" style="background: var(--gray-light); ">
+        <div class="container">
+            <div class="row">
+            <div class="col-lg-8 mx-auto text-center" style="margin-bottom:30px;">
+                <h2 class="section-heading">We Design “Mauritius Tours” Your Way 
+                Best Tailor-Made Private Mauritius Holidays Just for You</h2>
+
+            </div>
+
+            <!-- Full-width paragraph below the heading -->
+            <div class="col-12">
+                <p class="mb-3 fs-5 fw-medium text-center" style="color:grey;" >
+                    MyVac Tours Mauritius specializes in private tours and fully personalized holiday packages across the island. 
+                    Whether you're dreaming of a romantic escape, a family getaway, or a thrilling adventure, our dedicated local
+                    experts are here to craft unforgettable experiences — just the way you want.We're proud to be recognized for our
+                    commitment to quality, customer satisfaction, and authentic Mauritian hospitality. Our passionate team is based right here in Mauritius, ready to accompany you from start to finish, ensuring every moment of your trip is smooth, enriching, and truly memorable.
+                </p>
+            </div>
+
+            <!-- Masked word "mauritius" centered -->
+            <div class="col-12 text-center" style="margin-top:30px; margin-bottom:60px;">
+                <h1 class="masked-text">mauritius</h1>
+            </div>
+
+            <!-- Second paragraph -->
+            <div class="col-12">
+                <p class="mb-3 fs-5 fw-medium text-center" style="color:grey;">
+                At MyVac Tours, we don’t offer generic tour packages. 
+                Every itinerary is custom-designed around your preferences — budget, travel dates,
+                interests, and any special requests. Whether you want to explore hidden beaches, dive into Creole 
+                culture, hike lush trails, or savor local cuisine, we’re here to make it happen.
+                </p>
+            </div>
+            </div>
+        </div>
+   </section>
+
+
+
+
+
+    <!-- Tours Section -->
+    <section id="tours" class="section-padding" style="">
+     <div class="container text-center">
+        <p class="section-heading mt-5">
+            Mauritius island is our homeland. We'll show you Mauritius, <br>
+            better than anyone else!
+        </p>
+     </div>
+    
+        <div class="container text-center my-5">
+         
+            <!-- Category filter buttons -->
+            <div class="d-flex flex-wrap justify-content-center my-3" >
+                <button class="btn button-text category-btn active" data-category="all">All Tours</button>
+
+                @foreach ($categories as $category)
+                    <button class="btn button-text category-btn" data-category="{{ $category->slug }}">
+                        {{ $category->name }}
+                    </button>
+                @endforeach
+            </div>
+
+            
+            <!-- Tour cards -->
+            <div class="row g-4" style="margin-top:20px;">
+                @foreach ($tours as $tour)
+                <div class="col-md-3 tour-card" data-category="{{ $tour->category->slug }}">
+                <a href="{{ route('tours.show', $tour->slug) }}" style="text-decoration: none; color: inherit;">
+                    <div class="card destination-card">
+                        <img src="{{ asset($tour->main_image) }}" class="card-img-top" alt="{{ $tour->name }}">
+                        <div class="card-body text-start">
+                            <h5 class="card-title">{{ $tour->name }}</h5>
+                            <p class="card-time">{{ floor($tour->duration_minutes / 60) }} hours &nbsp;•&nbsp; {{ $tour->pickup_included ? 'Pickup Included' : '' }}</p>
+                            <div class="tour-rating mb-2">
+                                @for ($i = 0; $i < floor($tour->average_rating); $i++)
+                                    <i class="bx bxs-star"></i>
+                                @endfor
+                                @if ($tour->average_rating - floor($tour->average_rating) >= 0.5)
+                                    <i class="bx bxs-star-half"></i>
+                                @endif
+                                <span class="rating-text">{{ $tour->average_rating }} ({{ $tour->total_reviews }})</span>
+                            </div>
+                            <p class="from-text">From</p>
+                            <p><strong class="tour-price">€{{ $tour->starting_price }}</strong> <span class="per-person">per person</span></p>
+                        </div>
+                    </div>
+                </a>
+                </div>
+                @endforeach
+            </div>
+
+        </div>
+
+
+        <div class="text-center" style="margin-top: 100px;">
+            <button class="btn btn-primary btn-lg rad-0" onclick="window.location.href='{{ route('tours.index') }}'">
+                View All Tours →
+            </button>
+        </div>
+    </section>
+
+
 
     <!-- Stats Section -->
     <section class="stats-section section-padding" style=" height: auto; background-size: cover; background-position: center;">
@@ -275,9 +336,9 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <!-- PLACEHOLDER FOR ABOUT IMAGE -->
-                    <div class="img-placeholder" style="height: 400px;"> 
-                        <img  src="{{ asset('images/backgrounds/straw-hat.png') }}" style="width: 100%; height: 100%; object-fit: cover;">
+              
+                    <div class="img-placeholder" style="height: 400px; "> 
+                        <img  src="{{ asset('images/backgrounds/straw-hat.png') }}" style="width: 100%; height: 100%; object-fit: cover; border-radius:100px;">
                     </div>
                 </div>
             </div>

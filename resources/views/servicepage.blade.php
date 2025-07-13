@@ -59,7 +59,17 @@
                     <div class="service-content">
                         <h3 class="service-title">@{{ service.title }}</h3>
                         <p class="service-description">@{{ service.description }}</p>
-                        <p class="service-price">@{{ service.price }}</p> 
+                        <!-- <p class="service-price">
+                           <i class="bx bx-check-circle text-success me-3" style="font-size: 1.5rem;"></i>
+                            @{{ service.price }}
+                        </p>  -->
+                        <div class="d-flex align-items-center mb-3">
+                              
+                                <span style="color:grey;"> @{{ service.price }}</span>
+                        </div>
+                        
+
+                        
                     </div>
                    
                 </a>
