@@ -545,6 +545,18 @@
 }
 /*#endregion Stats Section */
 
+.masked-text {
+  font-size: 10rem;
+  font-weight: 800;
+  background: url('https://cdn.pixabay.com/photo/2015/06/19/21/24/avenue-815297_1280.jpg') center center no-repeat;
+  background-size: cover;
+  background-clip: text;              /* 👈 Standard version */
+  -webkit-background-clip: text;      /* 👈 Required for Chrome, Safari */
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+  text-transform: lowercase;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -568,6 +580,11 @@
    .phone-appear{
     display: flex;
    }
+
+
+   .masked-text {
+    font-size: 3rem;
+  }
 
    /* .swiper-slide{
     left:50px;

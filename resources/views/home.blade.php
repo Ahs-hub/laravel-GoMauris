@@ -9,26 +9,6 @@
     @endif
     <!--<link rel="stylesheet" href="{{ secure_asset('css/home.css') }}"> -->
 
-    <style>
-        .masked-text {
-        font-size: 10rem;
-        font-weight: 800;
-        background: url('https://cdn.pixabay.com/photo/2015/06/19/21/24/avenue-815297_1280.jpg') center center no-repeat;
-        background-size: cover;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: transparent;
-        display: inline-block;
-        text-transform: lowercase;
-        }
-
-        @media (max-width: 768px) {
-        .masked-text {
-            font-size: 3rem;
-        }
-        }
-    </style>
-
      <!-- Hero Section -->
      <section id="home" class="hero">
         <div class="video-background">
@@ -210,9 +190,6 @@
             </div>
         </div>
    </section>
-
-
-
 
 
     <!-- Tours Section -->
