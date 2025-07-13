@@ -47,7 +47,11 @@
                     <span>24/7</span>
                 </div>
             </div>
-            <div class="header-right">
+
+            <div class="header-right" style="display:flex; gap:40px;">
+                <div class="header-item">
+                        <a class="nav-link " href="{{ route('wishlist') }}">Wishlist</a>
+                </div>
                 <div class="header-item">
                         <i class='bx bx-book'></i>
                         <span>Tour Catalog 2025</span>
@@ -74,7 +78,7 @@
             <div class="collapse navbar-collapse navbars-links" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">Home</a>
+                        <a class="nav-link" href="{{ route('home') }}" style="font-size:17px;"><i class='bx bxs-home'></i> </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('service') }}">Services</a>
@@ -84,11 +88,15 @@
                     </li>
 
                     <li class="nav-item">
+                        <a class="nav-link" href="fleetpage.html">Taxi</a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('tours.index') }}">Tours</a>
                     </li>  
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('wishlist') }}">Wishlist</a>
+                        <a class="nav-link phone-appear" href="{{ route('wishlist') }}">Wishlist</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#about">About</a>
@@ -112,11 +120,11 @@
                         <a class="nav-link" href="#contact">Language</a>
                     </li> -->
            
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#profileModal">
                           <i class='bx bx-user'></i> Profile
                         </a>
-                      </li>
+                      </li> -->
 
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#contact">Profile</a>
