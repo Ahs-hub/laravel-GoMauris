@@ -82,7 +82,7 @@
                                 <span class="rating-text">{{ $tour->average_rating }} ({{ $tour->total_reviews }})</span>
                             </div>
                             <p class="from-text">From</p>
-                            <p><strong class="tour-price">${{ $tour->starting_price }}</strong> <span class="per-person">per person</span></p>
+                            <p><strong class="tour-price">€{{ $tour->starting_price }}</strong> <span class="per-person">per person</span></p>
                         </div>
                     </div>
                 </a>
@@ -94,9 +94,8 @@
 
 
         <div class="text-center" style="margin-top: 100px;">
-            <button type="submit" class="btn btn-primary btn-lg rad-0 " >
-                <span style="display:flex; align-items: center; gap:10px;">View All Tours →</span>
-                
+            <button class="btn btn-primary btn-lg rad-0" onclick="window.location.href='{{ route('tours.index') }}'">
+                View All Tours →
             </button>
         </div>
     </section>
@@ -120,11 +119,11 @@
                         <div class="swiper-service-card" style="background-image: url('images/services/accomodation.jpg');">
                             <div class="swiper-service-overlay">
                                 <h5>Accomodation</h5>
-                                <p class="description">Reliable and comfortable airport pickup & drop-off.</p>
+                                <p class="description">Book a hotel or villas with a discount and save up to 60%</p>
                                 <button type="submit" class="btn btn-primary btn-lg button-text description" >
                                     More
                                 </button>
-                                <p class="price-tag">$25 per person</p>
+                                <p class="price-tag">500+ Hotels & Villas</p>
                             </div>
                         </div>
                     </div>
@@ -133,11 +132,11 @@
                         <div class="swiper-service-card" style="background-image: url('images/services/private_airport_transfer.jpg');">
                             <div class="swiper-service-overlay">
                                 <h5>Private Airport Transfer</h5>
-                                <p class="description">Reliable and comfortable airport pickup & drop-off.</p>
+                                <p class="description">Private Transfers . Cars, Minivans,SUVs, Coaster .Free Child Seat</p>
                                 <button type="submit" class="btn btn-primary btn-lg button-text description" >
                                     More
                                 </button>
-                                <p class="price-tag">$25 per person</p>
+                                <p class="price-tag">From €33 per transfer</p>
                         </div>
                         </div>
                     </div>
@@ -146,11 +145,11 @@
                         <div class="swiper-service-card" style="background-image: url('images/services/luxury_airport_transfer.jpg');">
                             <div class="swiper-service-overlay">
                                 <h5>Luxury Airport Transfer</h5>
-                                <p class="description paragraph-text">Reliable and comfortable airport pickup & drop-off.</p>
+                                <p class="description paragraph-text">Private VIP Transfer . Incl. BMW x5, x7 & similar</p>
                                 <button type="submit" class="btn btn-primary btn-lg button-text description" >
                                     More
                                 </button>
-                                <p class="price-tag">$25 per person</p>
+                                <p class="price-tag">From €140 per transfer</p>
                             </div>
                         </div>
                     </div>
@@ -159,11 +158,11 @@
                         <div class="swiper-service-card" style="background-image: url('images/services/sightseeing_tour.jpg');">
                             <div class="swiper-service-overlay">
                                 <h5>Sightseeing tour</h5>
-                                <p class="description">Reliable and comfortable airport pickup & drop-off.</p>
+                                <p class="description">Explore Mauritius with our friendly & professional drivers</p>
                                 <button type="submit" class="btn btn-primary btn-lg button-text description" >
                                     More
                                 </button>
-                                <p class="price-tag">$25 per person</p>
+                                <p class="price-tag">€83 for a party of 4</p>
                             </div>
                         </div>
                     </div>
@@ -172,11 +171,11 @@
                         <div class="swiper-service-card" style="background-image: url('images/services/taxi_ride.jpg');">
                             <div class="swiper-service-overlay">
                                 <h5>Taxi ride</h5>
-                                <p class="description">Reliable and comfortable airport pickup & drop-off.</p>
+                                <p class="description">Need a transfer from Point A to B?With a return ?It's here </p>
                                 <button type="submit" class="btn btn-primary btn-lg button-text description" >
                                     More
                                 </button>
-                                <p class="price-tag">$25 per person</p>
+                                <p class="price-tag">Round-trips for €25</p>
                             </div>
                         </div>
                     </div>
@@ -212,8 +211,8 @@
 
         <div  style="margin-top: 4rem;">
             <div class="col-lg-8 mx-auto text-center">
-                <button class="btn btn-primary btn-lg rad-0"  onclick="window.location.href='servicepage.html'">View All Services →</button>
-            </div>
+            <button class="btn btn-primary btn-lg rad-0" onclick="window.location.href='{{ route('service') }}'">View All Services →</button>
+
         </div>
         </div>
     </section>

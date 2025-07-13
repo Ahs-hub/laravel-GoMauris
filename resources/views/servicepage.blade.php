@@ -49,19 +49,20 @@
                 class="col-lg-4 col-md-6 service-card"
                 :data-category="service.category"
             >
-                <div class="service-item">
-                <div class="position-relative">
-                    <img :src="service.image" :alt="service.title" class="service-image">
-                    <div class="service-overlay">
-                    <i class="bx text-white" :class="service.icon" style="font-size: 4rem;"></i>
+                <a class="service-item" :href="service.buttonLink || '#'" style="text-decoration: none;">
+                    <div class="position-relative">
+                        <img :src="service.image" :alt="service.title" class="service-image">
+                        <div class="service-overlay">
+                        <i class="bx text-white" :class="service.icon" style="font-size: 4rem;"></i>
+                        </div>
                     </div>
-                </div>
-                <div class="service-content">
-                    <h3 class="service-title">@{{ service.title }}</h3>
-                    <p class="service-description">@{{ service.description }}</p>
-                    <a :href="service.buttonLink || '#'" class="service-btn">@{{ service.buttonText }}</a>
-                </div>
-                </div>
+                    <div class="service-content">
+                        <h3 class="service-title">@{{ service.title }}</h3>
+                        <p class="service-description">@{{ service.description }}</p>
+                        <p class="service-price">@{{ service.price }}</p> 
+                    </div>
+                   
+                </a>
             </div>
             </div>
         </div>
@@ -128,7 +129,8 @@
                     icon: "bx-car",
                     description: "Comfortable and reliable door-to-door airport transfers with professional drivers and luxury vehicles.",
                     buttonText: "Book Now",
-                    buttonLink: "#"
+                    buttonLink: "#",
+                    price: "From $33 per transfer"
                 },
                 {
                     title: "Private Sightseeing Tour",
@@ -137,7 +139,8 @@
                     icon: "bx-map",
                     description: "Explore breathtaking destinations with our expert guides and customized itineraries for unforgettable experiences.",
                     buttonText: "Explore Tours",
-                    buttonLink: "#"
+                    buttonLink: "#",
+                    price: "$28 for  a party of 4"
                 },
                 {
                     title: "Activities & Tour",
@@ -146,7 +149,8 @@
                     icon: "bx-run",
                     description: "Thrilling adventures and cultural experiences including water sports, hiking, and local attractions.",
                     buttonText: "View Activities",
-                    buttonLink: "#"
+                    buttonLink: "#",
+                    price: "Sea & Land Activities"
                 },
                 {
                     title: "Car Rental",
@@ -155,7 +159,8 @@
                     icon: "bx-key",
                     description: "Premium fleet of vehicles available for self-drive adventures with flexible rental options and competitive rates.",
                     buttonText: "Rent Now",
-                    buttonLink: "#"
+                    buttonLink: "#",
+                    price: "Cars from $24 per day"
                 },
                 {
                     title: "Taxi Services",
@@ -164,7 +169,8 @@
                     icon: "bx-taxi",
                     description: "24/7 taxi services with experienced drivers for convenient city transportation and local travel needs.",
                     buttonText: "Book Taxi",
-                    buttonLink: "#"
+                    buttonLink: "#",
+                    price: "Round-trips from $25"
                 },
                 {
                     title: "Luxury Airport Transfers",
@@ -173,7 +179,8 @@
                     icon: "bx-diamond",
                     description: "Premium luxury vehicles with VIP treatment, perfect for business travelers and special occasions.",
                     buttonText: "Book Luxury",
-                    buttonLink: "#"
+                    buttonLink: "#",
+                    price: "From $140 per transfer"
                 },
                 {
                     title: "Accommodations",
@@ -182,7 +189,8 @@
                     icon: "bx-bed",
                     description: "Handpicked hotels, resorts, and vacation rentals offering comfort and luxury for every budget and preference.",
                     buttonText: "Find Hotels",
-                    buttonLink: "#"
+                    buttonLink: "#",
+                    price: "500 + Hotels & Villas"
                 },
                 {
                     title: "Air Ticket",
@@ -191,7 +199,8 @@
                     icon: "bx-plane",
                     description: "Competitive flight booking services with access to major airlines and exclusive deals for domestic and international travel.",
                     buttonText: "Book Flights",
-                    buttonLink: "#"
+                    buttonLink: "#",
+                    price: "200+ Airlines"
                 },
                 {
                     title: "Marriage Planner",
@@ -200,7 +209,8 @@
                     icon: "bx-heart",
                     description: "Complete wedding planning services including destination weddings, venue selection, and honeymoon packages.",
                     buttonText: "Plan Wedding",
-                    buttonLink: "#"
+                    buttonLink: "#",
+                    price: "10+ Famous places"
                 }
             ]
 
