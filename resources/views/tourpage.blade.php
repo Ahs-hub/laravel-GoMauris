@@ -80,12 +80,12 @@
     </section>
 
     <!-- Section Divider -->
-    <div class="container">
+    <!-- <div class="container">
         <div class="section-divider"></div>
-    </div>
+    </div> -->
 
     <!-- Marriage Planning Special Section -->
-    <section class="marriage-section">
+    <!-- <section class="marriage-section">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
@@ -122,7 +122,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <script src="{{ asset('js/style.js') }}"></script>
 

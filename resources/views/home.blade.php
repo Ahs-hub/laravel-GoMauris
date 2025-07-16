@@ -165,7 +165,7 @@
 
             <!-- Full-width paragraph below the heading -->
             <div class="col-12">
-                <p class="mb-3 fs-5 fw-medium text-center" style="color:grey;" >
+                <p class="mb-3 mx-5  fw-medium text-center" style="color:grey;" >
                     MyVac Tours Mauritius specializes in private tours and fully personalized holiday packages across the island. 
                     Whether you're dreaming of a romantic escape, a family getaway, or a thrilling adventure, our dedicated local
                     experts are here to craft unforgettable experiences — just the way you want.We're proud to be recognized for our
@@ -180,7 +180,7 @@
 
             <!-- Second paragraph -->
             <div class="col-12">
-                <p class="mb-3 fs-5 fw-medium text-center" style="color:grey;">
+                <p class="mb-3 mx-5  fw-medium text-center" style="color:grey;">
                 At MyVac Tours, we don’t offer generic tour packages. 
                 Every itinerary is custom-designed around your preferences — budget, travel dates,
                 interests, and any special requests. Whether you want to explore hidden beaches, dive into Creole 

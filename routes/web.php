@@ -33,6 +33,10 @@ Route::middleware('auth')->get('/admin/dashboard', function () {
     return view('admin.adminpanel');
 })->name('admin.dashboard');
 
+Route::get('/rentcar', function () {
+    return view('carhomepage');
+})->name('rentcar');
+
 //save booking tour
 // Route::post('/tour-bookings', [TourBookingController::class, 'store'])->name('tour.bookings.store');
 

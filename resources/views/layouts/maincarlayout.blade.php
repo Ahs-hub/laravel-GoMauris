@@ -32,33 +32,30 @@
 <body>
     <!-- Header Info -->
     <div class="header navbars-links">
-        <div class="header-info">
-            <div class="header-left">
-                <div class="header-item">
-                     <i class='bx bx-map'></i>
-                     <span>Tour Operator in Mauritius</span>
+            <div class="header-info">
+                <div class="header-left">
+                    <!-- <div class="header-item">
+                            <i class='bx bx-map'></i>
+                            <span>Car Rental in Mauritius</span>
+                    </div> -->
+                    <div class="header-item">
+                        <i class='bx bx-phone'></i>
+                        <span>+230 55040167</span>
+                    </div>
+                    <div class="header-item">
+                        <i class='bx bx-time'></i>
+                        <span>24/7</span>
+                    </div>
                 </div>
-                <div class="header-item">
-                    <i class='bx bx-phone'></i>
-                    <span>+230 55040167</span>
-                </div>
-                <div class="header-item">
-                    <i class='bx bx-time'></i>
-                    <span>24/7</span>
+                <div class="header-right">
+                    <div class="header-item">
+                        <i class='bx bxs-download'></i>
+                            <span>Free Road Guide</span>
+                    </div>
                 </div>
             </div>
+    </div>
 
-            <div class="header-right" style="display:flex; gap:40px;">
-                <div class="header-item">
-                        <a class="nav-link " href="{{ route('wishlist') }}">Wishlist</a>
-                </div>
-                <div class="header-item">
-                        <i class='bx bx-book'></i>
-                        <span>Tour Catalog 2025</span>
-                </div>
-            </div>
-        </div>
-     </div>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
@@ -78,25 +75,17 @@
             <div class="collapse navbar-collapse navbars-links" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}" style="font-size:17px;"><i class='bx bxs-home'></i> </a>
+                        <a class="nav-link" href="{{ route('rentcar') }}"><i class='bx bxs-home'></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('service') }}">Services</a>
+                        <a class="nav-link" href="fleetpage.html">Our Fleet</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('rentcar') }}">Our Fleet</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="fleetpage.html">Taxi</a>
+                        <a class="nav-link" href="fleetpage.html">Reservation</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('tours.index') }}">Tours</a>
-                    </li>  
-
-                    <li class="nav-item">
-                        <a class="nav-link phone-appear" href="{{ route('wishlist') }}">Wishlist</a>
+                        <a class="nav-link" href="whislist.html">FAQ</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#about">About</a>
@@ -110,27 +99,15 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#langCurrencyModal">
-                          <i class='bx bx-globe'></i> EN/EUR(€)
+                            <i class='bx bx-globe'></i> EN/EUR(€)
                         </a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="#event_planner">Event Planner</a>
-                    </li> --> 
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="#contact">Language</a>
-                    </li> -->
-           
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#profileModal">
-                          <i class='bx bx-user'></i> Profile
-                        </a>
-                      </li> -->
+                        </li>
 
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#contact">Profile</a>
                     </li> -->
                     <!-- <li class="nav-item" style="display: flex;  align-items: center;">
-                       <button class="btn btn-outline-primary">Profile</button>
+                        <button class="btn btn-outline-primary">Profile</button>
                     </li> -->
                 </ul>
             </div>
@@ -138,6 +115,9 @@
     </nav>
 
      @yield('content')
+
+
+
    
 
     <!-- Profile Modal -->
@@ -219,10 +199,9 @@
         </div> <!-- /.modal-dialog -->
     </div> <!-- /.modal -->
 
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
+     <!-- Footer -->
+     <footer class="footer" style="background-color: #111214">
+        <div class="footer-content" >
             <div class="container">
                 <div class="row g-4">
                     <!-- Company Info -->
@@ -252,33 +231,28 @@
                             </a>
                         </div>
                     </div>
-
-                    <!-- Quick Links -->
                     <div class="col-lg-2 col-md-6">
                         <div class="footer-section">
-                            <h5>Quick Links</h5>
-                            <ul class="footer-links">
-                                <li><a href="#home"><i class='bx bx-chevron-right'></i>Home</a></li>
-                                <li><a href="#about"><i class='bx bx-chevron-right'></i>About Us</a></li>
-                                <li><a href="#services"><i class='bx bx-chevron-right'></i>Services</a></li>
-                                <li><a href="#cars"><i class='bx bx-chevron-right'></i>Our Fleet</a></li>
-                                <li><a href="#tours"><i class='bx bx-chevron-right'></i>Tours</a></li>
-                                <li><a href="#contact"><i class='bx bx-chevron-right'></i>Contact</a></li>
-                            </ul>
+                            <h5>About </h5>
+                            <p  style="color:rgb(161, 161, 161);"> Planning a tour to the paradise island, business meeting,
+                             visiting family, we offer you a comfortable car adapted to your needs.
+                            To make sure you have an enjoyable stay in Mauritius we offer you a driving 
+                            seat every step of the way.
+                            </p>
+
                         </div>
                     </div>
 
-                    <!-- Services -->
+                    <!-- Quick Links -->
                     <div class="col-lg-2 col-md-6">
-                        <div class="footer-section">
-                            <h5>Services</h5>
+                        <div class="footer-section"  >
+                            <h5>Quick Links</h5>
                             <ul class="footer-links">
-                                <li><a href="#"><i class='bx bx-car'></i>Car Rental</a></li>
-                                <li><a href="#"><i class='bx bx-user'></i>Driver Services</a></li>
-                                <li><a href="#"><i class='bx bx-map'></i>Island Tours</a></li>
-                                <li><a href="#"><i class='bx bx-shield'></i>Airport Transfer</a></li>
-                                <li><a href="#"><i class='bx bx-calendar'></i>Custom Packages</a></li>
-                                <li><a href="#"><i class='bx bx-support'></i>24/7 Support</a></li>
+                                <li><a href="#home" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Home</a></li>
+                                <li><a href="#cars" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Our Fleet</a></li>
+                                <li><a href="#tours" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Reservation</a></li>
+                                <li><a href="#tours" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>FAQ</a></li>
+                                <li><a href="#contact" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Contact</a></li>
                             </ul>
                         </div>
                     </div>
@@ -292,8 +266,8 @@
                                     <div class="contact-icon">
                                         <i class='bx bx-phone'></i>
                                     </div>
-                                    <div class="contact-text">
-                                        <strong>Phone</strong>
+                                    <div class="contact-text" >
+                                        <strong style="color:rgb(161, 161, 161);">Phone</strong>
                                         <span>+230 55040167</span>
                                     </div>
                                 </div>
@@ -302,8 +276,8 @@
                                     <div class="contact-icon">
                                         <i class='bx bx-envelope'></i>
                                     </div>
-                                    <div class="contact-text">
-                                        <strong>Email</strong>
+                                    <div class="contact-text" >
+                                        <strong style="color:rgb(161, 161, 161);">Email</strong>
                                         <span>info@voyagehub.mu</span>
                                     </div>
                                 </div>
@@ -312,8 +286,8 @@
                                     <div class="contact-icon">
                                         <i class='bx bx-map'></i>
                                     </div>
-                                    <div class="contact-text">
-                                        <strong>Location</strong>
+                                    <div class="contact-text" >
+                                        <strong style="color:rgb(161, 161, 161);">Location</strong>
                                         <span>Mauritius Island</span>
                                     </div>
                                 </div>
@@ -344,24 +318,23 @@
             <div class="container">
                 <div class="footer-bottom-content">
                     <div class="copyright">
-                        <p>&copy; 2025 MyVac Tours Mauritius. All rights reserved. | Designed with <i class='bx bx-heart' style="color: var(--accent-color);"></i> for travelers</p>
+                        <p>&copy; Copyright © 2025 MyVacTour Mauritius Car Rental</p>
                     </div>
                     <div class="footer-bottom-links">
-                        <a href="#">Privacy Policy</a>
-                        <a href="#">Terms of Service</a>
-                        <a href="#">Booking Terms</a>
-                        <a href="#">Sitemap</a>
+                        <a href="#">Privacy Policy   </a>
+                        |
+                        <a href="#"> Cancellation Policy</a>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
-  
+ 
     <!-- Bootstrap link -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> -->
 
 
     @if (app()->environment('production'))

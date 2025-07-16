@@ -79,12 +79,12 @@
     </section>
 
     <!-- Section Divider -->
-    <div class="container">
+    <!-- <div class="container">
         <div class="section-divider"></div>
-    </div>
+    </div> -->
 
     <!-- Marriage Planning Special Section -->
-    <section class="marriage-section">
+    <!-- <section class="marriage-section">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
@@ -121,7 +121,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
 <script>
     const { createApp } = Vue;
@@ -211,17 +211,18 @@
                     buttonText: "Book Flights",
                     buttonLink: "#",
                     price: "200+ Airlines"
-                },
-                {
-                    title: "Marriage Planner",
-                    category: "tours",
-                    image: "https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                    icon: "bx-heart",
-                    description: "Complete wedding planning services including destination weddings, venue selection, and honeymoon packages.",
-                    buttonText: "Plan Wedding",
-                    buttonLink: "#",
-                    price: "10+ Famous places"
                 }
+                //,
+                // {
+                //     title: "Marriage Planner",
+                //     category: "tours",
+                //     image: "https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                //     icon: "bx-heart",
+                //     description: "Complete wedding planning services including destination weddings, venue selection, and honeymoon packages.",
+                //     buttonText: "Plan Wedding",
+                //     buttonLink: "#",
+                //     price: "10+ Famous places"
+                // }
             ]
 
         };
