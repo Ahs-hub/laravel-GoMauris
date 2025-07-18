@@ -2,7 +2,7 @@
 
 @section('content')
     @if (app()->environment('production'))
-        <link rel="stylesheet" href="{{ secure_asset('css/carhomepage.css') }}">
+        <link rel="stylesheet" href="{{ secure_asset('css/carreservationpage.css') }}">
     @else
         <link rel="stylesheet" href="{{ asset('css/carreservationpage.css') }}">
     @endif
@@ -251,9 +251,9 @@
 
                     <div class="col-lg-4">
                         <!-- Rate Section -->
-                        <div class="rate-section text-center" >
-                            {{--<img class="img-fluid rounded mb-3 shadow-sm" :src="car.image_url" :alt="car.name">
-                            <h3 class="rate-title">@{{ car.name }</h3>--}}
+                        <div class="rate-section text-center" v-if="selectedCar" >
+                            {{--<img class="img-fluid rounded mb-3 shadow-sm" :src="car.image_url" :alt="car.name">--}}
+                            <!-- <h3 class="rate-title">@{{ selectedCar.name }</h3> -->
                     
                             <div class="rate-row fw-bold border-bottom pb-2">
                                 <span>QTY</span>
