@@ -17,6 +17,8 @@ use App\Http\Controllers\WishlistController;
 
 use App\Http\Controllers\ContactController;
 
+use App\Http\Controllers\CarController;
+
 // Route::get('/', function () {
 //     return view('home');
 // })->name('home');
@@ -33,9 +35,11 @@ Route::middleware('auth')->get('/admin/dashboard', function () {
     return view('admin.adminpanel');
 })->name('admin.dashboard');
 
-Route::get('/rentcar', function () {
-    return view('carhomepage');
-})->name('rentcar');
+
+Route::get('/rent-cars', [CarController::class, 'index'])->name('cars.home');
+Route::get('/rentcar/{id}', [CarController::class, 'show'])->name('rentcar.show');
+
+Route::get('/reservation', [CarController::class, 'reservationPage'])->name('reservation');
 
 //save booking tour
 // Route::post('/tour-bookings', [TourBookingController::class, 'store'])->name('tour.bookings.store');

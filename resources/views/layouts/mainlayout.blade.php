@@ -84,7 +84,7 @@
                         <a class="nav-link" href="{{ route('service') }}">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('rentcar') }}">Our Fleet</a>
+                        <a class="nav-link" href="{{ route('cars.home') }}">Our Fleet</a>
                     </li>
 
                     <li class="nav-item">

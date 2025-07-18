@@ -16,6 +16,9 @@
     <!-- Google Fonts poppins,lato,Open_sans,Roboto-->
     <link href="https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
+    <!-- Vue CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
      <!-- Swiper CSS -->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     
@@ -31,7 +34,7 @@
 </head>
 <body>
     <!-- Header Info -->
-    <div class="header navbars-links">
+    <div class="header navbars-links" style=" background-color: #111214;">
             <div class="header-info">
                 <div class="header-left">
                     <!-- <div class="header-item">
@@ -47,17 +50,17 @@
                         <span>24/7</span>
                     </div>
                 </div>
-                <div class="header-right">
+                <!-- <div class="header-right">
                     <div class="header-item">
                         <i class='bx bxs-download'></i>
                             <span>Free Road Guide</span>
                     </div>
-                </div>
+                </div> -->
             </div>
     </div>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style=" background-color: #81879b;">
         <div class="container">
             <a class="navbar-brand" href="#home">
                 <!-- <i class='bx bx-car'></i> -->
@@ -75,13 +78,13 @@
             <div class="collapse navbar-collapse navbars-links" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('rentcar') }}"><i class='bx bxs-home'></i></a>
+                        <a class="nav-link" href="{{ route('cars.home') }}"><i class='bx bxs-home'></i></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="fleetpage.html">Our Fleet</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="fleetpage.html">Reservation</a>
+                        <a class="nav-link" href="{{ route('reservation') }}">Reservation</a>
                     </li>
 
                     <li class="nav-item">
