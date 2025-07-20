@@ -33,6 +33,8 @@ class ContactController extends Controller
             'message' => $validated['message'],
         ]);
 
-        return redirect()->route('tours.thankyou');
+        $type = $request->query('type', 'car'); // Defaults to 'car' if not provided
+        return redirect()->route('thankyou', ['type' => $type]);
+
     }
 }
