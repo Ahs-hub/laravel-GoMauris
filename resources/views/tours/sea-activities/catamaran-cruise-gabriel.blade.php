@@ -593,7 +593,7 @@
                             mobile_number: this.mobile_number,
                         });
 
-                        window.location.href = "/thank-you"; // redirect to success page
+                        window.location.href = '/thank-you?type=tour';
                     } catch (error) {
                         alert('Something went wrong! Please try again.');
                         if (error.response && error.response.data && error.response.data.message) {

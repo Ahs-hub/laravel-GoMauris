@@ -33,7 +33,7 @@
                         <!-- Pick-up date -->
                         <div class="form-group">
                         <label>Pick-up date</label>
-                        <input type="datetime-local" v-model="pickupDate" class="form-control">
+                        <input type="datetime-local" v-model="pickupDate" :min="minDateTime" class="form-control">
                         </div>
         
                         <!-- Return location -->
@@ -51,12 +51,13 @@
                         <!-- Return date -->
                         <div class="form-group">
                         <label>Return date</label>
-                        <input type="datetime-local"v-model="returnDate" class="form-control">
+                        <input type="datetime-local"v-model="returnDate" :min="minDateTime" class="form-control">
                         </div> 
 
                         <div class="form-group">
                             <p></p>
-                            <button class="btn btn-primary px-4" style="margin-top:5px;" @click="searchCars">Search</button>
+                            <!-- <button class="btn btn-primary px-4" style="margin-top:5px;" @click="searchCars">Search</button> -->
+                            <button class="btn btn-primary px-4" style="margin-top:5px;"  @click.prevent="handleContinue">Search</button>
                         </div>
 
                         <div class="form-group">
@@ -124,8 +125,8 @@
                             </div>
 
                             <div class="car-actions">
-                                    <button class="btn btn-primary" @click="bookNow({{ $car->id }}, '{{ route('rentcar.show', $car->id) }}')">Book Now</button>
-                            </div>
+                                    <button class="btn btn-primary" @click="bookNow({{ $car->id }}, '{{ route('reservation') }}')">Book Now</button>
+                            </div>  
                         </div>
                     </div>
                 @endforeach
@@ -229,7 +230,8 @@
                     pickupDate: '',
                     returnLocation: '',
                     returnDate: '',
-                    selectedCarId: null
+                    selectedCarId: null,
+                    minDateTime: new Date().toISOString().slice(0, 16), // 'YYYY-MM-DDTHH:MM'
                 };
             },
             mounted() {
@@ -255,6 +257,29 @@
                     localStorage.setItem('activeReservationSection', 'itinerary');
                     window.location.href = '/reservation'; // Redirect to reservation page
                 },
+                handleContinue() {
+                    const pickup = new Date(this.pickupDate);
+                    const dropoff = new Date(this.returnDate);
+                    const now = new Date();
+
+                    if (pickup < now) {
+                        alert("Pick-up date/time cannot be in the past.");
+                        return;
+                    }
+
+                    if (dropoff <= pickup) {
+                        alert("Drop-off must be after pick-up.");
+                        return;
+                    }
+
+                    // 👇 If sameLocation is true, returnLocation = pickupLocation
+                    if (this.sameLocation) {
+                        this.returnLocation = this.pickupLocation;
+                    } else {
+                        this.returnLocation = this.returnLocation;
+                    }
+                    this.searchCars();
+                },
                 clearForm() {
                     this.pickupLocation = '';
                     this.pickupDate = '';
@@ -262,6 +287,8 @@
                     this.returnDate = '';
                     this.selectedCarId = null;
                     localStorage.removeItem('bookingForm');
+                    localStorage.removeItem('activeReservationSection');
+                    localStorage.removeItem('selectedAddons');
                 },
                 bookNow(carId, route) {
                     this.selectedCarId = carId;
@@ -273,6 +300,7 @@
                         carId: carId
                     };
                     localStorage.setItem('bookingForm', JSON.stringify(formData));
+                    localStorage.setItem('activeReservationSection', 'carsaddon');
                     window.location.href = route;
                 }
             },

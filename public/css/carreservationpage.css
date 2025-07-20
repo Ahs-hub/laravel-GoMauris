@@ -4,7 +4,7 @@
     background-size: cover;
     background-position: center;
     /* background-attachment: fixed; */
-    height: 80vh;
+    /* height: 80vh; */
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -33,7 +33,7 @@
 
 
 .steps {
-    display: flex;
+    /* display: flex; ❌ remove this */
     justify-content: space-between;
     gap: 5px;
     width: 100%;
@@ -43,14 +43,11 @@
 
 .step {
     background: rgba(19, 19, 19, 0.719);
-     cursor: pointer;
-    width:500px;
-    /* backdrop-filter: blur(10px); */
-    text-align: center;
-    flex: 2;
+    cursor: pointer;
+    /* width: 500px; ❌ REMOVE THIS */
+    width: 100%; /* ✅ Responsive */
+    flex: 1;
     padding: 30px 20px;
-    /* border-radius: 10px; */
-    /* border: 2px solid rgba(255, 255, 255, 0.1); */
     transition: all 0.3s ease;
 }
 
@@ -293,6 +290,10 @@
     
     .section-content {
         grid-template-columns: 1fr;
+    }
+
+    .total-esti-form{
+        margin-top: 50px;
     }
 }
 
@@ -657,3 +658,4 @@
 
 
 /*#endregion carrentalform  */
+

@@ -106,7 +106,7 @@
                     </li> -->         
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('contact') }}">Contact</a>
+                        <a class="nav-link" href="{{ route('contact', ['type' => 'tour']) }}">Contact</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#langCurrencyModal">

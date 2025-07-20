@@ -1,4 +1,4 @@
-@extends('layouts.mainlayout')
+@extends(request('type') === 'car' ? 'layouts.maincarlayout' : 'layouts.mainlayout')
 
 @section('content')
     @if (app()->environment('production'))

@@ -1,4 +1,4 @@
-@extends('layouts.mainlayout') {{-- or use your custom layout like layouts.main --}}
+@extends(request('type') === 'car' ? 'layouts.maincarlayout' : 'layouts.mainlayout')
 
 @section('title', 'Booking Confirmation')
 
@@ -9,7 +9,7 @@
         </h1>
         <p class="lead">Your request has been received successfully.</p>
         <p>Our team will get back to you within 24 hours with confirmation and further details.</p>
-        <a href="{{ url('/') }}" class="btn btn-outline-primary mt-4">
+        <a href="{{ request('type') === 'car' ? url('/rent-cars') : url('/') }}" class="btn btn-outline-primary mt-4">
             <i class="bx bx-home"></i> Back to Home
         </a>
 </div>

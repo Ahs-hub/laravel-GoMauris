@@ -15,7 +15,7 @@
                 <div class="steps row justify-content-center text-center" >
                     <h1 class="display-4 fw-bold">Reservation</h1>
                         <!-- Reservation initiary Form Section -->
-                    <div class="col-md-4 step text-start"  @click="showSection('itinerary')">
+                    <div class="col-12 col-md-4 step text-start mb-4"  @click="showSection('itinerary')">
                         <h3 class="d-flex justify-content-between align-items-center">
                             <span><span class="step-number">1.</span> Your Itinerary</span>
                             <span class="text-success" v-if="isItineraryComplete">
@@ -30,7 +30,7 @@
                         <p>@{{ formattedReturnDate }}</p>
                     </div>
                     <!-- Select Vehicle          -->
-                    <div class="col-md-4 step text-start " @click="showSection('cars')">
+                    <div class="col-12 col-md-4 step text-start mb-4"  @click="showSection('cars')">
                         <h3 class="d-flex justify-content-between align-items-center">
                             <span><span class="step-number">2.</span> Vehicle & Add-ons</span>
                             <span class="text-success" v-if="isVehicleComplete">
@@ -45,7 +45,7 @@
                     </div>
 
                        <!--  Booking Form submission-->
-                    <div class="col-md-4 step text-start " @click="showSection('summary')">
+                    <div class="col-12 col-md-4 step text-start mb-4" @click="showSection('summary')">
                         <h3 class="d-flex justify-content-between align-items-center">
                             <span><span class="step-number">3.</span> Make a Booking</span>
                             <!-- <span class="text-success"><i class='bx bxs-check-circle fs-4'></i></span> -->
@@ -113,19 +113,26 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <div class="col-12 text-end mt-3">
-                        <!-- <button type="submit" class="btn btn-primary px-4 fw-bold" @click.prevent="searchCars">
-                            Continue
-                        </button> -->
-                        <button 
-                                type="submit" 
+                    <div class="col-12 mt-3">
+                        <div class="d-flex flex-column flex-md-row justify-content-center justify-content-md-end gap-2">
+                            <button
+                                type="submit"
                                 class="btn btn-primary px-4 fw-bold"
                                 @click.prevent="handleContinue"
                             >
-                            Continue
-                        </button>
-                       
+                                Continue
+                            </button>
+
+                            <button
+                                type="button"
+                                class="btn btn-primary px-4 fw-bold"
+                                @click.prevent="clearForm"
+                            >
+                                Clear all data
+                            </button>
+                        </div>
                     </div>
+
                 </form>
                 </div>
 
@@ -176,7 +183,7 @@
                                         <div class="text-end d-flex flex-column justify-content-between align-items-end">
                                             <div class="price-text fw-semibold">From €@{{ car.price_per_day }} /day</div>
                                             <div class="button-container mt-2">
-                                                 <button class="btn btn-primary" @click="selectCar(car.id); showSection('carsaddon')">Book Now</button>
+                                                 <button class="btn btn-primary" @click="selectCar(car.id,car.name); showSection('carsaddon')">Book Now</button>
                                             </div>
                                         </div>
                                     </div>
@@ -194,54 +201,47 @@
             </div>
         </div>
 
-        <!--  Booking Form submission-->
+         <!--  Booking Form submission-->
         <div class="content-section" v-show="activeSection === 'summary'">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="details-box">
                             <h3>Driver Details</h3>
-                            <form>
+                            <form @submit.prevent="submitDriverDetails">
                                 <div class="row g-3 mb-3">
                                     <div class="col-md-6">
-                                        <label for="firstName" class="form-label">First Name</label>
-                                        <input type="text" id="firstName" class="form-control" required>
+                                        <label class="form-label">First Name</label>
+                                        <input type="text" class="form-control" v-model="form.first_name" placeholder="John" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="lastName" class="form-label">Last Name</label>
-                                        <input type="text" id="lastName" class="form-control" required>
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" v-model="form.last_name" placeholder="Doe" required>
                                     </div>
                                 </div>
-                    
+
                                 <div class="row g-3 mb-3">
                                     <div class="col-md-6">
-                                        <label for="driverAge" class="form-label">Driver Age</label>
-                                        <input type="number" id="driverAge" class="form-control" min="16" max="100" required>
+                                        <label class="form-label">Driver Age</label>
+                                        <input type="number" class="form-control" v-model="form.driver_age" min="16" max="100" placeholder="25" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="mobile" class="form-label">Mobile Number <small class="text-muted">(WhatsApp)</small></label>
-                                        <input type="tel" id="mobile" class="form-control" required>
+                                        <label class="form-label">Mobile Number <small class="text-muted">(WhatsApp)</small></label>
+                                        <input type="tel" class="form-control" v-model="form.mobile" placeholder="+230 5504 0167" required>
                                     </div>
                                 </div>
-                    
+
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="email" id="email" class="form-control" required>
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" v-model="form.email" placeholder="john.doe@example.com" required>
                                     <div class="form-text">Service voucher will be sent to this email</div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="specialRequests" class="form-label">Message / Special Requests</label>
-                                    <textarea id="specialRequests" name="specialRequests" class="form-control" rows="4" placeholder="Write your notes or special requests here..."></textarea>
+                                    <label class="form-label">Message / Special Requests</label>
+                                    <textarea class="form-control" rows="4" v-model="form.special_requests" placeholder="Write your notes or special requests here..."></textarea>
                                 </div>
-                    
-                                <!-- <div class="form-check mb-3">
-                                    <input class="form-check-input" type="checkbox" id="terms" required>
-                                    <label class="form-check-label" for="terms">
-                                        I understand & agree with the <a href="#" target="_blank">Terms & Conditions</a>
-                                    </label>
-                                </div> -->
-                                
+
                                 <button type="submit" class="btn btn-primary px-5 py-2 fw-bold fs-6">
                                     Send Quote
                                 </button>
@@ -249,38 +249,52 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 total-esti-form">
+ 
+                        
                         <!-- Rate Section -->
-                        <div class="rate-section text-center" v-if="selectedCar" >
-                            {{--<img class="img-fluid rounded mb-3 shadow-sm" :src="car.image_url" :alt="car.name">--}}
-                            <!-- <h3 class="rate-title">@{{ selectedCar.name }</h3> -->
-                    
-                            <div class="rate-row fw-bold border-bottom pb-2">
-                                <span>QTY</span>
-                                <span>RATE</span>
-                                <span>SUBTOTAL</span>
+                        <div class="rate-section p-3 border rounded shadow-sm bg-light">
+                            <div v-if="selectedCar" >
+                                <img :src="selectedCar.image_url" :alt="selectedCar.name" class="car-image">
+                                <h2 class="car-title">@{{ selectedCar.name }}</h2>
                             </div>
-                    
-                            <div class="rate-row">
-                                <span>1 Day</span>
-                                <span>$60.00</span>
-                                <span>$60.00</span>
+
+                            <!-- Headers -->
+                            <div class="row fw-bold text-center border-bottom pb-2">
+                                <div class="col">QTY</div>
+                                <div class="col">RATE</div>
+                                <div class="col">SUBTOTAL</div>
                             </div>
-                    
-                            <div class="rate-row">
-                                <span>ADD-ON</span>
-                                <span>-</span>
-                                <span>$60.00</span>
+
+                            <!-- Base Rental -->
+                            <div class="row text-center py-2 border-bottom">
+                                <div class="col">@{{ rentalDays }} Days</div>
+                                <div class="col">$@{{ perDayRate.toFixed(2) }}</div>
+                                <div class="col">$@{{ baseSubtotal.toFixed(2) }}</div>
                             </div>
-                    
-                            <div class="rate-row fw-bold border-top pt-2">
-                                <span>Total</span>
-                                <span></span>
-                                <span>$120.00</span>
+
+                            <!-- Additional Driver -->
+                            <div class="row text-center py-2 border-bottom" v-if="hasDriver">
+                                <div class="col">Additional Driver</div>
+                                <div class="col">$@{{ driverRate.toFixed(2) }}</div>
+                                <div class="col">$@{{ driverRate.toFixed(2) }}</div>
+                            </div>
+
+                            <!-- Child Seat -->
+                            <div class="row text-center py-2 border-bottom" v-if="childQuantity > 0">
+                                <div class="col">Child Seat <div> × @{{ childQuantity }}</div></div>
+                                <div class="col">$@{{ childSeatRate.toFixed(2) }}</div>
+                                <div class="col">$@{{ (childQuantity * childSeatRate).toFixed(2) }}</div>
+                            </div>
+
+                            <!-- Total -->
+                            <div class="row text-center pt-3 fw-bold border-top">
+                                <div class="col">Total</div>
+                                <div class="col"></div>
+                                <div class="col">$@{{ totalRate.toFixed(2) }}</div>
                             </div>
                         </div>
                     </div>
-                    
 
                 </div>
 
@@ -541,6 +555,8 @@
 
     <!-- Ensure this is within an element with id="bookingApp" -->
     <script>
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
         const app = Vue.createApp({
             data() {
                 return {
@@ -570,15 +586,42 @@
 
                     minDateTime: new Date().toISOString().slice(0, 16), // 'YYYY-MM-DDTHH:MM'
 
+                    form : {
+                        first_name: "",
+                        last_name: "",
+                        driver_age: null,
+
+                        pickup_location: "",
+                        pickup_date: "",
+                        return_location: "",
+                        return_date: "",
+
+                        email: "",
+                        mobile: "",
+                        car_id: null,  // <-- required! Make sure to send the selected car ID
+                        has_driver: false,
+                        child_seats: 0,
+                        same_location: true,
+                        special_requests: ""
+                    }
+
                 };
             },
             mounted() {
                 const saved = JSON.parse(localStorage.getItem('bookingForm'));
                 if (saved) {
                     this.pickupLocation = saved.pickupLocation || '';
+                    this.tempPickupLocation =  saved.pickupLocation || '';
+
                     this.pickupDate = saved.pickupDate || '';
+                    this.tempPickupDate = saved.pickupDate || '';
+
                     this.returnLocation = saved.returnLocation || '';
+                    this.tempReturnLocation = saved.returnLocation || '';
+
                     this.returnDate = saved.returnDate || '';
+                    this.tempReturnDate = saved.returnDate || '';
+
                     this.sameLocation = saved.sameLocation !== undefined ? saved.sameLocation : true;
                     this.selectedCarId = saved.carId || null;
 
@@ -653,7 +696,6 @@
                         (car.transmission && car.transmission.toLowerCase().includes(term))
                     );
                 },
-
                 rentalDays() {
                     const start = new Date(this.pickupDate);
                     const end = new Date(this.returnDate);
@@ -675,30 +717,13 @@
                 }
             },
             methods: {
-                // ✅ Add this method
-                validateDates() {
-                    const now = new Date();
-                    const pickup = new Date(this.pickupDate);
-                    const dropoff = new Date(this.returnDate);
-
-                    if (pickup < now) {
-                        alert("Pick-up date/time cannot be in the past.");
-                        return false;
-                    }
-
-                    if (dropoff <= pickup) {
-                        alert("Drop-off date/time must be after pick-up date/time.");
-                        return false;
-                    }
-
-                    return true;
-                },
-
                 // ✅ Add this method too
                 handleContinue() {
                     const pickup = new Date(this.tempPickupDate);
                     const dropoff = new Date(this.tempReturnDate);
                     const now = new Date();
+
+ 
 
                     if (pickup < now) {
                         alert("Pick-up date/time cannot be in the past.");
@@ -713,8 +738,15 @@
                     // 👇 If sameLocation is true, returnLocation = pickupLocation
                     if (this.sameLocation) {
                         this.returnLocation = this.tempPickupLocation;
+                        this.tempReturnLocation = this.tempPickupLocation;
                     } else {
                         this.returnLocation = this.tempReturnLocation;
+                    }
+
+                    // ✅ Basic null or empty checks
+                    if (!this.tempPickupLocation || !this.tempReturnLocation || !this.tempPickupDate || !this.tempReturnDate) {
+                        alert("Please fill in all required fields.");
+                        return;
                     }
 
                     // Valid → apply values
@@ -752,13 +784,16 @@
                     this.sameLocation = true;
                     this.selectedCarId = null;
                     localStorage.removeItem('bookingForm');
+                    localStorage.removeItem('activeReservationSection');
+                    localStorage.removeItem('selectedAddons');
+                    window.location.href = '/reservation';
                 },
-                selectCar(id) {
+                selectCar(id,name) {
                     this.selectedCarId = id;
                     const saved = JSON.parse(localStorage.getItem('bookingForm')) || {};
                     saved.carId = id;
                     localStorage.setItem('bookingForm', JSON.stringify(saved));
-                    alert('Selected car ID: ' + id);
+                    // alert('Selected car: ' + name);
                 },
                 bookNow(carId) {
                     const saved = JSON.parse(localStorage.getItem('bookingForm')) || {};
@@ -782,7 +817,68 @@
                         driver: this.hasDriver ? 1 : 0,
                         child: this.childQuantity
                     }));
+                },
+                 
+                submitDriverDetails() {
+                    const bookingForm = JSON.parse(localStorage.getItem('bookingForm') || '{}');
+                    const selectedAddons = JSON.parse(localStorage.getItem('selectedAddons') || '{}');
+
+                    // Basic validation
+                    if (!bookingForm.pickupLocation || !bookingForm.pickupDate || !bookingForm.returnLocation || !bookingForm.returnDate) {
+                        alert('Please fill in pickup and return location/date.');
+                        return;
+                    }
+
+                    if (!bookingForm.carId) {
+                        alert('Please select a car.');
+                        return;
+                    }
+
+                    const payload = {
+                        ...selectedAddons, // <-- COMMA was missing here
+                        ...this.form,
+                        pickup_location: bookingForm.pickupLocation,
+                        pickup_date: bookingForm.pickupDate,
+                        return_location: bookingForm.returnLocation,
+                        return_date: bookingForm.returnDate,
+                        same_location: bookingForm.sameLocation,
+                        car_id: bookingForm.carId,
+                        has_driver: selectedAddons.driver === 1,
+                        child_seats: selectedAddons.child || 0,
+                    };
+
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                    console.log('Sending to server:', payload);
+
+                    fetch('/send-quote', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(payload) // ✅ FIXED: Was `formData` before, now correct
+                    })
+                    .then(res => {
+                        if (!res.ok) throw new Error('Network response was not ok');
+                        return res.json();
+                    })
+                    .then(response => {
+                        if (response.success) {
+                            this.clearForm(); // ✅ Clear form and localStorage
+                            window.location.href = '/thank-you?type=car';
+                        } else {
+                            alert('Something went wrong.');
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error:', err);
+                        alert('Failed to send quote.');
+                    });
                 }
+
+
             }
             
         });
