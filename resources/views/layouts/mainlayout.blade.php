@@ -103,11 +103,11 @@
                     </li> -->
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#event_planner">EN/EUR</a>
-                    </li> -->         
-                    
+                    </li> -->   
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('contact', ['type' => 'tour']) }}">Contact</a>
-                    </li>
+                    </li>      
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#langCurrencyModal">
                           <i class='bx bx-globe'></i> EN/EUR(€)

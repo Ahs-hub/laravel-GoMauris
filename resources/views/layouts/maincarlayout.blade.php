@@ -84,14 +84,17 @@
                         <a class="nav-link" href="{{ route('cars.home') }}"><i class='bx bxs-home'></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="fleetpage.html">Our Fleet</a>
+                        <a class="nav-link" href="{{ route('home') }}">Tours</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('fleet') }}">Our Fleet</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('reservation') }}">Reservation</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="whislist.html">FAQ</a>
+                        <a class="nav-link" href="{{ route('faq') }}">FAQ</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#about">About</a>

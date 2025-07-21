@@ -94,6 +94,15 @@ Route::get('/service', function () {
     return view('servicepage');
 })->name('service'); 
 
+//Go to car Fleet
+Route::get('/fleet', [CarController::class, 'showFleetPage'])->name('fleet');
+
+//Go to Car Faq page
+Route::get('/faq', function () {
+    return view('carsite.faqpage');
+})->name('faq'); 
+
+
 //tours
 Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
 
