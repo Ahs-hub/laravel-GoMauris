@@ -53,12 +53,12 @@
             <!-- Right: Hero Text -->
             <div class="col-md-6 text-center text-md-start">
                 <div class="right-content">
-                    <h1 class="main-heading">
+                    <h1 class="hero-title">
                         Your Reliable<br>
                         <span class="highlight">Taxi Service</span> in<br>
                         Mauritius
                     </h1>
-                    <p class="subtitle">
+                    <p class="subheading">
                         Fast, safe, and comfortable rides across Mauritius. 
                         Available 24/7 with professional drivers.
                     </p>
@@ -75,14 +75,14 @@
 </div>
 
 <!-- Taxi Info Section -->
-<div style="background-color: orange">
+<div style="background-color: var(--primary-color)">
     <div class="container ">
         <div class="row align-items-center">
             <!-- Left: Text -->
             <div class="col-md-6 order-2 order-md-1 text-center text-md-start" style="color:white;">
-                <h1>Your SUV will provide comfort for your trip</h1>
-                <p>Prefer calling?</p>
-                <p>Call us on: <strong>+230 53868363</strong></p>
+                <h1 class="section-heading">Your Toyota Alphard will provide comfort for your trip</h1>
+                <p  class="subheading">Prefer calling?</p>
+                <p class="paragraph-text">Call us on: <strong>+230 55040167</strong></p>
             </div>
 
             <!-- Right: Image -->
@@ -98,7 +98,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <!-- Hero Title -->
-                <div class="text-center mb-5">
+                <div class="text-center mb-5" style="color:grey;">
                     <h1 class="section-heading">Taking You Places, Making Moments</h1>
                     <p class="lead">Your trusted taxi service in beautiful Mauritius</p>
                 </div>
@@ -161,7 +161,7 @@
                 </div>
 
                 <!-- Rating and Locations -->
-                <div class="row mt-5 feature-card card-container">
+                <!-- <div class="row mt-5 feature-card card-container">
                     <div class="location-list">
                         <div class="d-flex align-items-center mb-3">
                             <i class='bx bxs-star text-warning me-2 bx-sm'></i>
@@ -195,7 +195,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
             </div> <!-- col-lg-10 -->
         </div> <!-- row -->

@@ -5,80 +5,13 @@
     background-repeat: no-repeat;
 
 }
-.main-container {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 20px 0;
 
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/back-taxi.jpg');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.form-container {
-    background: white;
-    padding: 40px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    max-width: 600px;
-    width: 100%;
-}
-
-.form-title {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin-bottom: 10px;
-}
-
-.form-subtitle {
-    color: #666;
-    margin-bottom: 30px;
-    font-size: 1rem;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-label {
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 8px;
-    display: block;
-}
-
-.form-control {
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 12px 15px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background: #f8f9fa;
-}
-
-.form-control:focus {
-    border-color: #ffc107;
-    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
-    background: white;
-}
-
-.input-group-text {
-    background: #f8f9fa;
-    border: 2px solid #e0e0e0;
-    border-right: none;
-    color: #666;
-}
-
-.input-group .form-control {
-    border-left: none;
-}
+/*#region button */
 
 .btn-book {
-    background: #ffc107;
+    background: var(--primary-color);
     border: none;
-    color: #1a1a1a;
+    color: #ffffff;
     font-weight: 700;
     padding: 15px 30px;
     border-radius: 8px;
@@ -90,33 +23,28 @@
 }
 
 .btn-book:hover {
-    background: #ffb300;
+    background: #05123E;
+    color:white;
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
-    color: #1a1a1a;
 }
+/*#endregion button */
 
 .right-content {
     color: white;
     padding-left: 60px;
 }
 
-.main-heading {
+/* .main-heading {
     font-size: 3.5rem;
     font-weight: 800;
     line-height: 1.2;
     margin-bottom: 20px;
-}
+} */
 
 .highlight {
-    color: #ffc107;
+    color: var(--primary-color);
 }
 
-.subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 40px;
-    opacity: 0.9;
-}
 
 .taxi-image {
     width: 100%;
@@ -139,9 +67,9 @@
 }
 
 .feature-list i {
-    color: #ffc107;
+    color: var(--primary-color);
     margin-right: 12px;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 @media (max-width: 768px) {
@@ -165,32 +93,6 @@
     }
 }
 
-.phone-input {
-    display: flex;
-}
-
-.country-code {
-    background: #f8f9fa;
-    border: 2px solid #e0e0e0;
-    border-right: none;
-    padding: 12px 15px;
-    border-radius: 8px 0 0 8px;
-    color: #666;
-    font-weight: 600;
-}
-
-.phone-number {
-    border-radius: 0 8px 8px 0 !important;
-    border-left: none;
-}
-
-.img-fluid {
-    max-width: 100%;       /* Keeps it responsive */
-    height: auto;          /* Maintains aspect ratio */
-    max-height: 500px;     /* Optional, limits height if needed */
-    border-radius: 15px;
-    object-fit: contain;   /* Ensures image fits inside without distortion */
-}
 
 .card-container{
     margin-bottom: 20px;
@@ -203,7 +105,7 @@
     margin-bottom: 1.5rem;
     box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: #333;
+    color: var(--primary-color);
     border: none;
 }
 
@@ -216,11 +118,11 @@
     font-size: 2.5rem;
     margin-bottom: 1rem;
     display: block;
-    color: #667eea;
+    color: var(--primary-color);
 }
 
 .feature-title {
-    color: #2c3e50;
+    color: var(--primary-color);
     font-weight: 600;
     margin-bottom: 0.75rem;
     font-size: 1.25rem;
