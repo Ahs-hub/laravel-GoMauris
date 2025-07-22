@@ -102,6 +102,11 @@ Route::get('/faq', function () {
     return view('carsite.faqpage');
 })->name('faq'); 
 
+//Go to Taxi Page
+Route::get('/taxi', function () {
+    return view('taxipage');
+})->name('taxi'); 
+
 
 //tours
 Route::get('/tours', [TourController::class, 'index'])->name('tours.index');

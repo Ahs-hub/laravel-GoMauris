@@ -88,7 +88,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="fleetpage.html">Taxi</a>
+                        <a class="nav-link" href="{{ route('taxi') }}">Taxi</a>
                     </li>
 
                     <li class="nav-item">

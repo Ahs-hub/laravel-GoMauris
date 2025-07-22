@@ -1,0 +1,233 @@
+.hero-section{
+    background-image: linear-gradient(#05123e83, #05123ea4), url('../images/backgrounds/back-taxi.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+.main-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/back-taxi.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.form-container {
+    background: white;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    max-width: 600px;
+    width: 100%;
+}
+
+.form-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+}
+
+.form-subtitle {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-control {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.form-control:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+    background: white;
+}
+
+.input-group-text {
+    background: #f8f9fa;
+    border: 2px solid #e0e0e0;
+    border-right: none;
+    color: #666;
+}
+
+.input-group .form-control {
+    border-left: none;
+}
+
+.btn-book {
+    background: #ffc107;
+    border: none;
+    color: #1a1a1a;
+    font-weight: 700;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    width: 100%;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-book:hover {
+    background: #ffb300;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+    color: #1a1a1a;
+}
+
+.right-content {
+    color: white;
+    padding-left: 60px;
+}
+
+.main-heading {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.highlight {
+    color: #ffc107;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+.taxi-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+.feature-list li {
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+}
+
+.feature-list i {
+    color: #ffc107;
+    margin-right: 12px;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
+    
+    .right-content {
+        padding-left: 0;
+        padding-top: 40px;
+        text-align: center;
+    }
+    
+    .main-heading {
+        font-size: 2.5rem;
+    }
+    
+    .form-container {
+        margin-bottom: 20px;
+        padding: 30px 20px;
+    }
+}
+
+.phone-input {
+    display: flex;
+}
+
+.country-code {
+    background: #f8f9fa;
+    border: 2px solid #e0e0e0;
+    border-right: none;
+    padding: 12px 15px;
+    border-radius: 8px 0 0 8px;
+    color: #666;
+    font-weight: 600;
+}
+
+.phone-number {
+    border-radius: 0 8px 8px 0 !important;
+    border-left: none;
+}
+
+.img-fluid {
+    max-width: 100%;       /* Keeps it responsive */
+    height: auto;          /* Maintains aspect ratio */
+    max-height: 500px;     /* Optional, limits height if needed */
+    border-radius: 15px;
+    object-fit: contain;   /* Ensures image fits inside without distortion */
+}
+
+.card-container{
+    margin-bottom: 20px;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #333;
+    border: none;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+    color: #667eea;
+}
+
+.feature-title {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+}
+
+.feature-text {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
