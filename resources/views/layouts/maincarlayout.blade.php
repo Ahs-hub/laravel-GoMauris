@@ -46,7 +46,11 @@
                     </div> -->
                     <div class="header-item">
                         <i class='bx bx-phone'></i>
-                        <span>+230 55040167</span>
+                        <span>
+                              <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none;">
+                                    +230 55040167
+                              </a>
+                        </span>
                     </div>
                     <div class="header-item">
                         <i class='bx bx-time'></i>

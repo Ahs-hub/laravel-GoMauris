@@ -98,7 +98,11 @@
                                 <i class='bx bx-phone'></i>
                             </div>
                             <h5 class="fw-bold mb-2" >Call Us</h5>
-                            <p class="paragraph-text text-muted mb-0">(+230) 5504 0167</p>
+                            <p class="paragraph-text text-muted mb-0">
+                                <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none;">
+                                    +230 55040167
+                                </a>
+                            </p>
                         </div>
                     </div>
                     <div class="col-12">

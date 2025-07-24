@@ -1,6 +1,6 @@
 .hero-section {
     /* background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/taxi-back.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/luxury-transfer-back.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -9,13 +9,4 @@
     padding: 120px 0 80px;
     position: relative;
     overflow: hidden;
-}
-
-.taxi-booking-section{
-       background-color: #2a324b;
-}
-
-.trust-section p {
-    margin-top: 10px;
-    font-weight: 500;
 }

@@ -23,10 +23,11 @@
           <h1 class="hero-title">Let Mauritius Vacation Be Your Next Escape</h1>
       
           <div class="button-group">
-            <button class="btn btn-form"><i class='bx bx-map'></i> Explore Mauritius</button>
+            <button class="btn btn-form" onclick="window.location.href='{{ route('tours.index') }}'"><i class='bx bx-map'></i> Explore Mauritius</button>
             <button class="btn btn-form"><i class='bx bx-camera'></i> Sightseeing</button>
             <button class="btn btn-form"><i class='bx bx-run'></i> Activities</button>
-            <button class="btn btn-form"><i class='bx bx-car'></i> Car Rental</button>
+            <button class="btn btn-form" onclick="window.location.href='{{ route('cars.home') }}'"><i class='bx bx-car'></i> Car Rental</button>
+            
           </div>
       
           <div class="cta-wrapper">
@@ -39,8 +40,15 @@
 
     <!-- Services Section -->
     <section id="services" class="section-padding">
-        <div class="container">
-            <!-- <div class="row">
+
+        <div class="container">    
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-lg-8 mx-auto text-center">   
+                <a class="section-heading" style="text-decoration: none;">Our Service</a>
+                <div style="width: 60px; height: 3px; background-color: #274993; margin: 8px auto 0;"></div>
+                </div>
+            </div>
+                <!-- <div class="row">
                 <div class="col-lg-8 mx-auto text-center">
                     <h2 class="section-heading">Your Trusted Guide to Mauritius</h2>
                     <p class="subheading " style="color: var(--gray-dark);">Our Service</p>
@@ -129,14 +137,14 @@
                 <div class="swiper-button-prev" style="display:none;"></div>
             </div>
 
-            <p class=".paragraph-text  text-center" style="margin-top:50px; color:grey;">
+            <!-- <p class=".paragraph-text text-center " style="margin-top:50px; color:grey;">
                 Mauritius is a vibrant mosaic of cultures, where people of Indian, African, Chinese, 
                 and European heritage live together in harmony, creating a unique blend of traditions,
                 festivals, and flavors. From the lively rhythms of Sega music to colorful celebrations 
                 like Diwali and Chinese New Year, the island pulses with joy and unity. Visitors are welcomed 
                 with warm smiles and rich culinary delights, making every experience a heartfelt celebration of
                 Mauritius's diverse and thriving culture.
-            </p>
+            </p> -->
 
         </div>
 
@@ -146,15 +154,72 @@
 
 
 
-        <div  style="margin-top: 4rem;">
+        <!-- <div  style="margin-top: 4rem;">
             <div class="col-lg-8 mx-auto text-center">
             <button class="btn btn-primary btn-lg rad-0" onclick="window.location.href='{{ route('service') }}'">View All Services →</button>
 
-        </div>
+        </div> -->
         </div>
     </section>
 
-    <section id="about" class="section-padding" style="background: var(--gray-light); ">
+    <!-- About Section -->
+    <section id="about" class="section-padding py-5" style="background: var(--gray-light);">
+        <div class="container">
+            <div class="row align-items-center gy-4 gx-5">
+                <!-- Image Column -->
+                <div class="col-lg-6">
+                    <div class="img-placeholder rounded" style="height: 400px; overflow: hidden;">
+                        <img src="{{ asset('images/backgrounds/lemorne.jpg') }}"
+                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;"
+                            alt="About GoMauris Image">
+                    </div>
+                </div>
+
+                <!-- Text Column -->
+                <div class="col-lg-6">
+                <h2 class="section-title section-heading mb-2">
+                    About GoMauris Mauritius
+                </h2>
+                <div style="width: 60px; height: 3px; background-color: #274993; margin: 0 auto 20px 0;"></div>
+
+                    <p class="section-subtitle subheading mb-3">
+                        Your trusted partner for exploring Mauritius
+                    </p>
+                    <p class="paragraph-text mb-3" style="color:#262626;">
+                        With years of experience in the Mauritius tourism industry, GoMauris Tours has established itself as a premier car rental and tour operator. We pride ourselves on providing exceptional service, reliable vehicles, and unforgettable experiences.
+                    </p>
+                    <p class="paragraph-text mb-4" style="color:#262626;">
+                        Our team of local experts knows every corner of this beautiful island and is passionate about sharing its wonders with visitors from around the world.
+                    </p>
+
+                    <!-- Icon Features -->
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class='bx bx-shield-check text-primary fs-3 me-3'></i>
+                                <div>
+                                    <h6 class="mb-0">Fully Licensed</h6>
+                                    <small class="text-muted" style="color:#262626;">Certified & Insured</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class='bx bx-support text-primary fs-3 me-3'></i>
+                                <div>
+                                    <h6 class="mb-0">24/7 Support</h6>
+                                    <small class="text-muted" style="color:#262626;">Always Here for You</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End Text Column -->
+            </div>
+        </div>
+    </section>
+
+
+    <!-- <section id="about" class="section-padding" style="background: var(--gray-light); ">
         <div class="container">
             <div class="row">
             <div class="col-lg-8 mx-auto text-center" style="margin-bottom:30px;">
@@ -163,7 +228,7 @@
 
             </div>
 
-            <!-- Full-width paragraph below the heading -->
+       
             <div class="col-12">
                 <p class="mb-3 mx-5  fw-medium text-center" style="color:grey;" >
                     MyVac Tours Mauritius specializes in private tours and fully personalized holiday packages across the island. 
@@ -173,12 +238,11 @@
                 </p>
             </div>
 
-            <!-- Masked word "mauritius" centered -->
+          
             <div class="col-12 text-center" style="margin-top:30px; margin-bottom:60px;">
                 <h1 class="masked-text">mauritius</h1>
             </div>
 
-            <!-- Second paragraph -->
             <div class="col-12">
                 <p class="mb-3 mx-5  fw-medium text-center" style="color:grey;">
                 At MyVac Tours, we don’t offer generic tour packages. 
@@ -189,8 +253,34 @@
             </div>
             </div>
         </div>
-   </section>
+   </section> -->
 
+
+    <!-- Stats Section -->
+       <section class="stats-section section-padding" style=" height: auto; background-size: cover; background-position: center;">
+        <div class="container" >
+            <div class="row text-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="stat-item">
+                        <span class="stat-number">10+</span>
+                        <div class="stat-label">Reviews</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="stat-item">
+                        <span class="stat-number">10+</span>
+                        <div class="stat-label">Vehicles Available</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="stat-item">
+                        <span class="stat-number">15+</span>
+                        <div class="stat-label">Tour Packages</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Tours Section -->
     <section id="tours" class="section-padding" style="">
@@ -199,6 +289,7 @@
             Mauritius island is our homeland. We'll show you Mauritius, <br>
             better than anyone else!
         </p>
+        <div style="width: 60px; height: 3px; background-color: #274993; margin: 0 auto 16px;"></div>
      </div>
     
         <div class="container text-center my-5">
@@ -253,118 +344,105 @@
         </div>
     </section>
 
-
-
-    <!-- Stats Section -->
-    <section class="stats-section section-padding" style=" height: auto; background-size: cover; background-position: center;">
-        <div class="container" >
-            <div class="row text-center">
-                <div class="col-lg-4 col-md-6">
-                    <div class="stat-item">
-                        <span class="stat-number">10+</span>
-                        <div class="stat-label">Reviews</div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="stat-item">
-                        <span class="stat-number">10+</span>
-                        <div class="stat-label">Vehicles Available</div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="stat-item">
-                        <span class="stat-number">15+</span>
-                        <div class="stat-label">Tour Packages</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- About Section -->
-    <section id="about" class="section-padding" style="background: var(--gray-light);">
+    <section id="about" class="section-padding py-5" style="background: var(--gray-light);">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row align-items-center gy-4 gx-5">
+
+                <!-- Text Column -->
                 <div class="col-lg-6">
-                    <h2 class="section-title section-heading">About MyVac Tours Mauritius</h2>
-                    <p class="section-subtitle subheading  ">Your trusted partner for exploring Mauritius</p>
-                    <p class="paragraph-text">With years of experience in the Mauritius tourism industry, MyVac Tours has established itself as a premier car rental and tour operator. We pride ourselves on providing exceptional service, reliable vehicles, and unforgettable experiences.</p>
-                    <p class="paragraph-text">Our team of local experts knows every corner of this beautiful island and is passionate about sharing its wonders with visitors from around the world.</p>
-                    
-                    <div class="row mt-4 paragraph-text" >
-                        <div class="col-6">
-                            <div class="d-flex align-items-center mb-3">
-                                <i class='bx bx-shield-check text-primary fs-3 me-3'></i>
-                                <div>
-                                    <h6 class="mb-0">Fully Licensed</h6>
-                                    <small class="text-muted">Certified & Insured</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="d-flex align-items-center mb-3">
-                                <i class='bx bx-support text-primary fs-3 me-3'></i>
-                                <div>
-                                    <h6 class="mb-0">24/7 Support</h6>
-                                    <small class="text-muted">Always Here for You</small>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="text-content">
+                        <h2 class="section-title section-heading mb-3">
+                            Discover the Heart of Mauritius
+                        </h2>
+                        <div style="width: 60px; height: 3px; background-color: #274993; margin: 0 auto 20px 0;"></div>
+                        <p class="paragraph-text" style="color: #262626; font-size: 1rem; line-height: 1.7;">
+                            Mauritius is a vibrant mosaic of cultures, where people of Indian, African, Chinese, 
+                            and European heritage live together in harmony, creating a unique blend of traditions, 
+                            festivals, and flavors. From the lively rhythms of Sega music to colorful celebrations 
+                            like Diwali and Chinese New Year, the island pulses with joy and unity.
+                        </p>
+                        <p class="paragraph-text" style="color: #262626; font-size: 1rem; line-height: 1.7;">
+                            Visitors are welcomed with warm smiles and rich culinary delights, making every experience 
+                            a heartfelt celebration of Mauritius's diverse and thriving culture.
+                        </p>
+                    </div>
+                </div> <!-- End Text Column -->
+
+                <!-- Image Column -->
+                <div class="col-lg-6">
+                    <div class="img-placeholder rounded overflow-hidden" style="height: 400px;">
+                        <img src="{{ asset('images/backgrounds/mauri.jpg') }}"
+                            alt="About GoMauris Image"
+                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
                     </div>
                 </div>
-                <div class="col-lg-6">
-              
-                    <div class="img-placeholder" style="height: 400px; "> 
-                        <img  src="{{ asset('images/backgrounds/straw-hat.png') }}" style="width: 100%; height: 100%; object-fit: cover; border-radius:100px;">
-                    </div>
-                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <!-- <section id="contact" class="section-padding" style="background: var(--gray-light);">
+    <!-- Why Choose us -->
+    <section id="whychooseus" >
+        <div class="container text-center" style="margin-bottom:30px;">
+            <p class="section-heading mt-5">
+               Why Choose Us?
+            </p>
+            <div style="width: 60px; height: 3px; background-color: #274993; margin: 0 auto 16px;"></div>
+        </div>
+
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 mx-auto text-center">
-                    <h2 class="section-title">Contact Us</h2>
-                    <p class="section-subtitle">
-                        Ready to start your Mauritius adventure? Get in touch with us today!
-                    </p>
-                </div>
-            </div>
-            
-            <div class="row g-4">
-                <div class="col-lg-4">
-                    <div class="text-center">
-                        <div class="service-icon mx-auto">
-                            <i class='bx bx-phone'></i>
+                <!-- Expert Local Guides -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                        <div class="card-front" style=" background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/guidetourist.jpg');
+                            background-position: center;
+                            background-size: cover;
+                            background-repeat: no-repeat;">
+                            <h3 class="feature-title">Expert Local Guides</h3>
                         </div>
-                        <h5>Phone</h5>
-                        <p class="text-muted">+230 55040167<br>Available 24/7</p>
+                        <div class="card-back">
+                            <h3 class="feature-title">Expert Local Guides</h3>
+                            <p class="feature-description">Our certified guides are passionate locals who bring destinations to life with authentic stories and insider knowledge.</p>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="col-lg-4">
-                    <div class="text-center">
-                        <div class="service-icon mx-auto">
-                            <i class='bx bx-envelope'></i>
+
+                <!-- Customized Itineraries -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                    <div class="card-front" style=" background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/hiking.jpg');
+                            background-position: center;
+                            background-size: cover;
+                            background-repeat: no-repeat;">
+                            <h3 class="feature-title">Custom Itineraries</h3>
                         </div>
-                        <h5>Email</h5>
-                        <p class="text-muted">info@VoyageHub.mu<br>Quick Response</p>
+                        <div class="card-back">
+                            <h3 class="feature-title">Customized Itineraries</h3>
+                            <p class="feature-description">Every traveler is unique. We craft personalized itineraries that match your interests, budget, and travel style perfectly.</p>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="col-lg-4">
-                    <div class="text-center">
-                        <div class="service-icon mx-auto">
-                            <i class='bx bx-map'></i>
+
+                <!-- Best Price Guarantee -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card">
+                    <div class="card-front" style=" background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/price.jpg');
+                            background-position: center;
+                            background-size: cover;
+                            background-repeat: no-repeat;">
+                            <h3 class="feature-title">Best Price Guarantee</h3>
                         </div>
-                        <h5>Location</h5>
-                        <p class="text-muted">Mauritius Island<br>Pickup Available</p>
+                        <div class="card-back">
+                            <h3 class="feature-title">Best Price Guarantee</h3>
+                            <p class="feature-description">We guarantee the best value for your money with transparent pricing and no surprise charges.</p>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
-    </section> -->
+    </section>
+
 @endsection

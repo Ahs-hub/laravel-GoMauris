@@ -109,6 +109,7 @@ body {
 
 /*#region Navigation */
 .navbar {
+     padding: 0px;
     /* padding: 1rem 0; */
     position: sticky;
 
@@ -133,7 +134,20 @@ body {
  top:0px;
  margin:0px;
 }
+@media (min-width: 769px) {
+  .navbar,
+  .navbar .container,
+  .navbar-nav,
+  .navbar-nav .nav-item {
+    height: 60px; /* Set your desired navbar height */
+  }
+}
 
+.navbar-nav .nav-item {
+  display: flex;
+  align-items: center;
+  height: 100%; /* Fill parent's height */
+}
 
 .navbar-nav .nav-link {
     /* color: var(--dark-color) !important; */
@@ -267,7 +281,39 @@ body {
 
 /*#endregion Modal for profile */
 
+/*#region       achon hover      */
+.custom-hover-dropdown {
+  position: relative;
+}
 
+.custom-hover-dropdown .dropdown-box {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 180px;
+  background-color: #0b2475;
+  /* border: 1px solid #ddd; */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: none;
+  z-index: 1000;
+  padding: 0.5rem 0;
+}
+
+.custom-hover-dropdown:hover .dropdown-box {
+  display: block;
+}
+
+.dropdown-box .dropdown-item {
+  padding: 0.5rem 1rem;
+  color: rgb(241, 241, 241);
+  text-decoration: none;
+}
+
+.dropdown-box .dropdown-item:hover {
+  background-color: #05123E;
+}
+/*#endregion    achon hover      */
+ 
 /*#endregion ---------Header & Navigation ----------- */
 
 

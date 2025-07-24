@@ -40,7 +40,11 @@
                 </div>
                 <div class="header-item">
                     <i class='bx bx-phone'></i>
-                    <span>+230 55040167</span>
+                    <span>
+                        <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
+                            +230 55040167
+                        </a>
+                    </span>
                 </div>
                 <div class="header-item">
                     <i class='bx bx-time'></i>
@@ -50,17 +54,18 @@
 
             <div class="header-right" style="display:flex; gap:40px;">
                 <div class="header-item">
+                        <i class='bx bx-heart'></i> 
                         <a class="nav-link " href="{{ route('wishlist') }}">Wishlist</a>
                 </div>
-                <div class="header-item">
+                <!-- <div class="header-item">
                         <i class='bx bx-book'></i>
                         <span>Tour Catalog 2025</span>
-                </div>
+                </div> -->
             </div>
         </div>
      </div>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="padding:0px; ">
         <div class="container">
             <a class="navbar-brand" href="#home">
                 <!-- <i class='bx bx-car'></i> -->
@@ -68,15 +73,19 @@
             </a>
             <div class="header-item phone-appear" style="color:white;">
                 <i class='bx bx-phone'></i>
-                <span>+230 55040167</span>
+                <span>
+                     <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
+                        +230 55040167
+                     </a>
+                </span>
             </div>
             <!-- Toggler Button -->
             <button class="navbar-toggler no-border" style="color:white;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <i class='bx bx-menu icon-toggler'></i>
             </button>
 
-            <div class="collapse navbar-collapse navbars-links" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+            <div class="collapse navbar-collapse navbars-links" id="navbarNav" >
+                <ul class="navbar-nav ms-auto" >
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}" style="font-size:17px;"><i class='bx bxs-home'></i> </a>
                     </li>
@@ -87,9 +96,17 @@
                         <a class="nav-link" href="{{ route('cars.home') }}">Our Fleet</a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item dropdown " >
                         <a class="nav-link" href="{{ route('taxi') }}">Taxi</a>
                     </li>
+                    
+                    <!-- <li class="nav-item dropdown custom-hover-dropdown" >
+                        <a class="nav-link" href="{{ route('taxi') }}">Taxi</a>
+                        <div class="dropdown-box">
+                                <a href="#" class="dropdown-item">Airport Transfer</a>
+                                <a href="#" class="dropdown-item">Luxury Airport Transfer</a>
+                        </div>
+                    </li> -->
 
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('tours.index') }}">Tours</a>

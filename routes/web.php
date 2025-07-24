@@ -107,6 +107,11 @@ Route::get('/taxi', function () {
     return view('taxipage');
 })->name('taxi'); 
 
+//Go to Luxury taxi page
+Route::get('/luxurytransfer', function () {
+    return view('luxurytransfer');
+})->name('luxurytransfer'); 
+
 
 //tours
 Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
