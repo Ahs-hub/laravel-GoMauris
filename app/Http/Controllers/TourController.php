@@ -29,12 +29,13 @@ class TourController extends Controller
     {
         $tour = Tour::where('slug', $slug)->with('category')->firstOrFail();
     
-        $viewPath = "tours.{$tour->category->slug}.{$slug}";
+        //$viewPath = "tours.{$tour->category->slug}.{$slug}";
     
         // Check if the specific blade file exists
-        if (view()->exists($viewPath)) {
-            return view($viewPath, compact('tour'));
-        }
+        // if (view()->exists($viewPath)) {
+        //     return view($viewPath, compact('tour'));
+        // }
+        return view('tours.viewtourpage', compact('tour'));
     
         // Fallback if the view doesn't exist
         return view('tours.show', compact('tour'));

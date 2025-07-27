@@ -361,13 +361,13 @@
             <div class="container">
                 <div class="footer-bottom-content">
                     <div class="copyright">
-                        <p>&copy; 2025 MyVac Tours Mauritius. All rights reserved. | Designed with <i class='bx bx-heart' style="color: var(--accent-color);"></i> for travelers</p>
+                        <p>&copy; 2025 GoMauris Travel & Tours Mauritius. All rights reserved. | Designed with <i class='bx bx-heart' style="color: var(--accent-color);"></i> for travelers</p>
                     </div>
                     <div class="footer-bottom-links">
                         <a href="#">Privacy Policy</a>
                         <a href="#">Terms of Service</a>
                         <a href="#">Booking Terms</a>
-                        <a href="#">Sitemap</a>
+                        <a href="#">Refund</a>
                     </div>
                 </div>
             </div>

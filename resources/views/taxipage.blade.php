@@ -69,7 +69,7 @@
 
                         <!-- Category Selection -->
                         <div class="mb-4">
-                            <label class="form-label">Category</label>
+                            <label class="form-label">Choose Ride Category</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="category" value="Economy" checked>
                                 <label class="form-check-label">Economy (Shared ride)</label>
@@ -85,7 +85,7 @@
                         </div>
 
                         <button type="submit" class="btn w-100 text-white" style="background-color: var(--primary-color); font-weight: 600;">
-                            Book Now via WhatsApp
+                            Next
                         </button>
                     </form>
                 </div>
@@ -115,33 +115,6 @@
         </div>
     </section>
 
-    <script>
-    document.getElementById("taxiBookingForm").addEventListener("submit", function (e) {
-        e.preventDefault(); // Stop default form submission
-
-        const pickup = document.getElementById("pickup").value;
-        const destination = document.getElementById("destination").value;
-        const date = document.getElementById("date").value;
-        const time = document.getElementById("time").value;
-        const passengers = document.getElementById("passengers").value;
-        const category = document.querySelector('input[name="category"]:checked').value;
-
-        const code = "TX" + Math.floor(100000 + Math.random() * 900000); // Random booking code
-        const phoneNumber = "23059298905"; // Your WhatsApp number
-
-        const message = `Hello, I would like to book a taxi.\n\n` +
-            `📍 Pickup: ${pickup}\n` +
-            `📍 Destination: ${destination}\n` +
-            `📅 Date: ${date}\n` +
-            `⏰ Time: ${time}\n` +
-            `👥 Passengers: ${passengers}\n` +
-            `🚗 Category: ${category}\n` +
-            `🔖 Booking Code: ${code}`;
-
-        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, "_blank");
-    });
-</script>
 
 
 @endsection

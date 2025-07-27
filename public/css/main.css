@@ -242,7 +242,7 @@ body {
 }
 
 .lang-list i {
-  font-size: 1rem;
+  font-size: 2rem;
 }
 
 .currency-list li {
@@ -273,7 +273,7 @@ body {
 
 .currency-list li.active i {
   margin-left: 5px;
-  font-size: 1rem;
+  font-size: 2rem;
 }
 
 

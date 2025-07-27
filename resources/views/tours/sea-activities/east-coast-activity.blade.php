@@ -64,8 +64,9 @@
     <div class="container py-4">
         <!-- Title Section -->
         <div class="title-section">
-            <div class="subtitle paragraph-text">A shared catamaran cruise on the East Coast</div>
-            <h1 class="main-title section-heading">Catamaran Cruise to Ile aux Cerfs Island</h1>
+
+            <h1 class="main-title section-heading">East Coast Mauritius Private Scenic Seaplane Tour- Seaplane </h1>
+            <div class="subtitle paragraph-text">Tours Activity:LagoonFLIGHT Experience</div>
 
             <div class="d-flex flex-wrap justify-content-between align-items-center">
                 <!-- Rating Section -->
@@ -106,38 +107,40 @@
     <div class="container py-4">
         <!-- Gallery Section at Top -->
         <div class="row mb-4">
-            <div class="col-12">
-                <div class="tour-gallery">
-                    <div class="row g-2">
-                        <div class="col-8">
-                            <img src="{{ asset('images/tours/catamaran-cruise-benitiers-island/catamaran-cruise-benitiers-island-1.jpg') }}" alt="Chamarel Waterfall" class="main-image">
+
+        <div class="col-12">
+            <div class="tour-gallery">
+                <div class="row g-2">
+                    <!-- Left: Large Image -->
+                    <div class="col-md-6">
+                        <img src="{{ asset('images/tours/' . $tour->slug . '/' . $tour->slug . '-1.jpg') }}" alt="Northern Isles Cruise 1" class="img-fluid w-100 h-100 object-fit-cover rounded">
+                    </div>
+
+                    <!-- Middle: Single Image -->
+                    <div class="col-md-3">
+                        <img src="{{ asset('images/tours/' . $tour->slug . '/' . $tour->slug . '-2.jpg') }}" alt="Northern Isles Cruise 2" class="img-fluid w-100 h-100 object-fit-cover rounded">
+                    </div>
+
+                    <!-- Right: Two stacked images -->
+                    <div class="col-md-3 d-flex flex-column gap-2">
+                        <div class="flex-fill">
+                            <img src="{{ asset('images/tours/' . $tour->slug . '/' . $tour->slug . '-3.jpg') }}" alt="Northern Isles Cruise 3" class="img-fluid w-100 h-100 object-fit-cover rounded">
                         </div>
-                        <div class="col-4">
-                            <div class="gallery-grid">
-                                <div class="gallery-item">
-                                <img src="{{ asset('images/tours/catamaran-cruise-benitiers-island/catamaran-cruise-benitiers-island-2.jpg') }}" alt="Chamarel Waterfall">
-                                </div>
-                                <div class="gallery-item">
-                                <img src="{{ asset('images/tours/catamaran-cruise-benitiers-island/catamaran-cruise-benitiers-island-3.jpg') }}" alt="Chamarel Waterfall">
-                                </div>
-                                <div class="gallery-item">
-                                <img src="{{ asset('images/tours/catamaran-cruise-benitiers-island/catamaran-cruise-benitiers-island-4.jpg') }}" alt="Chamarel Waterfall">
-                                </div>
-                                <div class="gallery-item">
-                                <img src="{{ asset('images/tours/catamaran-cruise-benitiers-island/catamaran-cruise-benitiers-island-5.jpg') }}" alt="Chamarel Waterfall">
-                                    <div class="more-photos">
-
-                                        <button class="btn " data-bs-toggle="modal" data-bs-target="#galleryModal" style="color:white;">
-                                            <i class='bx bx-plus'></i> More
-                                        </button>
-
-                                    </div>
-                                </div>
+                        <div class="flex-fill position-relative">
+                            <img src="{{ asset('images/tours/' . $tour->slug . '/' . $tour->slug . '-4.jpg') }}" alt="Northern Isles Cruise 4" class="img-fluid w-100 h-100 object-fit-cover rounded">
+                            <!-- Overlay Button -->
+                            <div class="position-absolute top-50 start-50 translate-middle">
+                                <button class="btn btn-dark text-white" data-bs-toggle="modal" data-bs-target="#galleryModal">
+                                    <i class='bx bx-plus'></i> More
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+
         </div>
         
         <!-- Tour Description and Booking Card Side by Side -->
@@ -147,7 +150,7 @@
             <div class="col-lg-8">
                 <div class="tour-info">
                     <div class="tour-title">
-                        Discover the southwest of Mauritius on a private full-day tour. Marvel at the Seven Coloured Earths in Chamarel, take in views from the Alexandra Falls Viewpoint, visit Grand Bassin, and more.
+                    {{ $tour->description }}
                     </div>
                     
                     <div class="section-title">About this activity</div>
@@ -171,7 +174,7 @@
                     <div class="feature-item">
                         <i class='bx bx-time feature-icon'></i>
                         <div>
-                            <strong>Duration 7.5 hours</strong><br>
+                            <strong>Duration 8 hours</strong><br>
                             <span class="text-muted">Check availability to see starting times</span>
                         </div>
                     </div>
@@ -184,13 +187,13 @@
                         </div>
                     </div>
                     
-                    <div class="feature-item">
+                    <!-- <div class="feature-item">
                         <i class='bx bx-car feature-icon'></i>
                         <div>
                             <strong>Pickup included</strong><br>
                             <span class="text-muted">Pick-up possible from your accommodation or the airport in Mauritius. Please wait in the lobby of your hotel if you are being picked up from there. Your driver will be outside with a sign with your name on it.</span>
                         </div>
-                    </div>
+                    </div> -->
                     
                     <div class="feature-item">
                         <i class='bx bx-group feature-icon'></i>
@@ -401,8 +404,8 @@
             <div class="col-lg-4">
                 <div class="booking-card">
                     <div class="mb-3">
-                        <span class="text-muted">From</span>
-                        <div class="price">€50</div>
+                    <span class="text-muted">From</span>
+                        <div class="price">€{{ $tour->starting_price }}</div>
                         <div class="price-subtitle">per person</div>
                     </div>
                     
@@ -440,21 +443,18 @@
                     <div class="swiper-container" id="gallerySwiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <img src="{{ asset('images/tours/catamaran-cruise-benitiers-island/catamaran-cruise-benitiers-island-1.jpg') }}" alt="Sunset Cruise">
+                            <img src="{{ asset('images/tours/' . $tour->slug . '/' . $tour->slug . '-1.jpg') }}" alt="Sunset Cruise">
        
                             </div>
                             <div class="swiper-slide">
-                                <img src="{{ asset('images/tours/catamaran-cruise-benitiers-island/catamaran-cruise-benitiers-island-2.jpg') }}" alt="Tropical Beach">
+                                <img src="{{ asset('images/tours/' . $tour->slug . '/' . $tour->slug . '-2.jpg') }}" alt="Tropical Beach">
 
                             </div>
                             <div class="swiper-slide">
-                                <img src="{{ asset('images/tours/catamaran-cruise-benitiers-island/catamaran-cruise-benitiers-island-1.jpg') }}" alt="Island Adventure">
+                                <img src="{{ asset('images/tours/' . $tour->slug . '/' . $tour->slug . '-3.jpg') }}" alt="Island Adventure">
                             </div>
                             <div class="swiper-slide">
-                                <img src="{{ asset('images/tours/catamaran-cruise-benitiers-island/catamaran-cruise-benitiers-island-4.jpg') }}" alt="Local Culture">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="{{ asset('images/tours/catamaran-cruise-benitiers-island/catamaran-cruise-benitiers-island-5.jpg') }}" alt="Snorkeling">
+                                <img src="{{ asset('images/tours/' . $tour->slug . '/' . $tour->slug . '-4.jpg') }}" alt="Local Culture">
                             </div>
                         </div>
                         

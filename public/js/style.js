@@ -216,8 +216,16 @@ document.addEventListener("DOMContentLoaded", function () {
         // Update counter
         function updateCounter() {
             if (!gallerySwiper) return;
+        
             document.getElementById('currentSlide').textContent = gallerySwiper.realIndex + 1;
-            document.getElementById('totalSlides').textContent = gallerySwiper.slides.length - gallerySwiper.loopedSlides * 2;
+        
+            let totalSlides = gallerySwiper.slides.length;
+            if (gallerySwiper.params.loop) {
+                // Subtract duplicated slides added by loop mode
+                totalSlides -= gallerySwiper.loopedSlides;
+            }
+        
+            document.getElementById('totalSlides').textContent = totalSlides + 1;
         }
     }
 // });

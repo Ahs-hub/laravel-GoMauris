@@ -58,7 +58,7 @@
                         <img src="{{ asset($tour->main_image) }}" class="card-img-top" alt="{{ $tour->name }}">
                         <div class="card-body text-start">
                             <h5 class="card-title">{{ $tour->name }}</h5>
-                            <p class="card-time">{{ floor($tour->duration_minutes / 60) }} hours &nbsp;•&nbsp; {{ $tour->pickup_included ? 'Pickup Included' : '' }}</p>
+                            <p class="card-time">{{ floor($tour->duration_minutes / 60) }} hours &nbsp;•&nbsp; {{ $tour->pickup_included ? 'Pickup available' : '' }}</p>
                             <div class="tour-rating mb-2">
                                 @for ($i = 0; $i < floor($tour->average_rating); $i++)
                                     <i class="bx bxs-star"></i>
@@ -69,7 +69,17 @@
                                 <span class="rating-text">{{ $tour->average_rating }} ({{ $tour->total_reviews }})</span>
                             </div>
                             <p class="from-text">From</p>
-                            <p><strong class="tour-price">${{ $tour->starting_price }}</strong> <span class="per-person">per person</span></p>
+                            @if ($tour->is_group_priced)
+                                <p>
+                                    <strong class="tour-price">€{{ $tour->group_price }}</strong>
+                                    <span class="per-person">per group of {{ $tour->group_size }}</span>
+                                </p>
+                            @else
+                                <p>
+                                    <strong class="tour-price">€{{ $tour->starting_price }}</strong>
+                                    <span class="per-person">per person</span>
+                                </p>
+                            @endif
                         </div>
                     </div>
                 </a>

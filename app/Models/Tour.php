@@ -11,15 +11,21 @@ class Tour extends Model
 
     protected $fillable = [
         'name',
+        'full_title',
         'slug',
         'description',
         'duration_minutes',
-        'pickup_included',
+        'pickup_available',
         'starting_price',
         'average_rating',
         'total_reviews',
         'tour_category_id',
         'main_image',
+        'is_group_priced',
+        'group_price',
+        'group_size',
+        'location',
+        'number_of_pictures',
     ];
 
     // Relationships
