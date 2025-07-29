@@ -231,7 +231,7 @@ class TourSeeder extends Seeder
             'name' => 'Private Island Tour',
             'full_title' => 'Private Island Tour with Chauffeur/Guide ',
             'slug' => 'private-tour-with-chauffeurguide',
-            'description' => 'Discover Mauritius your way with a full-day personal driver-guide. Choose the destinations you’d like to see, travel in comfort, and select between a luxury car or a standard option to suit your style and budget.<br><br>€110 per group (standard)<br>€115 per group (luxury car)',
+            'description' => 'Discover Mauritius your way with a full-day personal driver-guide. Choose the destinations you’d like to see, travel in comfort, and select between a luxury car or a standard option to suit your style and budget.<br><br>€110 per group (standard car)<br>€115 per group (luxury car)',
             'duration_minutes' => 480,
             'pickup_available' => false,
             'starting_price' => 110.00,

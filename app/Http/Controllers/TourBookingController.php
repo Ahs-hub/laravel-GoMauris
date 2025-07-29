@@ -33,7 +33,7 @@ class TourBookingController extends Controller
         // Create booking using mass assignment
         TourBooking::create($validated);
 
-        return redirect()->route('tours.thankyou');
+        return redirect()->route('thankyou');
     }
     public function getBookingsForDate($tourId, $date)
     {

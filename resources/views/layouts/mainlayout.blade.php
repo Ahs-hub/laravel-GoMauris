@@ -209,12 +209,12 @@
                             <div class="col-md-6">
                                 <ul class="list-unstyled lang-list">
                                     <li class="active">English (United States) <i class='bx bx-check'></i></li>
-                                    <li>Russie</li>
+                                    <!-- <li>Russie</li>
                                     <li>English (Australia)</li>
                                     <li>Español (España)</li>
                                     <li>Français</li>
                                     <li>Chinese</li>
-                                    <li>Germany</li>
+                                    <li>Germany</li> -->
                                 </ul>
                             </div>
                         </div>

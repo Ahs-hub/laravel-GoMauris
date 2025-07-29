@@ -532,7 +532,7 @@
     /* background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); */
     color: var(--white);
 
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/back-2.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/staw-hat-woman.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

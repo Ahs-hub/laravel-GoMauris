@@ -34,7 +34,7 @@ class ContactController extends Controller
         ]);
 
         $type = $request->query('type', 'car'); // Defaults to 'car' if not provided
-        return redirect()->route('thankyou', ['type' => $type]);
+         return redirect()->route('thankyou', ['type' => $type]);
 
     }
 }

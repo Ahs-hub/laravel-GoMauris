@@ -63,10 +63,10 @@
                            <i class="bx bx-check-circle text-success me-3" style="font-size: 1.5rem;"></i>
                             @{{ service.price }}
                         </p>  -->
-                        <div class="d-flex align-items-center mb-3">
+                        <!-- <div class="d-flex align-items-center mb-3">
                               
                                 <span style="color:grey;"> @{{ service.price }}</span>
-                        </div>
+                        </div> -->
                         
 
                         
@@ -140,7 +140,7 @@
                     description: "Comfortable and reliable door-to-door airport transfers with professional drivers and luxury vehicles.",
                     buttonText: "Book Now",
                     buttonLink: "#",
-                    price: "From $33 per transfer"
+                    // price: "From $33 per transfer"
                 },
                 {
                     title: "Private Sightseeing Tour",
@@ -150,7 +150,7 @@
                     description: "Explore breathtaking destinations with our expert guides and customized itineraries for unforgettable experiences.",
                     buttonText: "Explore Tours",
                     buttonLink: "#",
-                    price: "$28 for  a party of 4"
+                    //price: "$28 for  a party of 4"
                 },
                 {
                     title: "Activities & Tour",
@@ -160,7 +160,7 @@
                     description: "Thrilling adventures and cultural experiences including water sports, hiking, and local attractions.",
                     buttonText: "View Activities",
                     buttonLink: "#",
-                    price: "Sea & Land Activities"
+                    //price: "Sea & Land Activities"
                 },
                 {
                     title: "Car Rental",
@@ -170,7 +170,7 @@
                     description: "Premium fleet of vehicles available for self-drive adventures with flexible rental options and competitive rates.",
                     buttonText: "Rent Now",
                     buttonLink: "#",
-                    price: "Cars from $24 per day"
+                    //price: "Cars from $24 per day"
                 },
                 {
                     title: "Taxi Services",
@@ -180,7 +180,7 @@
                     description: "24/7 taxi services with experienced drivers for convenient city transportation and local travel needs.",
                     buttonText: "Book Taxi",
                     buttonLink: "#",
-                    price: "Round-trips from $25"
+                   // price: "Round-trips from $25"
                 },
                 {
                     title: "Luxury Airport Transfers",
@@ -190,7 +190,7 @@
                     description: "Premium luxury vehicles with VIP treatment, perfect for business travelers and special occasions.",
                     buttonText: "Book Luxury",
                     buttonLink: "#",
-                    price: "From $140 per transfer"
+                   // price: "From $140 per transfer"
                 },
                 {
                     title: "Accommodations",
@@ -200,17 +200,7 @@
                     description: "Handpicked hotels, resorts, and vacation rentals offering comfort and luxury for every budget and preference.",
                     buttonText: "Find Hotels",
                     buttonLink: "#",
-                    price: "500 + Hotels & Villas"
-                },
-                {
-                    title: "Air Ticket",
-                    category: "travel",
-                    image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                    icon: "bx-plane",
-                    description: "Competitive flight booking services with access to major airlines and exclusive deals for domestic and international travel.",
-                    buttonText: "Book Flights",
-                    buttonLink: "#",
-                    price: "200+ Airlines"
+                  //  price: "500 + Hotels & Villas"
                 }
                 //,
                 // {

@@ -1,21 +1,116 @@
 .hero-section {
-    /* background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/taxi-back.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                      url('../images/backgrounds/luxury-chat.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-
     color: var(--white);
-    padding: 120px 0 80px;
+    padding: 120px 0 100px;
     position: relative;
+}
+
+.tour-info {
+    background-color: white;
+    border: 2px solid var(--primary-color);
+    color: #2c3e50;
+}
+
+.booking-form{
+    position:absolute; 
+    z-index:10px; 
+    width:100%; 
+    display: flex;
+    justify-content: center;
+    left:0;
+}
+.about-taxi{
+    background: var(--gray-light); 
+    margin-top:400px;
+}
+
+.section-heading{
+    color:#262626;
+     font-weight: 700;
+  }
+
+/*#region   why choose us  */
+.feature-title {
+    font-size: 1.8rem;
+    font-weight: 700; /* or 'bold' */
+    margin-bottom: 15px;
+  }
+  .feature-card {
+    background: white;
+    border-radius: 20px;
+    padding: 0;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
     overflow: hidden;
-}
+    cursor: pointer;
+    height: 250px;
+    position: relative;
+  }
+  .feature-card:hover .card-front .feature-title{
+    display: none;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card-front,
+  .card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: opacity 0.5s ease;
+  }
+  
+  .card-front {
+    color: white;
+    z-index: 1;
+    opacity: 1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  .card-back {
+    background: #00a7cc67; /* overlay look */
+    color: white;
+    z-index: 2;
+    opacity: 0;
+    pointer-events: none;
+    backdrop-filter: blur(3px); /* optional: adds nice blur effect */
+  }
+  
+  /* On hover, fade in the overlay back */
+  .feature-card:hover .card-back {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  /*#endregion why choose us */
 
-.taxi-booking-section{
-       background-color: #2a324b;
-}
-
-.trust-section p {
-    margin-top: 10px;
-    font-weight: 500;
-}
+  @media (max-width: 768px){
+    .booking-form{
+        position:relative; 
+    }
+    .hero-section {
+        padding: 120px 0 0px;
+    }
+    .about-taxi{
+        margin-top:10px;
+    }
+    
+  }

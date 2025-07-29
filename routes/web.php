@@ -17,6 +17,8 @@ use App\Http\Controllers\WishlistController;
 
 use App\Http\Controllers\ContactController;
 
+use App\Http\Controllers\TaxiBookingController;
+
 use App\Http\Controllers\CarController;
 
 use App\Http\Controllers\CarBookingController;
@@ -129,7 +131,9 @@ Route::get('/tours/{slug}', [TourController::class, 'show'])->name('tours.show')
 
 //Save the tour in database
 Route::post('/tour-bookings', [TourBookingController::class, 'store']);
+
 Route::view('/thank-you', 'thankyou')->name('thankyou');
+
 
 //Search booktour to display in panel
 Route::get('/admin/tours/bookings/{tourId}/{date}', [TourBookingController::class, 'getBookingsForDate']);
@@ -138,6 +142,9 @@ Route::get('/admin/tours/bookings/{tourId}/{date}', [TourBookingController::clas
 
 //Send booking of car
 Route::post('/send-quote', [CarBookingController::class, 'store']);
+
+//Sent booking of taxi
+Route::post('/taxi-booking-submit', [TaxiBookingController::class, 'store'])->name('taxi.booking.submit');
 
 
 

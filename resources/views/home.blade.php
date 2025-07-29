@@ -12,7 +12,7 @@
      <!-- Hero Section -->
      <section id="home" class="hero">
         <div class="video-background">
-          <iframe src="https://www.youtube.com/embed/GBkQhDTmMHs?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&modestbranding=1&playlist=GBkQhDTmMHs"
+          <iframe src="https://www.youtube.com/embed/nd0w4nM1vEc?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&modestbranding=1&playlist=nd0w4nM1vEc"
             frameborder="0"
             allow="autoplay; encrypted-media"
             allowfullscreen>
@@ -169,7 +169,7 @@
                 <!-- Image Column -->
                 <div class="col-lg-6">
                     <div class="img-placeholder rounded" style="height: 400px; overflow: hidden;">
-                        <img src="{{ asset('images/backgrounds/lemorne.jpg') }}"
+                        <img src="{{ asset('images/backgrounds/lemorne.png') }}"
                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;"
                             alt="About GoMauris Image">
                     </div>
@@ -382,7 +382,7 @@
                 <!-- Image Column -->
                 <div class="col-lg-6">
                     <div class="img-placeholder rounded overflow-hidden" style="height: 400px;">
-                        <img src="{{ asset('images/backgrounds/mauri.jpg') }}"
+                        <img src="{{ asset('images/backgrounds/mauri.png') }}"
                             alt="About GoMauris Image"
                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
                     </div>

@@ -13,7 +13,7 @@
         <div class="row align-items-center">
             <div class="col-lg-12 text-center">
                 <h1 class="hero-title ">Contact Us</h1>
-                <p class="subheading mb-4">Get in touch for premium tour and car rental services</p>
+                <!-- <p class="subheading mb-4">Get in touch for premium tour and car rental services</p>
                 <div class="d-flex justify-content-center gap-4 flex-wrap">
                     <span class="badge bg-light text-primary px-3 py-2 paragraph-text">
                         Chauffeur Service
@@ -24,7 +24,7 @@
                     <span class="badge bg-light text-primary px-3 py-2 paragraph-text">
                         Sightseeing & Tours
                     </span>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
             <div class="col-lg-8">
                 <div class="contact-form">
                     <h3 class="subheading fw-bold mb-4" >Send us a Message</h3>
-                    <form method="POST" action="{{ route('contact.submit') }}">
+                    <form method="POST" action="{{ route('contact.submit', ['type' => $type]) }}">
                        @csrf
                         <div class="row g-3">
                             <div class="col-md-6" style="color:rgb(49, 49, 49)">
@@ -123,16 +123,6 @@
                             <h5 class="fw-bold mb-2" >Visit Us</h5>
                             <p class="paragraph-text text-muted mb-0">123 Tourism Boulevard</p>
                             <p class="paragraph-text text-muted">City Center, State 12345</p>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="contact-info-card">
-                            <div class="contact-icon">
-                                <i class='bx bx-time'></i>
-                            </div>
-                            <h5 class="fw-bold mb-2" >Business Hours</h5>
-                            <p class="paragraph-text text-muted mb-0">Mon - Fri: 8:00 AM - 8:00 PM</p>
-                            <p class="paragraph-text text-muted">Sat - Sun: 9:00 AM - 6:00 PM</p>
                         </div>
                     </div>
                 </div>
