@@ -75,7 +75,7 @@
                     </div> -->
                     <!-- ... other slides repeated -->
                     <div class="swiper-slide">
-                        <div class="swiper-service-card" style="background-image: url('images/services/private_airport_transfer.jpg');">
+                        <div class="swiper-service-card" style="background-image: url('images/services/private_airport_transfer.png');">
                             <div class="swiper-service-overlay">
                                 <h5>Private Airport Transfer</h5>
                                 <p class="description">Private Transfers . Cars, Minivans,SUVs, Coaster .Free Child Seat</p>
@@ -88,7 +88,7 @@
                     </div>
 
                     <div class="swiper-slide">
-                        <div class="swiper-service-card" style="background-image: url('images/services/car_rental.jpg');">
+                        <div class="swiper-service-card" style="background-image: url('images/services/car_rental.png');">
                             <div class="swiper-service-overlay">
                                 <h5>Car Rental</h5>
                                 <p class="description">Premium fleet of vehicles available for self-drive adventures.</p>
@@ -101,7 +101,7 @@
                    </div>
 
                     <div class="swiper-slide">
-                        <div class="swiper-service-card" style="background-image: url('images/services/luxury_airport_transfer.jpg');">
+                        <div class="swiper-service-card" style="background-image: url('images/services/luxury_airport_transfer.png');">
                             <div class="swiper-service-overlay">
                                 <h5>Luxury Airport Transfer</h5>
                                 <p class="description paragraph-text">Private VIP Transfer . Incl. BMW x5, x7 & similar</p>
@@ -114,7 +114,7 @@
                     </div>
 
                     <div class="swiper-slide">
-                        <div class="swiper-service-card" style="background-image: url('images/services/sightseeing_tour.jpg');">
+                        <div class="swiper-service-card" style="background-image: url('images/services/sightseeing_tour.png');">
                             <div class="swiper-service-overlay">
                                 <h5>Sightseeing tour</h5>
                                 <p class="description">Explore Mauritius with our friendly & professional drivers</p>
@@ -127,7 +127,7 @@
                     </div>
 
                     <div class="swiper-slide">
-                        <div class="swiper-service-card" style="background-image: url('images/services/taxi_ride.jpg');">
+                        <div class="swiper-service-card" style="background-image: url('images/services/taxi_ride.png');">
                             <div class="swiper-service-overlay">
                                 <h5>Taxi ride</h5>
                                 <p class="description">Need a transfer from Point A to B?With a return ?It's here </p>

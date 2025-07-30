@@ -135,7 +135,7 @@
                 {
                     title: "Private Airport Transfer",
                     category: "transport",
-                    image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    image: "images/services/luxury_airport_transfer.png",
                     icon: "bx-car",
                     description: "Comfortable and reliable door-to-door airport transfers with professional drivers and luxury vehicles.",
                     buttonText: "Book Now",
@@ -145,7 +145,7 @@
                 {
                     title: "Private Sightseeing Tour",
                     category: "tours",
-                    image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    image: "images/services/sightseeing_tour.png",
                     icon: "bx-map",
                     description: "Explore breathtaking destinations with our expert guides and customized itineraries for unforgettable experiences.",
                     buttonText: "Explore Tours",
@@ -165,7 +165,7 @@
                 {
                     title: "Car Rental",
                     category: "transport",
-                    image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    image: "images/services/car_rental.png",
                     icon: "bx-key",
                     description: "Premium fleet of vehicles available for self-drive adventures with flexible rental options and competitive rates.",
                     buttonText: "Rent Now",
@@ -175,7 +175,7 @@
                 {
                     title: "Taxi Services",
                     category: "transport",
-                    image: "/images/cars/taxi_ride.jpg",
+                    image: "images/services/taxi_ride.png",
                     icon: "bx-taxi",
                     description: "24/7 taxi services with experienced drivers for convenient city transportation and local travel needs.",
                     buttonText: "Book Taxi",
@@ -185,7 +185,7 @@
                 {
                     title: "Luxury Airport Transfers",
                     category: "transport",
-                    image: "https://images.unsplash.com/photo-1563720223185-11003d516935?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                    image: "images/services/private_airport_transfer.png",
                     icon: "bx-diamond",
                     description: "Premium luxury vehicles with VIP treatment, perfect for business travelers and special occasions.",
                     buttonText: "Book Luxury",
