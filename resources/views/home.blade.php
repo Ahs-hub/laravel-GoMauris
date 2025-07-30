@@ -420,7 +420,7 @@
                 <!-- Expert Local Guides -->
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
-                        <div class="card-front" style=" background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/guidetourist.jpg');
+                        <div class="card-front" style=" background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/guidetourist.png');
                             background-position: center;
                             background-size: cover;
                             background-repeat: no-repeat;">
@@ -436,7 +436,7 @@
                 <!-- Customized Itineraries -->
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
-                    <div class="card-front" style=" background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/hiking.jpg');
+                    <div class="card-front" style=" background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/hiking.png');
                             background-position: center;
                             background-size: cover;
                             background-repeat: no-repeat;">
@@ -452,7 +452,7 @@
                 <!-- Best Price Guarantee -->
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
-                    <div class="card-front" style=" background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/price.jpg');
+                    <div class="card-front" style=" background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/price.png');
                             background-position: center;
                             background-size: cover;
                             background-repeat: no-repeat;">

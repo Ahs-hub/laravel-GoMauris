@@ -242,9 +242,18 @@
                                     <textarea class="form-control" rows="4" v-model="form.special_requests" placeholder="Write your notes or special requests here..."></textarea>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary px-5 py-2 fw-bold fs-6">
+                                <button 
+                                      v-if="!loading"
+                                      type="submit" 
+                                      class="btn btn-primary px-5 py-2 fw-bold fs-6"
+                                      >
                                     Send Quote
                                 </button>
+
+                                <!-- Spinner (show when loading) -->
+                                <div v-if="loading" class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -560,6 +569,8 @@
         const app = Vue.createApp({
             data() {
                 return {
+                    loading: false,
+
                     activeSection: 'itinerary',
                      // Final data (used for display and saved)
                     pickupLocation: '',
@@ -820,6 +831,8 @@
                 },
                  
                 submitDriverDetails() {
+                    this.loading = true;
+
                     const bookingForm = JSON.parse(localStorage.getItem('bookingForm') || '{}');
                     const selectedAddons = JSON.parse(localStorage.getItem('selectedAddons') || '{}');
 
@@ -875,6 +888,9 @@
                     .catch(err => {
                         console.error('Error:', err);
                         alert('Failed to send quote.');
+                    })
+                    .finally(() => {
+                        this.loading = false;
                     });
                 }
 

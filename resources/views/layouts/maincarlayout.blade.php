@@ -69,7 +69,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" style=" background-color: #81879b;">
         <div class="container">
-            <a class="navbar-brand" href="#home">
+            <a class="navbar-brand" href="{{ route('cars.home') }}">
                 <!-- <i class='bx bx-car'></i> -->
                 <img src="{{ asset('images/logo/logo3.png') }}" alt="Logo">
             </a>

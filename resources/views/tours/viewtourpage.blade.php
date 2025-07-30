@@ -399,10 +399,19 @@
                             </div>
 
                             <div class="text-center mt-4">
-                                <button type="submit" class="book-button">
+                                <button 
+                                    v-if="!loading"
+                                    type="submit"
+                                    class="book-button"
+                                    >
                                     <i class="bx bx-calendar-check"></i>
                                     Book 
                                 </button>
+
+                                <!-- Spinner (show when loading) -->
+                                <div v-if="loading" class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -515,6 +524,8 @@
         createApp({
             data() {
                 return {
+                    loading: false,
+
                     selectedDate: '',
                     blockedDates: [],
                     availableDates: [],
@@ -600,6 +611,8 @@
                 },
                 
                 async submitForm() {
+                    this.loading = true; // Show spinner, hide button
+
                     try {
                         console.log('Submitting tour_date:', this.selectedDate); // ✅ Add this
                         
@@ -629,6 +642,8 @@
                         } else {
                             alert('Something went wrong! Please try again.');
                         }
+                    }finally {
+                        this.loading = false; // Always hide spinner after submission
                     }
                 },
 

@@ -18,7 +18,10 @@
             <div class="row justify-content-center">
                 <div class="col-lg-10 col-xl-8 text-center">
                     <h5>If you prefer WhatsApp, let's have a chat at</h5>
-                    <h1 style="color:var(--white); font-weight:500;">+230 55040167</h1>
+                    <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none;">
+                         <h1 style="color:var(--white); font-weight:500;">+230 55040167</h1>
+                    </a>
+                    
                 </div>
             </div>
 
@@ -70,9 +73,9 @@
                         </div>
 
                         <div class="text-end">
-                        <button class="btn text-white" style="background-color: var(--primary-color); width: 100px; font-weight: 600;">
-                            Next
-                        </button>
+                            <button class="btn text-white" style="background-color: var(--primary-color); width: 100px; font-weight: 600;">
+                                Next
+                            </button>
                         </div>
                     </form>
 
@@ -110,10 +113,21 @@
                         </div>
 
                         <div class="d-flex justify-content-between">
-                        <button type="button" class="btn btn-secondary" @click="step--">Back</button>
-                        <button type="submit" class="btn text-white" style="background-color: var(--primary-color); font-weight: 600;">
-                            Send Quote
-                        </button>
+                            <button type="button" class="btn btn-secondary" @click="step--">Back</button>
+                            <!-- Send Button (hide when loading) -->
+                            <button
+                                v-if="!loading"
+                                type="submit"
+                                class="btn text-white"
+                                style="background-color: var(--primary-color); font-weight: 600;"
+                            >
+                                Send Quote
+                            </button>
+
+                            <!-- Spinner (show when loading) -->
+                            <div v-if="loading" class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
                         </div>
                     </form>
                     </div>
@@ -161,7 +175,7 @@
                 <!-- Standard Taxi -->
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
-                        <div class="card-front" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/guidetourist.jpg');">
+                        <div class="card-front" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/services/taxi_ride.png');">
                             <h3 class="feature-title">STANDARD</h3>
                         </div>
                         <div class="card-back">
@@ -174,7 +188,7 @@
                 <!-- Airport Transfer -->
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
-                        <div class="card-front" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/hiking.jpg');">
+                        <div class="card-front" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/services/private_airport_transfer.png');">
                             <h3 class="feature-title">AIRPORT TRANSFER</h3>
                         </div>
                         <div class="card-back">
@@ -187,7 +201,7 @@
                 <!-- Luxury Car -->
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card">
-                        <div class="card-front" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/backgrounds/price.jpg');">
+                        <div class="card-front" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../images/services/luxury_airport_transfer.png');">
                             <h3 class="feature-title">LUXURY CAR</h3>
                         </div>
                         <div class="card-back">
@@ -207,6 +221,7 @@
         data() {
             return {
                 step: 1,
+                loading: false,
                 form: {
                     pickup: '',
                     destination: '',
@@ -232,6 +247,8 @@
                 this.step = 2;
             },
             submitForm() {
+                this.loading = true;
+                
                 fetch("{{ route('taxi.booking.submit') }}", {
                     method: "POST",
                     headers: {
@@ -256,6 +273,9 @@
                 })
                 .catch(error => {
                     console.error("Fetch error:", error);
+                })
+                .finally(() => {
+                    this.loading = false;
                 });
             },
             resetForm() {

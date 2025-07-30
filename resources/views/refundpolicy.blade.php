@@ -51,7 +51,7 @@
     <div class="privacy-policy">
         <h1>Refund Policy</h1>
 
-        <p>Welcome to Travelhub Mauritius! We aim to provide an exceptional and hassle-free experience for our valued customers. Our refund policy is designed to ensure fairness and transparency, making your booking experience with us smooth and worry-free. Please read the following guidelines carefully:</p>
+        <p>Welcome to GoMauris Mauritius! We aim to provide an exceptional and hassle-free experience for our valued customers. Our refund policy is designed to ensure fairness and transparency, making your booking experience with us smooth and worry-free. Please read the following guidelines carefully:</p>
 
         <h4>Customer-Initiated Cancellations:</h4>
         <ul>
@@ -78,7 +78,7 @@
 
         <hr>
 
-        <p>At Travelhub Mauritius, we strive to deliver exceptional service and unforgettable experiences. Our refund policy is designed to give you peace of mind, knowing your investment is secure. For inquiries, contact us at <a href="mailto:hello@travelhub.mu">hello@travelhub.mu</a>.</p>
+        <p>At GoMauris Mauritius, we strive to deliver exceptional service and unforgettable experiences. Our refund policy is designed to give you peace of mind, knowing your investment is secure. For inquiries, contact us at <a href="mailto:hello@travelhub.mu">hello@travelhub.mu</a>.</p>
     </div>
 </div>
 

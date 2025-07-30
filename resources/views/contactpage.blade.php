@@ -80,9 +80,24 @@
                                 <textarea class="form-control" id="message" rows="5" placeholder="Tell us about your requirements..." name="message"></textarea>
                             </div>
                             <div class="col-12 text-center">
-                                <button type="submit" class="btn btn-primary btn-lg rad-0">
+                                <button 
+                                      id="contactSubmitBtn"
+                                      type="submit" 
+                                      class="btn btn-primary btn-lg rad-0"
+                                      >
                                     <i class='bx bx-send me-2'></i>Send Message
                                 </button>
+
+                                <!-- Spinner (hidden by default) -->
+                                <div 
+                                    id="contactSpinner" 
+                                    class="spinner-border text-primary ms-3" 
+                                    style="display: none;" 
+                                    role="status"
+                                >
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+
                             </div>
                         </div>
                     </form>
@@ -148,5 +163,22 @@
         
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('.contact-form form');
+        const submitBtn = document.getElementById('contactSubmitBtn');
+        const spinner = document.getElementById('contactSpinner');
+
+        form.addEventListener('submit', function () {
+            // Disable the button
+            submitBtn.disabled = true;
+
+            // Hide the button and show the spinner
+            submitBtn.style.display = 'none';
+            spinner.style.display = 'inline-block';
+        });
+    });
+</script>
 
 @endsection
