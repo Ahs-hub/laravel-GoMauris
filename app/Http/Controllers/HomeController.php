@@ -25,4 +25,21 @@ class HomeController extends Controller
 
         return view('home', compact('tours', 'categories'));
     }
+
+    public function customTour(Request $request)
+    {
+        $categories = TourCategory::all();
+
+        $query = Tour::with('category');
+
+        if ($request->has('category') && $request->category != 'all') {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('slug', $request->category);
+            });
+        }
+
+        $tours = $query->get();
+
+        return view('customizeitinerary', compact('tours', 'categories'));
+    }
 }

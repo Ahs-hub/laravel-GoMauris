@@ -96,6 +96,9 @@ Route::get('/service', function () {
     return view('servicepage');
 })->name('service'); 
 
+//Go to Customize Tour page
+Route::get('/customizeTour', [HomeController::class, 'customTour'])->name('customizeTour');
+
 //Go to car Fleet
 Route::get('/fleet', [CarController::class, 'showFleetPage'])->name('fleet');
 
@@ -113,6 +116,26 @@ Route::get('/taxi', function () {
 Route::get('/luxurytransfer', function () {
     return view('luxurytransfer');
 })->name('luxurytransfer'); 
+
+//Go to privacy policy
+Route::get('/privacypolicy', function () {
+    return view('privacypolicy');
+})->name('privacypolicy'); 
+
+//Go to refund policy
+Route::get('/refundpolicy', function () {
+    return view('refundpolicy');
+})->name('refundpolicy');
+
+//Go to cancellation policy
+Route::get('/cancellationpolicy', function () {
+    return view('carsite.cancellationpolicy');
+})->name('cancellationpolicy');
+
+//Go to rental policy
+Route::get('/rentalpolicy', function () {
+    return view('carsite.rentalpolicy');
+})->name('rentalpolicy');
 
 
 //tours

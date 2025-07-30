@@ -275,12 +275,12 @@
                         <div class="footer-section">
                             <h5>Quick Links</h5>
                             <ul class="footer-links">
-                                <li><a href="#home"><i class='bx bx-chevron-right'></i>Home</a></li>
-                                <li><a href="#about"><i class='bx bx-chevron-right'></i>About Us</a></li>
-                                <li><a href="#services"><i class='bx bx-chevron-right'></i>Services</a></li>
-                                <li><a href="#cars"><i class='bx bx-chevron-right'></i>Our Fleet</a></li>
-                                <li><a href="#tours"><i class='bx bx-chevron-right'></i>Tours</a></li>
-                                <li><a href="#contact"><i class='bx bx-chevron-right'></i>Contact</a></li>
+                                <li><a href="{{ route('home') }}"><i class='bx bx-chevron-right'></i>Home</a></li>
+                                <li><a href="{{ route('service') }}"><i class='bx bx-chevron-right'></i>Services</a></li>
+                                <li><a href="{{ route('cars.home') }}"><i class='bx bx-chevron-right'></i>Our Fleet</a></li>
+                                <li><a href="{{ route('taxi') }}"><i class='bx bx-chevron-right'></i>Taxi</a></li>
+                                <li><a href="{{ route('tours.index') }}"><i class='bx bx-chevron-right'></i>Tours</a></li>
+                                <li><a href="{{ route('contact', ['type' => 'tour']) }}"><i class='bx bx-chevron-right'></i>Contact</a></li>
                             </ul>
                         </div>
                     </div>
@@ -290,12 +290,10 @@
                         <div class="footer-section">
                             <h5>Services</h5>
                             <ul class="footer-links">
-                                <li><a href="#"><i class='bx bx-car'></i>Car Rental</a></li>
-                                <li><a href="#"><i class='bx bx-user'></i>Driver Services</a></li>
-                                <li><a href="#"><i class='bx bx-map'></i>Island Tours</a></li>
-                                <li><a href="#"><i class='bx bx-shield'></i>Airport Transfer</a></li>
-                                <li><a href="#"><i class='bx bx-calendar'></i>Custom Packages</a></li>
-                                <li><a href="#"><i class='bx bx-support'></i>24/7 Support</a></li>
+                                <li><a href="{{ route('cars.home') }}"><i class='bx bx-car'></i>Car Rental</a></li>
+                                <li><a href="{{ route('taxi') }}"><i class='bx bx-car'></i>Taxi Transfer</a></li>
+                                <li><a href="{{ route('customizeTour') }}"><i class='bx bx-calendar'></i>Custom Packages</a></li>
+                                <li><a href=""><i class='bx bx-support'></i>24/7 Support</a></li>
                             </ul>
                         </div>
                     </div>
@@ -311,7 +309,11 @@
                                     </div>
                                     <div class="contact-text">
                                         <strong>Phone</strong>
-                                        <span>+230 55040167</span>
+                                        <span>
+                                            <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
+                                                    +230 55040167
+                                            </a>
+                                        </span>
                                     </div>
                                 </div>
                                 
@@ -364,10 +366,9 @@
                         <p>&copy; 2025 GoMauris Travel & Tours Mauritius. All rights reserved. | Designed with <i class='bx bx-heart' style="color: var(--accent-color);"></i> for travelers</p>
                     </div>
                     <div class="footer-bottom-links">
-                        <a href="#">Privacy Policy</a>
-                        <a href="#">Terms of Service</a>
-                        <a href="#">Booking Terms</a>
-                        <a href="#">Refund</a>
+                        <a href="{{ route('privacypolicy', ['type' => 'tour']) }}">Privacy Policy</a>
+                        <!-- <a href="#">Cookie</a> -->
+                        <a href="{{ route('refundpolicy') }}">Refund</a>
                     </div>
                 </div>
             </div>

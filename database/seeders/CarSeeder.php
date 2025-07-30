@@ -22,7 +22,7 @@ class CarSeeder extends Seeder
             'engine' => '1500 cc',
             'consumption' => '5.5 L / 100km',
             'policy' => 'Same to same',
-            'price_per_day' => 75.00,
+            'price_per_day' => 35.00,
             'climate_control' => true,
             'image_path' => 'images/cars/suzuki_celerio.jpg',
         ]);
@@ -39,7 +39,7 @@ class CarSeeder extends Seeder
             'engine' => '1000 cc',
             'consumption' => '4.5 L / 100km',
             'policy' => 'Same to same',
-            'price_per_day' => 60.00,
+            'price_per_day' => 35.00,
             'climate_control' => true,
             'image_path' => 'images/cars/suzuki_spresso.jpg',
         ]);
@@ -57,7 +57,7 @@ class CarSeeder extends Seeder
             'engine' => '1000 cc',
             'consumption' => '4.5 L / 100km',
             'policy' => 'Same to same',
-            'price_per_day' => 60.00,
+            'price_per_day' => 40.00,
             'climate_control' => true,
             'image_path' => 'images/cars/suzuki_swift.jpg',
         ]);

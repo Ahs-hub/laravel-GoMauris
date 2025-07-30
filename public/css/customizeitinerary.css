@@ -1,0 +1,139 @@
+.book-button {
+    background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+    border: none;
+    color: white;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    width: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+  }
+
+  /*#region    ---------Tour sectionn        ----------*/
+
+.category-btn {
+    border-radius: 20px;
+    margin: 5px;
+    padding: 10px 20px;
+  }
+  .category-btn.active {
+    background-color: #00AEEF;
+    color: white;
+  }
+  .destination-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+  }
+  .destination-card:hover {
+    transform: scale(1.02);
+  }
+  .card-title{
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25rem;
+  }
+  .card-time{
+    font-size: 14px;
+    font-weight: 600; /* Semi-bold */
+    font-family: 'Poppins', sans-serif;
+  }
+  .card-body p {
+    margin: 0;
+  }
+
+  .tour-price {
+    font-size: 18px;
+    font-weight: 700;
+  }
+ 
+  .tour-rating {
+    color: yellow;
+    margin-bottom: 1rem;
+  }
+
+
+  .category-btn {
+  border-radius: 20px;
+  margin: 5px;
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  background-color: white;
+  transition: background-color 0.3s;
+}
+
+.category-btn.active {
+  background-color: #00AEEF;
+  color: white;
+}
+
+.destination-card {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  border: none;
+}
+
+.destination-card:hover {
+  transform: scale(1.02);
+}
+
+.card-img-top {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-time {
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.75rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.tour-rating {
+  color: #FFD700;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.rating-text {
+  color: #333;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.from-text {
+  font-size: 14px;
+  color: #555;
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.tour-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #00AEEF;
+}
+
+.per-person {
+  font-size: 14px;
+  font-weight: 400;
+  color: #444;
+  margin-left: 4px;
+}
+
+/*#endregion    ---------Tour sectionn        ----------*/

@@ -139,7 +139,7 @@
                     icon: "bx-car",
                     description: "Comfortable and reliable door-to-door airport transfers with professional drivers and luxury vehicles.",
                     buttonText: "Book Now",
-                    buttonLink: "#",
+                    buttonLink: "{{ route('taxi') }}"
                     // price: "From $33 per transfer"
                 },
                 {
@@ -149,19 +149,19 @@
                     icon: "bx-map",
                     description: "Explore breathtaking destinations with our expert guides and customized itineraries for unforgettable experiences.",
                     buttonText: "Explore Tours",
-                    buttonLink: "#",
+                    buttonLink: "{{ route('tours.index') }}",
                     //price: "$28 for  a party of 4"
                 },
-                {
-                    title: "Activities & Tour",
-                    category: "tours",
-                    image: "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                    icon: "bx-run",
-                    description: "Thrilling adventures and cultural experiences including water sports, hiking, and local attractions.",
-                    buttonText: "View Activities",
-                    buttonLink: "#",
-                    //price: "Sea & Land Activities"
-                },
+                // {
+                //     title: "Activities & Tour",
+                //     category: "tours",
+                //     image: "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                //     icon: "bx-run",
+                //     description: "Thrilling adventures and cultural experiences including water sports, hiking, and local attractions.",
+                //     buttonText: "View Activities",
+                //     buttonLink: "#",
+                //     //price: "Sea & Land Activities"
+                // },
                 {
                     title: "Car Rental",
                     category: "transport",
@@ -169,7 +169,7 @@
                     icon: "bx-key",
                     description: "Premium fleet of vehicles available for self-drive adventures with flexible rental options and competitive rates.",
                     buttonText: "Rent Now",
-                    buttonLink: "#",
+                    buttonLink: "{{ route('cars.home') }}",
                     //price: "Cars from $24 per day"
                 },
                 {
@@ -179,7 +179,7 @@
                     icon: "bx-taxi",
                     description: "24/7 taxi services with experienced drivers for convenient city transportation and local travel needs.",
                     buttonText: "Book Taxi",
-                    buttonLink: "#",
+                    buttonLink: "{{ route('taxi') }}",
                    // price: "Round-trips from $25"
                 },
                 {
@@ -189,19 +189,19 @@
                     icon: "bx-diamond",
                     description: "Premium luxury vehicles with VIP treatment, perfect for business travelers and special occasions.",
                     buttonText: "Book Luxury",
-                    buttonLink: "#",
+                    buttonLink: "{{ route('taxi') }}",
                    // price: "From $140 per transfer"
                 },
-                {
-                    title: "Accommodations",
-                    category: "travel",
-                    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                    icon: "bx-bed",
-                    description: "Handpicked hotels, resorts, and vacation rentals offering comfort and luxury for every budget and preference.",
-                    buttonText: "Find Hotels",
-                    buttonLink: "#",
+              //  {
+              //      title: "Accommodations",
+               //     category: "travel",
+              //      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+               //     icon: "bx-bed",
+               //     description: "Handpicked hotels, resorts, and vacation rentals offering comfort and luxury for every budget and preference.",
+               //     buttonText: "Find Hotels",
+                //    buttonLink: "#",
                   //  price: "500 + Hotels & Villas"
-                }
+              //  }
                 //,
                 // {
                 //     title: "Marriage Planner",

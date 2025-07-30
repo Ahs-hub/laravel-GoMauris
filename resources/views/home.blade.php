@@ -24,14 +24,15 @@
       
           <div class="button-group">
             <button class="btn btn-form" onclick="window.location.href='{{ route('tours.index') }}'"><i class='bx bx-map'></i> Explore Mauritius</button>
-            <button class="btn btn-form"><i class='bx bx-camera'></i> Sightseeing</button>
-            <button class="btn btn-form"><i class='bx bx-run'></i> Activities</button>
+            <!-- <button class="btn btn-form"><i class='bx bx-camera'></i> Sightseeing</button> -->
+
             <button class="btn btn-form" onclick="window.location.href='{{ route('cars.home') }}'"><i class='bx bx-car'></i> Car Rental</button>
+            <button class="btn btn-form" onclick="window.location.href='{{ route('taxi') }}'"><i class='bx bx-car'></i> Book Taxi</button>
             
           </div>
       
           <div class="cta-wrapper">
-            <button class="btn btn-primary btn-lg cta-button rad-0" style="background-color:#05123E;">
+            <button class="btn btn-primary btn-lg cta-button rad-0" onclick="window.location.href='{{ route('customizeTour') }}'" style="background-color:#05123E;">
              Customize Tours
             </button>
           </div>
@@ -60,7 +61,7 @@
                 <div class="swiper-wrapper">
                     <!-- Repeated Swiper Slides -->
                     <!-- Just showing 1 for example -->
-                    <div class="swiper-slide">
+                    <!-- <div class="swiper-slide">
                         <div class="swiper-service-card" style="background-image: url('images/services/accomodation.jpg');">
                             <div class="swiper-service-overlay">
                                 <h5>Accomodation</h5>
@@ -71,14 +72,14 @@
                                 <p class="price-tag">500+ Hotels & Villas</p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- ... other slides repeated -->
                     <div class="swiper-slide">
                         <div class="swiper-service-card" style="background-image: url('images/services/private_airport_transfer.jpg');">
                             <div class="swiper-service-overlay">
                                 <h5>Private Airport Transfer</h5>
                                 <p class="description">Private Transfers . Cars, Minivans,SUVs, Coaster .Free Child Seat</p>
-                                <button type="submit" class="btn btn-primary btn-lg button-text description" >
+                                <button type="submit"  onclick="window.location.href='{{ route('taxi') }}'" class="btn btn-primary btn-lg button-text description" >
                                     More
                                 </button>
                                 <p class="price-tag">From €33 per transfer</p>
@@ -87,11 +88,24 @@
                     </div>
 
                     <div class="swiper-slide">
+                        <div class="swiper-service-card" style="background-image: url('images/services/car_rental.jpg');">
+                            <div class="swiper-service-overlay">
+                                <h5>Car Rental</h5>
+                                <p class="description">Premium fleet of vehicles available for self-drive adventures.</p>
+                                <button type="submit"  onclick="window.location.href='{{ route('cars.home') }}'" class="btn btn-primary btn-lg button-text description" >
+                                    More
+                                </button>
+                                <p class="price-tag">From €35 per transfer</p>
+                             </div>
+                        </div>
+                   </div>
+
+                    <div class="swiper-slide">
                         <div class="swiper-service-card" style="background-image: url('images/services/luxury_airport_transfer.jpg');">
                             <div class="swiper-service-overlay">
                                 <h5>Luxury Airport Transfer</h5>
                                 <p class="description paragraph-text">Private VIP Transfer . Incl. BMW x5, x7 & similar</p>
-                                <button type="submit" class="btn btn-primary btn-lg button-text description" >
+                                <button type="submit" onclick="window.location.href='{{ route('taxi') }}'" class="btn btn-primary btn-lg button-text description" >
                                     More
                                 </button>
                                 <p class="price-tag">From €140 per transfer</p>
@@ -104,7 +118,7 @@
                             <div class="swiper-service-overlay">
                                 <h5>Sightseeing tour</h5>
                                 <p class="description">Explore Mauritius with our friendly & professional drivers</p>
-                                <button type="submit" class="btn btn-primary btn-lg button-text description" >
+                                <button type="submit" onclick="window.location.href='{{ route('tours.index') }}'" class="btn btn-primary btn-lg button-text description" >
                                     More
                                 </button>
                                 <p class="price-tag">€83 for a party of 4</p>
@@ -117,7 +131,7 @@
                             <div class="swiper-service-overlay">
                                 <h5>Taxi ride</h5>
                                 <p class="description">Need a transfer from Point A to B?With a return ?It's here </p>
-                                <button type="submit" class="btn btn-primary btn-lg button-text description" >
+                                <button type="submit" onclick="window.location.href='{{ route('taxi') }}'" class="btn btn-primary btn-lg button-text description" >
                                     More
                                 </button>
                                 <p class="price-tag">Round-trips for €25</p>

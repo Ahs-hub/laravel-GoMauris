@@ -47,7 +47,7 @@
                         <div class="d-flex flex-wrap gap-3 mb-4 text-start">
                         <div class="flex-fill">
                             <label class="form-label">Date</label>
-                            <input type="date" class="form-control" v-model="form.date" required>
+                            <input type="date" class="form-control"  v-model="form.date" :min="minDate"  required>
                         </div>
                         <div class="flex-fill">
                             <label class="form-label">Time</label>
@@ -219,8 +219,13 @@
                     country: '',
                     mobile: '',
                     comments: ''
-                }
+                },
+                minDate: ''
             };
+        },
+        mounted() {
+            const today = new Date().toISOString().split('T')[0];
+            this.minDate = today;
         },
         methods: {
             goToNext() {

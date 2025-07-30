@@ -47,7 +47,7 @@
                     <div class="header-item">
                         <i class='bx bx-phone'></i>
                         <span>
-                              <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none;">
+                              <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
                                     +230 55040167
                               </a>
                         </span>
@@ -75,7 +75,11 @@
             </a>
             <div class="header-item phone-appear" style="color:white;">
                 <i class='bx bx-phone'></i>
-                <span>+230 55040167</span>
+                <span>
+                    <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
+                        +230 55040167
+                    </a>
+                </span>
             </div>
             <!-- Toggler Button -->
             <button class="navbar-toggler no-border" style="color:white;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -262,11 +266,12 @@
                         <div class="footer-section"  >
                             <h5>Quick Links</h5>
                             <ul class="footer-links">
-                                <li><a href="#home" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Home</a></li>
-                                <li><a href="#cars" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Our Fleet</a></li>
-                                <li><a href="#tours" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Reservation</a></li>
-                                <li><a href="#tours" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>FAQ</a></li>
-                                <li><a href="#contact" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Contact</a></li>
+                                <li><a href="{{ route('cars.home') }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Home</a></li>
+                                <li><a  href="{{ route('fleet') }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Our Fleet</a></li>
+                                <li><a href="{{ route('reservation') }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Reservation</a></li>
+                                <li><a href="{{ route('faq') }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>FAQ</a></li>
+                                <li><a href="{{ route('contact', ['type' => 'car']) }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Contact</a></li>
+                                <li><a href="{{ route('rentalpolicy') }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Rental Policy</a></li>
                             </ul>
                         </div>
                     </div>
@@ -282,7 +287,11 @@
                                     </div>
                                     <div class="contact-text" >
                                         <strong style="color:rgb(161, 161, 161);">Phone</strong>
-                                        <span>+230 55040167</span>
+                                        <span>
+                                            <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
+                                                    +230 55040167
+                                            </a>
+                                        </span>
                                     </div>
                                 </div>
                                 
@@ -335,9 +344,9 @@
                         <p>&copy; Copyright © 2025 MyVacTour Mauritius Car Rental</p>
                     </div>
                     <div class="footer-bottom-links">
-                        <a href="#">Privacy Policy   </a>
+                        <a href="{{ route('privacypolicy', ['type' => 'car']) }}">Privacy Policy   </a>
                         |
-                        <a href="#"> Cancellation Policy</a>
+                        <a  href="{{ route('cancellationpolicy') }}"> Cancellation Policy</a>
                     </div>
                 </div>
             </div>
