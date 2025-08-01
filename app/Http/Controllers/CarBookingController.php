@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+//For notification
+use App\Models\AdminNotification;
+
 class CarBookingController extends Controller
 {
     public function store(Request $request)
@@ -27,6 +30,12 @@ class CarBookingController extends Controller
         ]);
 
         $booking = \App\Models\CarBooking::create($validated);
+
+        //Notification
+        AdminNotification::create([
+            'type' => 'CarBooking',
+            'related_id' => $booking->id, // ✅ Corrected here
+        ]);
 
         return response()->json(['success' => true, 'message' => 'Quote received.']);
 

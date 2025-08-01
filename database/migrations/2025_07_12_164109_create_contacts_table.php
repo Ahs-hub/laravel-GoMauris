@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('service');
             $table->text('message')->nullable();
+
+            $table->enum('status', ['unseen', 'seen', 'reply'])->default('unseen');
+
             $table->timestamps();
         });
     }

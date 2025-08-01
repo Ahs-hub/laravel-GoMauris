@@ -17,6 +17,7 @@ class TaxiBooking extends Model
         'email', 
         'country', 
         'mobile', 
-        'comments'
+        'comments',
+        'status' // ✅ Add this
     ];
 }

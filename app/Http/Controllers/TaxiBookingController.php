@@ -5,6 +5,9 @@ use App\Models\TaxiBooking;
 
 use Illuminate\Http\Request;
 
+//For notification
+use App\Models\AdminNotification;
+
 class TaxiBookingController extends Controller
 {
 
@@ -25,7 +28,15 @@ class TaxiBookingController extends Controller
             'comments' => 'nullable|string',
         ]);
 
-        TaxiBooking::create($validated);
+        // ✅ Store the new booking
+        $booking = TaxiBooking::create($validated);
+
+        // Send Notification
+        AdminNotification::create([
+            'type' => 'TaxiBooking',
+            'related_id' => $booking->id, // ✅ Corrected here
+        ]);
+            
 
         // Instead of redirect(), return JSON with redirect URL
         return response()->json([

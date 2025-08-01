@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\TourController;
 
+use App\Http\Controllers\Admin\AdminNotificationController;
+use App\Http\Controllers\Admin\AdminController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -24,6 +26,18 @@ Route::get('/admin/tours/blocked-dates/{tour}', function($tourId) {
     ]);
 });
 
+//Admin receive notification 
+Route::get('/admin/notifications-count', [AdminNotificationController::class, 'count']);
+
 //return block-id without auth
 Route::get('/public/tours/blocked-dates/{id}', [TourController::class, 'getBlockedDatesPublic']);
+
+//fetching contact block of 20
+Route::get('/contacts', [AdminController::class, 'fetchPaginated']);
+
+//delete contact 
+Route::delete('/contacts/{id}', [AdminController::class, 'destroy']);
+
+//change status
+Route::put('/contacts/{id}/update-status', [AdminController::class, 'updateStatus']);
 

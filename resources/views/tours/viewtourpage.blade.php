@@ -254,6 +254,7 @@
                                         class="custom-date-input" 
                                         v-model="selectedDate"
                                         @change="checkDateAvailability"
+                                        :min="today"
                                     />
 
                                     <!-- Without auto-check -->
@@ -262,6 +263,7 @@
                                         type="date" 
                                         class="custom-date-input" 
                                         v-model="selectedDate"
+                                        :min="today"
                                     />
 
 
@@ -524,6 +526,7 @@
         createApp({
             data() {
                 return {
+                    today: new Date().toISOString().split('T')[0], // e.g., "2025-07-31"
                     loading: false,
 
                     selectedDate: '',

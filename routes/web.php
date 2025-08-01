@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 //admin connection
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\TourBlockedDateController;
+use App\Http\Controllers\Admin\AdminController;
 
 
 use App\Http\Controllers\TourBookingController;
@@ -22,6 +23,8 @@ use App\Http\Controllers\TaxiBookingController;
 use App\Http\Controllers\CarController;
 
 use App\Http\Controllers\CarBookingController;
+
+use App\Http\Controllers\CustomTourRequestController;
 
 // Route::get('/', function () {
 //     return view('home');
@@ -36,9 +39,23 @@ Route::post('/admin/login', [AuthController::class, 'login']);
 
 // Protected dashboard (only logged-in users can access)
 Route::middleware('auth')->get('/admin/dashboard', function () {
-    return view('admin.adminpanel');
+    return view('admin.dashboardpanel');
 })->name('admin.dashboard');
 
+
+// Go to Book Tour panel
+Route::middleware('auth')->get('/admin/booktour', function () {
+    return view('admin.tourpanel');
+})->name('admin.tourpanel');
+
+// Go to contact panel
+Route::middleware('auth')->get('/admin/contactpanel', function () {
+    return view('admin.contactpanel');
+})->name('admin.contactpanel');
+
+// Get number of contact, status
+Route::middleware('auth')->get('/admin/contact-stats', [AdminController::class, 'contactStats'])
+->name('admin.contactstats');
 
 Route::get('/rent-cars', [CarController::class, 'index'])->name('cars.home');
 Route::get('/rentcar/{id}', [CarController::class, 'show'])->name('rentcar.show');
@@ -155,7 +172,12 @@ Route::get('/tours/{slug}', [TourController::class, 'show'])->name('tours.show')
 //Save the tour in database
 Route::post('/tour-bookings', [TourBookingController::class, 'store']);
 
+//Save custom tour
+Route::post('/custom-tour', [CustomTourRequestController::class, 'store'])->name('custom-tour.store');
+
 Route::view('/thank-you', 'thankyou')->name('thankyou');
+
+
 
 
 //Search booktour to display in panel

@@ -20,7 +20,7 @@
                         <!-- Pick-up location -->
                         <div class="form-group">
                         <label>Pick-up location</label>
-                        <select v-model="pickupLocation" class="form-control">
+                        <select v-model="pickupLocation" class="form-control" required>
                             <option disabled value="">Pick up location</option>
                             <option>Mahebourg</option>
                             <option>Port Louis</option>
@@ -33,7 +33,7 @@
                         <!-- Pick-up date -->
                         <div class="form-group">
                         <label>Pick-up date</label>
-                        <input type="datetime-local" v-model="pickupDate" :min="minDateTime" class="form-control">
+                        <input type="datetime-local" v-model="pickupDate" :min="minDateTime" class="form-control" required>
                         </div>
         
                         <!-- Return location -->
@@ -51,7 +51,7 @@
                         <!-- Return date -->
                         <div class="form-group">
                         <label>Return date</label>
-                        <input type="datetime-local"v-model="returnDate" :min="minDateTime" class="form-control">
+                        <input type="datetime-local"v-model="returnDate" :min="minDateTime" class="form-control" required>
                         </div> 
 
                         <div class="form-group">

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TourBooking;
 
+//For notification
+use App\Models\AdminNotification;
+
 class TourBookingController extends Controller
 {
     public function store(Request $request)
@@ -32,6 +35,15 @@ class TourBookingController extends Controller
 
         // Create booking using mass assignment
         TourBooking::create($validated);
+
+        // ✅ Store the new booking
+        $booking = TourBooking::create($validated);
+
+        AdminNotification::create([
+            'type' => 'TourBooking',
+            'related_id' => $booking->id, // ✅ Corrected here
+        ]);
+    
 
         return redirect()->route('thankyou');
     }

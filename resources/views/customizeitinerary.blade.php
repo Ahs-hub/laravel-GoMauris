@@ -11,15 +11,16 @@
 
             <h1 class="text-center mb-4 section-heading" style="margin-top:50px; color:#262626; margin-bottom:70px;">Send Us Your Customized Tour</h1>
 
-            <div class="tour-info shadow p-4 p-md-5 rounded" v-if="showForm && checked" style="color:#2c3e50; border: 2px solid var(--accent-color);">
+            <div class="tour-info shadow p-4 p-md-5 rounded custom-tour" style="color:#2c3e50; border: 2px solid var(--accent-color);">
 
-                <form @submit.prevent="submitForm">
+                <form method="POST" action="{{ route('custom-tour.store') }}">
+                    @csrf
                     <div class="form-header text-center mb-4">
                         <h5>Let us assist you in planning your personalized tour</h5>
                         <h5>If you prefer WhatsApp, contact us at 
                             <span>
                                 <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="color: var(--secondary-color); font-weight: 500;">
-                                        +230 55040167
+                                    +230 55040167
                                 </a>
                             </span>
                         </h5>
@@ -29,10 +30,9 @@
                     <div class="section-title h4 mb-3" style="color:#2c3e50;">Enter your tour details:</div>
 
                     <div class="row mb-3">
-                        <!-- New dropdown field -->
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Vehicle Category <span class="text-danger">*</span></label>
-                            <select class="form-select" v-model="vehicle_category" required>
+                            <select class="form-select" name="vehicle_category" required>
                                 <option value="">Select a category</option>
                                 <option value="standard">Standard</option>
                                 <option value="accommodate">Accommodate</option>
@@ -42,33 +42,33 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Passengers <span class="text-danger">*</span></label>
-                            <input type="number" min="1" class="form-control" v-model="passengers" required>
+                            <input type="number" min="1" name="passengers" class="form-control" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Tour Date <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" v-model="tour_date" required>
+                            <input type="date" name="tour_date" class="form-control" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Preferred Start Time</label>
-                            <input type="time" class="form-control" v-model="start_time">
+                            <input type="time" name="start_time" class="form-control">
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Hotel / Residence Name</label>
-                            <input type="text" class="form-control" v-model="hotel_name" placeholder="Enter hotel or residence name">
+                            <input type="text" name="hotel_name" class="form-control" placeholder="Enter hotel or residence name">
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Preferred Tour</label>
-                            <input type="text" class="form-control" v-model="preferred_tour" placeholder="e.g., South Tour, Catamaran">
+                            <input type="text" name="preferred_tour" class="form-control" placeholder="e.g., South Tour, Catamaran">
                         </div>
                     </div>
 
                     <div class="mb-4">
                         <label class="form-label">Preferred Itinerary / Comments</label>
-                        <textarea class="form-control" v-model="comments" rows="3" placeholder="Describe your ideal route, stopovers, or any special requests..."></textarea>
+                        <textarea name="comments" class="form-control" rows="3" placeholder="Describe your ideal route, stopovers, or any special requests..."></textarea>
                     </div>
 
                     <!-- About You -->
@@ -77,17 +77,17 @@
                     <div class="row mb-3">
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Your Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" v-model="full_name" required placeholder="Enter your full name">
+                            <input type="text" name="full_name" class="form-control" required placeholder="Enter your full name">
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Your Email <span class="text-danger">*</span></label>
-                            <input type="email" class="form-control" v-model="email" required placeholder="Enter your email">
+                            <input type="email" name="email" class="form-control" required placeholder="Enter your email">
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Country <span class="text-danger">*</span></label>
-                            <select class="form-select" v-model="country" required>
+                            <select name="country" class="form-select" required>
                                 <option value="">Select your country</option>
                                 <option value="mauritius">Mauritius</option>
                                 <option value="france">France</option>
@@ -105,18 +105,29 @@
                             <label class="form-label">Mobile Number (WhatsApp) <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bx bxl-whatsapp"></i></span>
-                                <input type="tel" class="form-control" v-model="mobile_number" required placeholder="+230 55040167">
+                                <input type="tel" name="mobile_number" class="form-control" required placeholder="+230 55040167">
                             </div>
                         </div>
                     </div>
 
                     <div class="text-center mt-4">
-                        <button type="submit" class="book-button">
-                             Send a Quote
+                        <button type="submit" class="book-button" id="customtourSubmitBtn">
+                            Send a Quote
                         </button>
+
+                        <div 
+                            id="customtourSpinner" 
+                            class="spinner-border text-primary ms-3" 
+                            style="display: none;" 
+                            role="status"
+                        >
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
                     </div>
                 </form>
+                
             </div>
+
    
         </div>
     </div>
@@ -185,4 +196,21 @@
         </div>
 
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('.custom-tour form');
+            const submitBtn = document.getElementById('customtourSubmitBtn');
+            const spinner = document.getElementById('customtourSpinner');
+
+            form.addEventListener('submit', function () {
+                // Disable the button
+                submitBtn.disabled = true;
+
+                // Hide the button and show the spinner
+                submitBtn.style.display = 'none';
+                spinner.style.display = 'inline-block';
+            });
+        });
+    </script>
 @endsection

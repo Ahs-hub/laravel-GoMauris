@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Mail;
 
 use App\Models\Contact;
 
+//For notification
+use App\Models\AdminNotification;
+
 class ContactController extends Controller
 {
     public function submit(Request $request)
@@ -24,7 +27,7 @@ class ContactController extends Controller
         // Mail::to('admin@example.com')->send(new ContactMail($validated));
 
         // Save to database
-        Contact::create([
+        $booking = Contact::create([
             'first_name' => $validated['firstName'],
             'last_name' => $validated['lastName'],
             'email' => $validated['email'],
@@ -32,6 +35,14 @@ class ContactController extends Controller
             'service' => $validated['service'],
             'message' => $validated['message'],
         ]);
+
+
+        // Notification
+        AdminNotification::create([
+            'type' => 'TaxiBooking',
+            'related_id' => $booking->id, // ✅ Corrected here
+        ]);
+                    
 
         $type = $request->query('type', 'car'); // Defaults to 'car' if not provided
          return redirect()->route('thankyou', ['type' => $type]);

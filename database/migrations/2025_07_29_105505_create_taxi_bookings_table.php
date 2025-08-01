@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('country');
             $table->string('mobile');
             $table->text('comments')->nullable();
+
+            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
             
             $table->timestamps();
         });
