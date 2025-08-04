@@ -39,7 +39,7 @@ class ContactController extends Controller
 
         // Notification
         AdminNotification::create([
-            'type' => 'TaxiBooking',
+            'type' => 'ContactBooking',
             'related_id' => $booking->id, // ✅ Corrected here
         ]);
                     

@@ -26,6 +26,8 @@ return new class extends Migration
             $table->text('comments')->nullable();
 
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
+
+            $table->text('admin_comment')->nullable(); // <- admin comment field
             
             $table->timestamps();
         });

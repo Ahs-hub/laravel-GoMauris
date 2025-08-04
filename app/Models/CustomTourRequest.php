@@ -18,6 +18,7 @@ class CustomTourRequest extends Model
         'email',
         'country',
         'mobile_number',
-        'status' // ✅ Add this
+        'status', // ✅ Add this
+        'admin_comment'
     ];
 }

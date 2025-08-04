@@ -27,6 +27,9 @@
 </head>
 <body >
     <div id="app">
+        {{-- sound notification --}}
+        <audio id="notificationSound" src="/sounds/notification.mp3" preload="auto"></audio>
+
         {{-- Sidebar --}}
         <div class="sidebar" id="adminSidebar">
             <div class="sidebar-header">
@@ -44,7 +47,7 @@
                 <li><a href="/admin/calendar"><i class="bx bx-car"></i>Taxi Booking</a></li>
 
                 <li><a href="{{ route('admin.contactpanel') }}"><i class='bx bx-phone'></i>Contact</a></li>
-                <li><a href="/admin/calendar"><i class='bx bx-bell'></i> Notification</a></li>
+                <li><a href="{{ route('admin.notificationpanel') }}"><i class='bx bx-bell'></i> Notification</a></li>
 
                 <!-- <li><a href="/admin/bookings"><i class="bx bx-calendar"></i> Bookings</a></li> -->
                 <!-- <li><a href="/admin/vehicles"><i class="bx bx-car"></i> Vehicles</a></li> -->
@@ -86,13 +89,10 @@
 
             {{-- Notification Update --}}
             <div style="position: fixed; top: 20px; right: 20px; z-index: 1050;">
-                <div v-if="newNotifications > 0">
-                    <div  class="alert alert-warning alert-dismissible fade show" role="alert">
-                        🔔 @{{ newNotifications }} new notification(s) received.
+                <div v-if="newNotificationOnly > 0 && !notificationDismissed">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        🔔 @{{ newNotificationOnly }} new notification(s) received.
                         <button type="button" class="btn-close" @click="dismissNotification"></button>
-                        <a href="/admin/notifications/mark-seen" class="btn btn-sm ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Refresh page">
-                            <i class='bx bx-refresh'></i>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -115,25 +115,37 @@
         createApp({
             data() {
                 return {
-                    newNotifications: 0,
+                    newNotifications: 0,          // latest count from the server
+                    notificationDismissed: false, // true after user closes the alert
+                    playNotification: 0,
+
+                    //notification page
+                    notifications: [], // All notifications
+                    activeFilter: 'unseen', // Could be: 'unseen', 'tour', 'car', 'taxi', etc.
+                    showToast: false,
+                    toastMessage: '',
+                    unreadCount: 0, // Used in badge
 
                     tours: [],
                     selectedTour: '',
                     blockedDates: [],
                     currentDate: new Date(),
                     weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+
                     loading: false,
+                    loadingpage: false,
+                    loadingform: false,
 
 
                     //search book date
                     bookingsForSelectedDate: [],
                     selectedDate: '',
 
-                    statscontact: {
-                        total: 0,
-                        read: 0,
-                        unread: 0,
-                        today: 0
+ 
+                    stats: {
+                        contact: { total: 0, read: 0, unread: 0, today: 0 },
+                        taxi: { total: 0, proceed: 0, reserve: 0, cancel: 0 },
+                        tour: { total: 0, confirmed: 0, pending: 0, cancelled: 0 }
                     },
 
                     //Search Contact
@@ -147,12 +159,34 @@
                     allSelected: false,
                     selectedContact: null,
 
-                    //loading page contact 
+                    commentItem: null,
+                    tempComment: '',
+
+                    selectedItem: null,
+
+                    // page contact,tour,taxi ect
                     contacts: [],
-                    page: 1,
-                    hasMore: true
+                    taxi: [],
+                    tours: [],
+
+                    page: {
+                        contacts: 1,
+                        taxi: 1,
+                        tours: 1,
+                    },
+                    hasMore: {
+                        contacts: true,
+                        taxi: true,
+                        tours: true,
+                    },
 
                 };
+            },
+            created() {
+                // Load from localStorage on page load
+                this.previousNotificationCount = parseInt(localStorage.getItem('notificationCount')) || 0;
+                this.notificationDismissed = localStorage.getItem('notificationDismissed') === 'true';
+                this.playNotification = parseInt(localStorage.getItem('playNotification')) || 0;
             },
             computed: {
                 calendarDays() {
@@ -184,28 +218,87 @@
                     });
                 },
 
+                newNotificationOnly() {
+                    const stored = parseInt(localStorage.getItem('notificationCount')) || 0;
+                    return Math.max(this.newNotifications - stored, 0);
+                },
+
+                //Contact filtering
                 filteredContacts() {
-                    return this.contacts.filter(contact => {
-                    const query = this.searchQuery.toLowerCase();
+                    return this.getFilteredData(this.contacts, {
+                        searchQuery: this.searchQuery,
+                        status: this.filterStatus,
+                        service: this.filterService
+                    }, ['first_name', 'last_name', 'email', 'phone']);
+                },
+                paginatedContacts() {
+                    return this.paginate(this.filteredContacts, this.currentPage, this.itemsPerPage);
+                },
 
-                    const matchesSearch =
-                        query === '' ||
-                        (contact.first_name && contact.first_name.toLowerCase().includes(query)) ||
-                        (contact.last_name && contact.last_name.toLowerCase().includes(query)) ||
-                        (contact.email && contact.email.toLowerCase().includes(query)) ||
-                        (contact.phone && contact.phone.includes(query));
+                //Notification filter 
+                filteredNotifications() {
+                    let filtered = this.notifications;
 
-                    const matchesService =
-                        this.filterService === '' || contact.service === this.filterService;
+                    if (this.activeFilter === 'unseen') {
+                        return filtered.filter(n => !n.seen);
+                    }
 
-                    const matchesStatus =
-                        this.filterStatus === '' || contact.status === this.filterStatus;
+                    if (this.activeFilter === 'tour') {
+                        return filtered.filter(n => n.type === 'tour');
+                    }
 
-                    return matchesSearch && matchesService && matchesStatus;
-                    });
+                    if (this.activeFilter === 'car') {
+                        return filtered.filter(n => n.type === 'car');
+                    }
+
+                    if (this.activeFilter === 'taxi') {
+                        return filtered.filter(n => n.type === 'taxi');
+                    }
+
+                    return filtered;
                 }
+
+                
             },
             methods: {
+                //Globally for exporting
+                exportToCSV(dataArray, fields, filenamePrefix = 'export') {
+                    if (!dataArray || !fields || dataArray.length === 0) {
+                        alert("No data to export.");
+                        return;
+                    }
+
+                    // Build CSV header from fields
+                    const headers = fields.map(f => f.label).join(",") + "\n";
+
+                    // Build CSV rows
+                    const rows = dataArray.map(item => {
+                        return fields.map(f => `"${item[f.key] ?? ''}"`).join(",");
+                    }).join("\n");
+
+                    const csvContent = "data:text/csv;charset=utf-8," + headers + rows;
+                    const encodedUri = encodeURI(csvContent);
+                    const link = document.createElement("a");
+                    link.setAttribute("href", encodedUri);
+
+                    // Filename like tour_bookings_2025-08-02.csv
+                    const date = new Date().toISOString().split('T')[0];
+                    link.setAttribute("download", `${filenamePrefix}_${date}.csv`);
+
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                },
+
+                playNotificationSound() {
+                    const audio = document.getElementById('notificationSound');
+                    if (audio) {
+                    audio.play().catch(err => {
+                        console.warn('Audio play failed:', err);
+                    });
+                    }
+                },
+
                 fetchTours() {
                     this.loading = true;
                     axios.get('/api/tours')
@@ -274,54 +367,85 @@
                     return selected ? selected.name : '';
                 },
 
-                //Check notification
+                /** Poll the server for the unseen-notification count */
                 checkNotifications() {
                     fetch('/api/admin/notifications-count')
-                        .then(res => res.json())
-                        .then(data => {
-                            this.newNotifications = data.count;
+                        .then(r => r.json())
+                        .then(({ count }) => {
+                        const storedCount = parseInt(localStorage.getItem('notificationCount')) || 0;
+
+                        // New batch detected ➜ reset dismissal flag + play sound once
+                        if (count > storedCount) {
+                            this.notificationDismissed = false;
+                            localStorage.removeItem('notificationDismissed');
+                            
+                            // Only play sound if this is new increase
+                            if (count > this.playNotification) {
+                                this.playNotificationSound();
+                            }
+
+                            
+                            this.playNotification = count;
+                            localStorage.setItem('playNotification', this.playNotification.toString());
+                        }
+
+                        this.newNotifications = count;
                         })
                         .catch(console.error);
                 },
-                
-                //#region load contact
-                    loadStats() {
+
+                /** Close button logic */
+                dismissNotification() {
+                    this.notificationDismissed = true;
+                    localStorage.setItem('notificationDismissed', 'true');
+                    // Mark the latest count as “seen”
+                    localStorage.setItem('notificationCount', this.newNotifications.toString());
+                    
+                    //  No notifiication sound
+                    localStorage.setItem('playNotification', this.newNotifications.toString());
+                },
+
+
+                //#region load contact,tour,taxi ect
+                    loadStats(type) {
                         this.loading = true;
-                        fetch('/admin/contact-stats')
+
+                        fetch(`/admin/${type}-stats`)
                             .then(res => res.json())
                             .then(data => {
-                                this.statscontact = data;
+                                this.stats[type] = data;
                             })
                             .finally(() => {
                                 this.loading = false;
                             });
                     },
 
-                    loadContacts() {
-                        if (this.loading || !this.hasMore) return;
+                    loadPaginatedData(endpoint, targetArray) {
+                        if (this.loadingpage || !this.hasMore[targetArray]) return;
 
-                        this.loading = true;
+                        this.loadingpage = true;
 
-                        fetch(`/api/contacts?page=${this.page}`)
+                        fetch(`${endpoint}?page=${this.page[targetArray]}`)
                             .then(res => res.json())
                             .then(data => {
-                                this.contacts.push(...data.data);
-                                this.page++;
-                                this.hasMore = data.current_page < data.last_page;
+                                this[targetArray].push(...data.data);
+                                this.page[targetArray]++;
+                                this.hasMore[targetArray] = data.current_page < data.last_page;
                             })
                             .finally(() => {
-                                this.loading = false;
+                                this.loadingpage = false;
                             });
                     },
 
-                    handleScroll() {
-                        let bottomOfWindow =
+                    handleScroll(endpoint, targetArray) {
+                        const bottomOfWindow =
                             window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
 
                         if (bottomOfWindow) {
-                            this.loadContacts();
+                            this.loadPaginatedData(endpoint, targetArray);
                         }
                     },
+
                     getStatusClass(status) {
                         switch (status) {
                             case 'unseen': return 'bg-warning text-dark';
@@ -331,11 +455,12 @@
                         }
                     },
 
-                    deleteContact(id, index) {
-                        this.loading = true;
-                        if (!confirm("Are you sure you want to delete this contact?")) return;
+                    deleteItem(type, id, index) {
+                        if (!confirm("Are you sure you want to delete this item?")) return;
 
-                        fetch(`/api/contacts/${id}`, {
+                        this.loading = true;
+
+                        fetch(`/api/${type}/${id}`, {
                             method: 'DELETE',
                             headers: {
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -344,23 +469,22 @@
                             }
                         })
                         .then(res => {
-                            if (!res.ok) throw new Error('Failed to delete contact');
-                            // Remove from local list
-                            this.contacts.splice(index, 1);
+                            if (!res.ok) throw new Error('Failed to delete item');
+                            this[type].splice(index, 1);  // Remove from list
                         })
                         .catch(err => {
                             console.error(err);
-                            alert('An error occurred while deleting the contact.');
+                            alert('An error occurred while deleting the item.');
                         })
                         .finally(() => {
-                                this.loading = false;
+                            this.loading = false;
                         });
-
                     },
 
-                    updateContactStatus(id, index, status) {
+                    updateStatus(type, id, index, status) {
                         this.loading = true;
-                        fetch(`/api/contacts/${id}/update-status`, {
+
+                        fetch(`/api/${type}/${id}/update-status`, {
                             method: 'PUT',
                             headers: {
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -370,28 +494,193 @@
                             body: JSON.stringify({ status: status })
                         })
                         .then(res => {
-                            if (!res.ok) throw new Error('Failed to update contact status');
+                            if (!res.ok) throw new Error('Failed to update status');
                             return res.json();
                         })
                         .then(() => {
-                            this.contacts[index].status = status;
+                            this[type][index].status = status;  // example: this.taxiBookings[2].status
                         })
                         .catch(err => {
                             console.error(err);
-                            alert('Failed to update contact status.');
+                            alert('Failed to update status.');
                         })
                         .finally(() => {
                             this.loading = false;
                         });
                     },
 
-                    viewContact(contact) {
-                    this.selectedContact = contact;
-                    const modal = new bootstrap.Modal(document.getElementById('contactModal'));
-                    modal.show();
+                    viewItem(item, modalId) {
+                        this.selectedItem = item;
+                        const modal = new bootstrap.Modal(document.getElementById(modalId));
+                        modal.show();
                     },
-                //#endregion load contact
+
+                    getFilteredData(data, filters = {}, searchFields = []) {
+                        return data.filter(item => {
+                            const query = (filters.searchQuery || '').toLowerCase();
+
+                            const matchesSearch =
+                                query === '' ||
+                                searchFields.some(field =>
+                                    item[field] && item[field].toLowerCase().includes(query)
+                                );
+
+                            const matchesStatus =
+                                !filters.status || item.status === filters.status;
+
+                            const matchesService =
+                                !filters.service || item.service === filters.service;
+
+                            return matchesSearch && matchesStatus && matchesService;
+                        });
+                    },
+
+                    paginate(data, currentPage, itemsPerPage) {
+                        const start = (currentPage - 1) * itemsPerPage;
+                        return data.slice(start, start + itemsPerPage);
+                    },
+                   
+                    addComment(item, modalId) {
+                        this.commentItem = item;
+                        this.tempComment = item.admin_comment || '';
+                        const modal = new bootstrap.Modal(document.getElementById(modalId));
+                        modal.show();
+                    },
+
+                    saveComment() {
+                        if (this.commentItem) {
+
+                            this.loadingform = true;
+
+                            fetch(`/api/contacts/${this.commentItem.id}/update-comment`, {
+                                method: 'PUT',
+                                headers: {
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    admin_comment: this.tempComment
+                                })
+                            })
+                            .then(res => {
+                                if (!res.ok) throw new Error('Failed to save comment');
+                                return res.json();
+                            })
+                            .then(() => {
+                                this.commentItem.admin_comment = this.tempComment;
+
+                                // Close modal
+                                const modal = bootstrap.Modal.getInstance(document.getElementById('commentModal'));
+                                modal.hide();
+
+                                alert('Comment saved successfully!');
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                alert('Failed to save comment.');
+                            })
+                            .finally(() => {
+                                this.loadingform = false;
+                            });
+                        }
+                    },
+
+                    clearFilters() {
+                        this.searchQuery = '';
+                        this.filterService = '';
+                        this.filterStatus = '';
+                    },
+
+                    refreshData() {
+                        window.location.reload();
+                    },
+
+                //#endregion load contact,tour,taxi ect
                 
+                //#region load notification
+                    fetchNotifications() {
+                        this.loading = true;
+                        fetch('/api/admin/notifications') // ← You must create this API route in Laravel
+                            .then(res => res.json())
+                            .then(data => {
+                                this.notifications = data;
+                                this.unreadCount = data.filter(n => !n.seen).length;
+                            })
+                            .catch(console.error)
+                            .finally(() => this.loading = false);
+                    },
+                    deleteNotification(id) {
+                        if (!confirm("Are you sure you want to delete this notification?")) return;
+
+                        fetch(`/api/admin/notifications/${id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            }
+                        }).then(() => {
+                            this.notifications = this.notifications.filter(n => n.id !== id);
+                            this.toastMessage = 'Notification deleted';
+                            this.showToast = true;
+                        });
+                    },
+
+                    clearAllNotifications() {
+                        if (!confirm("Clear all notifications?")) return;
+
+                        fetch('/api/admin/notifications/clear-all', {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                'Accept': 'application/json',
+                            }
+                        }).then(() => {
+                            this.notifications = [];
+                            this.toastMessage = 'All notifications cleared';
+                            this.showToast = true;
+                        });
+                    },
+
+                    getNotificationTitle(type) {
+                        switch(type) {
+                            case 'TourBooking': return 'New Tour Booking';
+                            case 'CarBooking': return 'New Car Booking';
+                            case 'TaxiBooking': return 'New Taxi Request';
+                            default: return 'Notification';
+                        }
+                    },
+                    getNotificationMessage(notification) {
+                        if (notification.type === 'TourBooking') {
+                            return `Booking #${notification.related_id} just arrived.`;
+                        } else if (notification.type === 'CarBooking') {
+                            return `Car Booking #${notification.related_id} is pending.`;
+                        } else if (notification.type === 'TaxiBooking') {
+                            return `Taxi request received (ID: ${notification.related_id}).`;
+                        } else {
+                            return 'You have a new notification.';
+                        }
+                    },
+                    getNotificationIcon(type) {
+                        switch (type) {
+                            case 'tour': return 'bx bx-map';
+                            case 'car': return 'bx bx-car';
+                            case 'taxi': return 'bx bx-taxi';
+                            default: return 'bx bx-bell';
+                        }
+                    },
+                    getNotificationClass(type) {
+                        switch (type) {
+                            case 'tour': return 'bg-primary text-white';
+                            case 'car': return 'bg-success text-white';
+                            case 'taxi': return 'bg-warning text-dark';
+                            default: return 'bg-secondary text-white';
+                        }
+                    },
+                //#endregion load notification
+
+
                 //search book date
                 async selectDate(date) {
                     if (!date || !this.selectedTour) return;
@@ -408,25 +697,54 @@
                     } finally {
                         this.loading = false;
                     }
+                },
+
+
+
+                //Export contact
+                exportContacts() {
+                    this.exportToCSV(this.filteredContacts, [
+                        { label: "First Name", key: "first_name" },
+                        { label: "Last Name", key: "last_name" },
+                        { label: "Email", key: "email" },
+                        { label: "Phone", key: "phone" },
+                        { label: "Service Type", key: "service" },
+                        { label: "Inquiry Details", key: "message" },
+                        { label: "Status", key: "status" },
+                        { label: "Priority", key: "priority" },
+                        { label: "Admin Comment", key: "admin_comment" },
+                        { label: "Date Received", key: "created_at" }
+                    ], 'GoMauris_Contact');
                 }
 
 
             },
             mounted() {
+                const path = window.location.pathname;
 
-                if (window.location.pathname.includes('/admin/contactpanel')) {
-                    this.loadStats();
-                    this.loadContacts();
-                    window.addEventListener('scroll', this.handleScroll);
-                    
+                if (path.includes('/admin/contactpanel')) {
+                    this.currentTab = 'contact';
+                    this.loadStats('contact');
+                    this.loadPaginatedData('/api/contacts', 'contacts');
+                    window.addEventListener('scroll', () => this.handleScroll('/api/contacts', 'contacts'));
+
                 } else if (window.location.pathname.includes('/admin/booktour')) {
                     this.fetchTours();
+                }else if (window.location.pathname.includes('/admin/notificationpanel')) {
+                    this.fetchNotifications();
                 }
 
-                //check notification
-                this.checkNotifications();
-                setInterval(this.checkNotifications, 60000);
 
+                // Load dismissal state on start-up
+                this.notificationDismissed = localStorage.getItem('notificationDismissed') === 'true';
+
+                // First check immediately, then every 30 s
+                this.checkNotifications();
+                this.timer = setInterval(this.checkNotifications, 60_000);
+
+            },
+            beforeUnmount() {
+                clearInterval(this.timer);
             },
             watch: {
                 selectedTour() {

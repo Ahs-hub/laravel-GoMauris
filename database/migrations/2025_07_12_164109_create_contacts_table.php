@@ -22,6 +22,8 @@ return new class extends Migration
 
             $table->enum('status', ['unseen', 'seen', 'reply'])->default('unseen');
 
+            $table->text('admin_comment')->nullable(); // <- admin comment field
+
             $table->timestamps();
         });
     }

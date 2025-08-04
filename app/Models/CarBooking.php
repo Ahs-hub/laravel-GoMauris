@@ -10,7 +10,7 @@ class CarBooking extends Model
         'first_name', 'last_name', 'driver_age', 'mobile', 'email', 'special_requests',
         'pickup_location', 'pickup_date', 'return_location', 'return_date', 'same_location',
         'car_id', 'has_driver', 'child_seats',
-        'base_price', 'addons_price', 'total_price', 'status'
+        'base_price', 'addons_price', 'total_price', 'status','admin_comment'
     ];
     
     public function car()

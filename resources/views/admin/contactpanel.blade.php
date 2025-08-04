@@ -18,10 +18,10 @@
                 <p class="text-muted">Manage client inquiries and contact information</p>
             </div>
             <div>
-                <button class="btn btn-primary me-2" @click="" aria-label="Export Contact Messages">
+                <button class="btn btn-primary me-2" @click="exportContacts" aria-label="Export Contact Messages">
                     <i class='bx bx-download'></i> Export
                 </button>
-                <button class="btn btn-outline-primary" @click="" aria-label="Refresh Contact List">
+                <button class="btn btn-outline-primary" @click=" refreshData" aria-label="Refresh Contact List">
                     <i class='bx bx-refresh'></i> Refresh
                 </button>
             </div>
@@ -33,7 +33,7 @@
                 <div class="card stats-card text-center p-3">
                     <div class="card-body p-2">
                         <i class='bx bx-message-dots fs-1 mb-2'></i>
-                        <h3 class="mb-1"> @{{ statscontact.total }} </h3>
+                        <h3 class="mb-1"> @{{ stats.contact.total }}</h3>
                         <small>Total Messages</small>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                 <div class="card stats-card text-center p-3">
                     <div class="card-body p-2">
                         <i class='bx bx-check-circle fs-1 mb-2'></i>
-                        <h3 class="mb-1"> @{{ statscontact.read }} </h3>
+                        <h3 class="mb-1"> @{{ stats.contact.read }} </h3>
                         <small>Read Messages</small>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                 <div class="card stats-card text-center p-3">
                     <div class="card-body p-2">
                         <i class='bx bx-time fs-1 mb-2'></i>
-                        <h3 class="mb-1"> @{{ statscontact.unread }} </h3>
+                        <h3 class="mb-1"> @{{ stats.contact.unread }} </h3>
                         <small>Unread Messages</small>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                 <div class="card stats-card text-center p-3">
                     <div class="card-body p-2">
                         <i class='bx bx-calendar fs-1 mb-2'></i>
-                        <h3 class="mb-1"> @{{ statscontact.today }} </h3>
+                        <h3 class="mb-1"> @{{ stats.contact.today }} </h3>
                         <small>Today's Messages</small>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
         <div class="card">
             <div class="card-header bg-white">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Contact Messages (@{{ statscontact.total }})</h5>
+                    <h5 class="mb-0">Contact Messages (@{{ stats.contact.total }})</h5>
                     <div class="btn-group" role="group">
                         <button 
                             type="button" 
@@ -148,8 +148,7 @@
                                     <input type="checkbox" class="form-check-input" @change="selectAll" v-model="allSelected">
                                 </th>
                                 <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
+                                <th>Contact</th>
                                 <th>Service</th>
                                 <th>Status</th>
                                 <th>Date</th>
@@ -165,44 +164,69 @@
                                 <td>
                                     <strong>@{{ contact.first_name }}</strong>
                                 </td>
-                                <td>@{{ contact.email }}</td>
-                                <td>@{{ contact.phone }}</td>
+                                <td>
+                                    <div class="small">
+                                        <div><i class='bx bx-envelope me-1'></i>@{{ contact.email }}</div>
+                                        <div><i class='bx bx-phone me-1'></i>@{{ contact.phone }}</div>
+                                    </div>
+                                </td>
                                 <td>
                                     <span class="service-tag">@{{ contact.service }}</span>
                                 </td>
                                 <td>
-                                    <span class="badge" :class="getStatusClass(contact.status)">
+                                    <!-- <span class="badge" :class="getStatusClass(contact.status)">
                                         @{{ contact.status }}
-                                    </span>
+                                    </span> -->
+                                    <select 
+                                        class="form-select form-select-sm" 
+                                        v-model="contact.status" 
+                                        @change="updateStatus('contacts', contact.id, contacts.indexOf(contact), contact.status)">
+                                        <option value="unseen">unseen</option>
+                                        <option value="seen">seen</option>
+                                        <option value="reply">reply</option>
+                                    </select>
                                 </td>
                                 <td>@{{ new Date(contact.created_at).toLocaleDateString() }}</td>
                                 <td>
-                                    <button class="btn btn-success btn-action btn-sm"  title="View">
+                                    <button class="btn btn-success btn-action btn-sm"  title="View"  @click="viewItem(contact, 'contactModal')">
                                         <i class='bx bx-show'></i>
                                     </button>
-                                    <button 
+                                    <!-- <button 
                                            class="btn btn-primary btn-action btn-sm"  
                                            title="Mark as Read"
-                                           @click="updateContactStatus(contact.id, contacts.indexOf(contact), 'seen')"
+                                           @click="updateStatus('contacts', contact.id, contacts.indexOf(contact), 'seen')"
                                         >
 
                                             <i class='bx bx-check'></i>
+                                    </button> -->
+
+                                    <button class="btn btn-primary btn-action btn-sm" @click="addComment(contact, 'commentModal')" style="position:relative;" title="Add Comment">
+                                            <i class='bx bx-note'></i>
+                                            <span 
+                                                v-if="contact.admin_comment" 
+                                                class="d-inline-block ms-1 rounded-circle bg-warning" 
+                                                title="Has comment" 
+                                                style="width: 10px; height: 10px; position:absolute; top:1px; right:1px;">
+                                            </span>
                                     </button>
 
+      
+                               
                                     <button 
                                            class="btn btn-warning btn-action btn-sm" 
                                            title="Reply"
-                                           @click="updateContactStatus(contact.id, contacts.indexOf(contact) , 'reply')"
+                                           @click="updateStatus('contacts', contact.id, contacts.indexOf(contact), 'reply')"
                                         >
                                             <i class='bx bx-reply'></i>
                                     </button>
                                     <button 
                                            class="btn btn-danger btn-action btn-sm" 
                                            title="Delete"
-                                           @click="deleteContact(contact.id, contacts.indexOf(contact))"
+                                           @click="deleteItem('contacts', contact.id,contacts.indexOf(contact))"
                                         >
                                             <i class='bx bx-trash'></i>
                                     </button>
+
                                 </td>
                             </tr>
                         </tbody>
@@ -245,22 +269,36 @@
                                     <i class='bx bx-time me-1'></i>
                                     @{{ new Date(contact.created_at).toLocaleDateString() }}
                                 </small>
+                                <small v-if="contact.admin_comment" class="badge bg-warning text-dark ms-1" title="Has comment">
+                                    <i class='bx bx-message-square-detail'></i> Has comment
+                                </small>
                             </div>
                             <div class="card-footer bg-white text-center">
-                                <button class="btn btn-success btn-action btn-sm" @click="viewContact(contact)">
+                                <button class="btn btn-success btn-action btn-sm" @click="viewItem(contact, 'contactModal')">
                                     <i class='bx bx-show'></i>
                                 </button>
-                                <button class="btn btn-primary btn-action btn-sm" title="Mark as Read" @click="updateContactStatus(contact.id, contacts.indexOf(contact), 'seen')">
+                                <button class="btn btn-primary btn-action btn-sm" title="Mark as Read" @click="updateStatus('contacts', contact.id, contacts.indexOf(contact), 'seen')">
                                     <i class='bx bx-check'></i>
                                 </button>
-                                <button class="btn btn-warning btn-action btn-sm" title="Reply"  @click="updateContactStatus(contact.id, contacts.indexOf(contact), 'reply')">
+                                <button class="btn btn-warning btn-action btn-sm" title="Reply"  @click="updateStatus('contacts', contact.id, contacts.indexOf(contact), 'reply')">
                                     <i class='bx bx-reply'></i>
                                 </button>
-                                <button class="btn btn-danger btn-action btn-sm" title="Delete"  @click="deleteContact(contact.id,contacts.indexOf(contact))">
+                                <button class="btn btn-primary btn-action btn-sm" @click="addComment(contact, 'commentModal')">
+                                    <i class='bx bx-note'></i>
+                                </button>
+                                <button class="btn btn-danger btn-action btn-sm" title="Delete"  @click="deleteItem('contacts', contact.id,contacts.indexOf(contact))">
                                     <i class='bx bx-trash'></i>
                                 </button>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+
+                <!-- Loading Spinner -->
+                <div v-if="loadingpage" class="text-center my-3">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
 
@@ -278,36 +316,91 @@
                     <h5 class="modal-title">Contact Details</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body" v-if="selectedContact">
+                <div class="modal-body" v-if="selectedItem">
                     <div class="row">
                         <div class="col-md-6">
                             <h6>Personal Information</h6>
-                            <p><strong>Name:</strong> @{{ selectedContact.first_name }} @{{ selectedContact.last_name }}</p>
-                            <p><strong>Email:</strong> @{{ selectedContact.email }}</p>
-                            <p><strong>Phone:</strong> @{{ selectedContact.phone }}</p>
-                            <p><strong>Service:</strong> @{{ selectedContact.service }}</p>
-                            <p><strong>Date:</strong> @{{ formatDate(selectedContact.created_at) }}</p>
+                            <p><strong>Name:</strong> @{{ selectedItem.first_name }} @{{ selectedItem.last_name }}</p>
+                            <p><strong>Email:</strong> @{{ selectedItem.email }}</p>
+                            <p><strong>Phone:</strong> @{{ selectedItem.phone }}</p>
+                            <p><strong>Service:</strong> @{{ selectedItem.service }}</p>
+                            <p><strong>Date:</strong> @{{ new Date(selectedItem.created_at).toLocaleDateString() }}</p>
                         </div>
                         <div class="col-md-6">
                             <h6>Status</h6>
-                            <span class="badge" :class="getStatusClass(selectedContact.status)">
-                                @{{ selectedContact.status }}
+                            <span class="badge" :class="getStatusClass(selectedItem.status)">
+                                @{{ selectedItem.status }}
                             </span>
                         </div>
                     </div>
+
                     <div class="row mt-3">
                         <div class="col-12">
-                            <h6>Message</h6>
+                            <h6>Customer Message</h6>
                             <div class="border rounded p-3 bg-light">
-                                @{{ selectedContact.message }}
+                                 @{{ selectedItem.message }}
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h6>Admin Comments</h6>
+                            <textarea 
+                                class="form-control" 
+                                rows="4" 
+                                placeholder="Add internal notes or comments..."
+                                v-model="tempComment"
+                            ></textarea>
+                            <small class="text-muted">These comments are for internal use only and won't be visible to customers.</small>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" @click="updateContactStatus(contact.id, contacts.indexOf(selectedContact) , 'reply')">Reply</button>
-                    <button type="button" class="btn btn-success" @click="updateContactStatus(contact.id, contacts.indexOf(contact), 'seen')">Mark as Read</button>
+                    <button type="button" class="btn btn-primary" @click="saveComment" v-if="!loadingform">Save Comment</button>
+
+                    <div class="spinner-border text-primary" v-if="loadingform" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" @click="updateStatus('contacts', contact.id, contacts.indexOf(contact), 'reply')">Reply</button>
+                    <button type="button" class="btn btn-success" @click="updateStatus('contacts', contact.id, contacts.indexOf(contact), 'seen')">Mark as Read</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comment Modal -->
+    <div class="modal fade" id="commentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Admin Comment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" v-if="commentItem">
+                    <div class="mb-3">
+                        <label class="form-label">Customer: <strong>@{{ commentItem.first_name }} @{{ commentItem.last_name }}</strong></label>
+                        <p class="text-muted small">@{{ commentItem.service }} inquiry</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Admin Comment</label>
+                        <textarea 
+                            class="form-control" 
+                            rows="5" 
+                            placeholder="Add internal notes, follow-up actions, or any relevant information..."
+                            v-model="tempComment"
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" @click="saveComment" v-if="!loadingform">Save Comment</button>
+                    <div class="spinner-border text-primary" v-if="loadingform" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </div>
             </div>
         </div>

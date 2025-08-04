@@ -6,14 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Contact;
-use App\Models\CarBooking;
-use App\Models\CustomTourRequest;
-use App\Models\TaxiBooking;
-use App\Models\TourBooking;
 
 use Illuminate\Support\Carbon;
 
-class AdminController extends Controller
+class AdminContactController extends Controller
 {
     public function contactStats()
     {
@@ -30,13 +26,14 @@ class AdminController extends Controller
         ]);
     }
 
+    //fetching by 20
     public function fetchPaginated(Request $request)
     {
         $contacts = Contact::orderBy('created_at', 'desc')->paginate(20);
         return response()->json($contacts);
     }
 
-    //delete contact
+    //delete 
     public function destroy($id)
     {
         $contact = Contact::find($id);
@@ -50,7 +47,7 @@ class AdminController extends Controller
         return response()->json(['message' => 'Contact deleted successfully']);
     }
 
-    //Change status contact 
+    //Change status 
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
@@ -82,7 +79,5 @@ class AdminController extends Controller
 
         return response()->json(['success' => true]);
     }
-
-    
 
 }

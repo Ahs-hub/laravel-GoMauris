@@ -48,6 +48,8 @@ return new class extends Migration
 
             // Status of book bouking
             $table->enum('status', ['proceed', 'reserved', 'not_possible'])->default('proceed');
+
+            $table->text('admin_comment')->nullable(); // <- admin comment field
     
             // Timestamps
             $table->timestamps();

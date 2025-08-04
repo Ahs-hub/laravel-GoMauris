@@ -20,15 +20,11 @@ class AdminNotification extends Model
     // Optional: If you plan to relate to bookings (you'll need to define this properly)
     public function related()
     {
-        // Example: You can customize based on type
-        if ($this->type === 'TourBooking') {
-            return $this->belongsTo(TourBooking::class, 'related_id');
-        }
-
-        if ($this->type === 'CarBooking') {
-            return $this->belongsTo(CarBooking::class, 'related_id');
-        }
-
-        return null;
+        return match ($this->type) {
+            'TourBooking' => $this->belongsTo(\App\Models\TourBooking::class, 'related_id'),
+            'CarBooking' => $this->belongsTo(\App\Models\CarBooking::class, 'related_id'),
+            'TaxiBooking' => $this->belongsTo(\App\Models\TaxiBooking::class, 'related_id'),
+            default => null,
+        };
     }
 }

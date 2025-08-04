@@ -53,6 +53,11 @@ Route::middleware('auth')->get('/admin/contactpanel', function () {
     return view('admin.contactpanel');
 })->name('admin.contactpanel');
 
+// Go to notification panel
+Route::middleware('auth')->get('/admin/notificationpanel', function () {
+    return view('admin.notificationpanel');
+})->name('admin.notificationpanel');
+
 // Get number of contact, status
 Route::middleware('auth')->get('/admin/contact-stats', [AdminController::class, 'contactStats'])
 ->name('admin.contactstats');

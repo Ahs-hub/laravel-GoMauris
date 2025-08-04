@@ -24,7 +24,9 @@ class TourBooking extends Model
         'email',
         'country',
         'mobile_number',
-        'status'
+        'status',
+        'admin_comment'
+
     ];
     
     // Relationship: A booking belongs to a tour
