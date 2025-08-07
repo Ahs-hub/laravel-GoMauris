@@ -9,69 +9,66 @@
 
     <div id="bookingApp">
 
-    <section class="hero-section bg-dark text-white py-5">
-        <div class="container">
-            <div class="row align-items-center">
-            <!-- Title Section -->
-            <div class="col-lg-6 mb-4 mb-lg-0">
-                <div class="hero-image-text d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%;">
-                    <h1 class="display-4 fw-bold mb-2">Rent A Car</h1>
-                    <h2 class="mb-0">in Mauritius</h2>
-                </div>
-            </div>
-
-            <!-- Booking Form -->
-            <div class="col-lg-6 d-flex justify-content-center ">
-                <div class="booking-box p-4 text-white rounded shadow booking-form" style="width: 100%; max-width: 400px; right:0px;">
-                    <div>
-                        <div class="mb-3 form-group">
-                        <label class="fw-bold">Pick Up</label>
+    <section class="hero-section">
+        <div class="container-fluid d-flex justify-content-center align-items-center">
+            <div class="hero-content text-center">
+                <h1 class="display-4 fw-bold">#1 Car Rental </h1>
+                <h2 style="margin-bottom:50px;">in Mauritius</h2>
+        
+                <div class="booking-form">
+                    <div class="booking-form-top d-flex flex-wrap gap-3 justify-content-center">
+                        <!-- Pick-up location -->
+                        <div class="form-group">
+                        <label>Pick-up location</label>
                         <select v-model="pickupLocation" class="form-control" required>
-                            <option disabled value="">Select pick up location</option>
+                            <option disabled value="">Pick up location</option>
                             <option>Mahebourg</option>
                             <option>Port Louis</option>
                             <option>SSR Airport</option>
                             <option>Grand Baie</option>
                         </select>
                         </div>
-
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="sameLocation" v-model="sameLocation">
-                            <label class="form-check-label" for="sameLocation">Return to the same location</label>
-                        </div>
-
-                        <transition name="fade">
-                            <div class="mb-3 form-group" v-if="!sameLocation">
-                                <label class="fw-bold">Return</label>
-                                <select v-model="returnLocation" class="form-control" required>
-                                    <option disabled value="">Select pick up location</option>
-                                    <option>Mahebourg</option>
-                                    <option>Port Louis</option>
-                                    <option>SSR Airport</option>
-                                    <option>Grand Baie</option>
-                                </select>
-                            </div>
-                        </transition>
-
-                        <div class="mb-3 form-group">
-                        <label class="fw-bold">Pick-up Date</label>
+                        
+        
+                        <!-- Pick-up date -->
+                        <div class="form-group">
+                        <label>Pick-up date</label>
                         <input type="datetime-local" v-model="pickupDate" :min="minDateTime" class="form-control" required>
                         </div>
+        
+                        <!-- Return location -->
+                        <!-- <div class="form-group">
+                        <label>Return location</label>
+                        <select v-model="returnLocation" class="form-control">
+                            <option disabled value="">Return location</option>
+                            <option>Mahebourg</option>
+                            <option>Port Louis</option>
+                            <option>SSR Airport</option>
+                            <option>Grand Baie</option>
+                        </select>
+                        </div> -->
+        
+                        <!-- Return date -->
+                        <div class="form-group">
+                        <label>Return date</label>
+                        <input type="datetime-local"v-model="returnDate" :min="minDateTime" class="form-control" required>
+                        </div> 
 
-                        <div class="mb-3 form-group">
-                        <label class="fw-bold">Return Date</label>
-                        <input type="datetime-local" v-model="returnDate" :min="minDateTime" class="form-control" required>
+                        <div class="form-group">
+                            <p></p>
+                            <!-- <button class="btn btn-primary px-4" style="margin-top:5px;" @click="searchCars">Search</button> -->
+                            <button class="btn btn-primary px-4" style="margin-top:5px;"  @click.prevent="handleContinue">Search</button>
                         </div>
 
-                        <div class="d-flex justify-content-between">
-                            <button @click.prevent="handleContinue" class="btn btn-primary w-50 me-2 py-2 ">FIND A VEHICLE</button>
-                            <button  @click="clearForm" class="btn btn-secondary w-50 py-2 ">Clear Data</button>
+                        <div class="form-group">
+                            <p></p>
+                            <button class="btn btn-primary px-4" style="margin-top:5px;" @click="clearForm">Clear</button>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
         </div>
+        
     </section>
 
     <!-- Featured Cars Section -->
@@ -233,7 +230,6 @@
                     pickupDate: '',
                     returnLocation: '',
                     returnDate: '',
-                    sameLocation: true,
                     selectedCarId: null,
                     minDateTime: new Date().toISOString().slice(0, 16), // 'YYYY-MM-DDTHH:MM'
                 };
@@ -243,7 +239,6 @@
                 if (savedData) {
                     this.pickupLocation = savedData.pickupLocation || '';
                     this.pickupDate = savedData.pickupDate || '';
-                    this.sameLocation = typeof savedData.sameLocation === 'boolean' ? savedData.sameLocation : true;
                     this.returnLocation = savedData.returnLocation || '';
                     this.returnDate = savedData.returnDate || '';
                     this.selectedCarId = savedData.carId || null;
@@ -255,12 +250,11 @@
                         pickupLocation: this.pickupLocation,
                         pickupDate: this.pickupDate,
                         returnLocation: this.returnLocation,
-                        sameLocation: this.sameLocation,
                         returnDate: this.returnDate,
                         carId: this.selectedCarId
                     };
                     localStorage.setItem('bookingForm', JSON.stringify(formData));
-                    localStorage.setItem('activeReservationSection', 'cars');
+                    localStorage.setItem('activeReservationSection', 'itinerary');
                     window.location.href = '/reservation'; // Redirect to reservation page
                 },
                 handleContinue() {
@@ -290,7 +284,6 @@
                     this.pickupLocation = '';
                     this.pickupDate = '';
                     this.returnLocation = '';
-                    this.sameLocation = true;
                     this.returnDate = '';
                     this.selectedCarId = null;
                     localStorage.removeItem('bookingForm');
@@ -302,7 +295,6 @@
                     const formData = {
                         pickupLocation: this.pickupLocation,
                         pickupDate: this.pickupDate,
-                        sameLocation: this.sameLocation,
                         returnLocation: this.returnLocation,
                         returnDate: this.returnDate,
                         carId: carId
@@ -344,3 +336,27 @@
     </script>
 
 @endsection
+
+
+
+  .booking-form {
+      /* background: rgba(19, 19, 19, 0.425); */
+      background: rgb(19, 19, 19);
+      max-width: fit-content; 
+      /* backdrop-filter: blur(10px); */
+      border-radius: 10px;
+      padding: 30px;
+    
+      margin-bottom: 2rem;
+
+      width:700px;
+
+  }
+
+  .booking-form-top{
+      display: flex;
+     gap: 20px;
+     margin-bottom: 20px;
+      align-items: start;
+
+  }

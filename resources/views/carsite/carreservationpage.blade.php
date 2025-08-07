@@ -630,6 +630,8 @@
                     this.returnLocation = saved.returnLocation || '';
                     this.tempReturnLocation = saved.returnLocation || '';
 
+                    this.sameLocation = saved.sameLocation || '';
+
                     this.returnDate = saved.returnDate || '';
                     this.tempReturnDate = saved.returnDate || '';
 
