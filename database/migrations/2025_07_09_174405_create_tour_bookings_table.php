@@ -49,6 +49,8 @@ return new class extends Migration
             // Status of book bouking
             $table->enum('status', ['proceed', 'reserved', 'not_possible'])->default('proceed');
 
+            $table->enum('payment_status', ['unpaid', 'paid'])->default('unpaid');
+
             $table->text('admin_comment')->nullable(); // <- admin comment field
     
             // Timestamps

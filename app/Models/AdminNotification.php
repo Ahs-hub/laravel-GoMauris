@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class AdminNotification extends Model
 {
     protected $fillable = [
+        
         'type',
         'related_id',
         'seen',

@@ -38,15 +38,61 @@
             <ul class="sidebar-menu">
                 <li><a href="{{ route('admin.dashboard') }}"><i class="bx bx-home"></i> Dashboard</a></li>
 
-                <li><a href="{{ route('admin.tourpanel') }}"><i class="bx bx-calendar"></i>Tour Booking</a></li>
+                <li>
+                    <a href="{{ route('admin.tourpanel') }}"><i class="bx bx-calendar"></i>
+                        Tour Booking
+                        <span 
+                            v-if="newnotifications.tour.count > 0"
+                            class="badge bg-primary notification-badge ms-2">
+                            New @{{ newnotifications.tour.count }}
+                        </span>
+                    </a>
+                </li>
 
-                <li><a href="/admin/calendar"><i class="bx bx-calendar"></i>Custom Booking</a></li>
+                <li>
+                    <a href="/admin/calendar"><i class="bx bx-calendar"></i>
+                        CustomBooking
+                        <span 
+                            v-if="newnotifications.custom.count  > 0"
+                            class="badge bg-primary notification-badge ms-2">
+                            New @{{ newnotifications.custom.count }}
+                        </span>
+                    </a>
+                </li>
 
-                <li><a href="/admin/calendar"><i class="bx bx-car"></i>Car Booking</a></li>
+                <li>
+                    <a href="{{ route('admin.carrentalpanel') }}"><i class="bx bx-car"></i>
+                        Car Booking
+                        <span 
+                            v-if="newnotifications.car.count  > 0"
+                            class="badge bg-primary notification-badge ms-2">
+                            New @{{ newnotifications.car.count }}
+                        </span>
+                    </a>
+                </li>
 
-                <li><a href="/admin/calendar"><i class="bx bx-car"></i>Taxi Booking</a></li>
+                <li>
+                    <a href="/admin/calendar"><i class="bx bx-car"></i>
+                       Taxi Booking
+                       <span 
+                            v-if="newnotifications.taxi.count  > 0"
+                            class="badge bg-primary notification-badge ms-2">
+                            New @{{ newnotifications.taxi.count }}
+                        </span>
+                    </a>
+                </li>
 
-                <li><a href="{{ route('admin.contactpanel') }}"><i class='bx bx-phone'></i>Contact</a></li>
+                <li>
+                    <a href="{{ route('admin.contactpanel') }}"><i class='bx bx-phone'></i>
+                        Contact
+                        <span 
+                            v-if="newnotifications.contact.count  > 0"
+                            class="badge bg-primary notification-badge ms-2">
+                            New @{{ newnotifications.contact.count }}
+                        </span>
+                    </a>
+                </li>
+
                 <li><a href="{{ route('admin.notificationpanel') }}"><i class='bx bx-bell'></i> Notification</a></li>
 
                 <!-- <li><a href="/admin/bookings"><i class="bx bx-calendar"></i> Bookings</a></li> -->
@@ -93,6 +139,7 @@
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
                         🔔 @{{ newNotificationOnly }} new notification(s) received.
                         <button type="button" class="btn-close" @click="dismissNotification"></button>
+                        <p>Refresh the page to view changes.</p>
                     </div>
                 </div>
             </div>
@@ -108,6 +155,7 @@
 
     {{-- JS Libraries --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
 
     <script>
         const { createApp } = Vue;
@@ -119,12 +167,42 @@
                     notificationDismissed: false, // true after user closes the alert
                     playNotification: 0,
 
+                    //new notification receive  count,id
+                    newnotifications: {
+                        tour: {
+                            count: 0,
+                            ids: [], // Use a valid key like 'ids'
+                            related_id: []
+                        },
+                        car: {
+                            count: 0,
+                            ids: [],
+                            related_id: []
+                        },
+                        taxi: {
+                            count: 0,
+                            ids: [],
+                            related_id: []
+                        },
+                        contact: {
+                            count: 0,
+                            ids: [],
+                            related_id: []
+                        },
+                        custom: {
+                            count: 0,
+                            ids: [],
+                            related_id: []
+                            
+                        }
+                    },
+
                     //notification page
                     notifications: [], // All notifications
-                    activeFilter: 'unseen', // Could be: 'unseen', 'tour', 'car', 'taxi', etc.
+                    activeFilter: 'all', // Could be: 'all', 'ContactBooking', 'CarBooking', 'TaxiBooking', etc.
                     showToast: false,
                     toastMessage: '',
-                    unreadCount: 0, // Used in badge
+                  //  unreadCount: 0, // Used in badge
 
                     tours: [],
                     selectedTour: '',
@@ -144,6 +222,7 @@
  
                     stats: {
                         contact: { total: 0, read: 0, unread: 0, today: 0 },
+                        carrental: { total: 0, proceed: 0, reserve: 0, today: 0 },
                         taxi: { total: 0, proceed: 0, reserve: 0, cancel: 0 },
                         tour: { total: 0, confirmed: 0, pending: 0, cancelled: 0 }
                     },
@@ -168,6 +247,7 @@
                     contacts: [],
                     taxi: [],
                     tours: [],
+                    carrentals: [],
 
                     page: {
                         contacts: 1,
@@ -178,6 +258,7 @@
                         contacts: true,
                         taxi: true,
                         tours: true,
+                        carrentals: true
                     },
 
                 };
@@ -231,6 +312,16 @@
                         service: this.filterService
                     }, ['first_name', 'last_name', 'email', 'phone']);
                 },
+
+                //Contact filtering
+                filteredRentals() {
+                    return this.getFilteredData(this.carrentals, {
+                        searchQuery: this.searchQuery,
+                        status: this.filterStatus,
+                        carType: this.filterCarType, // 👈 added
+                    }, ['first_name', 'last_name', 'email', 'phone', 'car_name']); // 👈 searchable
+                },
+
                 paginatedContacts() {
                     return this.paginate(this.filteredContacts, this.currentPage, this.itemsPerPage);
                 },
@@ -239,20 +330,24 @@
                 filteredNotifications() {
                     let filtered = this.notifications;
 
-                    if (this.activeFilter === 'unseen') {
-                        return filtered.filter(n => !n.seen);
-                    }
-
                     if (this.activeFilter === 'tour') {
-                        return filtered.filter(n => n.type === 'tour');
+                        return filtered.filter(n => n.type === 'TourBooking');
                     }
 
                     if (this.activeFilter === 'car') {
-                        return filtered.filter(n => n.type === 'car');
+                        return filtered.filter(n => n.type === 'CarBooking');
                     }
 
                     if (this.activeFilter === 'taxi') {
-                        return filtered.filter(n => n.type === 'taxi');
+                        return filtered.filter(n => n.type === 'TaxiBooking');
+                    }
+
+                    if (this.activeFilter === 'contact') {
+                        return filtered.filter(n => n.type === 'ContactBooking');
+                    }
+
+                    if (this.activeFilter === 'custombook') {
+                        return filtered.filter(n => n.type === 'CustomBooking');
                     }
 
                     return filtered;
@@ -261,7 +356,7 @@
                 
             },
             methods: {
-                //Globally for exporting
+                //Globally for exporting database
                 exportToCSV(dataArray, fields, filenamePrefix = 'export') {
                     if (!dataArray || !fields || dataArray.length === 0) {
                         alert("No data to export.");
@@ -387,11 +482,70 @@
                             
                             this.playNotification = count;
                             localStorage.setItem('playNotification', this.playNotification.toString());
+
+
+                            const newCount = count - storedCount;
+                             
+                            // 🔁 Call second function to fetch & update new notifications
+                            this.fetchNewNotifications(newCount, count);
+
+                        }else{
+                            localStorage.setItem('notificationCount', String(count));
+
                         }
 
                         this.newNotifications = count;
                         })
                         .catch(console.error);
+                },
+
+                fetchNewNotifications(limit, totalCount) {
+                    fetch(`/api/admin/notifications/latest?limit=${limit}`)
+                        .then(res => res.json())
+                        .then(({ data }) => {
+                            // Reset object
+                            this.newnotifications = {
+                                tour: { count: 0, ids: [], related_id: [] },
+                                car: { count: 0, ids: [], related_id: [] },
+                                taxi: { count: 0, ids: [], related_id: [] },
+                                contact: { count: 0, ids: [], related_id: [] },
+                                custom: { count: 0, ids: [], related_id: [] }
+                            };
+
+                            // Mapping from type string to internal key
+                            const typeMap = {
+                                TourBooking: 'tour',
+                                CustomBooking: 'custom',
+                                TaxiBooking: 'taxi',
+                                CarBooking: 'car',
+                                ContactBooking: 'contact'
+                            };
+
+                            // Group and count by normalized type
+                            data.forEach(({ id, type, related_id }) => {
+                                const key = typeMap[type]; // e.g., "tour"
+
+                          //      console.log('[fetchNewNotifications] Notification received:', { id, type, related_id });
+                         //       console.log('[fetchNewNotifications] Mapped key:', key);
+
+                                if (key && this.newnotifications[key]) {
+                                    this.newnotifications[key].count++;
+                                    this.newnotifications[key].ids.push(id);
+                                    this.newnotifications[key].related_id.push(related_id);
+
+                                    // console.log(`[fetchNewNotifications] Updated ${key}:`, {
+                                    //     count: this.newnotifications[key].count,
+                                    //     ids: this.newnotifications[key].ids,
+                                    //     related_ids: this.newnotifications[key].related_id
+                                    // });
+                                } else {
+                                    console.warn('[fetchNewNotifications] Unknown type or unmapped key:', type);
+                                }
+                            });
+                        })
+                        .catch(error => {
+                            console.error('[fetchNewNotifications] Error:', error);
+                        });
                 },
 
                 /** Close button logic */
@@ -410,7 +564,7 @@
                     loadStats(type) {
                         this.loading = true;
 
-                        fetch(`/admin/${type}-stats`)
+                        fetch(`/api/admin/${type}-stats`)
                             .then(res => res.json())
                             .then(data => {
                                 this.stats[type] = data;
@@ -421,6 +575,9 @@
                     },
 
                     loadPaginatedData(endpoint, targetArray) {
+                        
+
+                        //Check that and comment
                         if (this.loadingpage || !this.hasMore[targetArray]) return;
 
                         this.loadingpage = true;
@@ -428,7 +585,12 @@
                         fetch(`${endpoint}?page=${this.page[targetArray]}`)
                             .then(res => res.json())
                             .then(data => {
-                                this[targetArray].push(...data.data);
+                               // console.log(`[loadPaginatedData] Fetched page ${this.page[targetArray]} for ${targetArray}:`, data);
+                                
+                                this[targetArray].push(...data.data); //contacts[] , tours[],carrentals[]
+
+                               // console.log(`[loadPaginatedData] Updated ${targetArray} array:`, this[targetArray]); // 👈 Debug this[targetArray]
+
                                 this.page[targetArray]++;
                                 this.hasMore[targetArray] = data.current_page < data.last_page;
                             })
@@ -449,7 +611,11 @@
                     getStatusClass(status) {
                         switch (status) {
                             case 'unseen': return 'bg-warning text-dark';
+                            case 'pending': return 'bg-warning text-dark';
                             case 'seen': return 'bg-info';
+                            case 'confirmed': return 'bg-success';
+                            case 'cancelled': return 'bg-danger';
+                            case 'paid': return 'bg-success';
                             case 'replied': return 'bg-success';
                             default: return 'bg-secondary';
                         }
@@ -483,6 +649,7 @@
 
                     updateStatus(type, id, index, status) {
                         this.loading = true;
+                        this.loadingform = true;
 
                         fetch(`/api/${type}/${id}/update-status`, {
                             method: 'PUT',
@@ -506,8 +673,50 @@
                         })
                         .finally(() => {
                             this.loading = false;
+                            this.loadingform = false;
                         });
                     },
+
+                    //Update all field
+                    updateItem(type, id, index, updatedData) {
+                        this.loading = true;
+                        this.loadingform = true;
+
+                        console.log('🟡 [updateItem] Sending update for:', {
+                            type,
+                            id,
+                            index,
+                            updatedData
+                        });
+
+                        fetch(`/api/${type}/${id}/update-data`, {
+                            method: 'PUT',
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(updatedData)
+                        })
+                        .then(res => {
+                            if (!res.ok) throw new Error('Failed to update item');
+                            return res.json();
+                        })
+                        .then(data => {
+                            this[type][index] = data; // Replace with full updated object
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            alert('Failed to update item.');
+                        })
+                        .finally(() => {
+                            this.loading = false;
+                            this.loadingform = false;
+
+                            console.log('🔵 [updateItem] Done loading');
+                        });
+                    },
+
 
                     viewItem(item, modalId) {
                         this.selectedItem = item;
@@ -530,6 +739,9 @@
 
                             const matchesService =
                                 !filters.service || item.service === filters.service;
+                            
+                            const matchesCarType =
+                                !filters.carType || item.car_type === filters.carType; // 👈 NEW
 
                             return matchesSearch && matchesStatus && matchesService;
                         });
@@ -547,12 +759,12 @@
                         modal.show();
                     },
 
-                    saveComment() {
+                    saveComment(model) {
                         if (this.commentItem) {
 
                             this.loadingform = true;
 
-                            fetch(`/api/contacts/${this.commentItem.id}/update-comment`, {
+                            fetch(`/api/${model}/${this.commentItem.id}/update-comment`, {
                                 method: 'PUT',
                                 headers: {
                                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -612,7 +824,7 @@
                     },
                     deleteNotification(id) {
                         if (!confirm("Are you sure you want to delete this notification?")) return;
-
+                        this.loading = true;
                         fetch(`/api/admin/notifications/${id}`, {
                             method: 'DELETE',
                             headers: {
@@ -624,12 +836,13 @@
                             this.notifications = this.notifications.filter(n => n.id !== id);
                             this.toastMessage = 'Notification deleted';
                             this.showToast = true;
-                        });
+                        })
+                        .finally(() => this.loading = false);
                     },
 
                     clearAllNotifications() {
                         if (!confirm("Clear all notifications?")) return;
-
+                        this.loading = true;
                         fetch('/api/admin/notifications/clear-all', {
                             method: 'DELETE',
                             headers: {
@@ -638,9 +851,17 @@
                             }
                         }).then(() => {
                             this.notifications = [];
+
+                            // Remove stored notification data
+                            localStorage.removeItem('notificationCount');
+                            localStorage.removeItem('notificationDismissed');
+                            localStorage.removeItem('playNotification');
+
                             this.toastMessage = 'All notifications cleared';
+
                             this.showToast = true;
-                        });
+                        })
+                        .finally(() => this.loading = false);
                     },
 
                     getNotificationTitle(type) {
@@ -648,6 +869,8 @@
                             case 'TourBooking': return 'New Tour Booking';
                             case 'CarBooking': return 'New Car Booking';
                             case 'TaxiBooking': return 'New Taxi Request';
+                            case 'ContactBooking': return 'New Contact Request';
+                            case 'CustomBooking': return 'New Custom Request';
                             default: return 'Notification';
                         }
                     },
@@ -658,26 +881,79 @@
                             return `Car Booking #${notification.related_id} is pending.`;
                         } else if (notification.type === 'TaxiBooking') {
                             return `Taxi request received (ID: ${notification.related_id}).`;
+                        } else if (notification.type === 'ContactBooking') {
+                            return `Contact request received (ID: ${notification.related_id}).`;
+                        } else if (notification.type === 'CustomBooking') {
+                            return `Custom request received (ID: ${notification.related_id}).`;
                         } else {
                             return 'You have a new notification.';
                         }
                     },
                     getNotificationIcon(type) {
                         switch (type) {
-                            case 'tour': return 'bx bx-map';
-                            case 'car': return 'bx bx-car';
-                            case 'taxi': return 'bx bx-taxi';
+                            case 'TourBooking': return 'bx bx-map';
+                            case 'CustomBooking': return 'bx bx-map';
+                            case 'CarBooking': return 'bx bx-car';
+                            case 'TaxiBooking': return 'bx bx-car';
+                            case 'ContactBooking': return 'bx bx-phone';
                             default: return 'bx bx-bell';
                         }
                     },
                     getNotificationClass(type) {
                         switch (type) {
-                            case 'tour': return 'bg-primary text-white';
-                            case 'car': return 'bg-success text-white';
-                            case 'taxi': return 'bg-warning text-dark';
+                            case 'TourBooking': return 'bg-primary text-white';
+                            case 'CustomBooking': return 'bg-primary text-white';
+                            case 'CarBooking': return 'bg-success text-white';
+                            case 'ContactBooking': return 'bg-success text-white';
+                            case 'TaxiBooking': return 'bg-warning text-dark';
                             default: return 'bg-secondary text-white';
                         }
                     },
+
+                    //check if notification is new         
+                    isNewNotification(notification) {
+                        const typeMap = {
+                        TourBooking: 'tour',
+                        CustomBooking: 'custom',
+                        TaxiBooking: 'taxi',
+                        CarBooking: 'car',
+                        ContactBooking: 'contact'
+                        };
+
+                        const key = typeMap[notification.type];
+                        if (!key || !this.newnotifications[key]) return false;
+
+                        return this.newnotifications[key].ids.includes(notification.id);
+                    },
+
+                    isnewitem(item, itemtype) {
+                        // Map contactbook types to newnotifications keys
+                        const typeMap = {
+                            TourBooking: 'tour',
+                            CarBooking: 'car',
+                            TaxiBooking: 'taxi',
+                            ContactBooking: 'contact',
+                            Custombooking: 'custom'
+                        };
+
+                        const key = typeMap[itemtype];
+
+                     //   console.log('[isnewitem] item:', item);
+                    //    console.log('[isnewitem] itemtype:', itemtype);
+                    //    console.log('[isnewitem] resolved key:', key);
+
+                        if (!key || !this.newnotifications[key]) {
+                    //        console.warn(`[isnewitem] Invalid key or missing notification data for key:`, key);
+                            return false;
+                        }
+
+                     //   console.log('[isnewitem] related_id array:', this.newnotifications[key].related_id);
+                        const exists = this.newnotifications[key].related_id.includes(item);
+                      //  console.log('[isnewitem] Exists in related_id:', exists);
+
+                        return exists;
+                    },
+
                 //#endregion load notification
 
 
@@ -730,6 +1006,12 @@
 
                 } else if (window.location.pathname.includes('/admin/booktour')) {
                     this.fetchTours();
+                }else if (path.includes('/admin/carrentalpanel')) {
+                    this.currentTab = 'carrental';
+                    this.loadStats('carrental');
+                    this.loadPaginatedData('/api/carrentals', 'carrentals');
+                    window.addEventListener('scroll', () => this.handleScroll('/api/carrentals', 'carrentals'));
+                    
                 }else if (window.location.pathname.includes('/admin/notificationpanel')) {
                     this.fetchNotifications();
                 }
@@ -740,7 +1022,7 @@
 
                 // First check immediately, then every 30 s
                 this.checkNotifications();
-                this.timer = setInterval(this.checkNotifications, 60_000);
+                this.timer = setInterval(this.checkNotifications, 30_000);
 
             },
             beforeUnmount() {

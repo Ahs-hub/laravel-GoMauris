@@ -32,7 +32,7 @@ class CustomTourRequestController extends Controller
 
         // Notification
         AdminNotification::create([
-            'type' => 'TaxiBooking',
+            'type' => 'CustomBooking',
             'related_id' => $booking->id, // ✅ Corrected here
         ]);
 

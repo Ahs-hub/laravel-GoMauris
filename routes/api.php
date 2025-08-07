@@ -8,6 +8,7 @@ use App\Http\Controllers\TourController;
 
 use App\Http\Controllers\Admin\AdminNotificationController;
 use App\Http\Controllers\Admin\AdminContactController;
+use App\Http\Controllers\Admin\AdminCarBookingController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -36,10 +37,35 @@ Route::get('/public/tours/blocked-dates/{id}', [TourController::class, 'getBlock
 //fetch notification page
 Route::prefix('admin/notifications')->group(function () {
     Route::get('/', [AdminNotificationController::class, 'index']);
-    Route::delete('/{id}', [AdminNotificationController::class, 'destroy']);
+    Route::get('/latest', [AdminNotificationController::class, 'latest']);  
     Route::delete('/clear-all', [AdminNotificationController::class, 'clearAll']);
+    Route::delete('/{id}', [AdminNotificationController::class, 'destroy']);
 });
 
+
+
+// Get number of contact, status
+Route::get('/admin/contact-stats', [AdminContactController::class, 'contactStats'])
+->name('admin.contactstats');
+
+// Get number of carrental, status
+Route::get('/admin/carrental-stats', [AdminCarBookingController::class, 'carrentalStats'])
+->name('admin.carrentalstats');
+
+//fetching carrental block of 20
+Route::get('/carrentals', [AdminCarBookingController::class, 'fetchPaginated']);
+
+//delete carrental 
+Route::delete('/carrentals/{id}', [AdminCarBookingController::class, 'destroy']);
+
+//Update all field
+Route::put('/carrentals/{id}/update-data', [AdminCarBookingController::class, 'update']);
+
+
+//Add comment to carrental
+Route::put('/carrentals/{id}/update-comment', [AdminCarBookingController::class, 'updateComment']);
+
+//-----------------------
 
 //fetching contact block of 20
 Route::get('/contacts', [AdminContactController::class, 'fetchPaginated']);

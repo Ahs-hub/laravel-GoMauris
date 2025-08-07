@@ -22,4 +22,9 @@ class Car extends Model
         'climate_control',
         'image_path',
     ];
+
+    public function type()
+    {
+        return $this->belongsTo(CarType::class); // assuming your car types are in a `car_types` table
+    }
 }

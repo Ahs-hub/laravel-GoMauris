@@ -18,10 +18,10 @@
                     <i class="fas fa-bell me-2"></i>
                     Notifications
                     <span  class="badge bg-warning text-dark ms-2">
-                         unreadCount  new
+                    @{{ newNotificationOnly }} new
                     </span>
                 </h2>
-                <p class="text-muted">Manage client inquiries and contact information</p>
+                <p class="text-muted">Clear notification after view to save storage </p>
             </div>
             <div>
                 <button class="btn btn-outline-primary" @click="clearAllNotifications">
@@ -30,14 +30,31 @@
                 </button>
             </div>
         </div>
+
         <!-- Filter Tabs -->
         <ul class="nav nav-pills mb-4" role="tablist">
 
+            
+            <li class="nav-item" role="presentation">
+                <button 
+                        @click="activeFilter = 'all'" 
+                        :class="['nav-link', { active: activeFilter === 'all' }]">
+                        All
+                </button>
+            </li>
             <li class="nav-item" role="presentation">
                 <button 
                         @click="activeFilter = 'tour'" 
                         :class="['nav-link', { active: activeFilter === 'tour' }]">
                         Tour Bookings
+                </button>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <button 
+                        @click="activeFilter = 'custombook'" 
+                        :class="['nav-link', { active: activeFilter === 'custombook' }]">
+                        Custom Bookings
                 </button>
             </li>
             <li class="nav-item" role="presentation">
@@ -52,6 +69,13 @@
                         @click="activeFilter = 'taxi'" 
                         :class="['nav-link', { active: activeFilter === 'taxi' }]">
                         Taxi Bookings
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button 
+                        @click="activeFilter = 'contact'" 
+                        :class="['nav-link', { active: activeFilter === 'contact' }]">
+                        Contact Bookings
                 </button>
             </li>
         </ul>
@@ -76,7 +100,7 @@
                                         <h6 class="card-title mb-1">
                                             @{{ getNotificationTitle(notification.type) }}
                                             <span 
-                                                v-if="!notification.seen" 
+                                                v-if="isNewNotification(notification)" 
                                                 class="badge bg-primary notification-badge ms-2">
                                                 New
                                             </span>
@@ -86,38 +110,16 @@
                                         </p>
                                         <small class="text-muted">
                                             <i class="fas fa-clock me-1"></i>
-                                            @{{ formatDate(notification.created_at) }}
+                                            @{{ new Date(notification.created_at).toLocaleString() }}
                                         </small>
                                     </div>
-                                    <div class="dropdown">
-                                        <button 
-                                            class="btn btn-link text-muted p-1" 
-                                            type="button" 
-                                            :id="'dropdown-' + notification.id"
-                                            data-bs-toggle="dropdown" 
-                                            aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li v-if="!notification.seen">
-                                                <button 
-                                                    @click="markAsRead(notification)"
-                                                    class="dropdown-item">
-                                                    <i class="fas fa-check me-2"></i>
-                                                    Mark as Read
-                                                </button>
-                                            </li>
-                                            <li><hr class="dropdown-divider"></li>
-                                            <li>
-                                                <button 
-                                                    @click="deleteNotification(notification.id)"
-                                                    class="dropdown-item text-danger">
-                                                    <i class="fas fa-trash me-2"></i>
-                                                    Delete
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <!-- Trash Bin Button -->
+                                    <button 
+                                        @click="deleteNotification(notification.id)"
+                                        class="btn btn-link text-danger p-1"
+                                        title="Delete Notification">
+                                        <i class="bx bx-trash"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>

@@ -16,6 +16,21 @@ class AdminNotificationController extends Controller
         $count = AdminNotification::where('seen', false)->count();
 
         return response()->json(['count' => $count]);
+        
+    }
+
+    public function latest(Request $request)
+    {
+        // Get the 'limit' from the query string (?limit=3), default to 5
+        $limit = (int) $request->input('limit', 20); // fallback if not passed
+    
+        $latest = AdminNotification::orderBy('id', 'desc')
+            ->take($limit)
+            ->get(['id', 'type','related_id']);
+    
+        return response()->json([
+            'data' => $latest
+        ]);
     }
 
     // List all notifications, newest first
@@ -37,7 +52,8 @@ class AdminNotificationController extends Controller
     // ✅ Clear all notifications
     public function clearAll()
     {
-        AdminNotification::truncate();
+        AdminNotification::query()->delete(); // Soft delete
+        \Log::info('[clearAll] Route hit');
         return response()->json(['message' => 'All notifications cleared']);
     }
 

@@ -39,6 +39,8 @@ return new class extends Migration
             // Status
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
 
+            $table->enum('payment_status', ['unpaid', 'paid'])->default('unpaid');
+
             $table->text('admin_comment')->nullable(); // <- admin comment field
         
             $table->timestamps();
