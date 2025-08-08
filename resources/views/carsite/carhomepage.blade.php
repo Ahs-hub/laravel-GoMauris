@@ -7,135 +7,218 @@
         <link rel="stylesheet" href="{{ asset('css/carhomepage.css') }}">
     @endif
 
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    />
+   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
     <div id="bookingApp">
 
-    <section class="hero-section bg-dark text-white py-5">
-        <div class="container">
-            <div class="row align-items-center">
-            <!-- Title Section -->
-            <div class="col-lg-6 mb-4 mb-lg-0">
-                <div class="hero-image-text d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%;">
-                    <h1 class="display-4 fw-bold mb-2">Rent A Car</h1>
-                    <h2 class="mb-0">in Mauritius</h2>
+        <section class="hero-section bg-dark text-white py-5">
+            <div class="container">
+                <div class="row align-items-center">
+                <!-- Title Section -->
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="hero-image-text d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%;">
+                        <h1 class="display-4 fw-bold mb-2">Rent A Car</h1>
+                        <h2 class="mb-0">in Mauritius</h2>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Booking Form -->
-            <div class="col-lg-6 d-flex justify-content-center ">
-                <div class="booking-box p-4 text-white rounded shadow booking-form" style="width: 100%; max-width: 400px; right:0px;">
-                    <div>
-                        <div class="mb-3 form-group">
-                        <label class="fw-bold">Pick Up</label>
-                        <select v-model="pickupLocation" class="form-control" required>
-                            <option disabled value="">Select pick up location</option>
-                            <option>Mahebourg</option>
-                            <option>Port Louis</option>
-                            <option>SSR Airport</option>
-                            <option>Grand Baie</option>
-                        </select>
-                        </div>
-
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="sameLocation" v-model="sameLocation">
-                            <label class="form-check-label" for="sameLocation">Return to the same location</label>
-                        </div>
-
-                        <transition name="fade">
-                            <div class="mb-3 form-group" v-if="!sameLocation">
-                                <label class="fw-bold">Return</label>
-                                <select v-model="returnLocation" class="form-control" required>
+                <!-- Booking Form -->
+                <div class="col-lg-6 d-flex justify-content-center ">
+                    <div class="booking-box p-4 text-white rounded shadow booking-form" style="width: 100%; max-width: 400px; right:0px;">
+                        <div>
+                            <div class="mb-3 form-group">
+                            <label class="fw-bold">Pick Up</label>
+                        
+                                <!-- <select v-model="pickupLocation" class="form-control" required>
                                     <option disabled value="">Select pick up location</option>
-                                    <option>Mahebourg</option>
+                                    <option> <i class='bx bx-map'></i>Mahebourg</option>
                                     <option>Port Louis</option>
                                     <option>SSR Airport</option>
                                     <option>Grand Baie</option>
-                                </select>
+                                </select> -->
+
+                                <div class="dropdown form-control p-0 ">
+                                    <button class="btn selectinput-place dropdown-toggle w-100 text-start d-flex align-items-center justify-content-between"
+                                            type="button" data-bs-toggle="dropdown">
+                                            <div>
+                                                <i class='bx bx-map me-2'></i> 
+                                                @{{ pickupLocation || 'Select pick up location' }}
+                                            </div>
+                                    </button>
+                                    <ul class="dropdown-menu w-100">
+                                        <li @click="pickupLocation = 'SSR Airport'" class="dropdown-item">
+                                            <i class='bx bx-map'></i> SSR Airport
+                                        </li>
+                                        <li @click="pickupLocation = 'Mahebourg'" class="dropdown-item">
+                                            <i class='bx bx-map'></i> Mahebourg
+                                        </li>
+                                        <li @click="pickupLocation = 'Port Louis'" class="dropdown-item">
+                                            <i class='bx bx-map'></i> Port Louis
+                                        </li>
+                                        <li @click="pickupLocation = 'Grand Baie'" class="dropdown-item">
+                                            <i class='bx bx-map'></i> Grand Baie
+                                        </li>
+                                        <li class="dropdown-item" @click="openMap('pickup')">
+                                            <i class='bx bx-map-pin'></i> Choose on map
+                                        </li>
+                                    </ul>
+                                </div>
+
                             </div>
-                        </transition>
 
-                        <div class="mb-3 form-group">
-                        <label class="fw-bold">Pick-up Date</label>
-                        <input type="datetime-local" v-model="pickupDate" :min="minDateTime" class="form-control" required>
-                        </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="sameLocation" v-model="sameLocation">
+                                <label class="form-check-label" for="sameLocation">Return to the same location</label>
+                            </div>
 
-                        <div class="mb-3 form-group">
-                        <label class="fw-bold">Return Date</label>
-                        <input type="datetime-local" v-model="returnDate" :min="minDateTime" class="form-control" required>
-                        </div>
+                            <transition name="fade">
+                                <div class="mb-3 form-group" v-if="!sameLocation">
+                                    <label class="fw-bold">Return</label>
+                                    <!-- <select v-model="returnLocation" class="form-control" required>
+                                        <option disabled value="">Select pick up location</option>
+                                        <option>Mahebourg</option>
+                                        <option>Port Louis</option>
+                                        <option>SSR Airport</option>
+                                        <option>Grand Baie</option>
+                                    </select> -->
+                                    <div class="dropdown form-control p-0 ">
+                                    <button class="btn selectinput-place dropdown-toggle w-100 text-start d-flex align-items-center justify-content-between"
+                                            type="button" data-bs-toggle="dropdown">
+                                            <div>
+                                                <i class='bx bx-map me-2'></i> 
+                                                @{{ returnLocation || 'Select return up location' }}
+                                            </div>
+                                    </button>
+                                    <ul class="dropdown-menu w-100">
+                                        <li @click="returnLocation = 'SSR Airport'" class="dropdown-item">
+                                            <i class='bx bx-map'></i> SSR Airport
+                                        </li>
+                                        <li @click="returnLocation = 'Mahebourg'" class="dropdown-item">
+                                            <i class='bx bx-map'></i> Mahebourg
+                                        </li>
+                                        <li @click="returnLocation = 'Port Louis'" class="dropdown-item">
+                                            <i class='bx bx-map'></i> Port Louis
+                                        </li>
+                                        <li @click="returnLocation = 'Grand Baie'" class="dropdown-item">
+                                            <i class='bx bx-map'></i> Grand Baie
+                                        </li>
+                                        <li class="dropdown-item" @click="openMap('return')">
+                                            <i class='bx bx-map-pin'></i> Choose on map
+                                        </li>
+                                    </ul>
+                                </div>
 
-                        <div class="d-flex justify-content-between">
-                            <button @click.prevent="handleContinue" class="btn btn-primary w-50 me-2 py-2 ">FIND A VEHICLE</button>
-                            <button  @click="clearForm" class="btn btn-secondary w-50 py-2 ">Clear Data</button>
+                                </div>
+                            </transition>
+
+                            <div class="mb-3 form-group">
+                            <label class="fw-bold">Pick-up Date</label>
+                            <input type="datetime-local" v-model="pickupDate" :min="minDateTime" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3 form-group">
+                            <label class="fw-bold">Return Date</label>
+                            <input type="datetime-local" v-model="returnDate" :min="minDateTime" class="form-control" required>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <button @click.prevent="handleContinue" class="btn btn-primary w-50 me-2 py-2 ">FIND A VEHICLE</button>
+                                <button  @click="clearForm" class="btn btn-secondary w-50 py-2 ">Clear Data</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Featured Cars Section -->
-    <section class="featured-section">
-        <div class="container">
-            <div class="section-header text-start">
-                <h2 class="section-heading" style="color:rgb(58, 58, 58);">Featured Vehicles</h2>
-            </div>
+        <!-- Featured Cars Section -->
+        <section class="featured-section">
+            <div class="container">
+                <div class="section-header text-start">
+                    <h2 class="section-heading" style="color:rgb(58, 58, 58);">Featured Vehicles</h2>
+                </div>
 
-            <div class="car-grid">
-                @foreach($cars as $car)
-                    <div class="car-card">
-                        <div class="car-image">
-                            <img src="{{ asset($car->image_path) }}" alt="{{ $car->name }}">
-                        </div>
-
-                        <div class="car-info">
-                            <div class="car-header">
-                                <div>
-                                    <h3 class="car-title">{{ $car->name }}</h3>
-                                    <p class="car-subtitle">{{ $car->transmission }} • {{ $car->fuel_type }}</p>
-                                </div>
-                                <div class="car-price">
-                                    <span class="price-amount">€{{ $car->price_per_day }}</span>
-                                    <span class="price-period">Per day</span>
-                                </div>
+                <div class="car-grid">
+                    @foreach($cars as $car)
+                        <div class="car-card">
+                            <div class="car-image">
+                                <img src="{{ asset($car->image_path) }}" alt="{{ $car->name }}">
                             </div>
 
-                            <div class="car-specs">
-                                @if($car->fuel_type)
-                                    <div class="spec-item">
-                                        <i class='bx bx-gas-pump spec-icon'></i>
-                                        <span>{{ $car->fuel_type }}</span>
+                            <div class="car-info">
+                                <div class="car-header">
+                                    <div>
+                                        <h3 class="car-title">{{ $car->name }}</h3>
+                                        <p class="car-subtitle">{{ $car->transmission }} • {{ $car->fuel_type }}</p>
                                     </div>
-                                @endif
-                                @if($car->transmission)
-                                    <div class="spec-item">
-                                        <i class='bx bx-cog spec-icon'></i>
-                                        <span>{{ $car->transmission }}</span>
+                                    <div class="car-price">
+                                        <span class="price-amount">€{{ $car->price_per_day }}</span>
+                                        <span class="price-period">Per day</span>
                                     </div>
-                                @endif
-                                @if($car->seats)
-                                    <div class="spec-item">
-                                        <i class='bx bxs-user spec-icon'></i>
-                                        <span>{{ $car->seats }} Seats</span>
-                                    </div>
-                                @endif
-                                @if($car->climate_control)
-                                    <div class="spec-item">
-                                        <i class='bx bx-wind spec-icon'></i>
-                                        <span>Climate Control</span>
-                                    </div>
-                                @endif
-                            </div>
+                                </div>
 
-                            <div class="car-actions">
-                                    <button class="btn btn-primary" @click="bookNow({{ $car->id }}, '{{ route('reservation') }}')">Book Now</button>
-                            </div>  
+                                <div class="car-specs">
+                                    @if($car->fuel_type)
+                                        <div class="spec-item">
+                                            <i class='bx bx-gas-pump spec-icon'></i>
+                                            <span>{{ $car->fuel_type }}</span>
+                                        </div>
+                                    @endif
+                                    @if($car->transmission)
+                                        <div class="spec-item">
+                                            <i class='bx bx-cog spec-icon'></i>
+                                            <span>{{ $car->transmission }}</span>
+                                        </div>
+                                    @endif
+                                    @if($car->seats)
+                                        <div class="spec-item">
+                                            <i class='bx bxs-user spec-icon'></i>
+                                            <span>{{ $car->seats }} Seats</span>
+                                        </div>
+                                    @endif
+                                    @if($car->climate_control)
+                                        <div class="spec-item">
+                                            <i class='bx bx-wind spec-icon'></i>
+                                            <span>Climate Control</span>
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="car-actions">
+                                        <button class="btn btn-primary" @click="bookNow({{ $car->id }}, '{{ route('reservation') }}')">Book Now</button>
+                                </div>  
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Modal -->
+        <div v-if="showMapModal" class="modal" tabindex="-1" style="display: block;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Select Location on Map</h5>
+                    <button type="button" class="btn-close" @click="showMapModal = false"></button>
+                </div>
+                <div class="modal-body" style="height: 400px;">
+                    <div :key="showMapModal" id="map" style="height: 100%;"></div>
+                </div>
+                <div class="modal-footer d-flex justify-content-end">
+                     <span style="width: 500px;"></span>
+                     <button class="btn btn-primary"  @click="confirmLocation">Select</button>
+                </div>
+                </div>
             </div>
         </div>
-    </section>
+
+
 
     </div>
 
@@ -198,7 +281,7 @@
                     </div>
                 </div>
                 
-                <div class="col-lg-4 col-md-6">
+                <!-- <div class="col-lg-4 col-md-6">
                     <div class="feature-item">
                         <div class="feature-icon">
                             <i class='bx bx-cog'></i>
@@ -208,7 +291,7 @@
                             <p>You will have the choice as per your comfort for Automatic or Manual transmission vehicle.</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-item">
@@ -225,6 +308,8 @@
         </div>
     </section>
 
+
+
     <script>
         const app = Vue.createApp({
             data() {
@@ -236,6 +321,12 @@
                     sameLocation: true,
                     selectedCarId: null,
                     minDateTime: new Date().toISOString().slice(0, 16), // 'YYYY-MM-DDTHH:MM'
+
+                    showMapModal: false,
+                    selectedLatLng: null,
+                    mapInstance: null,
+                    marker: null,
+                    mapTarget: '', // can be 'pickup' or 'return'
                 };
             },
             mounted() {
@@ -247,6 +338,15 @@
                     this.returnLocation = savedData.returnLocation || '';
                     this.returnDate = savedData.returnDate || '';
                     this.selectedCarId = savedData.carId || null;
+                }
+            },
+            watch: {
+                showMapModal(Val) {
+                    if (Val) {
+                    this.$nextTick(() => {
+                        this.initMap();
+                    });
+                    }
                 }
             },
             methods: {
@@ -281,9 +381,7 @@
                     // 👇 If sameLocation is true, returnLocation = pickupLocation
                     if (this.sameLocation) {
                         this.returnLocation = this.pickupLocation;
-                    } else {
-                        this.returnLocation = this.returnLocation;
-                    }
+                    } 
                     this.searchCars();
                 },
                 clearForm() {
@@ -310,7 +408,83 @@
                     localStorage.setItem('bookingForm', JSON.stringify(formData));
                     localStorage.setItem('activeReservationSection', 'carsaddon');
                     window.location.href = route;
+                },
+                openMap(target) {
+                    this.mapTarget = target; // 'pickup' or 'return'
+                    this.showMapModal = true;
+                },
+                initMap() {
+                    // If already created, destroy it cleanly
+                    if (this.mapInstance) {
+                    this.mapInstance.off();         // Remove all event listeners
+                    this.mapInstance.remove();      // Remove the map instance
+                    this.mapInstance = null;
+                    }
+
+                    // Clear previous selection
+                    this.selectedLatLng = null;
+                    this.marker = null;
+
+                    // Initialize new map
+                    this.mapInstance = L.map('map').setView([-20.2, 57.5], 10);
+
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(this.mapInstance);
+
+                    // Add marker on click
+                    this.mapInstance.on('click', (e) => {
+                    const { lat, lng } = e.latlng;
+                    this.selectedLatLng = { lat, lng };
+
+                    if (this.marker) {
+                        this.marker.setLatLng(e.latlng);
+                    } else {
+                        this.marker = L.marker(e.latlng).addTo(this.mapInstance);
+                    }
+                    });
+                },
+
+                async confirmLocation() {
+                    if (this.selectedLatLng) {
+                        const { lat, lng } = this.selectedLatLng;
+                        const address = await this.reverseGeocodeWithNominatim(lat, lng);
+
+                        if (this.mapTarget === 'pickup') {
+                            this.pickupLocation = address;
+                        } else if (this.mapTarget === 'return') {
+                            this.returnLocation = address;
+                        }
+
+                        this.showMapModal = false;
+                    } else {
+                        alert('Please select a location on the map');
+                    }
+                },
+
+                async reverseGeocodeWithNominatim(lat, lng) {
+                    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
+
+                    try {
+                        const response = await fetch(url);
+                        const data = await response.json();
+
+                        if (data && data.address) {
+                            const addr = data.address;
+                            const village = addr.village || addr.town || addr.suburb || '';
+                            const county = addr.county || '';
+                            const road = addr.road || '';
+                            const parts = [village, county, road].filter(Boolean);
+                            return parts.join(', ');
+                        } else {
+                            return 'Unknown location';
+                        }
+                    } catch (error) {
+                        console.error('Reverse geocoding failed:', error);
+                        return 'Unknown location';
+                    }
                 }
+
             },
             computed: {
                 formattedPickupDate() {

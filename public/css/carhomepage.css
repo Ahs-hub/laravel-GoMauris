@@ -50,6 +50,7 @@
   background: #111214d8;
 }
 
+/* input field style */
 .form-group select,
 .form-group input {
     padding: 0.75rem;
@@ -61,12 +62,29 @@
     min-width: 150px;
 }
 
+.selectinput-place{
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  font-size: 1rem;
+  min-width: 150px;
+}
+
+
 /* Fade transition for showing/hiding the return field */
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.3s ease;
 }
 .fade-enter-from, .fade-leave-to {
   opacity: 0;
+}
+
+.selectinput-place div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px; /* adjust as needed */
+  display: inline-block;
+  vertical-align: middle;
 }
 
 
