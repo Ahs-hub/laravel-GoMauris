@@ -26,7 +26,14 @@ class CarBookingController extends Controller
             'child_seats' => 'integer|min:0|max:3',
             // Optional:
             'special_requests' => 'nullable|string',
-            'same_location' => 'boolean'
+            'same_location' => 'boolean',
+             
+            // Optional latitude/longitude
+            'pickup_latitude'  => 'nullable|numeric|between:-90,90',
+            'pickup_longitude' => 'nullable|numeric|between:-180,180',
+            'return_latitude'  => 'nullable|numeric|between:-90,90',
+            'return_longitude' => 'nullable|numeric|between:-180,180'
+
         ]);
 
         $booking = \App\Models\CarBooking::create($validated);

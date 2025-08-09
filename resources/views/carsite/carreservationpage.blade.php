@@ -6,6 +6,13 @@
     @else
         <link rel="stylesheet" href="{{ asset('css/carreservationpage.css') }}">
     @endif
+ 
+    <!-- for location map -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    />
+   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 
     <div id="bookingApp">
 
@@ -67,13 +74,39 @@
                     <!-- Pick-up Location -->
                     <div class="col-md-6">
                         <label for="pickupLocation" class="form-label">Place to Pick Up the Car *</label>
-                        <select class="form-select" v-model="tempPickupLocation" id="pickupLocation" required>
+                        <!-- <select class="form-select" v-model="tempPickupLocation" id="pickupLocation" required>
                             <option selected disabled>Choose Location</option>
                             <option>Mahebourg</option>
                             <option>Port Louis</option>
                             <option>SSR Airport</option>
                             <option>Grand Baie</option>
-                        </select>
+                        </select> -->
+                        <div class="dropdown form-control p-0 ">
+                                    <button class="btn selectinput-place dropdown-toggle w-100 text-start d-flex align-items-center justify-content-between"
+                                            type="button" data-bs-toggle="dropdown">
+                                            <div>
+                                                <i class='bx bx-map me-2'></i> 
+                                                @{{ pickupLocation || 'Select pick up location' }}
+                                            </div>
+                                    </button>
+                                    <ul class="dropdown-menu w-100">
+                                        <li @click="pickupLocation = 'SSR Airport'" class="dropdown-item">
+                                            <i class='bx bx-map'></i> SSR Airport
+                                        </li>
+                                        <li @click="pickupLocation = 'Mahebourg'" class="dropdown-item">
+                                            <i class='bx bx-map'></i> Mahebourg
+                                        </li>
+                                        <li @click="pickupLocation = 'Port Louis'" class="dropdown-item">
+                                            <i class='bx bx-map'></i> Port Louis
+                                        </li>
+                                        <li @click="pickupLocation = 'Grand Baie'" class="dropdown-item">
+                                            <i class='bx bx-map'></i> Grand Baie
+                                        </li>
+                                        <li class="dropdown-item" @click="openMap('pickup')">
+                                            <i class='bx bx-map-pin'></i> Choose on map
+                                        </li>
+                                    </ul>
+                        </div>
                     </div>
                     
                     <!-- Return to Same Location Checkbox -->
@@ -89,15 +122,43 @@
                     <!-- Return location dropdown (shown only if checkbox is unchecked) -->
                     <div class="col-md-12">
                         <div class="col-md-6" v-if="!sameLocation">
-                        <label for="returnLocation" class="form-label">Place to Return the Car *</label>
-                        <select class="form-select" id="returnLocation" v-model="tempReturnLocation" required>
-                            <option disabled value="">Choose Location</option>
-                            <option>Mahebourg</option>
-                            <option>Port Louis</option>
-                            <option>SSR Airport</option>
-                            <option>Grand Baie</option>
-                        </select>
+                            <label for="returnLocation" class="form-label">Place to Return the Car *</label>
+                            <!-- <select class="form-select" id="returnLocation" v-model="tempReturnLocation" required>
+                                <option disabled value="">Choose Location</option>
+                                <option>Mahebourg</option>
+                                <option>Port Louis</option>
+                                <option>SSR Airport</option>
+                                <option>Grand Baie</option>
+                            </select>
+                            </div> -->
+                            <div class="dropdown form-control p-0 ">
+                                <button class="btn selectinput-place dropdown-toggle w-100 text-start d-flex align-items-center justify-content-between"
+                                        type="button" data-bs-toggle="dropdown">
+                                        <div>
+                                            <i class='bx bx-map me-2'></i> 
+                                            @{{ returnLocation || 'Select return up location' }}
+                                        </div>
+                                </button>
+                                <ul class="dropdown-menu w-100">
+                                    <li @click="returnLocation = 'SSR Airport'" class="dropdown-item">
+                                        <i class='bx bx-map'></i> SSR Airport
+                                    </li>
+                                    <li @click="returnLocation = 'Mahebourg'" class="dropdown-item">
+                                        <i class='bx bx-map'></i> Mahebourg
+                                    </li>
+                                    <li @click="returnLocation = 'Port Louis'" class="dropdown-item">
+                                        <i class='bx bx-map'></i> Port Louis
+                                    </li>
+                                    <li @click="returnLocation = 'Grand Baie'" class="dropdown-item">
+                                        <i class='bx bx-map'></i> Grand Baie
+                                    </li>
+                                    <li class="dropdown-item" @click="openMap('return')">
+                                        <i class='bx bx-map-pin'></i> Choose on map
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
+
                     </div>
 
                     <!-- Pick-up Date/Time -->
@@ -559,6 +620,24 @@
         </div>
 
 
+        <!-- Map Modal -->
+        <div v-if="showMapModal" class="modal" tabindex="-1" style="display: block;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Select Location on Map</h5>
+                        <button type="button" class="btn-close" @click="showMapModal = false"></button>
+                    </div>
+                    <div class="modal-body" style="height: 400px;">
+                        <div :key="showMapModal" id="map" style="height: 100%;"></div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-end">
+                        <span style="width: 500px;"></span>
+                        <button class="btn btn-primary"  @click="confirmLocation">Select</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -577,6 +656,19 @@
                     pickupDate: '',
                     returnLocation: '',
                     returnDate: '',
+
+                    //location map
+                    pickupLat: null,
+                    pickupLng: null,
+                    returnLat: null,
+                    returnLng: null,
+
+                    //Modal map
+                    showMapModal: false,
+                    selectedLatLng: null,
+                    mapInstance: null,
+                    marker: null,
+                    mapTarget: '', // can be 'pickup' or 'return'
 
                     // Temporary input data (used in form only)
                     tempPickupLocation: '',
@@ -619,7 +711,7 @@
                 };
             },
             mounted() {
-                const saved = JSON.parse(localStorage.getItem('bookingForm'));
+                const saved = JSON.parse(sessionStorage.getItem('bookingForm'));
                 if (saved) {
                     this.pickupLocation = saved.pickupLocation || '';
                     this.tempPickupLocation =  saved.pickupLocation || '';
@@ -638,17 +730,23 @@
                     this.sameLocation = saved.sameLocation !== undefined ? saved.sameLocation : true;
                     this.selectedCarId = saved.carId || null;
 
+                    // // ✅ Restore coordinates if saved
+                    // this.pickupLat = savedData.pickupLat || null;
+                    // this.pickupLng = savedData.pickupLng || null;
+                    // this.returnLat = savedData.returnLat || null;
+                    // this.returnLng = savedData.returnLng || null;
+
                 }
 
 
-                const stored = localStorage.getItem('selectedAddons');
+                const stored = sessionStorage.getItem('selectedAddons');
                 if (stored) {
                     const addons = JSON.parse(stored);
                     this.hasDriver = addons.driver === 1;
                     this.childQuantity = addons.child ?? 1;
                 }
 
-                const savedSection = localStorage.getItem('activeReservationSection');
+                const savedSection = sessionStorage.getItem('activeReservationSection');
                 if (savedSection) {
                     this.activeSection = savedSection;
                 }
@@ -668,6 +766,13 @@
                     this.selectedCar = this.cars.find(car => car.id === newId);
 
                     this.perDayRate = this.selectedCar ? Number(this.selectedCar.price_per_day) : 0;
+                },
+                showMapModal(Val) {
+                    if (Val) {
+                    this.$nextTick(() => {
+                        this.initMap();
+                    });
+                    }
                 }
             },
             computed: {
@@ -752,6 +857,10 @@
                     if (this.sameLocation) {
                         this.returnLocation = this.tempPickupLocation;
                         this.tempReturnLocation = this.tempPickupLocation;
+
+                        // ✅ Copy coordinates too
+                        this.returnLat = this.pickupLat;
+                        this.returnLng = this.pickupLng;
                     } else {
                         this.returnLocation = this.tempReturnLocation;
                     }
@@ -780,38 +889,50 @@
                         returnLocation: this.returnLocation,
                         returnDate: this.returnDate,
                         sameLocation: this.sameLocation,
-                        carId: this.selectedCarId
+                        carId: this.selectedCarId,
+
+                        // 💾 Save coordinates here too
+                        pickupLat: this.pickupLat,
+                        pickupLng: this.pickupLng,
+                        returnLat: this.returnLat,
+                        returnLng: this.returnLng
                     };
-                    localStorage.setItem('bookingForm', JSON.stringify(data));
+                    sessionStorage.setItem('bookingForm', JSON.stringify(data));
                     alert("Search triggered and form data saved.");
                 },
                 showSection(sectionName) {
                     this.activeSection = sectionName;
-                    localStorage.setItem('activeReservationSection', sectionName);
+                    sessionStorage.setItem('activeReservationSection', sectionName);
                 },
                 clearForm() {
-                    this.pickupLocation = '';
-                    this.pickupDate = '';
-                    this.returnLocation = '';
-                    this.returnDate = '';
-                    this.sameLocation = true;
+                    this.pickupLocation = null;
+                    this.pickupDate = null;
+                    this.returnLocation = null;
+                    this.returnDate = null;
+                    this.sameLocation = null;
                     this.selectedCarId = null;
-                    localStorage.removeItem('bookingForm');
-                    localStorage.removeItem('activeReservationSection');
-                    localStorage.removeItem('selectedAddons');
+
+                    this.pickupLat = "";
+                    this.pickupLng = "";
+                    this.returnLat = "";
+                    this.returnLng = "";
+
+                    sessionStorage.removeItem('bookingForm');
+                    sessionStorage.removeItem('activeReservationSection');
+                    sessionStorage.removeItem('selectedAddons');
                     window.location.href = '/reservation';
                 },
                 selectCar(id,name) {
                     this.selectedCarId = id;
-                    const saved = JSON.parse(localStorage.getItem('bookingForm')) || {};
+                    const saved = JSON.parse(sessionStorage.getItem('bookingForm')) || {};
                     saved.carId = id;
-                    localStorage.setItem('bookingForm', JSON.stringify(saved));
+                    sessionStorage.setItem('bookingForm', JSON.stringify(saved));
                     // alert('Selected car: ' + name);
                 },
                 bookNow(carId) {
-                    const saved = JSON.parse(localStorage.getItem('bookingForm')) || {};
+                    const saved = JSON.parse(sessionStorage.getItem('bookingForm')) || {};
                     saved.carId = carId;
-                    localStorage.setItem('bookingForm', JSON.stringify(saved));
+                    sessionStorage.setItem('bookingForm', JSON.stringify(saved));
                     // Optional: redirect or change section
                     // this.showSection('addons');
                 },
@@ -826,7 +947,7 @@
                     }
                 },
                 saveAddons() {
-                    localStorage.setItem('selectedAddons', JSON.stringify({
+                    sessionStorage.setItem('selectedAddons', JSON.stringify({
                         driver: this.hasDriver ? 1 : 0,
                         child: this.childQuantity
                     }));
@@ -835,8 +956,8 @@
                 submitDriverDetails() {
                     this.loading = true;
 
-                    const bookingForm = JSON.parse(localStorage.getItem('bookingForm') || '{}');
-                    const selectedAddons = JSON.parse(localStorage.getItem('selectedAddons') || '{}');
+                    const bookingForm = JSON.parse(sessionStorage.getItem('bookingForm') || '{}');
+                    const selectedAddons = JSON.parse(sessionStorage.getItem('selectedAddons') || '{}');
 
                     // Basic validation
                     if (!bookingForm.pickupLocation || !bookingForm.pickupDate || !bookingForm.returnLocation || !bookingForm.returnDate) {
@@ -850,11 +971,17 @@
                     }
 
                     const payload = {
-                        ...selectedAddons, // <-- COMMA was missing here
+                        ...selectedAddons,
                         ...this.form,
                         pickup_location: bookingForm.pickupLocation,
+                        pickup_latitude: bookingForm.pickupLat,
+                        pickup_longitude: bookingForm.pickupLng,
+
                         pickup_date: bookingForm.pickupDate,
                         return_location: bookingForm.returnLocation,
+                        return_latitude: bookingForm.returnLat,
+                        return_longitude: bookingForm.returnLng,
+
                         return_date: bookingForm.returnDate,
                         same_location: bookingForm.sameLocation,
                         car_id: bookingForm.carId,
@@ -894,6 +1021,90 @@
                     .finally(() => {
                         this.loading = false;
                     });
+                },
+
+
+                //Add map location
+                openMap(target) {
+                    this.mapTarget = target; // 'pickup' or 'return'
+                    this.showMapModal = true;
+                },
+                initMap() {
+                    // If already created, destroy it cleanly
+                    if (this.mapInstance) {
+                    this.mapInstance.off();         // Remove all event listeners
+                    this.mapInstance.remove();      // Remove the map instance
+                    this.mapInstance = null;
+                    }
+
+                    // Clear previous selection
+                    this.selectedLatLng = null;
+                    this.marker = null;
+
+                    // Initialize new map
+                    this.mapInstance = L.map('map').setView([-20.2, 57.5], 10);
+
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(this.mapInstance);
+
+                    // Add marker on click
+                    this.mapInstance.on('click', (e) => {
+                    const { lat, lng } = e.latlng;
+                    this.selectedLatLng = { lat, lng };
+
+                    if (this.marker) {
+                        this.marker.setLatLng(e.latlng);
+                    } else {
+                        this.marker = L.marker(e.latlng).addTo(this.mapInstance);
+                    }
+                    });
+                },
+
+                async confirmLocation() {
+                    if (this.selectedLatLng) {
+                        const { lat, lng } = this.selectedLatLng;
+                        const address = await this.reverseGeocodeWithNominatim(lat, lng);
+
+                        if (this.mapTarget === 'pickup') {
+                            this.pickupLocation = address;
+                            this.tempPickupLocation = address;
+                            this.pickupLat = lat;
+                            this.pickupLng = lng;
+                        } else if (this.mapTarget === 'return') {
+                            this.returnLocation = address;
+                            this.tempReturnLocation = address;
+                            this.returnLat = lat;
+                            this.returnLng = lng;
+                        }
+
+                        this.showMapModal = false;
+                    } else {
+                        alert('Please select a location on the map');
+                    }
+                },
+
+                async reverseGeocodeWithNominatim(lat, lng) {
+                    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
+
+                    try {
+                        const response = await fetch(url);
+                        const data = await response.json();
+
+                        if (data && data.address) {
+                            const addr = data.address;
+                            const village = addr.village || addr.town || addr.suburb || '';
+                            const county = addr.county || '';
+                            const road = addr.road || '';
+                            const parts = [village, county, road].filter(Boolean);
+                            return parts.join(', ');
+                        } else {
+                            return 'Unknown location';
+                        }
+                    } catch (error) {
+                        console.error('Reverse geocoding failed:', error);
+                        return 'Unknown location';
+                    }
                 }
 
 

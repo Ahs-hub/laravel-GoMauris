@@ -23,6 +23,21 @@
     justify-content: center;
     left:0;
 }
+
+.selectinput-place div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px; /* adjust as needed */
+  display: inline-block;
+  vertical-align: middle;
+}
+.dropdown-item {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+
 .about-taxi{
     background: var(--gray-light); 
     margin-top:400px;

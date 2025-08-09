@@ -87,6 +87,11 @@
   vertical-align: middle;
 }
 
+.dropdown-item {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
 
 /* .booking-box {
   background-color: #f6c000;

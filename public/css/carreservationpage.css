@@ -132,6 +132,11 @@
     font-size: 1.1rem;
 }
 
+.dropdown-item {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
 /*#region    search bar  */
 .search-filter-section {
     background: var(--gray-light);

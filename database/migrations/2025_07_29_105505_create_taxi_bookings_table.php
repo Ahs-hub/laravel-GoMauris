@@ -14,7 +14,15 @@ return new class extends Migration
         Schema::create('taxi_bookings', function (Blueprint $table) {
             $table->id();
             $table->string('pickup');
+            //location lalitude longitude
+            $table->decimal('pickup_latitude', 10, 8)->nullable();
+            $table->decimal('pickup_longitude', 11, 8)->nullable();
+
             $table->string('destination');
+            //location lalitude longitude
+            $table->decimal('destination_latitude', 10, 8)->nullable();
+            $table->decimal('destination_longitude', 11, 8)->nullable();
+      
             $table->date('date');
             $table->time('time');
             $table->integer('passengers');

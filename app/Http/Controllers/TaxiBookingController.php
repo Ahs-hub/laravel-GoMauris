@@ -26,6 +26,12 @@ class TaxiBookingController extends Controller
             'country' => 'required|string',
             'mobile' => 'required|string',
             'comments' => 'nullable|string',
+
+            // Optional latitude/longitude
+            'pickup_latitude'  => 'nullable|numeric|between:-90,90',
+            'pickup_longitude' => 'nullable|numeric|between:-180,180',
+            'destination_latitude'  => 'nullable|numeric|between:-90,90',
+            'destination_longitude' => 'nullable|numeric|between:-180,180'
         ]);
 
         // ✅ Store the new booking

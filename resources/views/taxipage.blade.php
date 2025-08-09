@@ -7,6 +7,14 @@
         <link rel="stylesheet" href="{{ asset('css/taxipage.css') }}">
     @endif
 
+    <!-- for location map -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    />
+   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Include Vue -->
@@ -39,11 +47,65 @@
                         <div class="row">
                             <div class="col-md-6 mb-3 text-start">
                                 <label for="pickup" class="form-label">Pick-up Location</label>
-                                <input type="text" class="form-control" v-model="form.pickup" required>
+                                <!-- <input type="text" class="form-control" v-model="form.pickup" required> -->
+                                <div class="dropdown form-control p-0 ">
+                                    <button class="btn selectinput-place dropdown-toggle w-100 text-start d-flex align-items-center justify-content-between"
+                                            type="button" data-bs-toggle="dropdown">
+                                            <div>
+                                                <i class='bx bx-map me-2'></i> 
+                                                @{{ form.pickup || 'Select pick up location' }}
+                                            </div>
+                                    </button>
+                                    <ul class="dropdown-menu w-100">
+                                        <li @click="form.pickup = 'SSR Airport';  form.pickup_latitude = -20.431997;  form.pickup_longitude = 57.676868;" class="dropdown-item">
+                                            <i class='bx bx-map'></i> SSR Airport
+                                        </li>
+                                        <li @click="form.pickup = 'Mahebourg'; form.pickup_latitude = -20.408056; form.pickup_longitude = 57.7;" class="dropdown-item">
+                                            <i class='bx bx-map'></i> Mahebourg
+                                        </li>
+                                        <li @click="form.pickup = 'Port Louis'; form.pickup_latitude = -20.160891; form.pickup_longitude = 57.501222;" class="dropdown-item">
+                                            <i class='bx bx-map'></i> Port Louis
+                                        </li>
+                                        <li @click="form.pickup = 'Grand Baie'; form.pickup_latitude = -20.013053; form.pickup_longitude = 57.580440;" class="dropdown-item">
+                                            <i class='bx bx-map'></i> Grand Baie
+                                        </li>
+                                        <li class=" dropdown-item" @click="openMap('pickup')">
+                                            <i class='bx bx-map-pin'></i> Choose on map
+                                        </li>
+                                    </ul>
+                                </div>
+
                             </div>
                             <div class="col-md-6 mb-3 text-start">
                                 <label for="destination" class="form-label">Destination</label>
-                                <input type="text" class="form-control" v-model="form.destination" required>
+                                <!-- <input type="text" class="form-control" v-model="form.destination" required> -->
+                                <div class="dropdown form-control p-0 ">
+                                    <button class="btn selectinput-place dropdown-toggle w-100 text-start d-flex align-items-center justify-content-between"
+                                            type="button" data-bs-toggle="dropdown">
+                                            <div>
+                                                <i class='bx bx-map me-2'></i> 
+                                                @{{ form.destination || 'Select return up location' }}
+                                            </div>
+                                    </button>
+                                    <ul class="dropdown-menu w-100">
+                                        <li @click="form.destination  = 'SSR Airport'; form.destination_latitude = -20.431997; form.destination_longitude = 57.676868;" class="dropdown-item">
+                                            <i class='bx bx-map'></i> SSR Airport
+                                        </li>
+                                        <li @click="form.destination  = 'Mahebourg'; form.destination_latitude = -20.408056; form.destination_longitude = 57.7;" class="dropdown-item">
+                                            <i class='bx bx-map'></i> Mahebourg
+                                        </li>
+                                        <li @click="form.destination  = 'Port Louis'; form.destination_latitude = -20.160891; form.destination_longitude = 57.501222;" class="dropdown-item">
+                                            <i class='bx bx-map'></i> Port Louis
+                                        </li>
+                                        <li @click="form.destination  = 'Grand Baie'; form.destination_latitude = -20.013053; form.destination_longitude =  57.580440;" class="dropdown-item">
+                                            <i class='bx bx-map'></i> Grand Baie
+                                        </li>
+                                        <li class="dropdown-item" @click="openMap('destination')">
+                                            <i class='bx bx-map-pin'></i> Choose on map
+                                        </li>
+                                    </ul>
+                                </div>
+
                             </div>
                         </div>
 
@@ -132,6 +194,26 @@
                     </form>
                     </div>
                 </div>
+
+                <!-- Map Modal -->
+                <div v-if="showMapModal" class="modal" tabindex="-1" style="display: block;">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>Select Location on Map</h5>
+                            <button type="button" class="btn-close" @click="showMapModal = false"></button>
+                        </div>
+                        <div class="modal-body" style="height: 400px;">
+                            <div :key="showMapModal" id="map" style="height: 100%;"></div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-end">
+                            <span style="width: 500px;"></span>
+                            <button class="btn btn-primary"  @click="confirmLocation">Select</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
 
@@ -233,14 +315,36 @@
                     email: '',
                     country: '',
                     mobile: '',
-                    comments: ''
+                    comments: '',
+                    
+                    //location map
+                    pickup_latitude: null,
+                    pickup_longitude: null,
+                    destination_latitude: null,
+                    destination_longitude: null
                 },
+
+                showMapModal: false,
+                selectedLatLng: null,
+                mapInstance: null,
+                marker: null,
+                mapTarget: '', // can be 'pickup' or 'return'
+
                 minDate: ''
             };
         },
         mounted() {
             const today = new Date().toISOString().split('T')[0];
             this.minDate = today;
+        },
+        watch: {
+            showMapModal(Val) {
+                if (Val) {
+                this.$nextTick(() => {
+                    this.initMap();
+                });
+                }
+            }
         },
         methods: {
             goToNext() {
@@ -291,8 +395,91 @@
                     email: '',
                     country: '',
                     mobile: '',
-                    comments: ''
+                    comments: '',
+                    pickup_latitude: null,
+                    pickup_longitude: null,
+                    destination_latitude: null,
+                    destination_longitude: null
                 };
+            },
+            openMap(target) {
+                this.mapTarget = target; // 'pickup' or 'return'
+                this.showMapModal = true;
+            },
+            initMap() {
+                // If already created, destroy it cleanly
+                if (this.mapInstance) {
+                this.mapInstance.off();         // Remove all event listeners
+                this.mapInstance.remove();      // Remove the map instance
+                this.mapInstance = null;
+                }
+
+                // Clear previous selection
+                this.selectedLatLng = null;
+                this.marker = null;
+
+                // Initialize new map
+                this.mapInstance = L.map('map').setView([-20.2, 57.5], 10);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(this.mapInstance);
+
+                // Add marker on click
+                this.mapInstance.on('click', (e) => {
+                const { lat, lng } = e.latlng;
+                this.selectedLatLng = { lat, lng };
+
+                if (this.marker) {
+                    this.marker.setLatLng(e.latlng);
+                } else {
+                    this.marker = L.marker(e.latlng).addTo(this.mapInstance);
+                }
+                });
+            },
+
+            async confirmLocation() {
+                if (this.selectedLatLng) {
+                    const { lat, lng } = this.selectedLatLng;
+                    const address = await this.reverseGeocodeWithNominatim(lat, lng);
+
+                    if (this.mapTarget === 'pickup') {
+                        this.form.pickup = address;
+                        this.form.pickup_latitude = lat;
+                        this.form.pickup_longitude = lng;
+                    } else if (this.mapTarget === 'destination') {
+                        this.form.destination = address;
+                        this.form.destination_latitude = lat;
+                        this.form.destination_longitude = lng;
+                    }
+
+                    this.showMapModal = false;
+                } else {
+                    alert('Please select a location on the map');
+                }
+            },
+
+            async reverseGeocodeWithNominatim(lat, lng) {
+                const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
+
+                try {
+                    const response = await fetch(url);
+                    const data = await response.json();
+
+                    if (data && data.address) {
+                        const addr = data.address;
+                        const village = addr.village || addr.town || addr.suburb || '';
+                        const county = addr.county || '';
+                        const road = addr.road || '';
+                        const parts = [village, county, road].filter(Boolean);
+                        return parts.join(', ');
+                    } else {
+                        return 'Unknown location';
+                    }
+                } catch (error) {
+                    console.error('Reverse geocoding failed:', error);
+                    return 'Unknown location';
+                }
             }
         }
     }).mount('#taxiApp');

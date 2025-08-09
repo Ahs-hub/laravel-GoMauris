@@ -24,8 +24,17 @@ return new class extends Migration
         
             // Booking Info
             $table->string('pickup_location');
+            //location lalitude longitude
+            $table->decimal('pickup_latitude', 10, 8)->nullable();
+            $table->decimal('pickup_longitude', 11, 8)->nullable();
+
             $table->dateTime('pickup_date');
+
             $table->string('return_location');
+            //location lalitude longitude
+            $table->decimal('return_latitude', 10, 8)->nullable();
+            $table->decimal('return_longitude', 11, 8)->nullable();
+
             $table->dateTime('return_date');
             $table->boolean('same_location')->default(true);
         

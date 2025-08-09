@@ -19,6 +19,11 @@ class TaxiBooking extends Model
         'mobile', 
         'comments',
         'status', // ✅ Add this
-        'admin_comment'
+        'admin_comment',
+        
+        'pickup_latitude',
+        'pickup_longitude',
+        'destination_latitude',
+        'destination_longitude'
     ];
 }
