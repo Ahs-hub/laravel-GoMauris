@@ -68,7 +68,7 @@
         </div>
 
         <!-- Filters and Search -->
-        <!-- <div class="card mb-4">
+        <div class="card mb-4">
             <div class="card-body">
                 <div class="row g-3">
                     <div class="col-md-4">
@@ -86,48 +86,46 @@
                     </div>
 
                     <div class="col-md-3">
-                        <select v-model="filterCarType" class="form-select">
+                        <select class="form-select" v-model="filterCarType">
                             <option value="">All Car Types</option>
-                            <option value="SUV">SUV</option>
-                            <option value="Sedan">Sedan</option>
-                            <option value="Hatchback">Hatchback</option> -->
+                            <option value="Suzuki Celerio">Suzuki Celerio</option>
+                            <option value="Suzuki Spresso">Suzuki Spresso</option>
+                            <option value="Suzuki Swift">Suzuki Swift</option> -->
                             <!-- Populate dynamically if needed -->
-                        <!-- </select>
-                    </div> -->
-                    <!-- type -->
-                    <!-- <div class="col-md-3">
-                        <select class="form-select" v-model="filterService">
-                            <option value="">All Services</option>
-                            <option value="Car Rental">Car Booking</option>
-                            <option value="Taxi Booking">Taxi Booking</option>
-                            <option value="Tour Booking">Tour Booking</option>
-                            <option value="Custom Tour">Custom Booking</option>
-                            <option value="Other">Other</option>
                         </select>
-                    </div> -->
-                   <!-- <div class="col-md-3">
+                    </div> 
+
+                    <div class="col-md-3">
+                        <select class="form-select" v-model="filterPayment">
+                            <option value="">All Payment</option>
+                            <option value="paid">Paid</option>
+                            <option value="unpaid">UnPaid</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-3">
                         <select class="form-select" v-model="filterStatus">
                             <option value="">All Status</option>
-                            <option value="unseen">Unread</option>
-                            <option value="seen">Read</option>
+                            <option value="pending">Pending</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="cancelled">Cancelled</option>
                         </select>
-                    </div> -->
-                      <!--<div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
                         <button class="btn btn-outline-secondary w-100" @click="clearFilters">
                             <i class='bx bx-x'></i> Clear
                         </button>
-                    </div> -->
-          <!--  </div>
+                    </div>
+                </div>
             </div>
-         </div> -->
+         </div>
 
-        
-       
+    
          <!-- Rentals Table -->
-        <!-- <div class="card">
+        <div class="card">
             <div class="card-header bg-white">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Rentals Messages (@{{ stats.carrental.total }})</h5>
+                    <h5 class="mb-0">Rental Booking (@{{ stats.carrental.total }})</h5>
                     <div class="btn-group" role="group">
                         <button 
                             type="button" 
@@ -147,7 +145,7 @@
                         </button>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
             <div class="card-body p-0">
                 <!-- Table View Mode -->
@@ -172,12 +170,12 @@
                         <tbody>
                             <tr  v-for="(rental, index) in  filteredRentals" :key="rental.id">
                                 <td>
-                                    <!-- <span 
+                                    <span 
                                         style="position:absolute;"
                                         class="badge bg-primary notification-badge ms-2"
-                                        v-if="isnewitem( rentals.id, 'ContactBooking')">
+                                        v-if="isnewitem( rental.id, 'CarBooking')">
                                         New
-                                    </span> -->
+                                    </span>
                                     <input type="checkbox" class="form-check-input" >
                                 </td>
                                 <td>
@@ -186,7 +184,7 @@
                                 <td>
                                     <div class="small">
                                         <div><i class='bx bx-envelope me-1'></i>@{{  rental.email }}</div>
-                                        <div><i class='bx bx-phone me-1'></i>@{{  rental.phone }}</div>
+                                        <div><i class='bx bx-phone me-1'></i>@{{  rental.mobile }}</div>
                                     </div>
                                 </td>
                                 <td>
@@ -250,13 +248,13 @@
 
       
                                
-                                    <button 
+                                    <!-- <button 
                                            class="btn btn-warning btn-action btn-sm" 
                                            title="Reply"
                                           
                                         >
                                             <i class='bx bx-reply'></i>
-                                    </button>
+                                    </button> -->
                                     <button 
                                            class="btn btn-danger btn-action btn-sm" 
                                            title="Delete"
@@ -274,8 +272,8 @@
                 </div>
 
                 <!-- Cards View -->
-                <!-- <div v-else class="row g-3 p-3">
-                    <div v-for="(contact, index) in filteredContacts" :key="contact.id" class="col-lg-6 col-xl-4">
+                <div v-else class="row g-3 p-3">
+                    <div v-for="(rental, index) in  filteredRentals" :key="rental.id" class="col-lg-6 col-xl-4">
                         <div class="card contact-card h-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center">
@@ -283,60 +281,67 @@
                                         <span 
                                             style="position:absolute;"
                                             class="badge bg-primary notification-badge ms-2"
-                                            v-if="isnewitem(contact.id, 'ContactBooking')">
+                                            v-if="isnewitem( rental.id, 'CarBooking')">
                                             New
                                         </span>
-                                          @{{ contact.first_name.charAt(0) }}@{{ contact.last_name.charAt(0) }}
+                                          @{{ rental.first_name.charAt(0) }}@{{ rental.last_name.charAt(0) }}
                                     </div>
-                                    <strong><strong>@{{ contact.first_name }} @{{ contact.last_name }}</strong></strong>
+                                    <strong><strong>@{{ rental.first_name }} @{{ rental.last_name }}</strong></strong>
                                 </div>
-                                <span class="badge" :class="getStatusClass(contact.status)">
-                                          @{{ contact.status }}
+                                <span class="badge" :class="getStatusClass(rental.status)">
+                                          @{{ rental.status }}
                                 </span>
                             </div>
                             <div class="card-body">
                                 <p class="mb-2">
                                     <i class='bx bx-envelope me-1'></i>
-                                    <small>@{{ contact.email }}</small>
+                                    <small>@{{ rental.email }}</small>
                                 </p>
                                 <p class="mb-2">
                                     <i class='bx bx-phone me-1'></i>
-                                    <small>@{{ contact.phone }}</small>
+                                    <small>@{{ rental.mobile }}</small>
                                 </p>
                                 <p class="mb-2">
-                                    <span class="service-tag">@{{ contact.service }}</span>
+                                    <i class='bx bx-car me-1'></i>
+                                    <small>@{{ rental.car_name }}</small>
+                                </p>
+
+                                <p class="mb-2">
+                                    <i class='bx bx-calendar me-1'></i>
+                                    <div>@{{ rental.pickup_date }}</div>
+                                    <div>@{{ rental.return_date }}</div>
                                 </p>
                                 <p class="text-muted small mb-3">
-                                    @{{ contact.message.substring(0, 100) }}...
+                                    <!-- @{{ rental.message.substring(0, 100) }}... -->
                                 </p>
                                 <small class="text-muted">
                                     <i class='bx bx-time me-1'></i>
-                                    @{{ new Date(contact.created_at).toLocaleDateString() }}
+                                    @{{ new Date(rental.created_at).toLocaleDateString() }}
                                 </small>
-                                <small v-if="contact.admin_comment" class="badge bg-warning text-dark ms-1" title="Has comment">
+                                <small v-if="rental.admin_comment" class="badge bg-warning text-dark ms-1" title="Has comment">
                                     <i class='bx bx-message-square-detail'></i> Has comment
                                 </small>
                             </div>
                             <div class="card-footer bg-white text-center">
-                                <button class="btn btn-success btn-action btn-sm" @click="viewItem(contact, 'contactModal')">
+                                <button class="btn btn-success btn-action btn-sm" @click="viewItem(rental, 'itemModal')">
                                     <i class='bx bx-show'></i>
                                 </button>
-                                <button class="btn btn-primary btn-action btn-sm" title="Mark as Read" @click="updateStatus('contacts', contact.id, contacts.indexOf(contact), 'seen')">
+                                <button class="btn btn-primary btn-action btn-sm" title="Mark as Confirmed" @click="updateItem('carrentals', rental.id, carrentals.indexOf(rental), { status: 'confirmed' })">
                                     <i class='bx bx-check'></i>
                                 </button>
-                                <button class="btn btn-warning btn-action btn-sm" title="Reply"  @click="updateStatus('contacts', contact.id, contacts.indexOf(contact), 'reply')">
+                                <!-- <button class="btn btn-warning btn-action btn-sm" title="Reply"  @click="updateStatus('contacts', contact.id, contacts.indexOf(contact), 'reply')">
                                     <i class='bx bx-reply'></i>
-                                </button>
-                                <button class="btn btn-primary btn-action btn-sm" @click="addComment(contact, 'commentModal')">
+                                </button> -->
+                                <button class="btn btn-primary btn-action btn-sm" @click="addComment(rental, 'commentModal')">
                                     <i class='bx bx-note'></i>
                                 </button>
-                                <button class="btn btn-danger btn-action btn-sm" title="Delete"  @click="deleteItem('contacts', contact.id,contacts.indexOf(contact))">
+                                <button class="btn btn-danger btn-action btn-sm" title="Delete"  @click="deleteItem('carrentals',  rental.id, carrentals.indexOf( rental))">
                                     <i class='bx bx-trash'></i>
                                 </button>
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div>
 
 
                 <!-- Loading Spinner -->
@@ -352,113 +357,216 @@
 
     </div>
 
-    <!-- Contact Details Modal -->
-    <div class="modal fade" id="itemModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+
+    <!-- Rental Details Modal -->
+    <div class="modal fade custom-modal-a" id="itemModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Rental Details</h5>
+                    <h5 class="modal-title">
+                        <i class="fas fa-car"></i>
+                        Rental Details
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body" v-if="selectedItem">
                     <div class="row">
-                        <div class="col-md-6">
-                            <h6>Personal Information</h6>
-                            <p><strong>Name:</strong> @{{ selectedItem.first_name }} @{{ selectedItem.last_name }}</p>
-                            <p><strong>Email:</strong> @{{ selectedItem.email }}</p>
-                            <p><strong>Phone:</strong> @{{ selectedItem.phone }}</p>
-                            <p><strong>Age:</strong> @{{ selectedItem.driver_age }}</p>
-                            
-                            <p><strong>Pickup Location:</strong> @{{ selectedItem.pickup_location }}</p>
-                            <p><strong>Return Location:</strong> @{{ selectedItem.return_location}}</p>
-
-                            <p><strong>Pickup Date:</strong> @{{ selectedItem.pickup_date }}</p>
-                            <p><strong>Return Date:</strong> @{{ selectedItem.return_date }}</p>
-
-                            <p><strong>Has Driver:</strong> @{{ selectedItem.has_driver }}</p>
-
-                            <p><strong>Child Seat:</strong> @{{ selectedItem.child_seats }}</p>
-
-                            <p><strong>Car Type:</strong> @{{ selectedItem.car_name }}</p>
-                            <p><strong>Date:</strong> @{{ new Date(selectedItem.created_at).toLocaleDateString() }}</p>
+                        <!-- Personal Information -->
+                        <div class="col-lg-6 col-md-12">
+                            <div class="info-section">
+                                <h6>
+                                    <i class="fas fa-user"></i>
+                                    Personal Information
+                                </h6>
+                                <div class="info-item">
+                                    <span class="info-label">Name</span>
+                                    <span class="info-value">@{{ selectedItem.first_name }} @{{ selectedItem.last_name }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Email</span>
+                                    <span class="info-value">@{{ selectedItem.email }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Phone</span>
+                                    <span class="info-value">@{{ selectedItem.mobile }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Age</span>
+                                    <span class="info-value">@{{ selectedItem.driver_age }} years</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <h6>Status</h6>
-                            <span class="badge" :class="getStatusClass(selectedItem.status)">
-                                @{{ selectedItem.status }}
+                        
+                        <!-- Rental Information -->
+                        <div class="col-lg-6 col-md-12">
+                            <div class="info-section">
+                                <h6>
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Rental Information
+                                </h6>
+                                <div class="info-item">
+                                    <span class="info-label">Car Type</span>
+                                    <span class="info-value">@{{ selectedItem.car_name }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Pickup Date</span>
+                                    <span class="info-value">@{{ selectedItem.pickup_date }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Return Date</span>
+                                    <span class="info-value">@{{ selectedItem.return_date }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Created</span>
+                                    <span class="info-value">@{{ new Date(selectedItem.created_at).toLocaleDateString() }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <!-- Locations & Services -->
+                        <div class="col-lg-6 col-md-12">
+                            <div class="info-section">
+                                <h6>
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Locations & Services
+                                </h6>
+                                <div class="info-item">
+                                    <span class="info-label">Pickup Location</span>
+                                    <span class="info-value">@{{ selectedItem.pickup_location }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Return Location</span>
+                                    <span class="info-value">@{{ selectedItem.return_location }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">See On Map</span>
+                                    <button class="btn btn-primary"  @click="openMapModal()" type="button">Map</button>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Driver Service</span>
+                                    <span class="info-value">
+                                        <i class="fas" :class="selectedItem.has_driver ? 'fa-check-circle text-success' : 'fa-times-circle text-danger'"></i>
+                                        @{{ selectedItem.has_driver ? 'Yes' : 'No' }}
+                                    </span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Child Seats</span>
+                                    <span class="info-value">@{{ selectedItem.child_seats || 'None' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Status & Payment -->
+                        <div class="col-lg-6 col-md-12">
+                            <div class="status-section">
+                                <h6>
+                                    <i class="fas fa-info-circle"></i>
+                                    Status & Payment
+                                </h6>
+                                <div class="info-item">
+                                    <span class="info-label">Rental Status</span>
+                                    <span class="badge" :class="getStatusClass(selectedItem.status)">
+                                        @{{ selectedItem.status }}
+                                    </span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Payment Status</span>
+                                    <span class="badge" :class="getStatusClass(selectedItem.payment_status)">
+                                        @{{ selectedItem.payment_status }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Special Request -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-comments me-1"></i> Special Request
+                        </label>
+                        <div class="p-3 border rounded bg-light">
+                            <span v-if="selectedItem.special_requests" class="text-dark">
+                                @{{ selectedItem.special_requests }}
                             </span>
-                            <h6>Payment</h6>
-                            <span class="badge" :class="getStatusClass(selectedItem.payment_status)">
-                                @{{ selectedItem.payment_status }}
+                            <span v-else class="text-muted fst-italic">
+                                No special request provided.
                             </span>
                         </div>
                     </div>
 
-                    <div class="row mt-3">
-                        <div class="col-12">
-                            <h6>Admin Comments</h6>
-                            <textarea 
-                                class="form-control" 
-                                rows="4" 
-                                placeholder="Add internal notes or comments..."
-                                v-model="tempComment"
-                            ></textarea>
-                            <small class="text-muted">These comments are for internal use only and won't be visible to customers.</small>
-                        </div>
-                    </div>
-
-                    <div class="row mt-3">
-                        <div class="col-12">
-                            <h6>Admin Comments</h6>
-                            <textarea 
-                                class="form-control" 
-                                rows="4" 
-                                placeholder="Add internal notes or comments..."
-                                v-model="tempComment"
-                            ></textarea>
-                            <small class="text-muted">These comments are for internal use only and won't be visible to customers.</small>
-                        </div>
+                    <!-- Admin Comments -->
+                    <div class="comment-section">
+                        <h6>
+                            <i class="fas fa-comments"></i>
+                            Admin Comments
+                        </h6>
+                        <textarea 
+                            class="form-control" 
+                            rows="4" 
+                            placeholder="Add internal notes or comments..."
+                            v-model="tempComment"
+                        ></textarea>
+                        <small class="text-muted mt-2 d-block">
+                            <i class="fas fa-lock"></i>
+                            These comments are for internal use only and won't be visible to customers.
+                        </small>
                     </div>
 
                 </div>
-                <div class="modal-footer">
-                   
-                    <button type="button" class="btn btn-primary" @click="updateItem('carrentals', commentItem.id, carrentals.indexOf(commentItem), { admin_comment: tempComment })" v-if="!loadingform">Save Comment</button>
-
-                    <div class="spinner-border text-primary" v-if="loadingform" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-
-                    <button type="button" class="btn btn-primary"  v-if="!loadingform" >Reply</button>
-
-                    <div v-if="selectedItem  && !loadingform">
-                        <select 
+                <div class="modal-footer d-flex justify-content-between align-items-center flex-wrap">
+                    <div class="status-controls">
+                        <div v-if="selectedItem && !loadingform">
+                            <label class="form-label small text-muted mb-1">Update Status:</label>
+                            <select 
                                 class="form-select form-select-sm" 
                                 v-model="selectedItem.status" 
-                                @change="updateStatus('carrentals',  selectedItem.id,  carrentals.indexOf(selectedItem),  selectedItem.status)">
-                                <option value="pending">pending</option>
-                                <option value="confirmed">confirmed</option>
-                                <option value="cancelled">cancelled</option>
-                        </select>
+                                @change="updateItem('carrentals', selectedItem.id, carrentals.indexOf(selectedItem), { status: selectedItem.status })">
+                                <option value="pending">Pending</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        
+                        <div v-if="selectedItem && !loadingform">
+                            <label class="form-label small text-muted mb-1">Payment Status:</label>
+                            <select 
+                                class="form-select form-select-sm" 
+                                v-model="selectedItem.payment_status" 
+                                @change="updateItem('carrentals', selectedItem.id, carrentals.indexOf(selectedItem), { payment_status: selectedItem.payment_status })"
+                            >
+                                <option value="paid">Paid</option>
+                                <option value="unpaid">Unpaid</option>
+                            </select>
+                        </div>
                     </div>
-                   
-                    <div v-if="selectedItem && !loadingform">
-                        <select 
-                            class="form-select form-select-sm" 
-                            v-model="selectedItem.payment_status" 
-                            @change="updateItem('carrentals', selectedItem.id, carrentals.indexOf(selectedItem), { payment_status: selectedItem.payment_status })"
-                        >
-                            <option value="paid">paid</option>
-                            <option value="unpaid">unpaid</option>
-                        </select>
+                    
+                    <div class="d-flex gap-2 align-items-center">
+                        <button type="button" class="btn btn-outline-primary" @click="updateItem('carrentals', commentItem.id, carrentals.indexOf(commentItem), { admin_comment: tempComment })" v-if="!loadingform">
+                            <i class="fas fa-save"></i>
+                            Save Comment
+                        </button>
+                        
+                        <!-- <button type="button" class="btn btn-primary" v-if="!loadingform">
+                            <i class="fas fa-reply"></i>
+                            Reply
+                        </button> -->
+                        
+                        <div class="spinner-border text-primary" v-if="loadingform" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                            Close
+                        </button>
                     </div>
-
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
                 </div>
             </div>
         </div>
     </div>
+
 
     <!-- Comment Modal -->
     <div class="modal fade" id="commentModal" >
@@ -493,6 +601,21 @@
             </div>
         </div>
     </div>
+
+<!-- Map Modal -->
+<div class="modal fade" id="mapModal" tabindex="-1" ref="mapModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Pickup & Return Locations</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" style="height: 400px;">
+        <div id="map" style="width: 100%; height: 100%;"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div>
 

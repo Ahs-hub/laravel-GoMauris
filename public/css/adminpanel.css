@@ -227,3 +227,167 @@ body {
 }
 
 /*#endregion   notification  */
+
+
+/*#region     car rental form */
+/* Form Control Styles - Textarea and Input Fields */
+.custom-modal-a .form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+}
+
+.custom-modal-a .modal-content {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.custom-modal-a .modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px 15px 0 0;
+    padding: 1.5rem;
+}
+
+.custom-modal-a .modal-title {
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.custom-modal-a .btn-close {
+    filter: invert(1);
+}
+
+.custom-modal-a .info-section {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid #667eea;
+}
+
+.custom-modal-a .info-section h6 {
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.custom-modal-a .info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.custom-modal-a .info-item:last-child {
+    border-bottom: none;
+}
+
+.custom-modal-a .info-label {
+    color: #6c757d;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.custom-modal-a .info-value {
+    color: #212529;
+    font-weight: 600;
+    text-align: right;
+    max-width: 60%;
+    word-wrap: break-word;
+}
+
+.custom-modal-a .status-section {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.custom-modal-a .badge {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.custom-modal-a .badge-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.custom-modal-a .badge-confirmed {
+    background-color: #d1edff;
+    color: #0c63e4;
+}
+
+.custom-modal-a .badge-cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.custom-modal-a .badge-paid {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.custom-modal-a .badge-unpaid {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.custom-modal-a .comment-section {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.custom-modal-a .form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+}
+
+.custom-modal-a .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    border-color: #667eea;
+}
+
+.custom-modal-a .form-select {
+    border-radius: 8px;
+}
+
+.custom-modal-a .btn {
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+}
+
+.custom-modal-a .btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+.custom-modal-a .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.custom-modal-a .modal-footer {
+    gap: 1rem;
+    padding: 1.5rem;
+    border-top: 1px solid #e9ecef;
+}
+
+.custom-modal-a .status-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+/*#endregion  car rental form */

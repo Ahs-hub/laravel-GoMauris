@@ -16,6 +16,13 @@
     @else
         <link rel="stylesheet" href="{{ asset('css/adminpanel.css') }}">
     @endif
+
+    <!-- for location map -->
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    />
+   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
     
     <!-- Vue + Axios -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -230,6 +237,9 @@
                     //Search Contact
                     searchQuery: '',
                     filterService: '',
+                    filterCarType: '',
+                    filterPayment: '',
+
                     filterStatus: '',
                     viewMode: 'table',
                     currentPage: 1,
@@ -243,6 +253,11 @@
 
                     selectedItem: null,
 
+                    //map location
+                    mapInstance: null,
+                    pickupMarker: null,
+                    returnMarker: null,
+                    
                     // page contact,tour,taxi ect
                     contacts: [],
                     taxi: [],
@@ -318,9 +333,11 @@
                     return this.getFilteredData(this.carrentals, {
                         searchQuery: this.searchQuery,
                         status: this.filterStatus,
-                        carType: this.filterCarType, // 👈 added
-                    }, ['first_name', 'last_name', 'email', 'phone', 'car_name']); // 👈 searchable
+                        car_name: this.filterCarType, // 👈 added
+                        payment_status: this.filterPayment
+                    }, ['first_name', 'last_name', 'email', 'mobile', 'car_name']); // 👈 searchable
                 },
+
 
                 paginatedContacts() {
                     return this.paginate(this.filteredContacts, this.currentPage, this.itemsPerPage);
@@ -648,6 +665,7 @@
                     },
 
                     updateStatus(type, id, index, status) {
+                        console.log('Updating status for item:', id, 'new status:', status, 'index:', index);
                         this.loading = true;
                         this.loadingform = true;
 
@@ -741,9 +759,12 @@
                                 !filters.service || item.service === filters.service;
                             
                             const matchesCarType =
-                                !filters.carType || item.car_type === filters.carType; // 👈 NEW
+                                !filters.car_name || item.car_name === filters.car_name; // 👈 NEW
 
-                            return matchesSearch && matchesStatus && matchesService;
+                            const matchesPaymentType =
+                                !filters.payment_status || item.payment_status === filters.payment_status; // 👈 NEW
+
+                            return matchesSearch && matchesStatus && matchesService && matchesCarType && matchesPaymentType;
                         });
                     },
 
@@ -802,6 +823,8 @@
                         this.searchQuery = '';
                         this.filterService = '';
                         this.filterStatus = '';
+                        this.filterCarType = '';
+                        this.filterPayment = '';
                     },
 
                     refreshData() {
@@ -972,6 +995,57 @@
                         this.bookingsForSelectedDate = [];
                     } finally {
                         this.loading = false;
+                    }
+                },
+
+
+                //open map for car booking
+                openMapModal() {
+                    // Show Bootstrap modal (use your method to open it)
+                    const modalEl = this.$refs.mapModal;
+                    const modal = new bootstrap.Modal(modalEl);
+                    modal.show();
+
+                    // Initialize map after modal is shown and DOM is ready
+                    this.$nextTick(() => {
+                        setTimeout(() => {
+                        this.initOrUpdateMap();
+                        }, 300);  // slight delay to ensure modal shown properly
+                    });
+                },
+                initOrUpdateMap() {
+                    const pickupLat = parseFloat(this.selectedItem.pickup_latitude);
+                    const pickupLng = parseFloat(this.selectedItem.pickup_longitude);
+                    const returnLat = parseFloat(this.selectedItem.return_latitude);
+                    const returnLng = parseFloat(this.selectedItem.return_longitude);
+
+                    if (!this.mapInstance) {
+                        // Create map
+                        this.mapInstance = L.map('map').setView([pickupLat, pickupLng], 13);
+
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap contributors',
+                        }).addTo(this.mapInstance);
+
+                        // Add markers
+                        this.pickupMarker = L.marker([pickupLat, pickupLng]).addTo(this.mapInstance)
+                        .bindPopup('<b>Pickup Location</b>');
+
+                        this.returnMarker = L.marker([returnLat, returnLng]).addTo(this.mapInstance)
+                        .bindPopup('<b>Return Location</b>');
+
+                        // Fit map to markers
+                        const group = L.featureGroup([this.pickupMarker, this.returnMarker]);
+                        this.mapInstance.fitBounds(group.getBounds());
+
+                    } else {
+                        // Update marker positions
+                        this.pickupMarker.setLatLng([pickupLat, pickupLng]);
+                        this.returnMarker.setLatLng([returnLat, returnLng]);
+
+                        // Fit map to markers
+                        const group = L.featureGroup([this.pickupMarker, this.returnMarker]);
+                        this.mapInstance.fitBounds(group.getBounds());
                     }
                 },
 

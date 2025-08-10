@@ -43,7 +43,7 @@ class AdminCarBookingController extends Controller
                 'last_name' => $rental->last_name,
                 'driver_age' => $rental->driver_age,
                 'email' => $rental->email,
-                'phone' => $rental->mobile,
+                'mobile' => $rental->mobile,
                 'special_requests' => $rental->special_requests,
                 
                 // Booking info
@@ -67,6 +67,12 @@ class AdminCarBookingController extends Controller
 
                 // Admin note
                 'admin_comment' => $rental->admin_comment,
+
+                // In fetchPaginated()
+                'pickup_latitude' => $rental->pickup_latitude,
+                'pickup_longitude' => $rental->pickup_longitude,
+                'return_latitude' => $rental->return_latitude,
+                'return_longitude' => $rental->return_longitude,
 
                 // Timestamps
                 'created_at' => $rental->created_at,
@@ -120,7 +126,52 @@ class AdminCarBookingController extends Controller
         $rental->fill($validated);
         $rental->save();
 
-        return response()->json($rental);
+        // Load car relationship to get car_name
+        $rental->load('car');
+
+        return response()->json([
+            'id' => $rental->id,
+            'first_name' => $rental->first_name,
+            'last_name' => $rental->last_name,
+            'driver_age' => $rental->driver_age,
+            'email' => $rental->email,
+            'mobile' => $rental->mobile,
+            'special_requests' => $rental->special_requests,
+            
+            // Booking info
+            'pickup_location' => $rental->pickup_location,
+            'pickup_date' => $rental->pickup_date,
+            'return_location' => $rental->return_location,
+            'return_date' => $rental->return_date,
+            'same_location' => $rental->same_location,
+
+            // Car info
+            'car_id' => $rental->car_id,
+            'car_name' => $rental->car->name ?? '',
+
+            // Addons
+            'has_driver' => $rental->has_driver,
+            'child_seats' => $rental->child_seats,
+
+            // Status
+            'status' => $rental->status,
+            'payment_status' => $rental->payment_status,
+
+            // Admin note
+            'admin_comment' => $rental->admin_comment,
+
+            // In fetchPaginated()
+            'pickup_latitude' => $rental->pickup_latitude,
+            'pickup_longitude' => $rental->pickup_longitude,
+            'return_latitude' => $rental->return_latitude,
+            'return_longitude' => $rental->return_longitude,
+
+            // Timestamps
+            'created_at' => $rental->created_at,
+            'updated_at' => $rental->updated_at
+        ]);
+
+        // return response()->json($rental);
     }
 
 
