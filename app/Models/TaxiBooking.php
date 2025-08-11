@@ -19,6 +19,7 @@ class TaxiBooking extends Model
         'mobile', 
         'comments',
         'status', // ✅ Add this
+        'payment_status',
         'admin_comment',
         
         'pickup_latitude',

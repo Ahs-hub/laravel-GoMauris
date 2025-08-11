@@ -14,16 +14,15 @@
         <!-- Header -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h2 class="mb-1">Car Rental</h2>
-                <p class="text-muted">Manage client rental</p>
+                <h2 class="mb-1">Taxi Booking</h2>
+                <p class="text-muted">Manage Taxi Booking</p>
             </div>
             <div>
                 <!-- <button class="btn btn-primary me-2" @click="exportContacts" aria-label="Export Car Rental Messages">
                     <i class='bx bx-download'></i> Export
                 </button> -->
 
-
-                <button class="btn btn-outline-primary" @click=" refreshData" aria-label="Refresh Car Rental List">
+                <button class="btn btn-outline-primary" @click=" refreshData" aria-label="Refresh Taxi Booking List">
                     <i class='bx bx-refresh'></i> Refresh
                 </button>
             </div>
@@ -35,7 +34,7 @@
                 <div class="card stats-card text-center p-3">
                     <div class="card-body p-2">
                         <i class='bx bx-message-dots fs-1 mb-2'></i>
-                        <h3 class="mb-1"> @{{ stats.carrental.total }}</h3>
+                        <h3 class="mb-1"> @{{ stats.taxi.total }}</h3>
                         <small>Total Messages</small>
                     </div>
                 </div>
@@ -44,7 +43,7 @@
                 <div class="card stats-card text-center p-3">
                     <div class="card-body p-2">
                         <i class='bx bx-check-circle fs-1 mb-2'></i>
-                        <h3 class="mb-1"> @{{ stats.carrental.reserve }} </h3>
+                        <h3 class="mb-1"> @{{ stats.taxi.reserve }} </h3>
                         <small>Confirmed</small>
                     </div>
                 </div>
@@ -53,7 +52,7 @@
                 <div class="card stats-card text-center p-3">
                     <div class="card-body p-2">
                         <i class='bx bx-time fs-1 mb-2'></i>
-                        <h3 class="mb-1"> @{{ stats.carrental.proceed }} </h3>
+                        <h3 class="mb-1"> @{{ stats.taxi.proceed }} </h3>
                         <small>Pending</small>
                     </div>
                 </div>
@@ -62,7 +61,7 @@
                 <div class="card stats-card text-center p-3">
                     <div class="card-body p-2">
                         <i class='bx bx-calendar fs-1 mb-2'></i>
-                        <h3 class="mb-1"> @{{ stats.carrental.today }} </h3>
+                        <h3 class="mb-1"> @{{ stats.taxi.today }} </h3>
                         <small>Today's Messages</small>
                     </div>
                 </div>
@@ -81,21 +80,11 @@
                             <input 
                                 type="text" 
                                 class="form-control search-box border-start-0" 
-                                placeholder="Search rental..."
+                                placeholder="Search Taxi Booking..."
                                 v-model="searchQuery"
                             >
                         </div>
                     </div>
-
-                    <div class="col-md-3">
-                        <select class="form-select" v-model="filterCarType">
-                            <option value="">All Car Types</option>
-                            <option value="Suzuki Celerio">Suzuki Celerio</option>
-                            <option value="Suzuki Spresso">Suzuki Spresso</option>
-                            <option value="Suzuki Swift">Suzuki Swift</option> -->
-                            <!-- Populate dynamically if needed -->
-                        </select>
-                    </div> 
 
                     <div class="col-md-3">
                         <select class="form-select" v-model="filterPayment">
@@ -122,12 +111,11 @@
             </div>
         </div>
 
-    
-        <!-- Rentals Table -->
+        <!-- Taxi Table -->
         <div class="card">
             <div class="card-header bg-white">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Rental Booking (@{{ stats.carrental.total }})</h5>
+                    <h5 class="mb-0">Taxi Booking (@{{ stats.taxi.total }})</h5>
                     <div class="btn-group" role="group">
                         <button 
                             type="button" 
@@ -160,8 +148,8 @@
                                 </th>
                                 <th>Customer</th>
                                 <th>Contact</th>
-                                <th>Car</th>
-                                <th>Pickup → Return</th>
+                                <th>From → To</th>
+                                <th>Pickup</th>
                                 <th>Payment</th>
                                 <th>Status</th>
                                 <th>Date</th>
@@ -170,40 +158,44 @@
                         </thead>
                         <!-- card detail table -->
                         <tbody>
-                            <tr  v-for="(rental, index) in  filteredRentals" :key="rental.id">
+                            <tr  v-for="(taxis, index) in   filteredTaxis" :key="taxi.id">
                                 <td>
-                                    <span 
+                                    <!-- <span 
                                         style="position:absolute;"
                                         class="badge bg-primary notification-badge ms-2"
                                         v-if="isnewitem( rental.id, 'CarBooking')">
                                         New
-                                    </span>
+                                    </span> -->
                                     <input type="checkbox" class="form-check-input" >
                                 </td>
                                 <td>
-                                    <strong>@{{  rental.first_name }}</strong>
+                                    <strong>@{{  taxis.name }}</strong>
                                 </td>
                                 <td>
                                     <div class="small">
-                                        <div><i class='bx bx-envelope me-1'></i>@{{  rental.email }}</div>
-                                        <div><i class='bx bx-phone me-1'></i>@{{  rental.mobile }}</div>
+                                        <div><i class='bx bx-envelope me-1'></i>@{{  taxis.email }}</div>
+                                        <div><i class='bx bx-phone me-1'></i>@{{  taxis.mobile }}</div>
+                                    </div>
+                                </td>
+     
+                                <td>
+                                    <div class="small">
+                                        <div>@{{  taxis.pickup }}</div>
+                                        <hr class="my-1">
+                                        <div>@{{  taxis.destination }}</div>
                                     </div>
                                 </td>
                                 <td>
-                                    @{{  rental.car_name}}
-                                </td>
-       
-                                <td>
                                     <div class="small">
-                                        <div>@{{  rental.pickup_date }}</div>
-                                        <div>@{{  rental.return_date }}</div>
+                                        <div>@{{ new Date(taxis.date).toLocaleDateString() }}</div>
+                                        <div>@{{  taxis.time }}</div>
                                     </div>
                                 </td>
                                 <td>
                                     <select 
                                         class="vertical-align: middle;" 
-                                        v-model="rental.payment_status" 
-                                        @change="updateItem('carrentals', rental.id, carrentals.indexOf(rental), { payment_status: rental.payment_status })"
+                                        v-model="taxis.payment_status" 
+                                        @change="updateItem('taxi', taxis.id, taxi.indexOf(taxis), { payment_status: taxis.payment_status })"
                                     >
                                         <option value="paid">paid</option>
                                         <option value="unpaid">unpaid</option>
@@ -215,17 +207,17 @@
                                     </span> -->
                                     <select 
                                         class="vertical-align: middle;" 
-                                        v-model="rental.status" 
-                                        @change="updateItem('carrentals', rental.id, carrentals.indexOf(rental), { status: rental.status })"
+                                        v-model="taxis.status" 
+                                        @change="updateItem('taxi', taxis.id, taxi.indexOf(taxis), { status: taxis.status })"
                                         >
                                         <option value="pending">pending</option>
                                         <option value="confirmed">confirmed</option>
                                         <option value="cancelled">cancelled</option>
                                     </select>
                                 </td>
-                                <td>@{{ new Date(rental.created_at).toLocaleDateString() }}</td>
+                                <td>@{{ new Date(taxis.created_at).toLocaleDateString() }}</td>
                                 <td>
-                                    <button class="btn btn-success btn-action btn-sm"  title="View"  @click="viewItem(rental, 'itemModal')">
+                                    <button class="btn btn-success btn-action btn-sm"  title="View"  @click="viewItem(taxis, 'itemModal')">
                                         <i class='bx bx-show'></i>
                                     </button>
                                     <!-- <button 
@@ -238,10 +230,10 @@
                                     </button> -->
 
                                     <!--Add admin comment -->
-                                    <button class="btn btn-primary btn-action btn-sm" @click="addComment( rental, 'commentModal')" style="position:relative;" title="Add Comment">
+                                    <button class="btn btn-primary btn-action btn-sm" @click="addComment( taxis, 'commentModal')" style="position:relative;" title="Add Comment">
                                             <i class='bx bx-note'></i>
                                             <span 
-                                                v-if="rental.admin_comment" 
+                                                v-if="taxis.admin_comment" 
                                                 class="d-inline-block ms-1 rounded-circle bg-warning" 
                                                 title="Has comment" 
                                                 style="width: 10px; height: 10px; position:absolute; top:1px; right:1px;">
@@ -260,7 +252,7 @@
                                     <button 
                                            class="btn btn-danger btn-action btn-sm" 
                                            title="Delete"
-                                           @click="deleteItem('carrentals',  rental.id, carrentals.indexOf( rental))"
+                                           @click="deleteItem('taxi',  taxis.id, taxi.indexOf( taxis))"
                                         >
                                             <i class='bx bx-trash'></i>
                                     </button>
@@ -275,7 +267,7 @@
 
                 <!-- Cards View -->
                 <div v-else class="row g-3 p-3">
-                    <div v-for="(rental, index) in  filteredRentals" :key="rental.id" class="col-lg-6 col-xl-4">
+                    <div v-for="(taxis, index) in   filteredTaxis" :key="taxis.id" class="col-lg-6 col-xl-4">
                         <div class="card contact-card h-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center">
@@ -283,68 +275,76 @@
                                         <span 
                                             style="position:absolute;"
                                             class="badge bg-primary notification-badge ms-2"
-                                            v-if="isnewitem( rental.id, 'CarBooking')">
+                                            v-if="isnewitem( taxis.id, 'TaxiBooking')">
                                             New
                                         </span>
-                                          @{{ rental.first_name.charAt(0) }}@{{ rental.last_name.charAt(0) }}
+                                    
                                     </div>
-                                    <strong><strong>@{{ rental.first_name }} @{{ rental.last_name }}</strong></strong>
+                                    <strong><strong>@{{ taxis.name }}</strong></strong>
                                 </div>
-                                <span class="badge" :class="getStatusClass(rental.status)">
-                                          @{{ rental.status }}
+                                <span class="badge" :class="getStatusClass(taxi.status)">
+                                          @{{ taxis.status }}
                                 </span>
                             </div>
                             <div class="card-body">
                                 <p class="mb-2">
                                     <i class='bx bx-envelope me-1'></i>
-                                    <small>@{{ rental.email }}</small>
+                                    <small>@{{ taxis.email }}</small>
                                 </p>
                                 <p class="mb-2">
                                     <i class='bx bx-phone me-1'></i>
-                                    <small>@{{ rental.mobile }}</small>
+                                    <small>@{{ taxis.mobile }}</small>
                                 </p>
-                                <p class="mb-2">
+                                <!-- <p class="mb-2">
                                     <i class='bx bx-car me-1'></i>
-                                    <small>@{{ rental.car_name }}</small>
+                                    <small>@{{ taxis.car_name }}</small>
+                                </p> -->
+                                <p class="mb-2">
+                                    <i class='bx bx-calendar me-1'></i>
+                                    <small>@{{ taxis.date }}</small>
+                                    <small>@{{ taxis.time }}</small>
                                 </p>
 
                                 <p class="mb-2">
-                                    <i class='bx bx-calendar me-1'></i>
-                                    <div>@{{ rental.pickup_date }}</div>
-                                    <div>@{{ rental.return_date }}</div>
+                                    <i class='bx bx-map me-1'></i>
+                                    <div>@{{ taxis.pickup }}</div>
+                                    <span class="text-muted">to</span>
+                                    <div>@{{ taxis.destination }}</div>
                                 </p>
                                 <p class="text-muted small mb-3">
-                                    <!-- @{{ rental.message.substring(0, 100) }}... -->
+                                    <!-- @{{ taxis.message.substring(0, 100) }}... -->
                                 </p>
                                 <small class="text-muted">
                                     <i class='bx bx-time me-1'></i>
-                                    @{{ new Date(rental.created_at).toLocaleDateString() }}
+                                    @{{ new Date(taxis.created_at).toLocaleDateString() }}
                                 </small>
-                                <small v-if="rental.admin_comment" class="badge bg-warning text-dark ms-1" title="Has comment">
+                                <p class="badge" :class="getStatusClass(taxis.payment_status)">
+                                          @{{ taxis.payment_status }}
+                                </p>
+                                <small v-if="taxis.admin_comment" class="badge bg-warning text-dark ms-1" title="Has comment">
                                     <i class='bx bx-message-square-detail'></i> Has comment
                                 </small>
                             </div>
                             <div class="card-footer bg-white text-center">
-                                <button class="btn btn-success btn-action btn-sm" @click="viewItem(rental, 'itemModal')">
+                                <button class="btn btn-success btn-action btn-sm" @click="viewItem(taxis, 'itemModal')">
                                     <i class='bx bx-show'></i>
                                 </button>
-                                <button class="btn btn-primary btn-action btn-sm" title="Mark as Confirmed" @click="updateItem('carrentals', rental.id, carrentals.indexOf(rental), { status: 'confirmed' })">
+                                <button class="btn btn-primary btn-action btn-sm" title="Mark as Confirmed" @click="updateItem('taxi', taxis.id, taxi.indexOf(taxis), { status: 'confirmed' })">
                                     <i class='bx bx-check'></i>
                                 </button>
                                 <!-- <button class="btn btn-warning btn-action btn-sm" title="Reply"  @click="updateStatus('contacts', contact.id, contacts.indexOf(contact), 'reply')">
                                     <i class='bx bx-reply'></i>
                                 </button> -->
-                                <button class="btn btn-primary btn-action btn-sm" @click="addComment(rental, 'commentModal')">
+                                <button class="btn btn-primary btn-action btn-sm" @click="addComment(taxis, 'commentModal')">
                                     <i class='bx bx-note'></i>
                                 </button>
-                                <button class="btn btn-danger btn-action btn-sm" title="Delete"  @click="deleteItem('carrentals',  rental.id, carrentals.indexOf( rental))">
+                                <button class="btn btn-danger btn-action btn-sm" title="Delete"  @click="deleteItem('taxi',taxis.id, taxi.indexOf(taxis))">
                                     <i class='bx bx-trash'></i>
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
-
 
                 <!-- Loading Spinner -->
                 <div v-if="loadingpage" class="text-center my-3">
@@ -367,7 +367,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title">
                         <i class="fas fa-car"></i>
-                        Rental Details
+                        Taxi Booking Details
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
@@ -382,19 +382,19 @@
                                 </h6>
                                 <div class="info-item">
                                     <span class="info-label">Name</span>
-                                    <span class="info-value">@{{ selectedItem.first_name }} @{{ selectedItem.last_name }}</span>
+                                    <span class="info-value">@{{ selectedItem.name }}</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="info-label">Email</span>
                                     <span class="info-value">@{{ selectedItem.email }}</span>
                                 </div>
                                 <div class="info-item">
-                                    <span class="info-label">Phone</span>
-                                    <span class="info-value">@{{ selectedItem.mobile }}</span>
+                                    <span class="info-label">Country</span>
+                                    <span class="info-value">@{{ selectedItem.country }}</span>
                                 </div>
                                 <div class="info-item">
-                                    <span class="info-label">Age</span>
-                                    <span class="info-value">@{{ selectedItem.driver_age }} years</span>
+                                    <span class="info-label">Phone</span>
+                                    <span class="info-value">@{{ selectedItem.mobile }}</span>
                                 </div>
                             </div>
                         </div>
@@ -404,20 +404,20 @@
                             <div class="info-section">
                                 <h6>
                                     <i class="fas fa-calendar-alt"></i>
-                                    Rental Information
+                                    Taxi Information
                                 </h6>
                                 <div class="info-item">
-                                    <span class="info-label">Car Type</span>
-                                    <span class="info-value">@{{ selectedItem.car_name }}</span>
-                                </div>
-                                <div class="info-item">
                                     <span class="info-label">Pickup Date</span>
-                                    <span class="info-value">@{{ selectedItem.pickup_date }}</span>
+                                    <span class="info-value">@{{ selectedItem.date }}</span>
+                                    <span class="info-value">@{{ selectedItem.time }}</span>
                                 </div>
-                                
                                 <div class="info-item">
-                                    <span class="info-label">Return Date</span>
-                                    <span class="info-value">@{{ selectedItem.return_date }}</span>
+                                    <span class="info-label">Passengers</span>
+                                    <span class="info-value">@{{ selectedItem.passengers}}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Category</span>
+                                    <span class="info-value">@{{ selectedItem.category}}</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="info-label">Created</span>
@@ -437,27 +437,18 @@
                                 </h6>
                                 <div class="info-item">
                                     <span class="info-label">Pickup Location</span>
-                                    <span class="info-value">@{{ selectedItem.pickup_location }}</span>
+                                    <span class="info-value">@{{ selectedItem.pickup }}</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="info-label">Return Location</span>
-                                    <span class="info-value">@{{ selectedItem.return_location }}</span>
+                                    <span class="info-value">@{{ selectedItem.destination }}</span>
                                 </div>
+
                                 <div class="info-item">
                                     <span class="info-label">See On Map</span>
                                     <button class="btn btn-primary"  @click="openMapModal()" type="button">Map</button>
                                 </div>
-                                <div class="info-item">
-                                    <span class="info-label">Driver Service</span>
-                                    <span class="info-value">
-                                        <i class="fas" :class="selectedItem.has_driver ? 'fa-check-circle text-success' : 'fa-times-circle text-danger'"></i>
-                                        @{{ selectedItem.has_driver ? 'Yes' : 'No' }}
-                                    </span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Child Seats</span>
-                                    <span class="info-value">@{{ selectedItem.child_seats || 'None' }}</span>
-                                </div>
+
                             </div>
                         </div>
                         
@@ -525,7 +516,7 @@
                             <select 
                                 class="form-select form-select-sm" 
                                 v-model="selectedItem.status" 
-                                @change="updateItem('carrentals', selectedItem.id, carrentals.indexOf(selectedItem), { status: selectedItem.status })">
+                                @change="updateItem('taxi', selectedItem.id, taxi.indexOf(selectedItem), { status: selectedItem.status })">
                                 <option value="pending">Pending</option>
                                 <option value="confirmed">Confirmed</option>
                                 <option value="cancelled">Cancelled</option>
@@ -537,7 +528,7 @@
                             <select 
                                 class="form-select form-select-sm" 
                                 v-model="selectedItem.payment_status" 
-                                @change="updateItem('carrentals', selectedItem.id, carrentals.indexOf(selectedItem), { payment_status: selectedItem.payment_status })"
+                                @change="updateItem('taxi', selectedItem.id, taxi.indexOf(selectedItem), { payment_status: selectedItem.payment_status })"
                             >
                                 <option value="paid">Paid</option>
                                 <option value="unpaid">Unpaid</option>
@@ -546,7 +537,7 @@
                     </div>
                     
                     <div class="d-flex gap-2 align-items-center">
-                        <button type="button" class="btn btn-outline-primary" @click="updateItem('carrentals', commentItem.id, carrentals.indexOf(commentItem), { admin_comment: tempComment })" v-if="!loadingform">
+                        <button type="button" class="btn btn-outline-primary" @click="updateItem('taxi', commentItem.id, taxi.indexOf(commentItem), { admin_comment: tempComment })" v-if="!loadingform">
                             <i class="fas fa-save"></i>
                             Save Comment
                         </button>
@@ -596,7 +587,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" @click="updateItem('carrentals', commentItem.id, carrentals.indexOf(commentItem), { admin_comment: tempComment })" v-if="!loadingform">Save Comment</button>
+                    <button type="button" class="btn btn-primary" @click="updateItem('taxi', commentItem.id, taxi.indexOf(commentItem), { admin_comment: tempComment })" v-if="!loadingform">Save Comment</button>
                     <div class="spinner-border text-primary" v-if="loadingform" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
@@ -605,20 +596,21 @@
         </div>
     </div>
 
-<!-- Map Modal -->
-<div class="modal fade" id="mapModal" tabindex="-1" ref="mapModal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Pickup & Return Locations</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body" style="height: 400px;">
-        <div id="map" style="width: 100%; height: 100%;"></div>
-      </div>
+    <!-- Map Modal -->
+    <div class="modal fade" id="mapModal" tabindex="-1" ref="mapModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Pickup & Return Locations</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" style="height: 400px;">
+                <div id="map" style="width: 100%; height: 100%;"></div>
+            </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+
 
 </div>
 

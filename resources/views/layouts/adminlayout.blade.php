@@ -79,7 +79,7 @@
                 </li>
 
                 <li>
-                    <a href="/admin/calendar"><i class="bx bx-car"></i>
+                    <a href="{{ route('admin.taxipanel') }}"><i class="bx bx-car"></i>
                        Taxi Booking
                        <span 
                             v-if="newnotifications.taxi.count  > 0"
@@ -336,6 +336,15 @@
                         car_name: this.filterCarType, // 👈 added
                         payment_status: this.filterPayment
                     }, ['first_name', 'last_name', 'email', 'mobile', 'car_name']); // 👈 searchable
+                },
+
+                //Taxi filtering
+                filteredTaxis() {            
+                  return this.getFilteredData(this.taxi, {
+                        searchQuery: this.searchQuery,
+                        status: this.filterStatus,
+                        payment_status: this.filterPayment
+                    }, ['name','email', 'mobile','pickup','destination','date']); // 👈 searchable
                 },
 
 
@@ -633,6 +642,7 @@
                             case 'confirmed': return 'bg-success';
                             case 'cancelled': return 'bg-danger';
                             case 'paid': return 'bg-success';
+                            case 'unpaid': return 'bg-warning text-dark';
                             case 'replied': return 'bg-success';
                             default: return 'bg-secondary';
                         }
@@ -1016,8 +1026,16 @@
                 initOrUpdateMap() {
                     const pickupLat = parseFloat(this.selectedItem.pickup_latitude);
                     const pickupLng = parseFloat(this.selectedItem.pickup_longitude);
-                    const returnLat = parseFloat(this.selectedItem.return_latitude);
-                    const returnLng = parseFloat(this.selectedItem.return_longitude);
+                    // For return location, prefer return_* if present, else fallback to destination_*
+                    const returnLat = parseFloat(
+                        this.selectedItem.return_latitude ?? this.selectedItem.destination_latitude
+                    );
+                    const returnLng = parseFloat(
+                        this.selectedItem.return_longitude ?? this.selectedItem.destination_longitude
+                    );
+
+                    console.log("Pickup Lat:", pickupLat, "Pickup Lng:", pickupLng);
+                    console.log("Return Lat:", returnLat, "Return Lng:", returnLng);
 
                     if (!this.mapInstance) {
                         // Create map
@@ -1085,6 +1103,12 @@
                     this.loadStats('carrental');
                     this.loadPaginatedData('/api/carrentals', 'carrentals');
                     window.addEventListener('scroll', () => this.handleScroll('/api/carrentals', 'carrentals'));
+                    
+                }else if (path.includes('/admin/taxipanel')) {
+                    this.currentTab = 'taxi';
+                    this.loadStats('taxi');
+                    this.loadPaginatedData('/api/taxi', 'taxi');
+                    window.addEventListener('scroll', () => this.handleScroll('/api/taxi', 'taxi'));
                     
                 }else if (window.location.pathname.includes('/admin/notificationpanel')) {
                     this.fetchNotifications();

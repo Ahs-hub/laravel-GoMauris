@@ -9,6 +9,7 @@ use App\Http\Controllers\TourController;
 use App\Http\Controllers\Admin\AdminNotificationController;
 use App\Http\Controllers\Admin\AdminContactController;
 use App\Http\Controllers\Admin\AdminCarBookingController;
+use App\Http\Controllers\Admin\AdminTaxiBookingController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -44,9 +45,7 @@ Route::prefix('admin/notifications')->group(function () {
 
 
 
-// Get number of contact, status
-Route::get('/admin/contact-stats', [AdminContactController::class, 'contactStats'])
-->name('admin.contactstats');
+
 
 // Get number of carrental, status
 Route::get('/admin/carrental-stats', [AdminCarBookingController::class, 'carrentalStats'])
@@ -66,6 +65,24 @@ Route::put('/carrentals/{id}/update-data', [AdminCarBookingController::class, 'u
 Route::put('/carrentals/{id}/update-comment', [AdminCarBookingController::class, 'updateComment']);
 
 //-----------------------
+// Get number of taxi book, status
+Route::get('/admin/taxi-stats', [AdminTaxiBookingController::class, 'taxiStats'])
+->name('admin.taxistats');
+
+//fetching carrental block of 20
+Route::get('/taxi', [AdminTaxiBookingController::class, 'fetchPaginated']);
+
+//delete carrental 
+Route::delete('/taxi/{id}', [AdminTaxiBookingController::class, 'destroy']);
+
+//Update all field
+Route::put('/taxi/{id}/update-data', [AdminTaxiBookingController::class, 'update']);
+
+//-----------------------
+
+// Get number of contact, status
+Route::get('/admin/contact-stats', [AdminContactController::class, 'contactStats'])
+->name('admin.contactstats');
 
 //fetching contact block of 20
 Route::get('/contacts', [AdminContactController::class, 'fetchPaginated']);

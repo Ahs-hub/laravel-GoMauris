@@ -64,6 +64,11 @@ Route::middleware('auth')->get('/admin/carrentalpanel', function () {
     return view('admin.rentalpanel');
 })->name('admin.carrentalpanel');
 
+// Go to taxi panel
+Route::middleware('auth')->get('/admin/taxipanel', function () {
+    return view('admin.taxipanel');
+})->name('admin.taxipanel');
+
 
 Route::get('/rent-cars', [CarController::class, 'index'])->name('cars.home');
 Route::get('/rentcar/{id}', [CarController::class, 'show'])->name('rentcar.show');
