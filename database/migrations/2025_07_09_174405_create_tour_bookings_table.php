@@ -47,7 +47,7 @@ return new class extends Migration
             $table->string('mobile_number');
 
             // Status of book bouking
-            $table->enum('status', ['proceed', 'reserved', 'not_possible'])->default('proceed');
+            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
 
             $table->enum('payment_status', ['unpaid', 'paid'])->default('unpaid');
 

@@ -57,7 +57,7 @@
                 </li>
 
                 <li>
-                    <a href="/admin/calendar"><i class="bx bx-calendar"></i>
+                    <a href="{{ route('admin.custompanel') }}"><i class="bx bx-calendar"></i>
                         CustomBooking
                         <span 
                             v-if="newnotifications.custom.count  > 0"
@@ -231,6 +231,7 @@
                     stats: {
                         contact: { total: 0, read: 0, unread: 0, today: 0 },
                         carrental: { total: 0, proceed: 0, reserve: 0, today: 0 },
+                        custom: { total: 0, proceed: 0, reserve: 0, today: 0 },
                         taxi: { total: 0, proceed: 0, reserve: 0, cancel: 0 },
                         tour: { total: 0, confirmed: 0, pending: 0, cancelled: 0 }
                     },
@@ -262,6 +263,7 @@
                     // page contact,tour,taxi ect
                     contacts: [],
                     taxi: [],
+                    custom:[],
                     tours: [],
                     carrentals: [],
 
@@ -274,6 +276,7 @@
                         contacts: true,
                         taxi: true,
                         tours: true,
+                        custom: true,
                         carrentals: true
                     },
 
@@ -346,6 +349,15 @@
                         status: this.filterStatus,
                         payment_status: this.filterPayment
                     }, ['name','email', 'mobile','pickup','destination','date']); // 👈 searchable
+                },
+
+                //Taxi filtering
+                filteredCustom() {            
+                  return this.getFilteredData(this.custom, {
+                        searchQuery: this.searchQuery,
+                        status: this.filterStatus,
+                        payment_status: this.filterPayment
+                    }, ['full_name','email', 'mobile_number','preferred_tour','date']); // 👈 searchable
                 },
 
 
@@ -1116,6 +1128,12 @@
                     this.currentTab = 'taxi';
                     this.loadStats('taxi');
                     this.loadPaginatedData('/api/taxi', 'taxi');
+                    window.addEventListener('scroll', () => this.handleScroll('/api/taxi', 'taxi'));
+                    
+                }else if (path.includes('/admin/custompanel')) {
+                    this.currentTab = 'custom';
+                    this.loadStats('custom');
+                    this.loadPaginatedData('/api/custom', 'custom');
                     window.addEventListener('scroll', () => this.handleScroll('/api/taxi', 'taxi'));
                     
                 }else if (window.location.pathname.includes('/admin/notificationpanel')) {

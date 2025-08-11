@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('country');
             $table->string('mobile_number');
 
-            $table->string('status')->default('proceed'); // ✅ Add this line
+            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
 
             $table->enum('payment_status', ['unpaid', 'paid'])->default('unpaid');
 

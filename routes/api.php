@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminNotificationController;
 use App\Http\Controllers\Admin\AdminContactController;
 use App\Http\Controllers\Admin\AdminCarBookingController;
 use App\Http\Controllers\Admin\AdminTaxiBookingController;
+use App\Http\Controllers\Admin\AdminCustomBookingController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -69,14 +70,28 @@ Route::put('/carrentals/{id}/update-comment', [AdminCarBookingController::class,
 Route::get('/admin/taxi-stats', [AdminTaxiBookingController::class, 'taxiStats'])
 ->name('admin.taxistats');
 
-//fetching carrental block of 20
+//fetching taxi block of 20
 Route::get('/taxi', [AdminTaxiBookingController::class, 'fetchPaginated']);
 
-//delete carrental 
+//delete taxi 
 Route::delete('/taxi/{id}', [AdminTaxiBookingController::class, 'destroy']);
 
 //Update all field
 Route::put('/taxi/{id}/update-data', [AdminTaxiBookingController::class, 'update']);
+
+//-----------------------
+// Get number of custom book, status
+Route::get('/admin/custom-stats', [AdminCustomBookingController::class, 'customStats'])
+->name('admin.customstats');
+
+//fetching taxi block of 20
+Route::get('/custom', [AdminCustomBookingController::class, 'fetchPaginated']);
+
+//delete taxi 
+Route::delete('/custom/{id}', [AdminCustomBookingController::class, 'destroy']);
+
+//Update all field
+Route::put('/custom/{id}/update-data', [AdminCustomBookingController::class, 'update']);
 
 //-----------------------
 

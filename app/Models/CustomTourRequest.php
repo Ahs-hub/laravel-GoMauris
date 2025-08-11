@@ -19,6 +19,7 @@ class CustomTourRequest extends Model
         'country',
         'mobile_number',
         'status', // ✅ Add this
+        'payment_status',
         'admin_comment'
     ];
 }
