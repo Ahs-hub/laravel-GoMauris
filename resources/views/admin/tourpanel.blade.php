@@ -1,8 +1,30 @@
 @extends('layouts.adminlayout')
 
 @section('content')
+<div class="d-flex justify-content-start gap-2 mt-3">
+    <button 
+        class="btn btn-primary me-2" 
+        @click="showTourBook = true"
+        :class="{ active: showTourBook }"
+    >
+        Show Tour Book
+    </button>
 
-<div>
+    <button 
+        class="btn btn-secondary" 
+        @click="showTourBook = false"
+        :class="{ active: !showTourBook }"
+    >
+        Confirmed
+    </button>
+</div>
+
+
+
+<div v-if="showTourBook">
+     tour-block
+</div>
+<div v-else>
     <!-- Loading Overlay -->
     <div v-if="loading" class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50" style="z-index: 1050;">
         <div class="spinner-border text-light" role="status">
@@ -132,5 +154,7 @@
         </div>
     </div>
 </div>
+
+
 
 @endsection

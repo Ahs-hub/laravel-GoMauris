@@ -170,6 +170,7 @@
         createApp({
             data() {
                 return {
+                    showTourBook: true, // default to tourblock showing
                     newNotifications: 0,          // latest count from the server
                     notificationDismissed: false, // true after user closes the alert
                     playNotification: 0,
@@ -1089,6 +1090,13 @@
             },
             mounted() {
                 const path = window.location.pathname;
+                const mediaQuery = window.matchMedia("(max-width: 768px)");
+
+                // Initial check
+                if (mediaQuery.matches) {
+                    this.viewMode = 'cards';
+                }
+
 
                 if (path.includes('/admin/contactpanel')) {
                     this.currentTab = 'contact';
