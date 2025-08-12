@@ -17,7 +17,7 @@ class CustomTourRequest extends Model
         'full_name',
         'email',
         'country',
-        'mobile_number',
+        'phone',
         'status', // ✅ Add this
         'payment_status',
         'admin_comment'

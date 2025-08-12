@@ -24,7 +24,7 @@ class TaxiBookingController extends Controller
             'name' => 'required|string',
             'email' => 'required|email',
             'country' => 'required|string',
-            'mobile' => 'required|string',
+            'phone' => 'required|string',
             'comments' => 'nullable|string',
 
             // Optional latitude/longitude

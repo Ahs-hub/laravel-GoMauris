@@ -44,7 +44,7 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('email');
             $table->string('country');
-            $table->string('mobile_number');
+            $table->string('phone');
 
             // Status of book bouking
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');

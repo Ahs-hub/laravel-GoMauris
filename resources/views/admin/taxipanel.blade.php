@@ -174,7 +174,7 @@
                                 <td>
                                     <div class="small">
                                         <div><i class='bx bx-envelope me-1'></i>@{{  taxis.email }}</div>
-                                        <div><i class='bx bx-phone me-1'></i>@{{  taxis.mobile }}</div>
+                                        <div><i class='bx bx-phone me-1'></i>@{{  taxis.phone }}</div>
                                     </div>
                                 </td>
      
@@ -294,7 +294,7 @@
                                 </p>
                                 <p class="mb-2">
                                     <i class='bx bx-phone me-1'></i>
-                                    <small>@{{ taxis.mobile }}</small>
+                                    <small>@{{ taxis.phone }}</small>
                                 </p>
                                 <!-- <p class="mb-2">
                                     <i class='bx bx-car me-1'></i>

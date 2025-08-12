@@ -16,7 +16,7 @@ class TaxiBooking extends Model
         'name', 
         'email', 
         'country', 
-        'mobile', 
+        'phone', 
         'comments',
         'status', // ✅ Add this
         'payment_status',

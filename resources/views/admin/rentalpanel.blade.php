@@ -186,7 +186,7 @@
                                 <td>
                                     <div class="small">
                                         <div><i class='bx bx-envelope me-1'></i>@{{  rental.email }}</div>
-                                        <div><i class='bx bx-phone me-1'></i>@{{  rental.mobile }}</div>
+                                        <div><i class='bx bx-phone me-1'></i>@{{  rental.phone }}</div>
                                     </div>
                                 </td>
                                 <td>
@@ -302,7 +302,7 @@
                                 </p>
                                 <p class="mb-2">
                                     <i class='bx bx-phone me-1'></i>
-                                    <small>@{{ rental.mobile }}</small>
+                                    <small>@{{ rental.phone }}</small>
                                 </p>
                                 <p class="mb-2">
                                     <i class='bx bx-car me-1'></i>
@@ -391,7 +391,7 @@
                                 </div>
                                 <div class="info-item">
                                     <span class="info-label">Phone</span>
-                                    <span class="info-value">@{{ selectedItem.mobile }}</span>
+                                    <span class="info-value">@{{ selectedItem.phone }}</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="info-label">Age</span>
@@ -636,7 +636,7 @@
                     
                     <div class="row" v-if="selectedItem">
                         <div class="col-md-6 mb-3">
-                            <a :href="'https://wa.me/' + selectedItem.mobile" target="_blank" class="contact-option whatsapp">
+                            <a :href="'https://wa.me/' + selectedItem.phone" target="_blank" class="contact-option whatsapp">
                                 <div class="text-center">
                                     <i class='bx bxl-whatsapp'></i>
                                     <div class="contact-title">WhatsApp</div>
@@ -646,7 +646,7 @@
                         </div>
                         
                         <div class="col-md-6 mb-3">
-                            <a :href="'sms:' + selectedItem.mobile" class="contact-option sms">
+                            <a :href="'sms:' + selectedItem.phone" class="contact-option sms">
                                 <div class="text-center">
                                     <i class='bx bx-message-dots'></i>
                                     <div class="contact-title">SMS</div>
@@ -656,11 +656,11 @@
                         </div>
                         
                         <div class="col-md-6 mb-3">
-                            <a :href="'tel:' + selectedItem.mobile" class="contact-option phone">
+                            <a :href="'tel:' + selectedItem.phone" class="contact-option phone">
                                 <div class="text-center">
                                     <i class='bx bx-phone-call'></i>
                                     <div class="contact-title">Phone Call</div>
-                                    <p class="contact-subtitle">@{{ selectedItem.mobile }}</p>
+                                    <p class="contact-subtitle">@{{ selectedItem.phone }}</p>
                                 </div>
                             </a>
                         </div>

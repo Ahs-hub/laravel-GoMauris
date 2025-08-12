@@ -68,7 +68,7 @@ class AdminCustomBookingController extends Controller
             'full_name'         => 'sometimes|string',
             'email'             => 'sometimes|email',
             'country'           => 'sometimes|string',
-            'mobile_number'     => 'sometimes|string',
+            'phone'             => 'sometimes|string',
             'status'            => 'sometimes|in:pending,confirmed,cancelled',
             'payment_status'    => 'sometimes|in:paid,unpaid',
             'admin_comment'     => 'nullable|string',

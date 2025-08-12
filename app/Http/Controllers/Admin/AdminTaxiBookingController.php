@@ -67,7 +67,7 @@ class AdminTaxiBookingController extends Controller
             'name' => 'sometimes|string',
             'email' => 'sometimes|email',
             'country' => 'sometimes|string',
-            'mobile' => 'sometimes|string',
+            'phone' => 'sometimes|string',
             'comments' => 'nullable|string',
             'status' => 'sometimes|in:pending,confirmed,cancelled',
             'payment_status' => 'sometimes|in:unpaid,paid',

@@ -288,7 +288,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Mobile Number <small class="text-muted">(WhatsApp)</small></label>
-                                        <input type="tel" class="form-control" v-model="form.mobile" placeholder="+230 5504 0167" required>
+                                        <input type="tel" class="form-control" v-model="form.phone" placeholder="+230 5504 0167" required>
                                     </div>
                                 </div>
 
@@ -700,7 +700,7 @@
                         return_date: "",
 
                         email: "",
-                        mobile: "",
+                        phone: "",
                         car_id: null,  // <-- required! Make sure to send the selected car ID
                         has_driver: false,
                         child_seats: 0,

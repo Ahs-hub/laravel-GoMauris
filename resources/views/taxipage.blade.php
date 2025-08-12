@@ -158,6 +158,8 @@
                         </div>
                     </form>
 
+                    <!-- Step 2: Taxi Detail -->
+
                     <!-- Step 2: About You -->
                     <form v-if="step === 2" @submit.prevent="submitForm">
                         <div class="form-header text-center mb-4">
@@ -182,7 +184,7 @@
                             </div>
                             <div class="col-md-6 mb-3 text-start">
                                   <label class="form-label">Mobile Number (Whatsapp)</label>
-                                   <input type="text" class="form-control" placeholder="Include country/area codes. eg. +23052514555" v-model="form.mobile" required>
+                                   <input type="text" class="form-control" placeholder="Include country/area codes. eg. +23052514555" v-model="form.phone" required>
                             </div>
                         </div>
 
@@ -331,7 +333,7 @@
                     name: '',
                     email: '',
                     country: '',
-                    mobile: '',
+                    phone: '',
                     comments: '',
                     
                     //location map
@@ -411,7 +413,7 @@
                     name: '',
                     email: '',
                     country: '',
-                    mobile: '',
+                    phone: '',
                     comments: '',
                     pickup_latitude: null,
                     pickup_longitude: null,

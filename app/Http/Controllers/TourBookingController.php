@@ -28,7 +28,7 @@ class TourBookingController extends Controller
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'country' => 'required|string|max:100',
-            'mobile_number' => 'required|string|max:50',
+            'phone' => 'required|string|max:50',
         ]);
 
         $validated['status'] = 'proceed';

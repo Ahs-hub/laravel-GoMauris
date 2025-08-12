@@ -23,7 +23,7 @@ class TourBooking extends Model
         'full_name',
         'email',
         'country',
-        'mobile_number',
+        'phone',
         'status',
         'admin_comment'
 

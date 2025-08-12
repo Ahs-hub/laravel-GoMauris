@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->unsignedTinyInteger('driver_age');
-            $table->string('mobile');
+            $table->string('phone');
             $table->string('email');
             $table->text('special_requests')->nullable();
         

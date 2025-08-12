@@ -30,8 +30,16 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('country');
-            $table->string('mobile');
+            $table->string('phone');
             $table->text('comments')->nullable();
+
+            // 🚖 Return Ride fields
+            $table->boolean('has_return_ride')->default(false); // Toggle for return trip
+            $table->date('return_date')->nullable();
+            $table->time('return_time')->nullable();
+
+            // 🪑 Optional child seat
+            $table->boolean('child_seat')->default(false);
 
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
 

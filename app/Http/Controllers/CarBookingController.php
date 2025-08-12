@@ -15,7 +15,7 @@ class CarBookingController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'driver_age' => 'required|integer|min:16|max:100',
-            'mobile' => 'required|string',
+            'phone' => 'required|string',
             'email' => 'required|email',
             'pickup_location' => 'required|string',
             'pickup_date' => 'required|date',

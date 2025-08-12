@@ -339,7 +339,7 @@
                         status: this.filterStatus,
                         car_name: this.filterCarType, // 👈 added
                         payment_status: this.filterPayment
-                    }, ['first_name', 'last_name', 'email', 'mobile', 'car_name']); // 👈 searchable
+                    }, ['first_name', 'last_name', 'email', 'phone', 'car_name']); // 👈 searchable
                 },
 
                 //Taxi filtering
@@ -348,7 +348,7 @@
                         searchQuery: this.searchQuery,
                         status: this.filterStatus,
                         payment_status: this.filterPayment
-                    }, ['name','email', 'mobile','pickup','destination','date']); // 👈 searchable
+                    }, ['name','email', 'phone','pickup','destination','date']); // 👈 searchable
                 },
 
                 //Taxi filtering
@@ -357,7 +357,7 @@
                         searchQuery: this.searchQuery,
                         status: this.filterStatus,
                         payment_status: this.filterPayment
-                    }, ['full_name','email', 'mobile_number','preferred_tour','date']); // 👈 searchable
+                    }, ['full_name','email', 'phone','preferred_tour','date']); // 👈 searchable
                 },
 
 

@@ -43,7 +43,7 @@ class AdminCarBookingController extends Controller
                 'last_name' => $rental->last_name,
                 'driver_age' => $rental->driver_age,
                 'email' => $rental->email,
-                'mobile' => $rental->mobile,
+                'phone' => $rental->phone,
                 'special_requests' => $rental->special_requests,
                 
                 // Booking info
@@ -110,7 +110,7 @@ class AdminCarBookingController extends Controller
             'first_name' => 'sometimes|string',
             'last_name' => 'sometimes|string',
             'email' => 'sometimes|email',
-            'mobile' => 'sometimes|string',
+            'phone' => 'sometimes|string',
             'status' => 'sometimes|in:pending,confirmed,cancelled',
             'pickup_location' => 'sometimes|string',
             'pickup_date' => 'sometimes|date',
@@ -135,7 +135,7 @@ class AdminCarBookingController extends Controller
             'last_name' => $rental->last_name,
             'driver_age' => $rental->driver_age,
             'email' => $rental->email,
-            'mobile' => $rental->mobile,
+            'phone' => $rental->phone,
             'special_requests' => $rental->special_requests,
             
             // Booking info
@@ -185,7 +185,7 @@ class AdminCarBookingController extends Controller
                     'first_name' => $rental->first_name,
                     'last_name' => $rental->last_name,
                     'email' => $rental->email,
-                    'phone' => $rental->mobile,
+                    'phone' => $rental->phone,
                     'status' => $rental->status,
                     'service' => $rental->service,
                     'car_name' => $rental->car->name ?? '', // Add car type name here

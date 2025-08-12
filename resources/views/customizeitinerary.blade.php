@@ -105,7 +105,7 @@
                             <label class="form-label">Mobile Number (WhatsApp) <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bx bxl-whatsapp"></i></span>
-                                <input type="tel" name="mobile_number" class="form-control" required placeholder="+230 55040167">
+                                <input type="tel" name="phone" class="form-control" required placeholder="+230 55040167">
                             </div>
                         </div>
                     </div>

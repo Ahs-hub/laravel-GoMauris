@@ -25,7 +25,7 @@ class CustomTourRequestController extends Controller
             'full_name'        => 'required|string',
             'email'            => 'required|email',
             'country'          => 'required|string',
-            'mobile_number'    => 'required|string',
+            'phone'    => 'required|string',
         ]);
 
         $booking = CustomTourRequest::create($validated);
