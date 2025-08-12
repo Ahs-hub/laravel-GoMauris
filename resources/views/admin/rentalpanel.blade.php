@@ -250,13 +250,14 @@
 
       
                                
-                                    <!-- <button 
+                                    <button 
                                            class="btn btn-warning btn-action btn-sm" 
                                            title="Reply"
+                                           @click="viewItem(rental, 'replyModal')"
                                           
                                         >
                                             <i class='bx bx-reply'></i>
-                                    </button> -->
+                                    </button>
                                     <button 
                                            class="btn btn-danger btn-action btn-sm" 
                                            title="Delete"
@@ -331,9 +332,9 @@
                                 <button class="btn btn-primary btn-action btn-sm" title="Mark as Confirmed" @click="updateItem('carrentals', rental.id, carrentals.indexOf(rental), { status: 'confirmed' })">
                                     <i class='bx bx-check'></i>
                                 </button>
-                                <!-- <button class="btn btn-warning btn-action btn-sm" title="Reply"  @click="updateStatus('contacts', contact.id, contacts.indexOf(contact), 'reply')">
+                                <button class="btn btn-warning btn-action btn-sm" title="Reply"   @click="viewItem(rental, 'replyModal')">
                                     <i class='bx bx-reply'></i>
-                                </button> -->
+                                </button>
                                 <button class="btn btn-primary btn-action btn-sm" @click="addComment(rental, 'commentModal')">
                                     <i class='bx bx-note'></i>
                                 </button>
@@ -551,10 +552,10 @@
                             Save Comment
                         </button>
                         
-                        <!-- <button type="button" class="btn btn-primary" v-if="!loadingform">
+                        <button type="button" class="btn btn-primary" @click="viewItem(selectedItem, 'replyModal')" v-if="!loadingform">
                             <i class="fas fa-reply"></i>
                             Reply
-                        </button> -->
+                        </button>
                         
                         <div class="spinner-border text-primary" v-if="loadingform" role="status">
                             <span class="visually-hidden">Loading...</span>
@@ -605,20 +606,84 @@
         </div>
     </div>
 
-<!-- Map Modal -->
-<div class="modal fade" id="mapModal" tabindex="-1" ref="mapModal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Pickup & Return Locations</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body" style="height: 400px;">
-        <div id="map" style="width: 100%; height: 100%;"></div>
-      </div>
+    <!-- Map Modal -->
+    <div class="modal fade" id="mapModal" tabindex="-1" ref="mapModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Pickup & Return Locations</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="height: 400px;">
+            <div id="map" style="width: 100%; height: 100%;"></div>
+        </div>
+        </div>
     </div>
-  </div>
-</div>
+    </div>
+
+    <!-- Reply Methods Modal -->
+    <div class="modal fade" id="replyModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactModalLabel">
+                        <i class='bx bx-user-voice'></i> Contact Client
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted mb-4">Choose your preferred method to contact the client:</p>
+                    
+                    <div class="row" v-if="selectedItem">
+                        <div class="col-md-6 mb-3">
+                            <a :href="'https://wa.me/' + selectedItem.mobile" target="_blank" class="contact-option whatsapp">
+                                <div class="text-center">
+                                    <i class='bx bxl-whatsapp'></i>
+                                    <div class="contact-title">WhatsApp</div>
+                                    <p class="contact-subtitle">Send message instantly</p>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <a :href="'sms:' + selectedItem.mobile" class="contact-option sms">
+                                <div class="text-center">
+                                    <i class='bx bx-message-dots'></i>
+                                    <div class="contact-title">SMS</div>
+                                    <p class="contact-subtitle">Send text message</p>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <a :href="'tel:' + selectedItem.mobile" class="contact-option phone">
+                                <div class="text-center">
+                                    <i class='bx bx-phone-call'></i>
+                                    <div class="contact-title">Phone Call</div>
+                                    <p class="contact-subtitle">@{{ selectedItem.mobile }}</p>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <a :href="'mailto:' + selectedItem.email" class="contact-option email">
+                                <div class="text-center">
+                                    <i class='bx bx-envelope'></i>
+                                    <div class="contact-title">Email</div>
+                                    <p class="contact-subtitle">Send email message</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class='bx bx-x'></i> Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 

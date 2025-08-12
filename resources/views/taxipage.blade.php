@@ -128,9 +128,8 @@
                             <label class="form-label">Choose Ride Category</label>
                             <div class="row g-3">
                                 <div class="col-6 col-md-3" v-for="option in [
-                                    { name: 'Economy', img: '{{ asset('images/services/economy_small.png') }}', passengers: 3, luggage: 3 },
                                     { name: 'Comfort', img: '{{ asset('images/services/comfort_small.png') }}', passengers: 3, luggage: 3 },
-                                    { name: 'Van', img: '{{ asset('images/services/van_small.png') }}', passengers: 8, luggage: 6 },
+                                    { name: 'Business', img: '{{ asset('images/services/business_small.png') }}', passengers: 3, luggage: 3 },
                                     { name: 'Minibus', img: '{{ asset('images/services/minibus_small.png') }}', passengers: 16, luggage: 16 }
                                 ]" :key="option.name">
                                     <div class="vehicle-card"

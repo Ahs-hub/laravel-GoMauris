@@ -230,6 +230,30 @@ body {
 
 /*#endregion   notification  */
 
+/*#region    contact option modal  */
+.contact-option {
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.contact-option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-decoration: none;
+    color: inherit;
+}
+
+.contact-option i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+/*#region    contact option modal  */
 
 /*#region     car rental form */
 /* Form Control Styles - Textarea and Input Fields */
