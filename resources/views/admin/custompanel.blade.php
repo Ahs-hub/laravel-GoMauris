@@ -255,6 +255,77 @@
                     </table>
                 </div>
 
+                <!-- Cards View -->
+                <div v-else class="row g-3 p-3">
+                    <div v-for="(customs, index) in  filteredCustom" :key="customs.id" class="col-lg-6 col-xl-4">
+                        <div class="card contact-card h-100">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar-sm bg-primary rounded-circle d-flex align-items-center justify-content-center text-white me-2">
+                                        <span 
+                                            style="position:absolute;"
+                                            class="badge bg-primary notification-badge ms-2"
+                                            v-if="isnewitem( customs.id, 'CustomBooking')">
+                                            New
+                                        </span>
+                                    </div>
+                                    <strong>@{{ customs.full_name }}</strong>
+                                </div>
+                                <span class="badge" :class="getStatusClass(customs.status)">
+                                          @{{ customs.status }}
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-2">
+                                    <i class='bx bx-envelope me-1'></i>
+                                    <small>@{{ customs.email }}</small>
+                                </p>
+                                <p class="mb-2">
+                                    <i class='bx bx-phone me-1'></i>
+                                    <small>@{{ customs.mobile_number }}</small>
+                                </p>
+                                <p class="mb-2">
+                                    <i class='bx bx-car me-1'></i>
+                                    <small>@{{ customs.vehicle_category}}</small>
+                                </p>
+
+                                <p class="mb-2">
+                                    <i class='bx bx-calendar me-1'></i>
+                                    <div>@{{ customs.tour_date }}</div>
+                                    <div>@{{ customs.start_time }}</div>
+                                </p>
+                                <p class="text-muted small mb-3">
+                                    <!-- @{{ rental.message.substring(0, 100) }}... -->
+                                </p>
+                                <small class="text-muted">
+                                    <i class='bx bx-time me-1'></i>
+                                    @{{ new Date(customs.created_at).toLocaleDateString() }}
+                                </small>
+                                <small v-if="customs.admin_comment" class="badge bg-warning text-dark ms-1" title="Has comment">
+                                    <i class='bx bx-message-square-detail'></i> Has comment
+                                </small>
+                            </div>
+                            <div class="card-footer bg-white text-center">
+                                <button class="btn btn-success btn-action btn-sm" @click="viewItem(customs, 'itemModal')">
+                                    <i class='bx bx-show'></i>
+                                </button>
+                                <button class="btn btn-primary btn-action btn-sm" title="Mark as Confirmed" @click="updateItem('custom', customs.id, custom.indexOf(customs), { status: 'confirmed' })">
+                                    <i class='bx bx-check'></i>
+                                </button>
+                                <!-- <button class="btn btn-warning btn-action btn-sm" title="Reply"  @click="updateStatus('contacts', contact.id, contacts.indexOf(contact), 'reply')">
+                                    <i class='bx bx-reply'></i>
+                                </button> -->
+                                <button class="btn btn-primary btn-action btn-sm" @click="addComment(customs, 'commentModal')">
+                                    <i class='bx bx-note'></i>
+                                </button>
+                                <button class="btn btn-danger btn-action btn-sm" title="Delete"  @click="deleteItem('custom',  customs.id, custom.indexOf(customs))">
+                                    <i class='bx bx-trash'></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Loading Spinner -->
                 <div v-if="loadingpage" class="text-center my-3">
                     <div class="spinner-border text-primary" role="status">
@@ -318,7 +389,7 @@
                             <div class="info-section">
                                 <h6>
                                     <i class="fas fa-calendar-alt"></i>
-                                    Taxi Information
+                                    Custom Information
                                 </h6>
                                 <div class="info-item">
                                     <span class="info-label">Prefer Date</span>
@@ -380,19 +451,19 @@
                     </div>
 
                     <!-- Special Request -->
-                    <!-- <div class="mb-3">
+                    <div class="mb-3">
                         <label class="form-label fw-bold">
-                            <i class="fas fa-comments me-1"></i> Special Request
+                            <i class="fas fa-comments me-1"></i> Preferred itinerary/Comment
                         </label>
                         <div class="p-3 border rounded bg-light">
-                            <span v-if="selectedItem.special_requests" class="text-dark">
-                                @{{ selectedItem.special_requests }}
+                            <span v-if="selectedItem.comments" class="text-dark">
+                                @{{ selectedItem.comments}}
                             </span>
                             <span v-else class="text-muted fst-italic">
                                 No special request provided.
                             </span>
                         </div>
-                    </div> -->
+                    </div>
 
                     <!-- Admin Comments -->
                     <div class="comment-section">

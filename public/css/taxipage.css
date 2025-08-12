@@ -37,6 +37,31 @@
   transition: background-color 0.2s ease;
 }
 
+/*#region       taxi card category  */
+.vehicle-card {
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.vehicle-card.active {
+  border-color: var(--primary-color);
+}
+.vehicle-card img {
+  width: 80px;
+  height: auto;
+}
+.vehicle-info {
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+.vehicle-info i {
+  margin-right: 4px;
+}
+/*#endregion    taxi card category  */
+
 
 .about-taxi{
     background: var(--gray-light); 

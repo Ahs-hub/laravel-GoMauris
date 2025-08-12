@@ -125,13 +125,30 @@
                         </div>
 
                         <div class="mb-4 text-start">
-                        <label class="form-label">Choose Ride Category</label>
-                        <div class="d-flex flex-wrap gap-3">
-                          <div class="form-check" v-for="option in ['Economy', 'Comfort', 'Luxury']" :key="option">
-                            <input class="form-check-input" type="radio" :id="option" v-model="form.category" :value="option">
-                            <label class="form-check-label" :for="option">@{{ option }}</label>
-                          </div>
-                        </div>
+                            <label class="form-label">Choose Ride Category</label>
+                            <div class="row g-3">
+                                <div class="col-6 col-md-3" v-for="option in [
+                                    { name: 'Economy', img: '{{ asset('images/services/economy_small.png') }}', passengers: 3, luggage: 3 },
+                                    { name: 'Comfort', img: '{{ asset('images/services/comfort_small.png') }}', passengers: 3, luggage: 3 },
+                                    { name: 'Van', img: '{{ asset('images/services/van_small.png') }}', passengers: 8, luggage: 6 },
+                                    { name: 'Minibus', img: '{{ asset('images/services/minibus_small.png') }}', passengers: 16, luggage: 16 }
+                                ]" :key="option.name">
+                                    <div class="vehicle-card"
+                                        :class="{ active: form.category === option.name }"
+                                        @click="form.category = option.name">
+                                        <input type="radio" class="d-none"
+                                            :id="option.name"
+                                            v-model="form.category"
+                                            :value="option.name">
+                                        <img :src="option.img" :alt="option.name">
+                                        <div class="fw-bold">@{{ option.name }}</div>
+                                        <div class="vehicle-info">
+                                            <i class='bx bx-user'></i> x @{{ option.passengers }}
+                                            <i class='bx bx-briefcase'></i> x @{{ option.luggage }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="text-end">
