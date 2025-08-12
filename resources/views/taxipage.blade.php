@@ -128,6 +128,7 @@
                             <label class="form-label">Choose Ride Category</label>
                             <div class="row g-3">
                                 <div class="col-6 col-md-3" v-for="option in [
+                                    { name: 'Economy', img: '{{ asset('images/services/economy_small.png') }}', passengers: 3, luggage: 3 },
                                     { name: 'Comfort', img: '{{ asset('images/services/comfort_small.png') }}', passengers: 3, luggage: 3 },
                                     { name: 'Business', img: '{{ asset('images/services/business_small.png') }}', passengers: 3, luggage: 3 },
                                     { name: 'Minibus', img: '{{ asset('images/services/minibus_small.png') }}', passengers: 16, luggage: 16 }
@@ -199,7 +200,7 @@
                                 class="btn text-white"
                                 style="background-color: var(--primary-color); font-weight: 600;"
                             >
-                                Send Quote
+                                Get Offers
                             </button>
 
                             <!-- Spinner (show when loading) -->

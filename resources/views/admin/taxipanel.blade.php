@@ -333,7 +333,7 @@
                                 <button class="btn btn-primary btn-action btn-sm" title="Mark as Confirmed" @click="updateItem('taxi', taxis.id, taxi.indexOf(taxis), { status: 'confirmed' })">
                                     <i class='bx bx-check'></i>
                                 </button>
-                                <button class="btn btn-warning btn-action btn-sm" title="Reply"  @click="viewItem(selectedItem, 'replyModal')">
+                                <button class="btn btn-warning btn-action btn-sm" title="Reply"  @click="viewItem(taxis, 'replyModal')">
                                     <i class='bx bx-reply'></i>
                                 </button>
                                 <button class="btn btn-primary btn-action btn-sm" @click="addComment(taxis, 'commentModal')">
