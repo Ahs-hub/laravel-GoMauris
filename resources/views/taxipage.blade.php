@@ -158,9 +158,11 @@
                         </div>
                     </form>
 
-                    <!-- Step 2: Taxi Detail -->
+                 {{--  <!-- Step 2: Taxi Detail -->
+                    <form v-if="step ===2" @submit.prevent="goToNext">
+                    </form>--}} 
 
-                    <!-- Step 2: About You -->
+                    <!-- Step 3: About You -->
                     <form v-if="step === 2" @submit.prevent="submitForm">
                         <div class="form-header text-center mb-4">
                         <h5 class="fw-bold">About You</h5>
