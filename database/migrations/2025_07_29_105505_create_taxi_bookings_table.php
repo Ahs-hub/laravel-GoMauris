@@ -39,7 +39,7 @@ return new class extends Migration
             $table->time('return_time')->nullable();
 
             // 🪑 Optional child seat
-            $table->boolean('child_seat')->default(false);
+            $table->integer('child_seat')->default(0);
 
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
 

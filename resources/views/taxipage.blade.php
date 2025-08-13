@@ -110,20 +110,66 @@
                         </div>
 
                         <div class="d-flex flex-wrap gap-3 mb-4 text-start">
-                        <div class="flex-fill">
-                            <label class="form-label">Date</label>
-                            <input type="date" class="form-control"  v-model="form.date" :min="minDate"  required>
-                        </div>
-                        <div class="flex-fill">
-                            <label class="form-label">Time</label>
-                            <input type="time" class="form-control" v-model="form.time" required>
-                        </div>
-                        <div class="flex-fill">
-                            <label class="form-label">Passengers</label>
-                            <input type="number" class="form-control" v-model="form.passengers" required>
-                        </div>
+                            <div class="flex-fill">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control"  v-model="form.date" :min="minDate"  required>
+                            </div>
+                            <div class="flex-fill">
+                                <label class="form-label">Time</label>
+                                <input type="time" class="form-control" v-model="form.time" required>
+                            </div>
+                            <div class="flex-fill">
+                                <label class="form-label">Passengers</label>
+                                <input type="number" class="form-control" v-model="form.passengers" required>
+                            </div>
                         </div>
 
+                        <div class="form-check mb-3 text-start">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="has_return_ride"
+                                v-model="form.has_return_ride"
+                            >
+                            <label class="form-check-label" for="has_return_ride">
+                                Add return ride
+                            </label>
+                        </div>
+
+                        <!-- Show return date/time only if checkbox is checked -->
+                        <div v-if="form.has_return_ride" class="d-flex flex-wrap gap-3 mb-4 text-start">
+                            <div class="flex-fill">
+                                <label class="form-label">Return Date</label>
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    v-model="form.return_date"
+                                    :min="minDate"
+                                >
+                            </div>
+                            <div class="flex-fill">
+                                <label class="form-label">Return Time</label>
+                                <input
+                                    type="time"
+                                    class="form-control"
+                                    v-model="form.return_time"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="text-end">
+                            <button class="btn text-white" style="background-color: var(--primary-color); width: 100px; font-weight: 600;">
+                                Next
+                            </button>
+                        </div>
+                    </form> 
+
+                   <!-- Step 2: Taxi Detail -->
+                    <form v-if="step ===2" @submit.prevent="goToNext">
+                        <div class="form-header text-center mb-4">
+                            <h5 class="fw-bold">Choose Your Ride</h5>
+                        </div>
+                                
                         <div class="mb-4 text-start">
                             <label class="form-label">Choose Ride Category</label>
                             <div class="row g-3">
@@ -149,23 +195,32 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
 
-                        <div class="text-end">
-                            <button class="btn text-white" style="background-color: var(--primary-color); width: 100px; font-weight: 600;">
-                                Next
-                            </button>
+                        <div class="mb-3 text-start">
+                            <label class="form-label">Child Seat</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                v-model.number="form.child_seat"
+                                min="0"
+                                max="5"
+                            >
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-secondary" @click="step--">Back</button>
+                            <div class="text-end">
+                                <button class="btn text-white" style="background-color: var(--primary-color); width: 100px; font-weight: 600;">
+                                    Next
+                                </button>
+                            </div>
                         </div>
                     </form>
 
-                 {{--  <!-- Step 2: Taxi Detail -->
-                    <form v-if="step ===2" @submit.prevent="goToNext">
-                    </form>--}} 
-
                     <!-- Step 3: About You -->
-                    <form v-if="step === 2" @submit.prevent="submitForm">
+                    <form v-if="step === 3" @submit.prevent="submitForm">
                         <div class="form-header text-center mb-4">
-                        <h5 class="fw-bold">About You</h5>
+                              <h5 class="fw-bold">About You</h5>
                         </div>
 
                         <div class="row">
@@ -337,6 +392,10 @@
                     country: '',
                     phone: '',
                     comments: '',
+                    child_seat: '',
+                    has_return_ride: false, 
+                    return_date: '',
+                    return_time: '',
                     
                     //location map
                     pickup_latitude: null,
@@ -369,7 +428,9 @@
         },
         methods: {
             goToNext() {
-                this.step = 2;
+                if (this.step < 3) {
+                    this.step++;
+                }
             },
             submitForm() {
                 this.loading = true;
@@ -417,6 +478,10 @@
                     country: '',
                     phone: '',
                     comments: '',
+                    child_seat: '',
+                    has_return_ride: '',
+                    return_date: '',
+                    return_time: '',
                     pickup_latitude: null,
                     pickup_longitude: null,
                     destination_latitude: null,
