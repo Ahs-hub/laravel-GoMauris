@@ -409,9 +409,22 @@
                                 </h6>
                                 <div class="info-item">
                                     <span class="info-label">Pickup Date</span>
-                                    <span class="info-value">@{{ selectedItem.date }}</span>
+                                    <span class="info-value">@{{ new Date(selectedItem.date).toLocaleDateString() }}</span>
                                     <span class="info-value">@{{ selectedItem.time }}</span>
                                 </div>
+
+                                <div class="info-item">
+                                    <span class="info-label">Has Return Ride</span>
+                                    <span class="info-value">@{{ selectedItem.has_return_ride}}</span>
+                                </div>
+                                <div class="info-item" v-if="selectedItem.has_return_ride">
+                                    <span class="info-label">Return Date</span>
+                                    <span class="info-value">
+                                        @{{ new Date(selectedItem.return_date).toLocaleDateString() }}
+                                    </span>
+                                    <span class="info-value">@{{ selectedItem.return_time }}</span>
+                                </div>
+
                                 <div class="info-item">
                                     <span class="info-label">Passengers</span>
                                     <span class="info-value">@{{ selectedItem.passengers}}</span>
@@ -421,8 +434,8 @@
                                     <span class="info-value">@{{ selectedItem.category}}</span>
                                 </div>
                                 <div class="info-item">
-                                    <span class="info-label">Created</span>
-                                    <span class="info-value">@{{ new Date(selectedItem.created_at).toLocaleDateString() }}</span>
+                                    <span class="info-label">Has Child seat</span>
+                                    <span class="info-value">@{{ selectedItem.child_seat}}</span>
                                 </div>
                             </div>
                         </div>
@@ -627,7 +640,7 @@
                     
                     <div class="row" v-if="selectedItem">
                         <div class="col-md-6 mb-3">
-                            <a :href="'https://wa.me/' + selectedItem.phone" target="_blank" class="contact-option whatsapp">
+                            <a :href="'https://wa.me/' + formatPhone(selectedItem.phone)" target="_blank" class="contact-option whatsapp">
                                 <div class="text-center">
                                     <i class='bx bxl-whatsapp'></i>
                                     <div class="contact-title">WhatsApp</div>
@@ -637,7 +650,7 @@
                         </div>
                         
                         <div class="col-md-6 mb-3">
-                            <a :href="'sms:' + selectedItem.phone" class="contact-option sms">
+                            <a :href="'sms:' + formatPhone(selectedItem.phone)" class="contact-option sms">
                                 <div class="text-center">
                                     <i class='bx bx-message-dots'></i>
                                     <div class="contact-title">SMS</div>
@@ -647,7 +660,7 @@
                         </div>
                         
                         <div class="col-md-6 mb-3">
-                            <a :href="'tel:' + selectedItem.phone" class="contact-option phone">
+                            <a :href="'tel:' + formatPhone(selectedItem.phone)" class="contact-option phone">
                                 <div class="text-center">
                                     <i class='bx bx-phone-call'></i>
                                     <div class="contact-title">Phone Call</div>

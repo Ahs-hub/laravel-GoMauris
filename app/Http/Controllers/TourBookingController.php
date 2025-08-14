@@ -31,11 +31,6 @@ class TourBookingController extends Controller
             'phone' => 'required|string|max:50',
         ]);
 
-        $validated['status'] = 'proceed';
-
-        // Create booking using mass assignment
-        TourBooking::create($validated);
-
         // ✅ Store the new booking
         $booking = TourBooking::create($validated);
 
@@ -47,17 +42,20 @@ class TourBookingController extends Controller
 
         return redirect()->route('thankyou');
     }
+
     public function getBookingsForDate($tourId, $date)
     {
         try {
+
             $bookings = \App\Models\TourBooking::where('tour_id', $tourId)
                 ->where('tour_date', $date) // ✅ use correct column name
-                ->where('status', 'reserved')
+                ->where('status', 'confirmed')
                 ->select('full_name', 'adults', 'children')
                 ->get();
     
             return response()->json($bookings);
         } catch (\Exception $e) {
+
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }

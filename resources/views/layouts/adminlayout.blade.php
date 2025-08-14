@@ -101,6 +101,8 @@
                 </li>
 
                 <li><a href="{{ route('admin.notificationpanel') }}"><i class='bx bx-bell'></i> Notification</a></li>
+                <li><a href="{{ route('admin.deletepanel') }}"><i class="bx bx-cog"></i> Settings</a></li>
+                
 
                 <!-- <li><a href="/admin/bookings"><i class="bx bx-calendar"></i> Bookings</a></li> -->
                 <!-- <li><a href="/admin/vehicles"><i class="bx bx-car"></i> Vehicles</a></li> -->
@@ -211,9 +213,12 @@
                     showToast: false,
                     toastMessage: '',
                   //  unreadCount: 0, // Used in badge
-
-                    tours: [],
-                    selectedTour: '',
+                    
+                  
+                    optiontours: [],
+                    bookselectedTour: '',
+                  //  tours: [],
+                  //  selectedTour: '',
                     blockedDates: [],
                     currentDate: new Date(),
                     weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -280,6 +285,25 @@
                         carrentals: true
                     },
 
+                    deletetables: [
+                        { value: 'custom_booking', label: 'Custom Booking', icon: 'bx bx-calendar-event' },
+                        { value: 'tour_booking', label: 'Tour Booking', icon: 'bx bx-map' },
+                        { value: 'car_rental', label: 'Car Rental Booking', icon: 'bx bx-car' },
+                        { value: 'contact', label: 'Contact Form Messages', icon: 'bx bx-user-voice' },
+                        { value: 'taxi_booking', label: 'Taxi Booking', icon: 'bx bx-taxi' }
+                    ],
+                    deletestatuses: ['Confirmed', 'Cancelled', 'Pending', 'Completed'],
+                    deleteages: [
+                        { value: '6months', label: 'Older than 6 Months' },
+                        { value: '1year', label: 'Older than 1 Year' },
+                        { value: '2years', label: 'Older than 2 Years' },
+                        { value: '5years', label: 'Older than 5 Years' }
+                    ],
+                    deleteselectedTables: [],
+                    deletestatus: '',
+                    deleteage: '',
+                    deleteadminPassword: ''
+
                 };
             },
             created() {
@@ -323,6 +347,15 @@
                     return Math.max(this.newNotifications - stored, 0);
                 },
 
+                //Tours filtering
+                filteredTours() {
+                    return this.getFilteredData(this.tours, {
+                        searchQuery: this.searchQuery,
+                        status: this.filterStatus,
+                        payment_status: this.filterPayment
+                    }, ['first_name', 'last_name', 'email', 'phone','tour_type','tour_date']); // 👈 searchable
+                },
+
                 //Contact filtering
                 filteredContacts() {
                     return this.getFilteredData(this.contacts, {
@@ -332,7 +365,7 @@
                     }, ['first_name', 'last_name', 'email', 'phone']);
                 },
 
-                //Contact filtering
+                //Rentals filtering
                 filteredRentals() {
                     return this.getFilteredData(this.carrentals, {
                         searchQuery: this.searchQuery,
@@ -351,7 +384,7 @@
                     }, ['name','email', 'phone','pickup','destination','date']); // 👈 searchable
                 },
 
-                //Taxi filtering
+                //Custom filtering
                 filteredCustom() {            
                   return this.getFilteredData(this.custom, {
                         searchQuery: this.searchQuery,
@@ -390,7 +423,8 @@
                     }
 
                     return filtered;
-                }
+                },
+
 
                 
             },
@@ -432,25 +466,37 @@
                     });
                     }
                 },
-
+ 
+                //confirmed tour date
                 fetchTours() {
                     this.loading = true;
-                    axios.get('/api/tours')
-                        .then(res => this.tours = res.data)
+                    axios.get('/api/optiontours')
+                        .then(res => this.optiontours = res.data)
                         .catch(err => console.error(err))
                         .finally(() => this.loading = false);
                 },
                 loadBlockedDates() {
-                    if (!this.selectedTour) return;
+                    if (!this.bookselectedTour) {
+                        console.log("No tour selected. bookselectedTour =", this.bookselectedTour);
+                        return;
+                    }
+
+                    console.log("Fetching blocked dates for tour ID:", this.bookselectedTour);
+
                     this.loading = true;
-                    axios.get(`/admin/tours/blocked-dates/${this.selectedTour}`)
-                        .then(res => this.blockedDates = res.data.blocked_dates || [])
+
+                    axios.get(`/api/admin/optiontours/blockedd-dates/${this.bookselectedTour}`)
+                        .then(res => {
+                            console.log('Blocked Dates API response:', res.data);
+                            this.blockedDates = res.data.blocked_dates || [];
+                        })
                         .catch(err => {
                             console.error(err);
                             this.blockedDates = [];
                         })
                         .finally(() => this.loading = false);
                 },
+
                 isBlocked(date) {
                     return this.blockedDates.includes(date);
                 },
@@ -471,8 +517,8 @@
                     }
 
                     try {
-                        await axios.post('/admin/tours/block-dates', {
-                            tour_id: this.selectedTour,
+                        await axios.post('/api/admin/optiontours/block-dates', {
+                            tour_id: this.bookselectedTour,
                             blocked_dates: this.blockedDates
                         });
                     } catch (error) {
@@ -497,9 +543,10 @@
                     });
                 },
                 getSelectedTourName() {
-                    const selected = this.tours.find(t => t.id == this.selectedTour);
+                    const selected = this.optiontours.find(t => t.id == this.bookselectedTour);
                     return selected ? selected.name : '';
                 },
+                //-----------------
 
                 /** Poll the server for the unseen-notification count */
                 checkNotifications() {
@@ -854,6 +901,14 @@
                         window.location.reload();
                     },
 
+                    formatPhone(phone) {
+                        if (!phone) return '';
+                        // Remove all spaces and leading +
+                        const formatted = phone.replace(/\s+/g, '').replace(/^\+/, '');
+                        console.log('Formatted phone:', formatted); // -> 23054757697
+                        return formatted;
+                    },
+
                 //#endregion load contact,tour,taxi ect
                 
                 //#region load notification
@@ -985,11 +1040,11 @@
                         const key = typeMap[itemtype];
 
                      //   console.log('[isnewitem] item:', item);
-                    //    console.log('[isnewitem] itemtype:', itemtype);
-                    //    console.log('[isnewitem] resolved key:', key);
+                     //    console.log('[isnewitem] itemtype:', itemtype);
+                     //    console.log('[isnewitem] resolved key:', key);
 
                         if (!key || !this.newnotifications[key]) {
-                    //        console.warn(`[isnewitem] Invalid key or missing notification data for key:`, key);
+                     //        console.warn(`[isnewitem] Invalid key or missing notification data for key:`, key);
                             return false;
                         }
 
@@ -1005,13 +1060,13 @@
 
                 //search book date
                 async selectDate(date) {
-                    if (!date || !this.selectedTour) return;
+                    if (!date || !this.bookselectedTour) return;
 
                     this.selectedDate = date;
                     this.loading = true;
 
                     try {
-                        const res = await axios.get(`/admin/tours/bookings/${this.selectedTour}/${date}`);
+                        const res = await axios.get(`/api/admin/optiontours/bookings/${this.bookselectedTour}/${date}`);
                         this.bookingsForSelectedDate = res.data;
                     } catch (error) {
                         console.error(error);
@@ -1096,7 +1151,47 @@
                         { label: "Admin Comment", key: "admin_comment" },
                         { label: "Date Received", key: "created_at" }
                     ], 'GoMauris_Contact');
-                }
+                },
+
+
+                //#region    for deletion of data
+                    deleteResetForm() {
+                        this.deleteselectedTables = [];
+                        this.deletestatus = '';
+                        this.deleteage = '';
+                        this.deleteadminPassword = '';
+                    },
+                    deleteShowPasswordModal() {
+                        const modal = new bootstrap.Modal(document.getElementById('passwordModal'));
+                        modal.show();
+                    },
+                    deleteConfirmDeletion() {
+                        fetch('/api/delete-data', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + localStorage.getItem('token') // if using Sanctum/JWT
+                            },
+                            body: JSON.stringify({
+                                tables: this.deleteselectedTables,
+                                status: this.deletestatus,
+                                age: this.deleteage,
+                                password: this.deleteadminPassword
+                            })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Data deleted successfully!');
+                                this.deleteResetForm();
+                                bootstrap.Modal.getInstance(document.getElementById('passwordModal')).hide();
+                            } else {
+                                alert(data.message || 'Password incorrect or deletion failed.');
+                            }
+                        })
+                        .catch(() => alert('Error processing deletion.'));
+                    }
+                //#endregion for deletion of data
 
 
             },
@@ -1116,8 +1211,14 @@
                     this.loadPaginatedData('/api/contacts', 'contacts');
                     window.addEventListener('scroll', () => this.handleScroll('/api/contacts', 'contacts'));
 
-                } else if (window.location.pathname.includes('/admin/booktour')) {
+                } else if (path.includes('/admin/booktour')) {
                     this.fetchTours();
+
+                    this.currentTab = 'tour';
+                    this.loadStats('tour');
+                     this.loadPaginatedData('/api/tours', 'tours');
+                    // window.addEventListener('scroll', () => this.handleScroll('/api/tours', 'tours'));
+               
                 }else if (path.includes('/admin/carrentalpanel')) {
                     this.currentTab = 'carrental';
                     this.loadStats('carrental');
@@ -1153,7 +1254,7 @@
                 clearInterval(this.timer);
             },
             watch: {
-                selectedTour() {
+                bookselectedTour() {
                     this.loadBlockedDates();
                 }
             }

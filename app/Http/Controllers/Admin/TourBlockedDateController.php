@@ -9,9 +9,9 @@ use App\Models\Tour;
 
 class TourBlockedDateController extends Controller
 {
-    public function getBlockedDates($tourId)
+    public function getBlockedDates($id)
     {
-        $dates = TourBlockedDate::where('tour_id', $tourId)->pluck('date');
+        $dates = TourBlockedDate::where('tour_id', $id)->pluck('date');
         return response()->json(['blocked_dates' => $dates]);
     }
 

@@ -25,6 +25,7 @@ class TourBooking extends Model
         'country',
         'phone',
         'status',
+        'payment_status',
         'admin_comment'
 
     ];

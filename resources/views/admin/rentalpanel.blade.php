@@ -636,7 +636,7 @@
                     
                     <div class="row" v-if="selectedItem">
                         <div class="col-md-6 mb-3">
-                            <a :href="'https://wa.me/' + selectedItem.phone" target="_blank" class="contact-option whatsapp">
+                            <a :href="'https://wa.me/' + formatPhone(selectedItem.phone)" target="_blank" class="contact-option whatsapp">
                                 <div class="text-center">
                                     <i class='bx bxl-whatsapp'></i>
                                     <div class="contact-title">WhatsApp</div>
@@ -646,7 +646,7 @@
                         </div>
                         
                         <div class="col-md-6 mb-3">
-                            <a :href="'sms:' + selectedItem.phone" class="contact-option sms">
+                            <a :href="'sms:' + formatPhone(selectedItem.phone)" class="contact-option sms">
                                 <div class="text-center">
                                     <i class='bx bx-message-dots'></i>
                                     <div class="contact-title">SMS</div>
@@ -656,7 +656,7 @@
                         </div>
                         
                         <div class="col-md-6 mb-3">
-                            <a :href="'tel:' + selectedItem.phone" class="contact-option phone">
+                            <a :href="'tel:' + formatPhone(selectedItem.phone)" class="contact-option phone">
                                 <div class="text-center">
                                     <i class='bx bx-phone-call'></i>
                                     <div class="contact-title">Phone Call</div>

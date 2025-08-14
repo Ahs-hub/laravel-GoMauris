@@ -395,7 +395,7 @@
                                     <label class="form-label">Mobile Number (WhatsApp) <span class="required-field">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bx bxl-whatsapp"></i></span>
-                                        <input type="tel" class="form-control" v-model="mobile_number" required placeholder="+230 55040167">
+                                        <input type="tel" class="form-control" v-model="phone" required placeholder="+230 55040167">
                                     </div>
                                 </div>
                             </div>
@@ -553,7 +553,7 @@
                     full_name: '',
                     email: '',
                     country: '',
-                    mobile_number: '',
+                    phone: '',
                 };
             },
             methods: {
@@ -634,7 +634,7 @@
                             full_name: this.full_name,
                             email: this.email,
                             country: this.country,
-                            mobile_number: this.mobile_number,
+                            phone: this.phone,
                         });
 
                         window.location.href = '/thank-you?type=tour';

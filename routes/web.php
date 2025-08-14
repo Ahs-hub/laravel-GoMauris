@@ -74,6 +74,12 @@ Route::middleware('auth')->get('/admin/custompanel', function () {
     return view('admin.custompanel');
 })->name('admin.custompanel');
 
+// Go to bulk deletion
+Route::middleware('auth')->get('/admin/deletepanel', function () {
+    return view('admin.deletepanel');
+})->name('admin.deletepanel');
+
+
 
 Route::get('/rent-cars', [CarController::class, 'index'])->name('cars.home');
 Route::get('/rentcar/{id}', [CarController::class, 'show'])->name('rentcar.show');

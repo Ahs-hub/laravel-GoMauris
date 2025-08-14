@@ -149,6 +149,11 @@ body {
         border: none;
         cursor: default;
     }
+    .btn.active {
+        background-color: #28a745 !important; /* green background */
+        border-color: #28a745 !important;
+        color: white !important;
+    }
     @media (max-width: 768px) {
         .day-text{
             font-size:12px;
@@ -231,29 +236,29 @@ body {
 /*#endregion   notification  */
 
 /*#region    contact option modal  */
-.contact-option {
-    transition: all 0.3s ease;
-    border: 1px solid #e9ecef;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 15px;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
+    .contact-option {
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 15px;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
 
-.contact-option:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    text-decoration: none;
-    color: inherit;
-}
+    .contact-option:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        text-decoration: none;
+        color: inherit;
+    }
 
-.contact-option i {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-/*#region    contact option modal  */
+    .contact-option i {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+/*#endregion    contact option modal  */
 
 /*#region     car rental form */
 /* Form Control Styles - Textarea and Input Fields */
