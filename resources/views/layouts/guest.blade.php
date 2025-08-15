@@ -34,7 +34,7 @@
             </div>
             <h4 class="mb-3">Session Expired</h4>
             <p class="text-muted">Your session has timed out due to inactivity. Please log in again to continue.</p>
-            <a href="{{ route('login') }}" class="btn btn-warning mt-3">
+            <a href="{{ route('admin.login') }}" class="btn btn-warning mt-3">
                 <i class='bx bx-log-in-circle'></i> Login Again
             </a>
         </div>

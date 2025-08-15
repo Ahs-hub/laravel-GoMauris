@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\DB;
 //admin connection
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\TourBlockedDateController;
-use App\Http\Controllers\Admin\AdminController;
-
 
 use App\Http\Controllers\TourBookingController;
 use App\Http\Controllers\WishlistController;
@@ -26,6 +24,8 @@ use App\Http\Controllers\CarBookingController;
 
 use App\Http\Controllers\CustomTourRequestController;
 
+use App\Http\Controllers\Admin\AdminSetupController;
+
 // Route::get('/', function () {
 //     return view('home');
 // })->name('home');
@@ -37,10 +37,20 @@ Route::get('/admin/login', [AuthController::class, 'showLoginForm'])->name('admi
 // Handle login POST
 Route::post('/admin/login', [AuthController::class, 'login']);
 
+//Handle logout POST
+Route::post('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/admin/login');
+})->name('logout');
+
 // Protected dashboard (only logged-in users can access)
 Route::middleware('auth')->get('/admin/dashboard', function () {
     return view('admin.dashboardpanel');
 })->name('admin.dashboard');
+//Deletion of all data for admin
+Route::middleware('auth')->post('/delete-data', [AdminSetupController::class, 'deleteData']);
 
 
 // Go to Book Tour panel

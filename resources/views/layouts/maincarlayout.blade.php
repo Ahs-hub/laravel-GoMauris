@@ -299,9 +299,13 @@
                                     <div class="contact-icon">
                                         <i class='bx bx-envelope'></i>
                                     </div>
-                                    <div class="contact-text" >
+                                    <div class="contact-text">
                                         <strong style="color:rgb(161, 161, 161);">Email</strong>
-                                        <span>info@voyagehub.mu</span>
+                                        <span>
+                                            <a href="https://mailto:gomauristours@gmail.com" style="color:white; text-decoration: none;">
+                                                gomauristours@gmail.com
+                                            </a>
+                                        </span>
                                     </div>
                                 </div>
                                 

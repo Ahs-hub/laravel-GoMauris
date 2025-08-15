@@ -1,4 +1,4 @@
-@extends('layouts.mainlayout')
+@extends('layouts.maincarlayout')
 
 @section('content')
     <style>
@@ -130,7 +130,11 @@
         <li>Complete the Accident Form (in glovebox)</li>
         <li>Exchange info with the other driver, sign the form, and submit it to us</li>
         <li>We’ll send a tow and replacement car if vehicle is immobilized</li>
-        <li>Email a copy of the form to <a href="mailto:rentals@travelhub.mu">rentals@travelhub.mu</a> within 24 hrs</li>
+        <li>Email a copy of the form to 
+            <a href="https://mailto:gomauristours@gmail.com" style="color:blue; text-decoration: none;">
+                gomauristours@gmail.com
+            </a> within 24 hrs
+        </li>
     </ul>
 
     <h4>10. Maintenance Alerts</h4>

@@ -89,7 +89,10 @@
             </ul>
 
             <h4>5. Your Rights</h4>
-            <p>You may request to access, correct, or delete your personal data at any time. Contact us at <a href="mailto:info@yourcompany.com">info@yourcompany.com</a>.</p>
+            <p>You may request to access, correct, or delete your personal data at any time. Contact us at 
+                <a href="https://mailto:gomauristours@gmail.com" style="color:blue; text-decoration: none;">
+                    gomauristours@gmail.com
+                </a>.</p>
 
             <h4>6. Cookies</h4>
             <p>We may use basic cookies to improve performance and analytics. You can disable cookies via your browser settings.</p>
@@ -103,7 +106,9 @@
             <h4>9. Contact Us</h4>
             <p>For any privacy-related concerns:</p>
             <ul>
-                <li>Email: <a href="mailto:info@yourcompany.com">info@yourcompany.com</a></li>
+                <li>Email:<a href="https://mailto:gomauristours@gmail.com" style="color:blue; text-decoration: none;">
+                                gomauristours@gmail.com
+                          </a></li>
                 <li>Phone: +230 55040167</li>
                 <li>Address: Royal Road, Port Louis, Mauritius</li>
             </ul>

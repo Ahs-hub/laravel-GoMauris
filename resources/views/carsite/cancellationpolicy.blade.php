@@ -1,4 +1,4 @@
-@extends('layouts.mainlayout')
+@extends('layouts.maincarlayout')
 
 @section('content')
     <style>
@@ -53,7 +53,10 @@
 
         <h4>1. Standard Cancellations</h4>
         <p>
-            If you need to cancel your booking, please email <a href="mailto:rentals@travelhub.mu">rentals@travelhub.mu</a>
+            If you need to cancel your booking, please email 
+            <a href="https://mailto:gomauristours@gmail.com" style="color:blue; text-decoration: none;">
+                gomauristours@gmail.com
+            </a>
             at least <strong>72 hours before</strong> the scheduled vehicle delivery. Cancellations made within this
             timeframe will be eligible for a <strong>full refund</strong>.
         </p>
@@ -83,7 +86,9 @@
 
         <p>
             For any questions or assistance regarding cancellations, please contact us at
-            <a href="mailto:rentals@travelhub.mu">rentals@travelhub.mu</a>.
+            <a href="https://mailto:gomauristours@gmail.com" style="color:blue; text-decoration: none;">
+                gomauristours@gmail.com
+            </a>
             We appreciate your understanding and look forward to assisting you with future car rental needs.
         </p>
     </div>

@@ -25,7 +25,6 @@ Route::get('/optiontours', function () {
     return Tour::select('id', 'name')->get();
 });
 
-
 // Admin-only route (keep it if you need restricted access somewhere)
 Route::get('/admin/optiontours/blocked-dates/{tour}', function($tourId) {
     $tour = Tour::findOrFail($tourId);
@@ -137,3 +136,4 @@ Route::put('/contacts/{id}/update-status', [AdminContactController::class, 'upda
 Route::put('/contacts/{id}/update-comment', [AdminContactController::class, 'updateComment']);
 
 //----------------------------
+

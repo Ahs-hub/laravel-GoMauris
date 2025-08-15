@@ -133,10 +133,14 @@
                             <i class="bx bx-user-circle"></i> Admin
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#"><i class="bx bx-user"></i> Profile</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bx bx-cog"></i> Settings</a></li>
+                            <!-- <li><a class="dropdown-item" href="#"><i class="bx bx-user"></i> Profile</a></li> -->
+                            <li><a class="dropdown-item" href="{{ route('admin.deletepanel') }}"><i class="bx bx-cog"></i> Settings</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#"><i class="bx bx-log-out"></i> Logout</a></li>
+                            <li>
+                                <a class="dropdown-item" href="#" @click.prevent="logout">
+                                    <i class="bx bx-log-out"></i> Logout
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -271,11 +275,14 @@
                     custom:[],
                     tours: [],
                     carrentals: [],
-
+  
+                    //Make it stop searching when fetching
                     page: {
                         contacts: 1,
                         taxi: 1,
                         tours: 1,
+                        custom: 1,
+                        carrentals: 1
                     },
                     hasMore: {
                         contacts: true,
@@ -285,24 +292,24 @@
                         carrentals: true
                     },
 
-                    deletetables: [
+                    deleteTables: [
                         { value: 'custom_booking', label: 'Custom Booking', icon: 'bx bx-calendar-event' },
                         { value: 'tour_booking', label: 'Tour Booking', icon: 'bx bx-map' },
                         { value: 'car_rental', label: 'Car Rental Booking', icon: 'bx bx-car' },
                         { value: 'contact', label: 'Contact Form Messages', icon: 'bx bx-user-voice' },
                         { value: 'taxi_booking', label: 'Taxi Booking', icon: 'bx bx-taxi' }
                     ],
-                    deletestatuses: ['Confirmed', 'Cancelled', 'Pending', 'Completed'],
-                    deleteages: [
+                    deleteStatuses: ['Confirmed', 'Cancelled', 'Pending'],
+                    deleteAges: [
                         { value: '6months', label: 'Older than 6 Months' },
                         { value: '1year', label: 'Older than 1 Year' },
                         { value: '2years', label: 'Older than 2 Years' },
                         { value: '5years', label: 'Older than 5 Years' }
                     ],
-                    deleteselectedTables: [],
-                    deletestatus: '',
-                    deleteage: '',
-                    deleteadminPassword: ''
+                    deleteSelectedTables: [],
+                    deleteStatus: '',
+                    deleteAge: '',
+                    deleteAdminPassword: ''
 
                 };
             },
@@ -1155,43 +1162,66 @@
 
 
                 //#region    for deletion of data
-                    deleteResetForm() {
-                        this.deleteselectedTables = [];
-                        this.deletestatus = '';
-                        this.deleteage = '';
-                        this.deleteadminPassword = '';
+                    resetDeleteForm() {
+                        this.deleteSelectedTables = [];
+                        this.deleteStatus = '';
+                        this.deleteAge = '';
+                        this.deleteAdminPassword = '';
                     },
-                    deleteShowPasswordModal() {
+                    showPasswordModal() {
                         const modal = new bootstrap.Modal(document.getElementById('passwordModal'));
                         modal.show();
                     },
-                    deleteConfirmDeletion() {
-                        fetch('/api/delete-data', {
+                    confirmDelete() {
+                        this.loadingform = true;
+                        fetch('/delete-data', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Authorization': 'Bearer ' + localStorage.getItem('token') // if using Sanctum/JWT
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                             },
                             body: JSON.stringify({
-                                tables: this.deleteselectedTables,
-                                status: this.deletestatus,
-                                age: this.deleteage,
-                                password: this.deleteadminPassword
+                                tables: this.deleteSelectedTables,
+                                status: this.deleteStatus,
+                                age: this.deleteAge,
+                                password: this.deleteAdminPassword
                             })
                         })
                         .then(res => res.json())
                         .then(data => {
                             if (data.success) {
                                 alert('Data deleted successfully!');
-                                this.deleteResetForm();
+                                this.resetDeleteForm();
                                 bootstrap.Modal.getInstance(document.getElementById('passwordModal')).hide();
                             } else {
                                 alert(data.message || 'Password incorrect or deletion failed.');
                             }
                         })
-                        .catch(() => alert('Error processing deletion.'));
-                    }
+                        .catch(() => alert('Error processing deletion.'))
+                        .finally(() => this.loadingform = false);
+                    },
                 //#endregion for deletion of data
+                async logout() {
+                    if (confirm("Do you want to log out?")) {
+                        this.loading = true;
+                        try {
+                            await fetch("/logout", {
+                                method: "POST",
+                                headers: {
+                                    "X-CSRF-TOKEN": document
+                                        .querySelector('meta[name="csrf-token"]')
+                                        .getAttribute("content"),
+                                    "Accept": "application/json",
+                                },
+                            });
+                            window.location.href = "/admin/login";
+                        } catch (error) {
+                            console.error("Logout failed", error);
+                        } finally {
+                            this.loading = false;
+                        }
+                    }
+                }
 
 
             },
@@ -1217,7 +1247,7 @@
                     this.currentTab = 'tour';
                     this.loadStats('tour');
                      this.loadPaginatedData('/api/tours', 'tours');
-                    // window.addEventListener('scroll', () => this.handleScroll('/api/tours', 'tours'));
+                     window.addEventListener('scroll', () => this.handleScroll('/api/tours', 'tours'));
                
                 }else if (path.includes('/admin/carrentalpanel')) {
                     this.currentTab = 'carrental';

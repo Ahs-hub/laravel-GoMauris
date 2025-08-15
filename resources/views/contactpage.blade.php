@@ -126,8 +126,12 @@
                                 <i class='bx bx-envelope'></i>
                             </div>
                             <h5 class="fw-bold mb-2" >Email Us</h5>
-                            <p class="paragraph-text text-muted mb-0">info@premiumtours.com</p>
-                            <p class="paragraph-text text-muted">bookings@premiumtours.com</p>
+                            <p class="paragraph-text text-muted mb-0">
+                               <a href="https://mailto:gomauristours@gmail.com" style=" text-decoration: none;">
+                                    gomauristours@gmail.com
+                                </a>
+                            </p>
+                           
                         </div>
                     </div>
                     <div class="col-12">

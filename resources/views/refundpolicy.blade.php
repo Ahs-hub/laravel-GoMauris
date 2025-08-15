@@ -55,7 +55,10 @@
 
         <h4>Customer-Initiated Cancellations:</h4>
         <ul>
-            <li><strong>Full Refund Eligibility:</strong> Customers who cancel their tour at least 24 hours before the scheduled commencement will receive a full refund. To initiate a cancellation, please send an email to <a href="mailto:hello@travelhub.mu">hello@travelhub.mu</a>.</li>
+            <li><strong>Full Refund Eligibility:</strong> Customers who cancel their tour at least 24 hours before the scheduled commencement will receive a full refund. To initiate a cancellation, please send an email to 
+                <a href="https://mailto:gomauristours@gmail.com" style="color:var(--primary-color); text-decoration: none;">
+                    gomauristours@gmail.com
+                </a></li>
             <li><strong>Effective Cancellation Notice:</strong> Your cancellation request will only be effective upon receipt of your email. Ensure to include your booking details for prompt processing.</li>
         </ul>
 
@@ -78,7 +81,12 @@
 
         <hr>
 
-        <p>At GoMauris Mauritius, we strive to deliver exceptional service and unforgettable experiences. Our refund policy is designed to give you peace of mind, knowing your investment is secure. For inquiries, contact us at <a href="mailto:hello@travelhub.mu">hello@travelhub.mu</a>.</p>
+        <p>At GoMauris Mauritius, we strive to deliver exceptional service and unforgettable experiences. Our refund policy is designed to give you peace of mind, knowing your investment is secure. For inquiries, contact us at 
+           <a href="https://mailto:gomauristours@gmail.com" style="color:var(--primary-color); text-decoration: none;">
+                gomauristours@gmail.com
+            </a>
+        .
+        </p>
     </div>
 </div>
 
