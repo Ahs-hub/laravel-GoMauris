@@ -250,6 +250,8 @@
                     filterService: '',
                     filterCarType: '',
                     filterPayment: '',
+                    filterDate: '',
+                    filterMonth: '', // 👈 NEW
 
                     filterStatus: '',
                     viewMode: 'table',
@@ -359,7 +361,9 @@
                     return this.getFilteredData(this.tours, {
                         searchQuery: this.searchQuery,
                         status: this.filterStatus,
-                        payment_status: this.filterPayment
+                        payment_status: this.filterPayment,
+                        tour_date: this.filterDate,
+                        item_month: this.filterMonth // 👈 NEW
                     }, ['first_name', 'last_name', 'email', 'phone','tour_type','tour_date']); // 👈 searchable
                 },
 
@@ -378,7 +382,9 @@
                         searchQuery: this.searchQuery,
                         status: this.filterStatus,
                         car_name: this.filterCarType, // 👈 added
-                        payment_status: this.filterPayment
+                        payment_status: this.filterPayment,
+                        pickup_date: this.filterDate,
+                        item_month: this.filterMonth // 👈 NEW
                     }, ['first_name', 'last_name', 'email', 'phone', 'car_name']); // 👈 searchable
                 },
 
@@ -840,8 +846,21 @@
 
                             const matchesPaymentType =
                                 !filters.payment_status || item.payment_status === filters.payment_status; // 👈 NEW
+                            
+                            // ✅ Date filtering (works for both tour_date and date)
+                            const matchesDate =
+                                !filters.tour_date && !filters.date ||
+                                (filters.tour_date && item.tour_date === filters.tour_date) ||
+                                (filters.pickup_date && item.pickup_date === filters.pickup_date);
 
-                            return matchesSearch && matchesStatus && matchesService && matchesCarType && matchesPaymentType;
+                            // ✅ Month filtering (works for both tour_date and date)
+                            const matchesMonth =
+                                !filters.item_month ||
+                                (item.tour_date && item.tour_date.slice(0, 7) === filters.item_month) ||
+                                (item.pickup_date && item.pickup_date.slice(0, 7) === filters.item_month);
+
+
+                            return matchesSearch && matchesStatus && matchesService && matchesCarType && matchesPaymentType && matchesDate && matchesMonth;
                         });
                     },
 
@@ -902,6 +921,8 @@
                         this.filterStatus = '';
                         this.filterCarType = '';
                         this.filterPayment = '';
+                        this.filterDate = '';
+                        this.filterMonth ='';
                     },
 
                     refreshData() {

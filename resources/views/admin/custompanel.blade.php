@@ -152,7 +152,7 @@
                                 <th>Vehicle Category</th>
                                 <th>Payment</th>
                                 <th>Status</th>
-                                <th>Date</th>
+                                <th>Create at</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>

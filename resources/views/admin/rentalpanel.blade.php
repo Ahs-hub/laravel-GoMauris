@@ -113,6 +113,23 @@
                             <option value="cancelled">Cancelled</option>
                         </select>
                     </div>
+                    <div class="col-md-3">
+                        <input 
+                            type="date" 
+                            class="form-control" 
+                            v-model="filterDate"
+                        >
+                    </div>
+
+                    <div class="col-md-3">
+                        <input 
+                            placeholder="Find Month ex : 2025-08"
+                            type="month" 
+                            class="form-control" 
+                            v-model="filterMonth"
+                        >
+                    </div>
+
                     <div class="col-md-2">
                         <button class="btn btn-outline-secondary w-100" @click="clearFilters">
                             <i class='bx bx-x'></i> Clear
@@ -164,7 +181,7 @@
                                 <th>Pickup → Return</th>
                                 <th>Payment</th>
                                 <th>Status</th>
-                                <th>Date</th>
+                                <th>Create at</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
