@@ -70,7 +70,7 @@
         <!-- Filters and Search -->
         <div class="card mb-4">
             <div class="card-body">
-                <div class="row g-3">
+                <div class="row g-3 align-items-center">
                     <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-text bg-white border-end-0">
@@ -102,10 +102,36 @@
                             <option value="reply">Reply</option>
                         </select>
                     </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-outline-secondary w-100" @click="clearFilters">
-                            <i class='bx bx-x'></i> Clear
+
+                    <!-- Clear & Advanced -->
+                    <div class="col-md-2 d-flex gap-2">
+                        <button class="btn btn-outline-secondary flex-fill" @click="clearFilters">
+                        <i class='bx bx-x'></i> Clear
                         </button>
+                        <button 
+                        class="btn btn-outline-primary flex-fill"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#advancedFilters"
+                        >
+                        <i class="bx bx-filter-alt"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Advanced Filters -->
+                <div class="collapse mt-4" id="advancedFilters">
+                    
+                    <div class="row g-3 mt-2">
+                        <!-- Created At -->
+                        <div class="col-md-2 text-end fw-bold">Created At:</div>
+                        <div class="col-md-3">
+                        <input type="date" class="form-control" v-model="filterDateCreateAt">
+                        </div>
+                        <div class="col-md-3">
+                        <input type="month" class="form-control"  placeholder="Find Month ex: 2025-06" v-model="filterMonthCreateAt">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -151,7 +177,7 @@
                                 <th>Contact</th>
                                 <th>Service</th>
                                 <th>Status</th>
-                                <th>Date</th>
+                                <th>Create at</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>

@@ -46,9 +46,9 @@ return new class extends Migration
             $table->unsignedTinyInteger('child_seats')->default(0);
         
             // Status
-            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
+            $table->enum('status', ['pending', 'confirmed', 'cancelled','completed'])->default('pending');
 
-            $table->enum('payment_status', ['unpaid', 'paid'])->default('unpaid');
+            $table->enum('payment_status', ['unpaid', 'paid','refund'])->default('unpaid');
 
             $table->text('admin_comment')->nullable(); // <- admin comment field
         

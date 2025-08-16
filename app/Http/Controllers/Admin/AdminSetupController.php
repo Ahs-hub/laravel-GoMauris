@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash; // if you plan to check password later
 
+//Get database space
+use Illuminate\Support\Facades\DB;
+
 class AdminSetupController extends Controller
 {
     public function deleteData(Request $request)
@@ -69,5 +72,19 @@ class AdminSetupController extends Controller
         }
     
         return response()->json(['success' => 'Data deleted successfully']);
+    }
+
+    public function getDatabaseSize()
+    {
+        $dbName = DB::getDatabaseName();
+    
+        $size = DB::selectOne("SELECT pg_database_size(?) AS size_bytes", [DB::getDatabaseName()]);
+
+        $size_mb = round($size->size_bytes / 1024 / 1024, 2);
+        
+        return response()->json([
+            'database' => DB::getDatabaseName(),
+            'size_mb' => $size_mb
+        ]);
     }
 }

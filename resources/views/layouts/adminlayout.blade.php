@@ -253,6 +253,9 @@
                     filterDate: '',
                     filterMonth: '', // 👈 NEW
 
+                    filterDateCreateAt: '',
+                    filterMonthCreateAt: '',
+
                     filterStatus: '',
                     viewMode: 'table',
                     currentPage: 1,
@@ -260,6 +263,7 @@
                     selectedContacts: [],
                     allSelected: false,
                     selectedContact: null,
+                    showAdvanced: false,   // Advance Search
 
                     commentItem: null,
                     tempComment: '',
@@ -311,7 +315,13 @@
                     deleteSelectedTables: [],
                     deleteStatus: '',
                     deleteAge: '',
-                    deleteAdminPassword: ''
+                    deleteAdminPassword: '',
+
+                    //Size memory
+                    dbInfo: {
+                        database: '',
+                        size_mb: ''
+                    }
 
                 };
             },
@@ -363,7 +373,9 @@
                         status: this.filterStatus,
                         payment_status: this.filterPayment,
                         tour_date: this.filterDate,
-                        item_month: this.filterMonth // 👈 NEW
+                        item_month: this.filterMonth, // 👈 NEW
+                        created_at: this.filterDateCreateAt,
+                        createat_month:this.filterMonthCreateAt
                     }, ['first_name', 'last_name', 'email', 'phone','tour_type','tour_date']); // 👈 searchable
                 },
 
@@ -372,7 +384,9 @@
                     return this.getFilteredData(this.contacts, {
                         searchQuery: this.searchQuery,
                         status: this.filterStatus,
-                        service: this.filterService
+                        service: this.filterService,
+                        created_at: this.filterDateCreateAt,
+                        createat_month:this.filterMonthCreateAt
                     }, ['first_name', 'last_name', 'email', 'phone']);
                 },
 
@@ -384,7 +398,9 @@
                         car_name: this.filterCarType, // 👈 added
                         payment_status: this.filterPayment,
                         pickup_date: this.filterDate,
-                        item_month: this.filterMonth // 👈 NEW
+                        item_month: this.filterMonth, // 👈 NEW
+                        created_at: this.filterDateCreateAt,
+                        createat_month:this.filterMonthCreateAt
                     }, ['first_name', 'last_name', 'email', 'phone', 'car_name']); // 👈 searchable
                 },
 
@@ -393,7 +409,11 @@
                   return this.getFilteredData(this.taxi, {
                         searchQuery: this.searchQuery,
                         status: this.filterStatus,
-                        payment_status: this.filterPayment
+                        payment_status: this.filterPayment,
+                        date: this.filterDate,
+                        item_month: this.filterMonth, // 👈 NEW
+                        created_at: this.filterDateCreateAt,
+                        createat_month:this.filterMonthCreateAt
                     }, ['name','email', 'phone','pickup','destination','date']); // 👈 searchable
                 },
 
@@ -402,7 +422,11 @@
                   return this.getFilteredData(this.custom, {
                         searchQuery: this.searchQuery,
                         status: this.filterStatus,
-                        payment_status: this.filterPayment
+                        payment_status: this.filterPayment,
+                        tour_date: this.filterDate,
+                        item_month: this.filterMonth, // 👈 NEW
+                        created_at: this.filterDateCreateAt,
+                        createat_month:this.filterMonthCreateAt
                     }, ['full_name','email', 'phone','preferred_tour','date']); // 👈 searchable
                 },
 
@@ -849,18 +873,29 @@
                             
                             // ✅ Date filtering (works for both tour_date and date)
                             const matchesDate =
-                                !filters.tour_date && !filters.date ||
+                                (!filters.tour_date && !filters.pickup_date && !filters.date ) ||
                                 (filters.tour_date && item.tour_date === filters.tour_date) ||
-                                (filters.pickup_date && item.pickup_date === filters.pickup_date);
+                                (filters.pickup_date && item.pickup_date.slice(0, 10) === filters.pickup_date) ||
+                                (filters.date && item.date.slice(0, 10) === filters.date);
 
                             // ✅ Month filtering (works for both tour_date and date)
                             const matchesMonth =
                                 !filters.item_month ||
                                 (item.tour_date && item.tour_date.slice(0, 7) === filters.item_month) ||
-                                (item.pickup_date && item.pickup_date.slice(0, 7) === filters.item_month);
+                                (item.pickup_date && item.pickup_date.slice(0, 7) === filters.item_month)||
+                                (item.date && item.date.slice(0, 7) === filters.item_month);
+                            
+                            const matchesCreateAtDate =
+                                !filters.created_at || (item.created_at && item.created_at.slice(0, 10) === filters.created_at);
+
+                            // Month match (YYYY-MM)
+                            const matchesCreateAtMonth =
+                                !filters.createat_month || (item.created_at && item.created_at.slice(0, 7) === filters.createat_month);
 
 
-                            return matchesSearch && matchesStatus && matchesService && matchesCarType && matchesPaymentType && matchesDate && matchesMonth;
+                            return matchesSearch && matchesStatus && matchesService &&
+                                   matchesCarType && matchesPaymentType && matchesDate &&
+                                   matchesMonth && matchesCreateAtDate && matchesCreateAtMonth;
                         });
                     },
 
@@ -923,6 +958,8 @@
                         this.filterPayment = '';
                         this.filterDate = '';
                         this.filterMonth ='';
+                        this.filterDateCreateAt = '',
+                        this.filterMonthCreateAt = ''
                     },
 
                     refreshData() {
@@ -1242,8 +1279,23 @@
                             this.loading = false;
                         }
                     }
-                }
+                },
 
+                //Fetch size memory
+                async fetchDbSize() {
+                    try {
+                        const res = await fetch('/api/db-size');
+                        if (!res.ok) throw new Error('Network error');
+
+                        const data = await res.json();
+
+                        // Update dbInfo safely
+                        this.dbInfo = data || { database: 'N/A', size_mb: 0 };
+                    } catch (err) {
+                        console.error('Error fetching DB size:', err);
+                        this.dbInfo = { database: 'Error', size_mb: 0 };
+                    }
+                }
 
             },
             mounted() {
@@ -1288,6 +1340,8 @@
                     this.loadPaginatedData('/api/custom', 'custom');
                     window.addEventListener('scroll', () => this.handleScroll('/api/taxi', 'taxi'));
                     
+                }else if (path.includes('/admin/deletepanel')) {
+                    this.fetchDbSize(); // fetch on page load
                 }else if (window.location.pathname.includes('/admin/notificationpanel')) {
                     this.fetchNotifications();
                 }

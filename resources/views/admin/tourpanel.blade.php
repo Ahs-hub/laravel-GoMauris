@@ -90,63 +90,86 @@
         <!-- Filters and Search -->
         <div class="card mb-4">
             <div class="card-body">
-                <div class="row g-3">
+                <div class="row g-3 align-items-center">
+                    <!-- Search -->
                     <div class="col-md-4">
                         <div class="input-group">
-                            <span class="input-group-text bg-white border-end-0">
-                                <i class='bx bx-search'></i>
-                            </span>
-                            <input 
-                                type="text" 
-                                class="form-control search-box border-start-0" 
-                                placeholder="Search custom..."
-                                v-model="searchQuery"
-                            >
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class='bx bx-search'></i>
+                        </span>
+                        <input 
+                            type="text" 
+                            class="form-control search-box border-start-0" 
+                            placeholder="Search custom..."
+                            v-model="searchQuery"
+                        >
                         </div>
                     </div>
 
+                    <!-- Payment -->
                     <div class="col-md-3">
                         <select class="form-select" v-model="filterPayment">
-                            <option value="">All Payment</option>
-                            <option value="paid">Paid</option>
-                            <option value="unpaid">UnPaid</option>
+                        <option value="">All Payment</option>
+                        <option value="paid">Paid</option>
+                        <option value="unpaid">UnPaid</option>
+                        <option value="refund">Refund</option>
                         </select>
                     </div>
                     
+                    <!-- Status -->
                     <div class="col-md-3">
                         <select class="form-select" v-model="filterStatus">
-                            <option value="">All Status</option>
-                            <option value="pending">Pending</option>
-                            <option value="confirmed">Confirmed</option>
-                            <option value="cancelled">Cancelled</option>
+                        <option value="">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="cancelled">Cancelled</option>
+                        <option value="completed">Completed</option>
                         </select>
                     </div>
 
-                    <div class="col-md-3">
-                        <input 
-                            type="date" 
-                            class="form-control" 
-                            v-model="filterDate"
-                        >
-                    </div>
-
-                    <div class="col-md-3">
-                        <input 
-                            placeholder="Find Month ex : 2025-08"
-                            type="month" 
-                            class="form-control" 
-                            v-model="filterMonth"
-                        >
-                    </div>
-
-                    <div class="col-md-2">
-                        <button class="btn btn-outline-secondary w-100" @click="clearFilters">
-                            <i class='bx bx-x'></i> Clear
+                    <!-- Clear & Advanced -->
+                    <div class="col-md-2 d-flex gap-2">
+                        <button class="btn btn-outline-secondary flex-fill" @click="clearFilters">
+                        <i class='bx bx-x'></i> Clear
                         </button>
+                        <button 
+                        class="btn btn-outline-primary flex-fill"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#advancedFilters"
+                        >
+                        <i class="bx bx-filter-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Advanced Filters -->
+                <div class="collapse mt-4" id="advancedFilters">
+                    <div class="row g-3">
+                        <!-- Book Date -->
+                        <div class="col-md-2 text-end fw-bold">Book Date:</div>
+                        <div class="col-md-3">
+                        <input type="date" class="form-control" v-model="filterDate">
+                        </div>
+                        <div class="col-md-3">
+                        <input type="month" class="form-control"  placeholder="Find Month ex: 2025-06" v-model="filterMonth">
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-2">
+                        <!-- Created At -->
+                        <div class="col-md-2 text-end fw-bold">Created At:</div>
+                        <div class="col-md-3">
+                        <input type="date" class="form-control" v-model="filterDateCreateAt">
+                        </div>
+                        <div class="col-md-3">
+                        <input type="month" class="form-control"  placeholder="Find Month ex: 2025-06" v-model="filterMonthCreateAt">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <!-- Tours Table -->
         <div class="card">
@@ -233,6 +256,7 @@
                                     >
                                         <option value="paid">paid</option>
                                         <option value="unpaid">unpaid</option>
+                                        <option value="refund">refund</option>
                                     </select>
                                 </td>
                                 <td>
@@ -247,6 +271,7 @@
                                         <option value="pending">pending</option>
                                         <option value="confirmed">confirmed</option>
                                         <option value="cancelled">cancelled</option>
+                                        <option value="completed">completed</option>
                                     </select>
                                 </td>
                                 <td>@{{ new Date(tourb.created_at).toLocaleDateString() }}</td>
@@ -562,6 +587,7 @@
                                 <option value="pending">Pending</option>
                                 <option value="confirmed">Confirmed</option>
                                 <option value="cancelled">Cancelled</option>
+                                <option value="completed">Completed</option>
                             </select>
                         </div>
                         
@@ -573,7 +599,8 @@
                                 @change="updateItem('tours', selectedItem.id, tours.indexOf(selectedItem), { payment_status: selectedItem.payment_status })"
                             >
                                 <option value="paid">Paid</option>
-                                <option value="unpaid">Unpaid</option>
+                                <option value="unpaid">UnPaid</option>
+                                <option value="refund">Refund</option>
                             </select>
                         </div>
                     </div>

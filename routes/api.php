@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AdminCarBookingController;
 use App\Http\Controllers\Admin\AdminTaxiBookingController;
 use App\Http\Controllers\Admin\AdminCustomBookingController;
 use App\Http\Controllers\Admin\AdminTourBookingController;
+use App\Http\Controllers\Admin\AdminSetupController;
 
 use App\Http\Controllers\Admin\TourBlockedDateController;
 use App\Http\Controllers\TourBookingController;
@@ -137,3 +138,5 @@ Route::put('/contacts/{id}/update-comment', [AdminContactController::class, 'upd
 
 //----------------------------
 
+//Get database size
+Route::get('/db-size', [AdminSetupController::class, 'getDatabaseSize']);

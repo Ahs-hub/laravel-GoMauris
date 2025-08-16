@@ -111,7 +111,7 @@ class AdminCarBookingController extends Controller
             'last_name' => 'sometimes|string',
             'email' => 'sometimes|email',
             'phone' => 'sometimes|string',
-            'status' => 'sometimes|in:pending,confirmed,cancelled',
+            'status' => 'sometimes|in:pending,confirmed,cancelled,completed',
             'pickup_location' => 'sometimes|string',
             'pickup_date' => 'sometimes|date',
             'return_location' => 'sometimes|string',
@@ -119,7 +119,7 @@ class AdminCarBookingController extends Controller
             'has_driver' => 'sometimes|boolean',
             'child_seats' => 'sometimes|integer|min:0',
             'admin_comment' => 'nullable|string',
-            'payment_status' => 'sometimes|in:unpaid,paid',
+            'payment_status' => 'sometimes|in:unpaid,paid,refund',
             // Add other fields if needed
         ]);
 

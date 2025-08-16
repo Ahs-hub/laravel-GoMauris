@@ -72,8 +72,8 @@ class AdminTourBookingController extends Controller
             'email'             => 'sometimes|email',
             'country'           => 'sometimes|string',
             'phone'             => 'sometimes|string',
-            'status'            => 'sometimes|in:pending,confirmed,cancelled', // ✅ must match enum
-            'payment_status'    => 'sometimes|in:unpaid,paid', // ✅ must match enum
+            'status'            => 'sometimes|in:pending,confirmed,cancelled,completed', // ✅ must match enum
+            'payment_status'    => 'sometimes|in:unpaid,paid,refund', // ✅ must match enum
             'admin_comment'     => 'nullable|string',
         ]);
     

@@ -12,6 +12,11 @@
         </div>
     </div>
 
+    <div>
+        <p><strong>Database:</strong> @{{ dbInfo.database }}</p>
+        <p><strong>Size:</strong> @{{ dbInfo.size_mb }} MB</p>
+    </div>
+
     <div class="container my-5">
         <div class="card shadow border-0">
             <div class="card-header bg-danger text-white d-flex align-items-center">
