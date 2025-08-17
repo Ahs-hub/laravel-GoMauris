@@ -273,18 +273,18 @@
                                 <div class="row g-3 mb-3">
                                     <div class="col-md-6">
                                         <label class="form-label">First Name</label>
-                                        <input type="text" class="form-control" v-model="form.first_name" placeholder="John" required>
+                                        <input type="text" class="form-control" v-model="form.first_name" placeholder="Enter first name" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Last Name</label>
-                                        <input type="text" class="form-control" v-model="form.last_name" placeholder="Doe" required>
+                                        <input type="text" class="form-control" v-model="form.last_name" placeholder="Enter last name" required>
                                     </div>
                                 </div>
 
                                 <div class="row g-3 mb-3">
                                     <div class="col-md-6">
                                         <label class="form-label">Driver Age</label>
-                                        <input type="number" class="form-control" v-model="form.driver_age" min="16" max="100" placeholder="25" required>
+                                        <input type="number" class="form-control" v-model="form.driver_age" min="16" max="100" placeholder="e.g. 28" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Mobile Number <small class="text-muted">(WhatsApp)</small></label>
@@ -294,7 +294,7 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Email</label>
-                                    <input type="email" class="form-control" v-model="form.email" placeholder="john.doe@example.com" required>
+                                    <input type="email" class="form-control" v-model="form.email" placeholder="example@email.com" required>
                                     <div class="form-text">Service voucher will be sent to this email</div>
                                 </div>
 

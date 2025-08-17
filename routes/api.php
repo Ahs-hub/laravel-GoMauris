@@ -139,4 +139,6 @@ Route::put('/contacts/{id}/update-comment', [AdminContactController::class, 'upd
 //----------------------------
 
 //Get database size
-Route::get('/db-size', [AdminSetupController::class, 'getDatabaseSize']);
+Route::get('/db-usage', [AdminSetupController::class, 'getDatabaseUsage']);
+//Fetch size to be deleted
+Route::post('/delete-preview', [AdminSetupController::class, 'previewDelete']);

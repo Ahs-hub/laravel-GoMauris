@@ -323,7 +323,7 @@
                                     </div>
                                     <strong><strong>@{{ taxis.name }}</strong></strong>
                                 </div>
-                                <span class="badge" :class="getStatusClass(taxi.status)">
+                                <span class="badge" :class="getStatusClass(taxis.status)">
                                           @{{ taxis.status }}
                                 </span>
                             </div>

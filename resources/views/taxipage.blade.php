@@ -57,6 +57,10 @@
                                             </div>
                                     </button>
                                     <ul class="dropdown-menu w-100">
+                                        <li class="dropdown-item" @click="getCurrentLocationFor('pickup')">
+                                            <i class='bx bx-map'></i> Use Current Location
+                                        </li>
+
                                         <li @click="form.pickup = 'SSR Airport';  form.pickup_latitude = -20.431997;  form.pickup_longitude = 57.676868;" class="dropdown-item">
                                             <i class='bx bx-map'></i> SSR Airport
                                         </li>
@@ -88,6 +92,10 @@
                                             </div>
                                     </button>
                                     <ul class="dropdown-menu w-100">
+
+                                        <li class="dropdown-item" @click="getCurrentLocationFor('destination')">
+                                            <i class='bx bx-map'></i> Use Current Location
+                                        </li>
                                         <li @click="form.destination  = 'SSR Airport'; form.destination_latitude = -20.431997; form.destination_longitude = 57.676868;" class="dropdown-item">
                                             <i class='bx bx-map'></i> SSR Airport
                                         </li>
@@ -522,6 +530,48 @@
                     this.marker = L.marker(e.latlng).addTo(this.mapInstance);
                 }
                 });
+            },
+
+            getCurrentLocationFor(field) {
+                if (!navigator.geolocation) {
+                alert("Geolocation is not supported by your browser.");
+                return;
+                }
+
+                navigator.geolocation.getCurrentPosition(
+                async (pos) => {
+                    const { latitude, longitude } = pos.coords;
+
+                    try {
+                    // Call reverse geocoding (Nominatim)
+                    const response = await fetch(
+                        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+                    );
+                    const data = await response.json();
+
+                    // Pick a nice readable name (city/town/village/road)
+                    const place =
+                        data.address.city ||
+                        data.address.town ||
+                        data.address.village ||
+                        data.address.suburb ||
+                        data.display_name ||
+                        "Unknown Location";
+
+                    // Dynamically assign pickup or destination
+                    this.form[field] = place;
+                    this.form[`${field}_latitude`] = latitude;
+                    this.form[`${field}_longitude`] = longitude;
+
+                    } catch (e) {
+                    alert("Failed to fetch location name.");
+                    }
+                },
+                (err) => {
+                    alert("Could not get your location: " + err.message);
+                },
+                { enableHighAccuracy: true, timeout: 10000 }
+                );
             },
 
             async confirmLocation() {

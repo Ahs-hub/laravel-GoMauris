@@ -361,7 +361,7 @@
                                 </p> -->
                                 <p class="mb-2">
                                     <i class='bx bx-calendar me-1'></i>
-                                    <small>@{{ tourb.tour_date }}</small>
+                                    <small>@{{ new Date(tourb.tour_date).toLocaleDateString() }}</small>
                                 </p>
 
                                 <p class="mb-2">
@@ -473,7 +473,7 @@
                                 </h6>
                                 <div class="info-item">
                                     <span class="info-label">Date</span>
-                                    <span class="info-value">@{{ selectedItem.tour_date }}</span>
+                                    <span class="info-value">@{{ new Date(selectedItem.tour_date).toLocaleDateString() }}</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="info-label">Tour type</span>

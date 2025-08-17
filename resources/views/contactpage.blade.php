@@ -72,6 +72,7 @@
                                     <option value="airport">Airport Transfer</option>
                                     <option value="sightseeing">Sightseeing & Tours</option>
                                     <option value="car-rental">Car Rental</option>
+                                    <option value="taxi">Taxi</option>
                                     <option value="other">Other</option>
                                 </select>
                             </div>

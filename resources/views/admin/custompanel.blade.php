@@ -334,7 +334,7 @@
 
                                 <p class="mb-2">
                                     <i class='bx bx-calendar me-1'></i>
-                                    <div>@{{ customs.tour_date }}</div>
+                                    <div>@{{ new Date(customs.tour_date).toLocaleDateString() }}</div>
                                     <div>@{{ customs.start_time }}</div>
                                 </p>
                                 <p class="text-muted small mb-3">
@@ -436,7 +436,7 @@
                                 </h6>
                                 <div class="info-item">
                                     <span class="info-label">Prefer Date</span>
-                                    <span class="info-value">@{{ selectedItem.tour_date }}</span>
+                                    <span class="info-value">@{{ new Date(selectedItem.tour_date).toLocaleDateString() }}</span>
                                     <span class="info-value">@{{ selectedItem.start_time }}</span>
                                 </div>
                                 <div class="info-item">

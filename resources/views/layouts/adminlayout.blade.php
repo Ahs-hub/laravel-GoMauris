@@ -305,7 +305,7 @@
                         { value: 'contact', label: 'Contact Form Messages', icon: 'bx bx-user-voice' },
                         { value: 'taxi_booking', label: 'Taxi Booking', icon: 'bx bx-taxi' }
                     ],
-                    deleteStatuses: ['Confirmed', 'Cancelled', 'Pending'],
+                    deleteStatuses: ['confirmed', 'cancelled', 'pending','completed'],
                     deleteAges: [
                         { value: '6months', label: 'Older than 6 Months' },
                         { value: '1year', label: 'Older than 1 Year' },
@@ -316,11 +316,16 @@
                     deleteStatus: '',
                     deleteAge: '',
                     deleteAdminPassword: '',
+                    //See amount to be deleted
+                    previewCount: 0,
+                    previewPerTable: {}, // 👈 new
 
                     //Size memory
-                    dbInfo: {
+                    usage: {
                         database: '',
-                        size_mb: ''
+                        used_mb: 0,
+                        limit_mb: 0,
+                        remaining_mb: 0
                     }
 
                 };
@@ -462,7 +467,11 @@
                     return filtered;
                 },
 
-
+                //For checking space 
+                usagePercent() {
+                    if (!this.usage.limit_mb) return 0;
+                    return ((this.usage.used_mb / this.usage.limit_mb) * 100).toFixed(2);
+                }
                 
             },
             methods: {
@@ -737,6 +746,7 @@
                             case 'pending': return 'bg-warning text-dark';
                             case 'seen': return 'bg-info';
                             case 'confirmed': return 'bg-success';
+                            case 'completed': return 'bg-success';
                             case 'cancelled': return 'bg-danger';
                             case 'paid': return 'bg-success';
                             case 'unpaid': return 'bg-warning text-dark';
@@ -1226,10 +1236,44 @@
                         this.deleteAge = '';
                         this.deleteAdminPassword = '';
                     },
-                    showPasswordModal() {
+                    async showPasswordModal() {
+                        this.previewCount = 0;
+                        this.previewPerTable = {};
+                        this.loadingform = true;
+
+                        try {
+                            const res = await fetch('/admin/delete-preview', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                                },
+                                body: JSON.stringify({
+                                    tables: this.deleteSelectedTables,
+                                    status: this.deleteStatus,
+                                    age: this.deleteAge
+                                })
+                            });
+
+                            const data = await res.json();
+
+                            if (data.success) {
+                                this.previewCount = data.total || 0;
+                                this.previewPerTable = data.perTable || {};
+                            } else {
+                                alert(data.message || 'Unable to fetch preview data.');
+                            }
+                        } catch (err) {
+                            console.error("Preview fetch failed:", err);
+                            alert("Failed to fetch preview counts. Try again.");
+                        } finally {
+                            this.loadingform = false;
+                        }
+
                         const modal = new bootstrap.Modal(document.getElementById('passwordModal'));
                         modal.show();
                     },
+
                     confirmDelete() {
                         this.loadingform = true;
                         fetch('/delete-data', {
@@ -1282,18 +1326,14 @@
                 },
 
                 //Fetch size memory
-                async fetchDbSize() {
+                async fetchUsage() {
                     try {
-                        const res = await fetch('/api/db-size');
-                        if (!res.ok) throw new Error('Network error');
-
-                        const data = await res.json();
-
-                        // Update dbInfo safely
-                        this.dbInfo = data || { database: 'N/A', size_mb: 0 };
+                        const res = await fetch('/api/db-usage');
+                        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                        this.usage = await res.json();
                     } catch (err) {
-                        console.error('Error fetching DB size:', err);
-                        this.dbInfo = { database: 'Error', size_mb: 0 };
+                        console.error('Error fetching DB usage:', err);
+                        this.usage = { database: 'Error', used_mb: 0, limit_mb: 0, remaining_mb: 0 };
                     }
                 }
 
@@ -1341,7 +1381,7 @@
                     window.addEventListener('scroll', () => this.handleScroll('/api/taxi', 'taxi'));
                     
                 }else if (path.includes('/admin/deletepanel')) {
-                    this.fetchDbSize(); // fetch on page load
+                    this.fetchUsage();//Space used
                 }else if (window.location.pathname.includes('/admin/notificationpanel')) {
                     this.fetchNotifications();
                 }

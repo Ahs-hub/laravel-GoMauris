@@ -52,6 +52,10 @@ Route::middleware('auth')->get('/admin/dashboard', function () {
 //Deletion of all data for admin
 Route::middleware('auth')->post('/delete-data', [AdminSetupController::class, 'deleteData']);
 
+// Search bulk  deletion
+// API for preview counts
+Route::middleware('auth')->post('/admin/delete-preview', [AdminSetupController::class, 'previewDelete']);
+
 
 // Go to Book Tour panel
 Route::middleware('auth')->get('/admin/booktour', function () {
@@ -88,8 +92,6 @@ Route::middleware('auth')->get('/admin/custompanel', function () {
 Route::middleware('auth')->get('/admin/deletepanel', function () {
     return view('admin.deletepanel');
 })->name('admin.deletepanel');
-
-
 
 Route::get('/rent-cars', [CarController::class, 'index'])->name('cars.home');
 Route::get('/rentcar/{id}', [CarController::class, 'show'])->name('rentcar.show');

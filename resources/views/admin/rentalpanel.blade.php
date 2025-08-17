@@ -235,8 +235,8 @@
        
                                 <td>
                                     <div class="small">
-                                        <div>@{{  rental.pickup_date }}</div>
-                                        <div>@{{  rental.return_date }}</div>
+                                        <div> @{{ new Date(rental.pickup_date).toLocaleString() }} </div>
+                                        <div>@{{ new Date(rental.return_date).toLocaleString() }}</div>
                                     </div>
                                 </td>
                                 <td>
@@ -351,8 +351,8 @@
 
                                 <p class="mb-2">
                                     <i class='bx bx-calendar me-1'></i>
-                                    <div>@{{ rental.pickup_date }}</div>
-                                    <div>@{{ rental.return_date }}</div>
+                                    <div>@{{ new Date(rental.pickup_date).toLocaleString() }}</div>
+                                    <div>@{{ new Date(rental.return_date).toLocaleString() }}</div>
                                 </p>
                                 <p class="text-muted small mb-3">
                                     <!-- @{{ rental.message.substring(0, 100) }}... -->
@@ -453,12 +453,12 @@
                                 </div>
                                 <div class="info-item">
                                     <span class="info-label">Pickup Date</span>
-                                    <span class="info-value">@{{ selectedItem.pickup_date }}</span>
+                                    <span class="info-value">@{{ new Date(selectedItem.pickup_date).toLocaleString()}}</span>
                                 </div>
                                 
                                 <div class="info-item">
                                     <span class="info-label">Return Date</span>
-                                    <span class="info-value">@{{ selectedItem.return_date }}</span>
+                                    <span class="info-value">@{{ new Date(selectedItem.return_date).toLocaleString() }}</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="info-label">Created</span>

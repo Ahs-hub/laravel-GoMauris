@@ -11,11 +11,57 @@
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
+    
+    <div class="container my-5">
+        <div class="card shadow border-0">
+            <div class="card-body">
+                <!-- Header -->
+                <h5 class="card-title mb-4">
+                    <i class="bx bx-server text-primary me-2"></i> Database Usage
+                </h5>
 
-    <div>
-        <p><strong>Database:</strong> @{{ dbInfo.database }}</p>
-        <p><strong>Size:</strong> @{{ dbInfo.size_mb }} MB</p>
+                <!-- Database Name -->
+                <p class="mb-3">
+                    <strong>Database:</strong> <span class="text-dark">@{{ usage.database }}</span>
+                </p>
+
+                <!-- Progress Bar -->
+                <div class="d-flex align-items-center mb-3">
+                    <div class="progress flex-grow-1" style="height: 20px;">
+                        <div class="progress-bar"
+                            role="progressbar"
+                            :style="{width: usagePercent + '%', backgroundColor: usagePercent > 80 ? '#dc3545' : '#198754'}"
+                            :aria-valuenow="usagePercent"
+                            aria-valuemin="0"
+                            aria-valuemax="100">
+                        </div>
+                    </div>
+                    <small class="text-muted ms-3">
+                        @{{ usagePercent }}%
+                    </small>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="row text-center">
+                    <div class="col">
+                        <p class="text-muted mb-1">Used</p>
+                        <h6 class="text-info mb-0">@{{ usage.used_mb }} MB</h6>
+                    </div>
+                    <div class="col">
+                        <p class="text-muted mb-1">Limit</p>
+                        <h6 class="text-warning mb-0">@{{ usage.limit_mb }} MB</h6>
+                    </div>
+                    <div class="col">
+                        <p class="text-muted mb-1">Remaining</p>
+                        <h6 :class="usagePercent > 80 ? 'text-danger mb-0' : 'text-success mb-0'">
+                            @{{ usage.remaining_mb }} MB
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 
     <div class="container my-5">
         <div class="card shadow border-0">
@@ -74,39 +120,13 @@
                     </div>
                 </div>
 
-                <hr>
-
                 <!-- Step 3: Confirm & Delete -->
                 <div class="d-flex justify-content-end mt-4">
                     <button class="btn btn-secondary me-2" @click="resetDeleteForm">
                         <i class='bx bx-reset me-1'></i> Reset
                     </button>
-                    <button class="btn btn-danger" @click="showPasswordModal">
+                    <button class="btn btn-danger" v-if="!loadingform" @click="showPasswordModal">
                         <i class='bx bx-trash-alt me-1'></i> Delete Selected Data
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Password Modal -->
-    <div class="modal fade" id="passwordModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">
-                        <i class="bx bx-lock-alt me-2"></i>Confirm Admin Password
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Please enter your admin password to confirm deletion.</p>
-                    <input type="password" v-model="deleteAdminPassword" class="form-control" placeholder="Enter password">
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal" v-if="!loadingform">Cancel</button>
-                    <button class="btn btn-danger" v-if="!loadingform" @click="confirmDelete">
-                        Confirm & Delete
                     </button>
                     <div class="spinner-border text-primary" v-if="loadingform" role="status">
                             <span class="visually-hidden">Loading...</span>
@@ -114,6 +134,52 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Password Modal -->
+    <div class="modal fade" id="passwordModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+        <!-- Header -->
+        <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title">
+            <i class="bx bx-lock-alt me-2"></i>Confirm Admin Password
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Body -->
+        <div class="modal-body">
+            <p>
+            <strong class="text-danger">@{{ previewCount }}</strong> rows will be deleted.
+            </p>
+
+            <ul v-if="Object.keys(previewPerTable).length">
+            <li v-for="(count, table) in previewPerTable" :key="table">
+                @{{ table }}: <strong>@{{ count }}</strong>
+            </li>
+            </ul>
+
+            <hr>
+
+            <p>Please enter your admin password to confirm deletion.</p>
+            <input type="password" v-model="deleteAdminPassword" class="form-control" placeholder="Enter password">
+        </div>
+
+        <!-- Footer -->
+        <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal" v-if="!loadingform">Cancel</button>
+            <button class="btn btn-danger" v-if="!loadingform" @click="confirmDelete">
+            Confirm & Delete
+            </button>
+            <div class="spinner-border text-primary" v-if="loadingform" role="status">
+            <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+        </div>
+    </div>
     </div>
 </div>
 
