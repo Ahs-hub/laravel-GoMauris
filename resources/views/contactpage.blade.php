@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-12 text-center">
-                <h1 class="hero-title ">Contact Us</h1>
+                <h1 class="hero-title ">{{ __('messages.contact_us') }}</h1>
                 <!-- <p class="subheading mb-4">Get in touch for premium tour and car rental services</p>
                 <div class="d-flex justify-content-center gap-4 flex-wrap">
                     <span class="badge bg-light text-primary px-3 py-2 paragraph-text">
@@ -31,12 +31,12 @@
 </section>
 
 <!-- Contact Section -->
-<section class="contact-section">
+<section class="contact-section" style="overflow-y:hidden;">
     <div class="container">
         <div class="row text-center mb-5">
             <div class="col-lg-8 mx-auto">
-                <h2 class=".section-heading">Get In Touch</h2>
-                <p class="section-subtitle">Ready to experience premium service? Contact us today for bookings and inquiries</p>
+                <h2 class=".section-heading">{{ __('messages.get_in_touch') }}</h2>
+                <p class="section-subtitle">{{ __('messages.get_in_touch_des') }}</p>
             </div>
         </div>
         
@@ -44,40 +44,40 @@
             <!-- Contact Form -->
             <div class="col-lg-8">
                 <div class="contact-form">
-                    <h3 class="subheading fw-bold mb-4" >Send us a Message</h3>
+                    <h3 class="subheading fw-bold mb-4" >{{ __('messages.send_us_a_message') }}</h3>
                     <form method="POST" action="{{ route('contact.submit', ['type' => $type]) }}">
                        @csrf
                         <div class="row g-3">
                             <div class="col-md-6" style="color:rgb(49, 49, 49)">
-                                <label for="firstName" class="form-label fw-semibold">First Name</label>
+                                <label for="firstName" class="form-label fw-semibold">{{ __('messages.first_name') }}</label>
                                 <input type="text" class="form-control" id="firstName" name="firstName" required>
                             </div>
                             <div class="col-md-6">
-                                <label for="lastName" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">Last Name</label>
+                                <label for="lastName" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">{{ __('messages.last_name') }}</label>
                                 <input type="text" class="form-control" id="lastName" name="lastName" required>
                             </div>
                             <div class="col-md-6">
-                                <label for="email" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">Email Address</label>
+                                <label for="email" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">{{ __('messages.email_address') }}</label>
                                 <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="col-md-6">
-                                <label for="phone" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">Phone Number</label>
+                                <label for="phone" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">{{ __('messages.phone_number') }}</label>
                                 <input type="tel" class="form-control" id="phone" name="phone">
                             </div>
                             <div class="col-12">
-                                <label for="service" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">Service Needed</label>
+                                <label for="service" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">{{ __('messages.service_needed') }}</label>
                                 <select class="form-control" id="service" name="service" required>
-                                    <option value="">Select a service</option>
-                                    <option value="chauffeur">Chauffeur Service</option>
-                                    <option value="airport">Airport Transfer</option>
-                                    <option value="sightseeing">Sightseeing & Tours</option>
-                                    <option value="car-rental">Car Rental</option>
-                                    <option value="taxi">Taxi</option>
-                                    <option value="other">Other</option>
+                                    <option value="">{{ __('messages.select_a_service') }}</option>
+                                    <option value="chauffeur">{{ __('messages.chauffeur_service') }}</option>
+                                    <option value="airport">{{ __('messages.airport_transfer') }}</option>
+                                    <option value="sightseeing">{{ __('messages.sightseeing_tours') }}</option>
+                                    <option value="car-rental">{{ __('messages.service_car_rental_title') }}</option>
+                                    <option value="taxi">{{ __('messages.service_taxi_title') }}</option>
+                                    <option value="other">{{ __('messages.other') }}</option>
                                 </select>
                             </div>
                             <div class="col-12">
-                                <label for="message" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">Message</label>
+                                <label for="message" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">{{ __('messages.message') }}</label>
                                 <textarea class="form-control" id="message" rows="5" placeholder="Tell us about your requirements..." name="message"></textarea>
                             </div>
                             <div class="col-12 text-center">
@@ -86,7 +86,7 @@
                                       type="submit" 
                                       class="btn btn-primary btn-lg rad-0"
                                       >
-                                    <i class='bx bx-send me-2'></i>Send Message
+                                    <i class='bx bx-send me-2'></i>{{ __('messages.send_message') }}
                                 </button>
 
                                 <!-- Spinner (hidden by default) -->
@@ -96,7 +96,7 @@
                                     style="display: none;" 
                                     role="status"
                                 >
-                                    <span class="visually-hidden">Loading...</span>
+                                    <span class="visually-hidden">{{ __('messages.loading') }}...</span>
                                 </div>
 
                             </div>
@@ -113,7 +113,7 @@
                             <div class="contact-icon">
                                 <i class='bx bx-phone'></i>
                             </div>
-                            <h5 class="fw-bold mb-2" >Call Us</h5>
+                            <h5 class="fw-bold mb-2" >{{ __('messages.call_us') }}</h5>
                             <p class="paragraph-text text-muted mb-0">
                                 <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none;">
                                     +230 55040167
@@ -126,7 +126,7 @@
                             <div class="contact-icon">
                                 <i class='bx bx-envelope'></i>
                             </div>
-                            <h5 class="fw-bold mb-2" >Email Us</h5>
+                            <h5 class="fw-bold mb-2" >{{ __('messages.email_us') }}</h5>
                             <p class="paragraph-text text-muted mb-0">
                                <a href="https://mailto:gomauristours@gmail.com" style=" text-decoration: none;">
                                     gomauristours@gmail.com
@@ -140,7 +140,7 @@
                             <div class="contact-icon">
                                 <i class='bx bx-map'></i>
                             </div>
-                            <h5 class="fw-bold mb-2" >Visit Us</h5>
+                            <h5 class="fw-bold mb-2" >{{ __('messages.visit_us') }}</h5>
                             <p class="paragraph-text text-muted mb-0">123 Tourism Boulevard</p>
                             <p class="paragraph-text text-muted">City Center, State 12345</p>
                         </div>

@@ -36,7 +36,7 @@
             <div class="header-left">
                 <div class="header-item">
                      <i class='bx bx-map'></i>
-                     <span>Tour Operator in Mauritius</span>
+                     <span>{{ __('messages.header_tour_operator') }}</span>
                 </div>
                 <div class="header-item">
                     <i class='bx bx-phone'></i>
@@ -55,7 +55,7 @@
             <div class="header-right" style="display:flex; gap:40px;">
                 <div class="header-item">
                         <i class='bx bx-heart'></i> 
-                        <a class="nav-link " href="{{ route('wishlist') }}">Wishlist</a>
+                        <a class="nav-link " href="{{ route('wishlist') }}">{{ __('messages.wishlist') }}</a>
                 </div>
                 <!-- <div class="header-item">
                         <i class='bx bx-book'></i>
@@ -63,7 +63,7 @@
                 </div> -->
             </div>
         </div>
-     </div>
+    </div>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="padding:0px; ">
         <div class="container">
@@ -90,14 +90,14 @@
                         <a class="nav-link" href="{{ route('home') }}" style="font-size:17px;"><i class='bx bxs-home'></i> </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('service') }}">Services</a>
+                        <a class="nav-link" href="{{ route('service') }}">{{ __('messages.service') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('cars.home') }}">Our Fleet</a>
+                        <a class="nav-link" href="{{ route('cars.home') }}">{{ __('messages.our_fleet') }}</a>
                     </li>
 
                     <li class="nav-item dropdown " >
-                        <a class="nav-link" href="{{ route('taxi') }}">Taxi</a>
+                        <a class="nav-link" href="{{ route('taxi') }}">{{ __('messages.taxi') }}</a>
                     </li>
                     
                     <!-- <li class="nav-item dropdown custom-hover-dropdown" >
@@ -109,11 +109,11 @@
                     </li> -->
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('tours.index') }}">Tours</a>
+                        <a class="nav-link" href="{{ route('tours.index') }}">{{ __('messages.tours') }}</a>
                     </li>  
 
                     <li class="nav-item">
-                        <a class="nav-link phone-appear" href="{{ route('wishlist') }}">Wishlist</a>
+                        <a class="nav-link phone-appear" href="{{ route('wishlist') }}">{{ __('messages.wishlist') }}</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#about">About</a>
@@ -122,7 +122,7 @@
                         <a class="nav-link" href="#event_planner">EN/EUR</a>
                     </li> -->   
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('contact', ['type' => 'tour']) }}">Contact</a>
+                        <a class="nav-link" href="{{ route('contact', ['type' => 'tour']) }}">{{ __('messages.contact') }}</a>
                     </li>      
                     
                     <li class="nav-item">
@@ -204,21 +204,42 @@
                 <!-- Modal Body with Tab Content -->
                 <div class="modal-body tab-content">
                     <!-- Language Tab -->
-                    <div class="tab-pane fade show active" id="language" role="tabpanel">
+                    <!-- <div class="tab-pane fade show active" id="language" role="tabpanel">
                         <div class="row">
                             <div class="col-md-6">
                                 <ul class="list-unstyled lang-list">
                                     <li class="active">English (United States) <i class='bx bx-check'></i></li>
+                                    <a href="{{ route('setLocale', 'en') }}">English</a>
+                                    <li>Français</li> -->
                                     <!-- <li>Russie</li>
                                     <li>English (Australia)</li>
                                     <li>Español (España)</li>
-                                    <li>Français</li>
                                     <li>Chinese</li>
                                     <li>Germany</li> -->
+                                <!-- </ul>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="tab-pane fade show active" id="language" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled lang-list">
+                                    @foreach(['en'=>'English','fr'=>'Français','es'=>'Español'] as $code => $label)
+                                    <li class="{{ app()->getLocale() === $code ? 'active' : '' }}">
+                                        <a href="{{ route('setLocale', $code) }}">
+                                            {{ $label }}
+                                            @if(app()->getLocale() === $code)
+                                                <i class='bx bx-check'></i>
+                                            @endif
+                                        </a>
+                                    </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
                     </div>
+
+
 
                     <!-- Currency Tab -->
                     <div class="tab-pane fade" id="currency" role="tabpanel">
@@ -273,14 +294,14 @@
                     <!-- Quick Links -->
                     <div class="col-lg-2 col-md-6">
                         <div class="footer-section">
-                            <h5>Quick Links</h5>
+                            <h5>{{ __('messages.quick_link') }}</h5>
                             <ul class="footer-links">
-                                <li><a href="{{ route('home') }}"><i class='bx bx-chevron-right'></i>Home</a></li>
-                                <li><a href="{{ route('service') }}"><i class='bx bx-chevron-right'></i>Services</a></li>
-                                <li><a href="{{ route('cars.home') }}"><i class='bx bx-chevron-right'></i>Our Fleet</a></li>
-                                <li><a href="{{ route('taxi') }}"><i class='bx bx-chevron-right'></i>Taxi</a></li>
-                                <li><a href="{{ route('tours.index') }}"><i class='bx bx-chevron-right'></i>Tours</a></li>
-                                <li><a href="{{ route('contact', ['type' => 'tour']) }}"><i class='bx bx-chevron-right'></i>Contact</a></li>
+                                <li><a href="{{ route('home') }}"><i class='bx bx-chevron-right'></i>{{ __('messages.home') }}</a></li>
+                                <li><a href="{{ route('service') }}"><i class='bx bx-chevron-right'></i>{{ __('messages.services') }}</a></li>
+                                <li><a href="{{ route('cars.home') }}"><i class='bx bx-chevron-right'></i>{{ __('messages.our_fleet') }}</a></li>
+                                <li><a href="{{ route('taxi') }}"><i class='bx bx-chevron-right'></i>{{ __('messages.taxi') }}</a></li>
+                                <li><a href="{{ route('tours.index') }}"><i class='bx bx-chevron-right'></i>{{ __('messages.tours') }}</a></li>
+                                <li><a href="{{ route('contact', ['type' => 'tour']) }}"><i class='bx bx-chevron-right'></i>{{ __('messages.contact') }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -288,12 +309,12 @@
                     <!-- Services -->
                     <div class="col-lg-2 col-md-6">
                         <div class="footer-section">
-                            <h5>Services</h5>
+                            <h5>{{ __('messages.service') }}</h5>
                             <ul class="footer-links">
-                                <li><a href="{{ route('cars.home') }}"><i class='bx bx-car'></i>Car Rental</a></li>
-                                <li><a href="{{ route('taxi') }}"><i class='bx bx-car'></i>Taxi Transfer</a></li>
-                                <li><a href="{{ route('customizeTour') }}"><i class='bx bx-calendar'></i>Custom Packages</a></li>
-                                <li><a href=""><i class='bx bx-support'></i>24/7 Support</a></li>
+                                <li><a href="{{ route('cars.home') }}"><i class='bx bx-car'></i>{{ __('messages.car_rental') }}</a></li>
+                                <li><a href="{{ route('taxi') }}"><i class='bx bx-car'></i>{{ __('messages.taxi_trans') }}</a></li>
+                                <li><a href="{{ route('customizeTour') }}"><i class='bx bx-calendar'></i>{{ __('messages.custom_packages') }}</a></li>
+                                <li><a href=""><i class='bx bx-support'></i>{{ __('messages.support_24_7') }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -301,14 +322,14 @@
                     <!-- Contact & Newsletter -->
                     <div class="col-lg-4 col-md-6">
                         <div class="footer-section">
-                            <h5>Contact Info</h5>
+                            <h5>{{ __('messages.contact_info') }}</h5>
                             <div class="contact-info">
                                 <div class="contact-item">
                                     <div class="contact-icon">
                                         <i class='bx bx-phone'></i>
                                     </div>
                                     <div class="contact-text">
-                                        <strong>Phone</strong>
+                                        <strong>{{ __('messages.phone') }}</strong>
                                         <span>
                                             <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
                                                     +230 55040167
@@ -322,7 +343,7 @@
                                         <i class='bx bx-envelope'></i>
                                     </div>
                                     <div class="contact-text">
-                                        <strong style="color:rgb(161, 161, 161);">Email</strong>
+                                        <strong style="color:rgb(161, 161, 161);">{{ __('messages.email') }}</strong>
                                         <span>
                                             <a href="https://mailto:gomauristours@gmail.com" style="color:white; text-decoration: none;">
                                                 gomauristours@gmail.com
@@ -336,8 +357,8 @@
                                         <i class='bx bx-map'></i>
                                     </div>
                                     <div class="contact-text">
-                                        <strong>Location</strong>
-                                        <span>Mauritius Island</span>
+                                        <strong>{{ __('messages.location') }}</strong>
+                                        <span>{{ __('messages.mauritius_island') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -367,12 +388,12 @@
             <div class="container">
                 <div class="footer-bottom-content">
                     <div class="copyright">
-                        <p>&copy; 2025 GoMauris Travel & Tours Mauritius. All rights reserved. | Designed with <i class='bx bx-heart' style="color: var(--accent-color);"></i> for travelers</p>
+                        <p>{{ __('messages.footer_end_one') }} <i class='bx bx-heart' style="color: var(--accent-color);"> </i> {{ __('messages.footer_end_two') }}</p>
                     </div>
                     <div class="footer-bottom-links">
-                        <a href="{{ route('privacypolicy', ['type' => 'tour']) }}">Privacy Policy</a>
+                        <a href="{{ route('privacypolicy', ['type' => 'tour']) }}">{{ __('messages.privacy_policy') }}</a>
                         <!-- <a href="#">Cookie</a> -->
-                        <a href="{{ route('refundpolicy') }}">Refund</a>
+                        <a href="{{ route('refundpolicy') }}">{{ __('messages.refund') }}</a>
                     </div>
                 </div>
             </div>

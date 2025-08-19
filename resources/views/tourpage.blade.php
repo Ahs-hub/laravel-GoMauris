@@ -13,7 +13,7 @@
     <!-- Hero Section -->
     <section class="services-hero">
         <div class="container">
-            <h1 class="hero-title mb-4">Tour</h1>
+            <h1 class="hero-title mb-4">{{ __('messages.tours') }}</h1>
         </div>
     </section>
 
@@ -27,17 +27,17 @@
                             <span class="input-group-text bg-transparent border-0">
                                 <i class="bx bx-search"></i>
                             </span>
-                            <input type="text" class="form-control border-0" placeholder="Search tours..." id="searchInput">
+                            <input type="text" class="form-control border-0" placeholder="{{ __('messages.search_tours') }}..." id="searchInput">
                         </div>
 
                 </div>
             </div>
         </div>
         <div class="filter-buttons text-center" style="margin-top:25px;">
-           <button class="btn button-text category-btn active" data-category="all">All Tours</button>
+           <button class="btn button-text category-btn active" data-category="all">{{ __('messages.all_tours') }}</button>
             @foreach ($categories as $category)
                 <button class="btn button-text category-btn" data-category="{{ $category->slug }}">
-                    {{ $category->name }}
+                    {{ __('messages.' . $category->slug) }}
                 </button>
             @endforeach
         </div>
@@ -55,10 +55,10 @@
                 <div class="col-md-3 tour-card" data-category="{{ $tour->category->slug }}">
                 <a href="{{ route('tours.show', $tour->slug) }}" style="text-decoration: none; color: inherit;">
                     <div class="card destination-card">
-                        <img src="{{ asset($tour->main_image) }}" class="card-img-top" alt="{{ $tour->name }}">
+                        <img src="{{ asset($tour->main_image) }}" class="card-img-top" alt="{{ $tour->{'name_' . app()->getLocale()} }}">
                         <div class="card-body text-start">
-                            <h5 class="card-title">{{ $tour->name }}</h5>
-                            <p class="card-time">{{ floor($tour->duration_minutes / 60) }} hours &nbsp;•&nbsp; {{ $tour->pickup_included ? 'Pickup available' : '' }}</p>
+                            <h5 class="card-title">{{ $tour->{'name_' . app()->getLocale()} }}</h5>
+                            <p class="card-time">{{ floor($tour->duration_minutes / 60) }} {{ __('messages.hours') }} &nbsp;•&nbsp; {{ $tour->pickup_included ? 'Pickup available' : '' }}</p>
                             <div class="tour-rating mb-2">
                                 @for ($i = 0; $i < floor($tour->average_rating); $i++)
                                     <i class="bx bxs-star"></i>
@@ -68,16 +68,16 @@
                                 @endif
                                 <span class="rating-text">{{ $tour->average_rating }} ({{ $tour->total_reviews }})</span>
                             </div>
-                            <p class="from-text">From</p>
+                            <p class="from-text">{{ __('messages.from') }}</p>
                             @if ($tour->is_group_priced)
                                 <p>
                                     <strong class="tour-price">€{{ $tour->group_price }}</strong>
-                                    <span class="per-person">per group of {{ $tour->group_size }}</span>
+                                    <span class="per-person">{{ __('messages.per_group_of') }} {{ $tour->group_size }}</span>
                                 </p>
                             @else
                                 <p>
                                     <strong class="tour-price">€{{ $tour->starting_price }}</strong>
-                                    <span class="per-person">per person</span>
+                                    <span class="per-person">{{ __('messages.per_person') }}</span>
                                 </p>
                             @endif
                         </div>

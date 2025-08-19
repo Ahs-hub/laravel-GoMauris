@@ -24,11 +24,51 @@ use App\Http\Controllers\CarBookingController;
 
 use App\Http\Controllers\CustomTourRequestController;
 
-use App\Http\Controllers\Admin\AdminSetupController;
+use Illuminate\Session\Middleware\StartSession;
+//change language
+use App\Http\Middleware\SetLocale;
 
 // Route::get('/', function () {
 //     return view('home');
 // })->name('home');
+
+
+//Translation language
+// Wrap all routes with session + locale middleware
+
+Route::middleware(['web', 'setlocale'])->group(function () {
+
+    //Go to home page
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+
+    //Go to tour page
+    Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
+
+    //go to correspond tour page
+    Route::get('/tours/{slug}', [TourController::class, 'show'])->name('tours.show');
+
+    //Go to service page
+    Route::get('/service', fn() => view('servicepage'))->name('service');
+
+    //Go Taxi page
+    Route::get('/taxi', function () {
+        return view('taxipage');
+    })->name('taxi'); 
+
+    //Go Contact page
+    Route::get('/contact', function (Illuminate\Http\Request $request) {
+        return view('contactpage', ['type' => $request->query('type')]);
+    })->name('contact');
+
+    Route::get('locale/{lang}', function ($lang) {
+        if (in_array($lang, ['en','fr','es'])) {
+            session(['locale' => $lang]);
+            \Log::debug('Locale changed to: ' . $lang);
+        }
+        return redirect()->back() ?? redirect()->route('home');
+    })->name('setLocale');
+
+});
 
 //admin login to form 
 // Show login form
@@ -111,7 +151,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 // Route::get('/admin/tours/block-dates', [TourBlockedDateController::class, 'showBlockTourDatesPage'])->middleware('auth');
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+//Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/db-check', function () {
     try {
@@ -134,9 +174,9 @@ Route::middleware('auth')->group(function () {
 });
 
 //Go to Contact page
-Route::get('/contact', function (Illuminate\Http\Request $request) {
-    return view('contactpage', ['type' => $request->query('type')]);
-})->name('contact');
+// Route::get('/contact', function (Illuminate\Http\Request $request) {
+//     return view('contactpage', ['type' => $request->query('type')]);
+// })->name('contact');
 
 //Send contact to email
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
@@ -145,9 +185,9 @@ Route::post('/contact', [ContactController::class, 'submit'])->name('contact.sub
 Route::get('/wishlist', [WishlistController::class, 'showWishlistPage'])->name('wishlist');
 
 //Go to Service page
-Route::get('/service', function () {
-    return view('servicepage');
-})->name('service'); 
+// Route::get('/service', function () {
+//     return view('servicepage');
+// })->name('service'); 
 
 //Go to Customize Tour page
 Route::get('/customizeTour', [HomeController::class, 'customTour'])->name('customizeTour');
@@ -161,9 +201,9 @@ Route::get('/faq', function () {
 })->name('faq'); 
 
 //Go to Taxi Page
-Route::get('/taxi', function () {
-    return view('taxipage');
-})->name('taxi'); 
+// Route::get('/taxi', function () {
+//     return view('taxipage');
+// })->name('taxi'); 
 
 //Go to Luxury taxi page
 Route::get('/luxurytransfer', function () {
@@ -192,18 +232,14 @@ Route::get('/rentalpolicy', function () {
 
 
 //tours
-Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
+// Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
 
 Route::get('/north-coast', function () {
     return view('north-coast-sightseeing');
 })->name('north-coast');
 
-
-//go to tour page
-Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
-
 //go to correspond tour page
-Route::get('/tours/{slug}', [TourController::class, 'show'])->name('tours.show');
+//Route::get('/tours/{slug}', [TourController::class, 'show'])->name('tours.show');
 
 //Save the tour in database
 Route::post('/tour-bookings', [TourBookingController::class, 'store']);

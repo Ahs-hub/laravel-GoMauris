@@ -11,9 +11,21 @@ return new class extends Migration
         Schema::create('tours', function (Blueprint $table) {
             $table->id();
             $table->string('name');                    // e.g., "Catamaran Cruise to Ile Aux Gabriel Island"
-            $table->string('full_title')->nullable(); // Optional full title
+            $table->string('name_en')->nullable();
+            $table->string('name_fr')->nullable();
+            $table->string('name_es')->nullable();
+
+            $table->string('full_title_en')->nullable(); // Optional full title
+            $table->string('full_title_fr')->nullable();
+            $table->string('full_title_es')->nullable();
+
             $table->string('slug')->unique();   // Add this line
-            $table->text('description')->nullable();  // full description (optional)
+            
+            $table->text('description_en')->nullable();  // full description (optional)
+            $table->text('description_fr')->nullable();
+            $table->text('description_es')->nullable();
+
+
             $table->integer('duration_minutes');      // e.g., 420 for 7 hours
             $table->boolean('pickup_available')->default(false); // true/false
             $table->decimal('starting_price', 8, 2);  // e.g., 42.00

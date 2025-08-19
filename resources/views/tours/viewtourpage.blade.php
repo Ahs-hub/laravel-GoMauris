@@ -65,7 +65,7 @@
         <!-- Title Section -->
         <div class="title-section">
             <!-- <div class="subtitle paragraph-text">A shared catamaran cruise on the East Coast</div> -->
-            <h1 class="main-title section-heading">{{ $tour->full_title}}</h1>
+            <h1 class="main-title section-heading">{{ $tour->{'full_title_' . app()->getLocale()} }}</h1>
 
             <div class="d-flex flex-wrap justify-content-between align-items-center">
                 <!-- Rating Section -->
@@ -83,7 +83,7 @@
                             @endfor
                         </div>
                         <span class="rating-text paragraph-text">{{ $tour->average_rating }} / 5</span>
-                        <span class="rating-reviews paragraph-text">  +{{ $tour->total_reviews }} Reviews</span>
+                        <span class="rating-reviews paragraph-text">  +{{ $tour->total_reviews }} {{ __('messages.reviews') }}</span>
                     </div>
                 @endif
 
@@ -95,7 +95,7 @@
                     <div @click="toggleWishlist" style="cursor: pointer;" class="d-flex align-items-center">
                         <i :class="isInWishlist ? 'bx bxs-heart text-danger' : 'bx bx-heart'"
                         style="font-size: 1.5rem; width: 1.5em; text-align: center;"></i>
-                        <span>Add to Wishlist</span>
+                        <span>{{ __('messages.add_to_wishlist') }}</span>
                     </div>
                 </div>
 
@@ -130,7 +130,7 @@
                             <!-- Overlay Button -->
                             <div class="position-absolute top-50 start-50 translate-middle">
                                 <button class="btn btn-dark text-white" data-bs-toggle="modal" data-bs-target="#galleryModal">
-                                    <i class='bx bx-plus'></i> More
+                                    <i class='bx bx-plus'></i> {{ __('messages.more') }}
                                 </button>
                             </div>
                         </div>
@@ -149,25 +149,24 @@
             <div class="col-lg-8">
                 <div class="tour-info">
                     <div class="tour-title">
-                 
-                    {!! $tour->description !!}
+                    {!! $tour->{'description_' . app()->getLocale()} !!}
                     </div>
                     
-                    <div class="section-title">About this activity</div>
+                    <div class="section-title">{{ __('messages.about_this_activity') }}</div>
                     
                     <div class="feature-item">
                         <i class='bx bx-x-circle feature-icon'></i>
                         <div>
-                            <strong>Free cancellation</strong><br>
-                            <span class="text-muted">Cancel up to 24 hours in advance for a full refund</span>
+                            <strong>{{ __('messages.free_cancellation') }}</strong><br>
+                            <span class="text-muted">{{ __('messages.free_cancellation_des') }}</span>
                         </div>
                     </div>
                     
                     <div class="feature-item">
                         <i class='bx bx-credit-card feature-icon'></i>
                         <div>
-                            <strong>Reserve now & pay later</strong><br>
-                            <span class="text-muted">Keep your travel plans flexible — book your spot and pay nothing today</span>
+                            <strong>{{ __('messages.reserve_now_pay_later') }}</strong><br>
+                            <span class="text-muted">{{ __('messages.reserve_now_pay_later_des') }}</span>
                         </div>
                     </div>
                     
@@ -179,23 +178,23 @@
                                 $minutes = $tour->duration_minutes % 60;
                             @endphp
 
-                            <strong>Duration 
+                            <strong>{{ __('messages.duration') }} 
                                 @if ($hours > 0)
-                                    {{ $hours }} hours
+                                    {{ $hours }} {{ __('messages.hours') }} 
                                 @endif
                                 @if ($minutes > 0)
-                                    {{ $minutes }} minutes
+                                    {{ $minutes }} {{ __('messages.minutes') }} 
                                 @endif
                             </strong><br>
-                            <span class="text-muted">Check availability to see starting times</span>
+                            <span class="text-muted">{{ __('messages.duration_des') }}</span>
                         </div>
                     </div>
                     
                     <div class="feature-item">
                         <i class='bx bx-user feature-icon'></i>
                         <div>
-                            <strong>Live tour guide</strong><br>
-                            <span class="text-muted">English, French</span>
+                            <strong>{{ __('messages.live_tour_guide') }}</strong><br>
+                            <span class="text-muted">{{ __('messages.live_tour_guide_des') }}</span>
                         </div>
                     </div>
                     
@@ -210,8 +209,8 @@
                     <div class="feature-item">
                         <i class='bx bx-group feature-icon'></i>
                         <div>
-                            <strong>Private group</strong><br>
-                            <span class="text-muted">This is a private activity. Only your group will participate.</span>
+                            <strong>{{ __('messages.private_group') }}</strong><br>
+                            <span class="text-muted">{{ __('messages.private_group_des') }}</span>
                         </div>
                     </div>
                 </div>
@@ -222,7 +221,7 @@
                     <div class="tour-info" style="background-color:#2c3e50; color:white;">
                         <div class="form-header">
                             <!-- <h2>Select participants and date</h2> -->
-                            <h2>Select date</h2>
+                            <h2>{{ __('messages.select_date') }}</h2>
                         </div>
 
                         <div style="display: flex; flex-direction: row; gap:10px">
@@ -243,7 +242,7 @@
                                     <span>
                                         <i class='bx bx-calendar'></i>
                                         <span v-if="selectedDate">Date: @{{ formatFullDate(selectedDate) }}</span>
-                                        <span v-else>Date</span>
+                                        <span v-else>{{ __('messages.date') }}</span>
                                     </span>
                                     <i class='bx bx-chevron-down'></i>
 
@@ -275,13 +274,13 @@
                         <button class="btn btn-primary w-100 mb-3 mt-3" style="border-radius:100px;" 
                             v-if="!enableAutoCheck" 
                             @click="activateAutoCheck">
-                                Check availability
+                                {{ __('messages.check_availability') }}
                         </button>
 
                         <!-- Not available message -->
                         <div v-if="selectedDate && !showForm && checked" class=" mt-3">
-                            Booking not available on <strong>@{{ selectedDate }}</strong><br>
-                            <small class="text-white">Available dates this month:</small>
+                        {{ __('messages.booking_not_available_on') }} <strong>@{{ selectedDate }}</strong><br>
+                            <small class="text-white">{{ __('messages.booking_not_available_on') }}:</small>
                             <div class="available-dates-grid">
                                 <!-- <li v-for="date in availableDates" :key="date">@{{ date }}</li> -->
                                 <span v-for="date in availableDates" :key="date" class="available-date">
@@ -296,90 +295,90 @@
                     <div class="tour-info" v-if="showForm && checked" style="color:#2c3e50; border: 2px solid var(--accent-color);">    
                         <form @submit.prevent="submitForm">
                             <div class="form-header text-center">
-                                <h5>Let us assist you with your catamaran cruise</h5>
-                                <h5>If you prefer WhatsApp, let's have a chat at <span style="color:var(--secondary-color); font-weight:500;">+230 55040167</span></h5>
+                                <h5>{{ __('messages.let_us_assist_you_with_your') }} catamaran cruise</h5>
+                                <h5>{{ __('messages.call_hero_title') }} <span style="color:var(--secondary-color); font-weight:500;">+230 55040167</span></h5>
                             </div>
 
-                            <h4 class="mt-4">Enter your tour details:</h4>
+                            <h4 class="mt-4">{{ __('messages.enter_your_tour_details') }}:</h4>
 
                             <div class="row mb-3">
                                 <!-- Adults -->
                                 <div class="col-md-3 mb-3">
-                                    <label class="form-label">Adults <span class="text-danger">*</span></label>
+                                    <label class="form-label">{{ __('messages.adults') }} <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control" v-model="adults" min="1">
                                 </div>
 
                                 <!-- Children -->
                                 <div class="col-md-3 mb-3">
-                                    <label class="form-label">Children (0–10 yrs)</label>
+                                    <label class="form-label">{{ __('messages.children_zero_ten') }}</label>
                                     <input type="number" class="form-control" v-model="children" min="0">
                                 </div>
                             </div>
 
                             <!-- Transport -->
                             <div class="mb-3">
-                                <label class="form-label">Require Transport? <span class="required-field">*</span></label>
+                                <label class="form-label">{{ __('messages.require_transport') }}? <span class="required-field">*</span></label>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" id="transport-yes" value="yes" v-model="transport_required">
-                                    <label class="form-check-label" for="transport-yes">Yes, please quote for it</label>
+                                    <label class="form-check-label" for="transport-yes">{{ __('messages.yes_please_quote_it') }}</label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" id="transport-no" value="no" v-model="transport_required">
-                                    <label class="form-check-label" for="transport-no">No thanks, going on my own</label>
+                                    <label class="form-check-label" for="transport-no">{{ __('messages.no_thank_going_on_my_own') }}</label>
                                 </div>
                             </div>
 
                             <!-- Hotel Info -->
                             <div class="mb-3">
-                                <label class="form-label">Hotel/Residence Name</label>
-                                <input type="text" class="form-control" v-model="hotel_name" placeholder="Enter hotel or residence name">
+                                <label class="form-label">{{ __('messages.hotel_residence_name') }}</label>
+                                <input type="text" class="form-control" v-model="hotel_name" placeholder="{{ __('messages.hotel_enter_hotel_or_residence_name') }}">
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Hotel Room Number</label>
-                                <input type="text" class="form-control" v-model="room_number" placeholder="Room #">
-                                <small class="form-text text-muted">Required for hotel access by the driver. Leave blank if you will confirm this later by email.</small>
+                                <label class="form-label">{{ __('messages.hotel_room_number') }}</label>
+                                <input type="text" class="form-control" v-model="room_number" placeholder="{{ __('messages.room') }} #">
+                                <small class="form-text text-muted">{{ __('messages.hotel_require_driver') }}</small>
                             </div>
 
                             <!-- Lunch -->
                             <div class="row mb-3">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Non-Veg Lunch Menu</label>
+                                    <label class="form-label">{{ __('messages.non_veg_lunch_menu') }}</label>
                                     <input type="number" class="form-control" v-model="lunch_non_veg" min="0">
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Veg Lunch Menu</label>
+                                    <label class="form-label">{{ __('messages.veg_lunch_menu') }}</label>
                                     <input type="number" class="form-control" v-model="lunch_veg" min="0">
                                 </div>
                             </div>
 
                             <!-- Special Requests -->
                             <div class="mb-4">
-                                <label class="form-label">Special Requests / Comments</label>
-                                <textarea class="form-control" v-model="special_requests" rows="3" placeholder="Any dietary requirements or comments..."></textarea>
+                                <label class="form-label">{{ __('messages.special_requests_comments') }}</label>
+                                <textarea class="form-control" v-model="special_requests" rows="3" placeholder="{{ __('messages.special_requests_comments_des') }}..."></textarea>
                             </div>
 
                             <!-- Personal Info -->
                             <div class="section-title" style="color:#2c3e50;">
-                                About you:
+                               {{ __('messages.about_you') }}:
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Your Name <span class="required-field">*</span></label>
-                                    <input type="text" class="form-control" v-model="full_name" required placeholder="Enter your full name">
+                                    <label class="form-label">{{ __('messages.your_name') }} <span class="required-field">*</span></label>
+                                    <input type="text" class="form-control" v-model="full_name" required placeholder="{{ __('messages.enter_your_full_name') }}">
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Your Email <span class="required-field">*</span></label>
-                                    <input type="email" class="form-control" v-model="email" required placeholder="Enter your email address">
+                                    <label class="form-label">{{ __('messages.your_email') }} <span class="required-field">*</span></label>
+                                    <input type="email" class="form-control" v-model="email" required placeholder="{{ __('messages.enter_your_email_address') }}">
                                 </div>
                             </div>
 
                             <div class="row mb-3">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Country <span class="required-field">*</span></label>
+                                    <label class="form-label">{{ __('messages.country') }} <span class="required-field">*</span></label>
                                     <select class="form-select" v-model="country" required>
-                                        <option value="">Select your country</option>
+                                        <option value="">{{ __('messages.select_your_country') }}</option>
                                         <option value="mauritius">Mauritius</option>
                                         <option value="france">France</option>
                                         <option value="uk">United Kingdom</option>
@@ -388,11 +387,11 @@
                                         <option value="canada">Canada</option>
                                         <option value="australia">Australia</option>
                                         <option value="south-africa">South Africa</option>
-                                        <option value="other">Other</option>
+                                        <option value="other">{{ __('messages.other') }}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Mobile Number (WhatsApp) <span class="required-field">*</span></label>
+                                    <label class="form-label">{{ __('messages.mobile_number_whatsapp') }}<span class="required-field">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bx bxl-whatsapp"></i></span>
                                         <input type="tel" class="form-control" v-model="phone" required placeholder="+230 55040167">
@@ -407,12 +406,12 @@
                                     class="book-button"
                                     >
                                     <i class="bx bx-calendar-check"></i>
-                                    Book 
+                                    {{ __('messages.book') }} 
                                 </button>
 
                                 <!-- Spinner (show when loading) -->
                                 <div v-if="loading" class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">Loading...</span>
+                                    <span class="visually-hidden">{{ __('messages.loading') }} ...</span>
                                 </div>
                             </div>
                         </form>
@@ -429,35 +428,35 @@
                     <div class="mb-3">
                         @if ($tour->is_group_priced)
                             <div class="mb-3">
-                                <span class="text-muted">From</span>
+                                <span class="text-muted">{{ __('messages.from') }}</span>
                                 <div class="price">€{{ $tour->group_price }}</div>
-                                <div class="price-subtitle">per group of {{ $tour->group_size }}</div>
+                                <div class="price-subtitle">{{ __('messages.per_group_of') }} {{ $tour->group_size }}</div>
                             </div>
                         @elseif (is_null($tour->transfer_price))
                             <!-- Show this if transfer_price is null -->
                             <div class="mb-3">
-                                <span class="text-muted">From</span>
+                                <span class="text-muted">{{ __('messages.from') }}</span>
                                 <div class="price">€{{ $tour->starting_price }}</div>
-                                <div class="price-subtitle">per person</div>
+                                <div class="price-subtitle">{{ __('messages.per_person') }}</div>
                             </div>
                         @else
                             <!-- Show this if transfer_price is not null -->
                             <div class="mb-3">
-                                <span class="text-muted">Price options</span>
+                                <span class="text-muted">{{ __('messages.price_options') }}</span>
                                 <div class="price">
                                     €{{ $tour->starting_price }}
-                                    <small class="text-muted" style="font-size: 1.25rem; font-weight: 600;">without transfer</small>
+                                    <small class="text-muted" style="font-size: 1.25rem; font-weight: 600;">{{ __('messages.without_transfer') }}</small>
                                 </div>
                                 <div class="price">
                                     €{{ $tour->transfer_price }}
-                                    <small class="text-muted" style="font-size: 1.25rem; font-weight: 600;">with transfer</small>
+                                    <small class="text-muted" style="font-size: 1.25rem; font-weight: 600;">{{ __('messages.with_transfer') }}</small>
                                 </div>
-                                <div class="price-subtitle">per person</div>
+                                <div class="price-subtitle">{{ __('messages.per_person') }}</div>
                             </div>
                         @endif
 
                         
-                        <a href="#check-availability-app"><button class="btn btn-primary w-100 mb-3" >Book</button></a>
+                        <a href="#check-availability-app"><button class="btn btn-primary w-100 mb-3" >{{ __('messages.book') }}</button></a>
                         <!--
                         <div class="reserve-info">
                             <div class="d-flex align-items-center">

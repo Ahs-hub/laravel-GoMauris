@@ -12,16 +12,19 @@ class TourCategorySeeder extends Seeder
         TourCategory::insert([
             [
                 'name' => 'Sea Activities',
+                
                 'slug' => 'sea-activities',
                 'description' => 'Enjoy water sports, cruises and more.',
             ],
             [
                 'name' => 'Sightseeing Tours',
+
                 'slug' => 'sightseeing',
                 'description' => 'Explore the best scenic spots around Mauritius.',
             ],
             [
                 'name' => 'Nature Park',
+
                 'slug' => 'nature-park',
                 'description' => 'Discover the rich flora and fauna of the island.',
             ],

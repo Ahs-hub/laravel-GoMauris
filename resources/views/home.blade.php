@@ -20,20 +20,20 @@
         </div>
       
         <div class="container content hero-content">
-          <h1 class="hero-title">Let Mauritius Vacation Be Your Next Escape</h1>
+          <h1 class="hero-title">{{ __('messages.hero_title') }}</h1>
       
           <div class="button-group">
-            <button class="btn btn-form" onclick="window.location.href='{{ route('tours.index') }}'"><i class='bx bx-map'></i> Explore Mauritius</button>
+            <button class="btn btn-form" onclick="window.location.href='{{ route('tours.index') }}'"><i class='bx bx-map'></i>{{ __('messages.hero_btn_explore') }}</button>
             <!-- <button class="btn btn-form"><i class='bx bx-camera'></i> Sightseeing</button> -->
 
-            <button class="btn btn-form" onclick="window.location.href='{{ route('cars.home') }}'"><i class='bx bx-car'></i> Car Rental</button>
-            <button class="btn btn-form" onclick="window.location.href='{{ route('taxi') }}'"><i class='bx bx-car'></i> Book Taxi</button>
+            <button class="btn btn-form" onclick="window.location.href='{{ route('cars.home') }}'"><i class='bx bx-car'></i>{{ __('messages.hero_btn_car_rental') }}</button>
+            <button class="btn btn-form" onclick="window.location.href='{{ route('taxi') }}'"><i class='bx bx-car'></i>{{ __('messages.hero_btn_book_taxi') }}</button>
             
           </div>
       
           <div class="cta-wrapper">
             <button class="btn btn-primary btn-lg cta-button rad-0" onclick="window.location.href='{{ route('customizeTour') }}'" style="background-color:#05123E;">
-             Customize Tours
+                {{ __('messages.hero_btn_customize') }}
             </button>
           </div>
         </div>
@@ -45,7 +45,7 @@
         <div class="container">    
             <div class="row" style="margin-bottom:10px;">
                 <div class="col-lg-8 mx-auto text-center">   
-                <a class="section-heading" style="text-decoration: none;">Our Service</a>
+                <a class="section-heading" style="text-decoration: none;">{{ __('messages.service_title') }}</a>
                 <div style="width: 60px; height: 3px; background-color: #274993; margin: 8px auto 0;"></div>
                 </div>
             </div>
@@ -77,12 +77,12 @@
                     <div class="swiper-slide">
                         <div class="swiper-service-card" style="background-image: url('images/services/private_airport_transfer.png');">
                             <div class="swiper-service-overlay">
-                                <h5>Private Airport Transfer</h5>
-                                <p class="description">Private Transfers . Cars, Minivans,SUVs, Coaster .Free Child Seat</p>
+                                <h5>{{ __('messages.service_private_airport_transfer_title') }}</h5>
+                                <p class="description">{{ __('messages.service_private_airport_transfer_description') }}</p>
                                 <button type="submit"  onclick="window.location.href='{{ route('taxi') }}'" class="btn btn-primary btn-lg button-text description" >
-                                    More
+                                    {{ __('messages.btn_more') }}
                                 </button>
-                                <p class="price-tag">From €33 per transfer</p>
+                                <p class="price-tag">{{ __('messages.service_private_airport_transfer_pricetag') }}</p>
                         </div>
                         </div>
                     </div>
@@ -90,12 +90,12 @@
                     <div class="swiper-slide">
                         <div class="swiper-service-card" style="background-image: url('images/services/car_rental.png');">
                             <div class="swiper-service-overlay">
-                                <h5>Car Rental</h5>
-                                <p class="description">Premium fleet of vehicles available for self-drive adventures.</p>
+                                <h5>{{ __('messages.service_car_rental_title') }}</h5>
+                                <p class="description">{{ __('messages.service_car_rental_description') }}</p>
                                 <button type="submit"  onclick="window.location.href='{{ route('cars.home') }}'" class="btn btn-primary btn-lg button-text description" >
-                                    More
+                                    {{ __('messages.btn_more') }}
                                 </button>
-                                <p class="price-tag">From €35 per transfer</p>
+                                <p class="price-tag">{{ __('messages.service_car_rental_pricetag') }}</p>
                              </div>
                         </div>
                    </div>
@@ -103,12 +103,12 @@
                     <div class="swiper-slide">
                         <div class="swiper-service-card" style="background-image: url('images/services/luxury_airport_transfer.png');">
                             <div class="swiper-service-overlay">
-                                <h5>Luxury Airport Transfer</h5>
-                                <p class="description paragraph-text">Private VIP Transfer . Incl. BMW x5, x7 & similar</p>
+                                <h5>{{ __('messages.service_luxury_airport_transfer_title') }}</h5>
+                                <p class="description paragraph-text">{{ __('messages.service_luxury_airport_transfer_description') }}</p>
                                 <button type="submit" onclick="window.location.href='{{ route('taxi') }}'" class="btn btn-primary btn-lg button-text description" >
-                                    More
+                                  {{ __('messages.btn_more') }}
                                 </button>
-                                <p class="price-tag">From €140 per transfer</p>
+                                <p class="price-tag"> {{ __('messages.service_luxury_airport_transfer_pricetag') }}</p>
                             </div>
                         </div>
                     </div>
@@ -116,12 +116,12 @@
                     <div class="swiper-slide">
                         <div class="swiper-service-card" style="background-image: url('images/services/sightseeing_tour.png');">
                             <div class="swiper-service-overlay">
-                                <h5>Sightseeing tour</h5>
-                                <p class="description">Explore Mauritius with our friendly & professional drivers</p>
+                                <h5>{{ __('messages.service_sightseeing_title') }}</h5>
+                                <p class="description">{{ __('messages.service_sightseeing_description') }}</p>
                                 <button type="submit" onclick="window.location.href='{{ route('tours.index') }}'" class="btn btn-primary btn-lg button-text description" >
-                                    More
+                                    {{ __('messages.btn_more') }}
                                 </button>
-                                <p class="price-tag">€83 for a party of 4</p>
+                                <p class="price-tag">{{ __('messages.service_sightseeing_pricetag') }}</p>
                             </div>
                         </div>
                     </div>
@@ -129,12 +129,12 @@
                     <div class="swiper-slide">
                         <div class="swiper-service-card" style="background-image: url('images/services/taxi_ride.png');">
                             <div class="swiper-service-overlay">
-                                <h5>Taxi ride</h5>
-                                <p class="description">Need a transfer from Point A to B?With a return ?It's here </p>
+                                <h5>{{ __('messages.service_taxi_title') }}</h5>
+                                <p class="description">{{ __('messages.service_taxi_description') }} </p>
                                 <button type="submit" onclick="window.location.href='{{ route('taxi') }}'" class="btn btn-primary btn-lg button-text description" >
-                                    More
+                                   {{ __('messages.btn_more') }}
                                 </button>
-                                <p class="price-tag">Round-trips for €25</p>
+                                <p class="price-tag">{{ __('messages.service_taxi_pricetag') }}</p>
                             </div>
                         </div>
                     </div>
@@ -179,7 +179,7 @@
     <!-- About Section -->
     <section id="about" class="section-padding py-5" style="background: var(--gray-light);">
         <div class="container">
-            <div class="row align-items-center gy-4 gx-5">
+            <div class="row align-items-center gy-4">
                 <!-- Image Column -->
                 <div class="col-lg-6">
                     <div class="img-placeholder rounded" style="height: 400px; overflow: hidden;">
@@ -192,18 +192,20 @@
                 <!-- Text Column -->
                 <div class="col-lg-6">
                 <h2 class="section-title section-heading mb-2">
-                    About GoMauris Mauritius
+                   {{ __('messages.about_title') }}
                 </h2>
                 <div style="width: 60px; height: 3px; background-color: #274993; margin: 0 auto 20px 0;"></div>
 
                     <p class="section-subtitle subheading mb-3">
-                        Your trusted partner for exploring Mauritius
+                        {{ __('messages.about_subtitle') }}
                     </p>
                     <p class="paragraph-text mb-3" style="color:#262626;">
-                        With years of experience in the Mauritius tourism industry, GoMauris Tours has established itself as a premier car rental and tour operator. We pride ourselves on providing exceptional service, reliable vehicles, and unforgettable experiences.
+                       {{ __('messages.about_paragraph_one') }}
+            
                     </p>
                     <p class="paragraph-text mb-4" style="color:#262626;">
-                        Our team of local experts knows every corner of this beautiful island and is passionate about sharing its wonders with visitors from around the world.
+                       {{ __('messages.about_paragraph_two') }}
+                        
                     </p>
 
                     <!-- Icon Features -->
@@ -212,8 +214,8 @@
                             <div class="d-flex align-items-center">
                                 <i class='bx bx-shield-check text-primary fs-3 me-3'></i>
                                 <div>
-                                    <h6 class="mb-0">Fully Licensed</h6>
-                                    <small class="text-muted" style="color:#262626;">Certified & Insured</small>
+                                    <h6 class="mb-0">{{ __('messages.about_fully_license') }}</h6>
+                                    <small class="text-muted" style="color:#262626;">{{ __('messages.about_certified_insured') }}</small>
                                 </div>
                             </div>
                         </div>
@@ -221,8 +223,8 @@
                             <div class="d-flex align-items-center">
                                 <i class='bx bx-support text-primary fs-3 me-3'></i>
                                 <div>
-                                    <h6 class="mb-0">24/7 Support</h6>
-                                    <small class="text-muted" style="color:#262626;">Always Here for You</small>
+                                    <h6 class="mb-0">{{ __('messages.support_24_7') }}</h6>
+                                    <small class="text-muted" style="color:#262626;">{{ __('messages.about_always_here') }}</small>
                                 </div>
                             </div>
                         </div>
@@ -277,19 +279,19 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="stat-item">
                         <span class="stat-number">10+</span>
-                        <div class="stat-label">Reviews</div>
+                        <div class="stat-label">{{ __('messages.stat_reviews') }}</div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="stat-item">
                         <span class="stat-number">10+</span>
-                        <div class="stat-label">Vehicles Available</div>
+                        <div class="stat-label">{{ __('messages.stat_vehicles_available') }}</div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="stat-item">
                         <span class="stat-number">15+</span>
-                        <div class="stat-label">Tour Packages</div>
+                        <div class="stat-label">{{ __('messages.stat_tour_packages') }}</div>
                     </div>
                 </div>
             </div>
@@ -300,8 +302,7 @@
     <section id="tours" class="section-padding" style="">
      <div class="container text-center">
         <p class="section-heading mt-5">
-            Mauritius island is our homeland. We'll show you Mauritius, <br>
-            better than anyone else!
+           {{ __('messages.tour_mauritius_title') }}
         </p>
         <div style="width: 60px; height: 3px; background-color: #274993; margin: 0 auto 16px;"></div>
      </div>
@@ -310,7 +311,7 @@
          
             <!-- Category filter buttons -->
             <div class="d-flex flex-wrap justify-content-center my-3" >
-                <button class="btn button-text category-btn active" data-category="all">All Tours</button>
+                <button class="btn button-text category-btn active" data-category="all">{{ __('messages.tour_all_tours_btn') }}</button>
 
                 @foreach ($categories as $category)
                     <button class="btn button-text category-btn" data-category="{{ $category->slug }}">
@@ -326,10 +327,10 @@
                 <div class="col-md-3 tour-card" data-category="{{ $tour->category->slug }}">
                 <a href="{{ route('tours.show', $tour->slug) }}" style="text-decoration: none; color: inherit;">
                     <div class="card destination-card">
-                        <img src="{{ asset($tour->main_image) }}" class="card-img-top" alt="{{ $tour->name }}">
+                        <img src="{{ asset($tour->main_image) }}" class="card-img-top" alt="{{ $tour->{'name_' . app()->getLocale()} }}">
                         <div class="card-body text-start">
-                            <h5 class="card-title">{{ $tour->name }}</h5>
-                            <p class="card-time">{{ floor($tour->duration_minutes / 60) }} hours &nbsp;•&nbsp; {{ $tour->pickup_included ? 'Pickup Available' : '' }}</p>
+                            <h5 class="card-title">{{ $tour->{'name_' . app()->getLocale()} }}</h5>
+                            <p class="card-time">{{ floor($tour->duration_minutes / 60) }} {{ __('messages.hours') }} &nbsp;•&nbsp; {{ $tour->pickup_included ? 'Pickup Available' : '' }}</p>
                             <div class="tour-rating mb-2">
                                 @for ($i = 0; $i < floor($tour->average_rating); $i++)
                                     <i class="bx bxs-star"></i>
@@ -339,7 +340,7 @@
                                 @endif
                                 <span class="rating-text">{{ $tour->average_rating }} ({{ $tour->total_reviews }})</span>
                             </div>
-                            <p class="from-text">From</p>
+                            <p class="from-text">{{ __('messages.from') }}</p>
                             @if ($tour->is_group_priced)
                                 <p>
                                     <strong class="tour-price">€{{ $tour->group_price }}</strong>
@@ -348,7 +349,7 @@
                             @else
                                 <p>
                                     <strong class="tour-price">€{{ $tour->starting_price }}</strong>
-                                    <span class="per-person">per person</span>
+                                    <span class="per-person">{{ __('messages.per_person') }}</span>
                                 </p>
                             @endif
                         </div>
@@ -363,7 +364,7 @@
 
         <div class="text-center" style="margin-top: 100px;">
             <button class="btn btn-primary btn-lg rad-0" onclick="window.location.href='{{ route('tours.index') }}'">
-                View All Tours →
+                 {{ __('messages.tour_view_all_tours_btn') }}
             </button>
         </div>
     </section>
@@ -371,24 +372,20 @@
     <!-- About Section -->
     <section id="about" class="section-padding py-5" style="background: var(--gray-light);">
         <div class="container">
-            <div class="row align-items-center gy-4 gx-5">
+            <div class="row align-items-center gy-4 ">
 
                 <!-- Text Column -->
                 <div class="col-lg-6">
                     <div class="text-content">
                         <h2 class="section-title section-heading mb-3">
-                            Discover the Heart of Mauritius
+                        {{ __('messages.about_mur_title') }}
                         </h2>
                         <div style="width: 60px; height: 3px; background-color: #274993; margin: 0 auto 20px 0;"></div>
                         <p class="paragraph-text" style="color: #262626; font-size: 1rem; line-height: 1.7;">
-                            Mauritius is a vibrant mosaic of cultures, where people of Indian, African, Chinese, 
-                            and European heritage live together in harmony, creating a unique blend of traditions, 
-                            festivals, and flavors. From the lively rhythms of Sega music to colorful celebrations 
-                            like Diwali and Chinese New Year, the island pulses with joy and unity.
+                        {{ __('messages.about_mur_paragraph_one') }}
                         </p>
                         <p class="paragraph-text" style="color: #262626; font-size: 1rem; line-height: 1.7;">
-                            Visitors are welcomed with warm smiles and rich culinary delights, making every experience 
-                            a heartfelt celebration of Mauritius's diverse and thriving culture.
+                        {{ __('messages.about_mur_paragraph_two') }}
                         </p>
                     </div>
                 </div> <!-- End Text Column -->
@@ -410,7 +407,7 @@
     <section id="whychooseus" >
         <div class="container text-center" style="margin-bottom:30px;">
             <p class="section-heading mt-5">
-               Why Choose Us?
+            {{ __('messages.why_choose_us_title') }}
             </p>
             <div style="width: 60px; height: 3px; background-color: #274993; margin: 0 auto 16px;"></div>
         </div>
@@ -424,11 +421,11 @@
                             background-position: center;
                             background-size: cover;
                             background-repeat: no-repeat;">
-                            <h3 class="feature-title">Expert Local Guides</h3>
+                            <h3 class="feature-title">  {{ __('messages.why_choose_us_expert_local') }}</h3>
                         </div>
                         <div class="card-back">
-                            <h3 class="feature-title">Expert Local Guides</h3>
-                            <p class="feature-description">Our certified guides are passionate locals who bring destinations to life with authentic stories and insider knowledge.</p>
+                            <h3 class="feature-title">{{ __('messages.why_choose_us_expert_local') }}</h3>
+                            <p class="feature-description">{{ __('messages.why_choose_us_expert_local_p') }}</p>
                         </div>
                     </div>
                 </div>
@@ -440,11 +437,11 @@
                             background-position: center;
                             background-size: cover;
                             background-repeat: no-repeat;">
-                            <h3 class="feature-title">Custom Itineraries</h3>
+                            <h3 class="feature-title">{{ __('messages.why_choose_us_customized_itineraries') }}</h3>
                         </div>
                         <div class="card-back">
-                            <h3 class="feature-title">Customized Itineraries</h3>
-                            <p class="feature-description">Every traveler is unique. We craft personalized itineraries that match your interests, budget, and travel style perfectly.</p>
+                            <h3 class="feature-title">{{ __('messages.why_choose_us_customized_itineraries') }}</h3>
+                            <p class="feature-description">{{ __('messages.why_choose_us_customized_itineraries_p') }}</p>
                         </div>
                     </div>
                 </div>
@@ -456,11 +453,11 @@
                             background-position: center;
                             background-size: cover;
                             background-repeat: no-repeat;">
-                            <h3 class="feature-title">Best Price Guarantee</h3>
+                            <h3 class="feature-title">{{ __('messages.why_choose_us_best_price') }}</h3>
                         </div>
                         <div class="card-back">
-                            <h3 class="feature-title">Best Price Guarantee</h3>
-                            <p class="feature-description">We guarantee the best value for your money with transparent pricing and no surprise charges.</p>
+                            <h3 class="feature-title">{{ __('messages.why_choose_us_best_price') }}</h3>
+                            <p class="feature-description">{{ __('messages.why_choose_us_best_price_p') }}</p>
                         </div>
                     </div>
                 </div>

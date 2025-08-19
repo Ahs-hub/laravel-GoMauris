@@ -11,9 +11,20 @@ class Tour extends Model
 
     protected $fillable = [
         'name',
-        'full_title',
+        'name_en',
+        'name_fr',
+        'name_es',
+
+        'full_title_en',
+        'full_title_fr',
+        'full_title_es',
+
         'slug',
-        'description',
+
+        'description_en',
+        'description_fr',
+        'description_es',
+        
         'duration_minutes',
         'pickup_available',
         'starting_price',

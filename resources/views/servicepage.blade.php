@@ -14,7 +14,7 @@
     <!-- Hero Section -->
     <section class="services-hero">
         <div class="container">
-            <h1 class="hero-title mb-4">Our Services</h1>
+            <h1 class="hero-title mb-4">{{ __('messages.service_title') }}</h1>
         </div>
     </section>
 
@@ -28,17 +28,17 @@
                             <span class="input-group-text bg-transparent border-0">
                                 <i class="bx bx-search"></i>
                             </span>
-                            <input type="text" class="form-control border-0" placeholder="Search services..." v-model="searchQuery">
+                            <input type="text" class="form-control border-0" placeholder="{{ __('messages.search_service') }}..." v-model="searchQuery">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="filter-buttons text-center" style="margin-top:25px; margin-bottom:25px;">
-            <button class="btn button-text filter-btn" :class="{ active: activeFilter === 'all' }" @click="setFilter('all')">All Services</button>
-            <button class="btn button-text filter-btn" :class="{ active: activeFilter === 'transport' }" @click="setFilter('transport')">Transport</button>
-            <button class="btn button-text filter-btn" :class="{ active: activeFilter === 'tours' }" @click="setFilter('tours')">Tours</button>
-            <button class="btn button-text filter-btn" :class="{ active: activeFilter === 'travel' }" @click="setFilter('travel')">Travel</button>
+            <button class="btn button-text filter-btn" :class="{ active: activeFilter === 'all' }" @click="setFilter('all')">{{ __('messages.all_services') }}</button>
+            <button class="btn button-text filter-btn" :class="{ active: activeFilter === 'transport' }" @click="setFilter('transport')">{{ __('messages.transport') }}</button>
+            <button class="btn button-text filter-btn" :class="{ active: activeFilter === 'tours' }" @click="setFilter('tours')">{{ __('messages.tours') }}</button>
+            <button class="btn button-text filter-btn" :class="{ active: activeFilter === 'travel' }" @click="setFilter('travel')">{{ __('messages.travel') }}</button>
         </div>
     <!-- Services Section -->
         <div class="container">
@@ -133,22 +133,20 @@
         activeFilter: 'all',
         services: [
                 {
-                    title: "Private Airport Transfer",
+                    title: "{{ __('messages.service_private_airport_transfer_title') }}",
                     category: "transport",
                     image: "images/services/luxury_airport_transfer.png",
                     icon: "bx-car",
-                    description: "Comfortable and reliable door-to-door airport transfers with professional drivers and luxury vehicles.",
-                    buttonText: "Book Now",
+                    description: "{{ __('messages.service_private_airport_transfer_details') }}",
                     buttonLink: "{{ route('taxi') }}"
                     // price: "From $33 per transfer"
                 },
                 {
-                    title: "Private Sightseeing Tour",
+                    title: "{{ __('messages.service_sightseeing_title') }}",
                     category: "tours",
                     image: "images/services/sightseeing_tour.png",
                     icon: "bx-map",
-                    description: "Explore breathtaking destinations with our expert guides and customized itineraries for unforgettable experiences.",
-                    buttonText: "Explore Tours",
+                    description: "{{ __('messages.service_sightseeing_details') }}",
                     buttonLink: "{{ route('tours.index') }}",
                     //price: "$28 for  a party of 4"
                 },
@@ -163,32 +161,32 @@
                 //     //price: "Sea & Land Activities"
                 // },
                 {
-                    title: "Car Rental",
+                    title: "{{ __('messages.service_car_rental_title') }}",
                     category: "transport",
                     image: "images/services/car_rental.png",
                     icon: "bx-key",
-                    description: "Premium fleet of vehicles available for self-drive adventures with flexible rental options and competitive rates.",
-                    buttonText: "Rent Now",
+                    description: "{{ __('messages.service_private_airport_transfer_details') }}",
+
                     buttonLink: "{{ route('cars.home') }}",
                     //price: "Cars from $24 per day"
                 },
                 {
-                    title: "Taxi Services",
+                    title: "{{ __('messages.service_taxi_title') }}",
                     category: "transport",
                     image: "images/services/taxi_ride.png",
                     icon: "bx-taxi",
-                    description: "24/7 taxi services with experienced drivers for convenient city transportation and local travel needs.",
-                    buttonText: "Book Taxi",
+                    description: "{{ __('messages.service_taxi_detail') }}",
+                  
                     buttonLink: "{{ route('taxi') }}",
                    // price: "Round-trips from $25"
                 },
                 {
-                    title: "Luxury Airport Transfers",
+                    title: "{{ __('messages.service_private_airport_transfer_title') }}",
                     category: "transport",
                     image: "images/services/private_airport_transfer.png",
                     icon: "bx-diamond",
-                    description: "Premium luxury vehicles with VIP treatment, perfect for business travelers and special occasions.",
-                    buttonText: "Book Luxury",
+                    description: "{{ __('messages.service_private_airport_transfer_details') }}",
+          
                     buttonLink: "{{ route('taxi') }}",
                    // price: "From $140 per transfer"
                 },
