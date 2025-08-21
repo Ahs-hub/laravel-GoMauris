@@ -40,9 +40,15 @@
                 </div>
                 <div class="header-item">
                     <i class='bx bx-phone'></i>
+                    @php
+                        // Remove spaces and plus signs
+                        $whatsappNumber = isset($siteSettings->whatsapp) 
+                            ? preg_replace('/[\s+]/', '', $siteSettings->whatsapp) 
+                            : '';
+                    @endphp
                     <span>
-                        <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
-                            +230 55040167
+                        <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
+                           {{ $siteSettings->whatsapp }}
                         </a>
                     </span>
                 </div>
@@ -74,8 +80,8 @@
             <div class="header-item phone-appear" style="color:white;">
                 <i class='bx bx-phone'></i>
                 <span>
-                     <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
-                        +230 55040167
+                     <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
+                        {{ $siteSettings->whatsapp }}
                      </a>
                 </span>
             </div>
@@ -127,7 +133,7 @@
                     
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#langCurrencyModal">
-                          <i class='bx bx-globe'></i> EN/EUR(€)
+                          <i class='bx bx-globe'></i> {{ __('messages.en') }}/EUR(€)
                         </a>
                     </li>
                     <!-- <li class="nav-item">
@@ -276,13 +282,13 @@
                         </p> -->
                        
                         <div class="social-links">
-                            <a href="#" class="social-link" title="Facebook">
+                            <a href="{{ $siteSettings->facebook }}" class="social-link" title="Facebook" target="_blank">
                                 <i class='bx bxl-facebook'></i>
                             </a>
-                            <a href="#" class="social-link" title="Instagram">
+                            <a href="{{ $siteSettings->instagram }}" class="social-link" title="Instagram" target="_blank">
                                 <i class='bx bxl-instagram'></i>
                             </a>
-                            <a href="#" class="social-link" title="WhatsApp">
+                            <a href="https://wa.me/{{ $whatsappNumber }}" class="social-link" title="WhatsApp" target="_blank">
                                 <i class='bx bxl-whatsapp'></i>
                             </a>
                             <a href="#" class="social-link" title="TripAdvisor">
@@ -331,8 +337,8 @@
                                     <div class="contact-text">
                                         <strong>{{ __('messages.phone') }}</strong>
                                         <span>
-                                            <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
-                                                    +230 55040167
+                                            <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
+                                                {{ $siteSettings->whatsapp }}
                                             </a>
                                         </span>
                                     </div>
@@ -345,8 +351,8 @@
                                     <div class="contact-text">
                                         <strong style="color:rgb(161, 161, 161);">{{ __('messages.email') }}</strong>
                                         <span>
-                                            <a href="https://mailto:gomauristours@gmail.com" style="color:white; text-decoration: none;">
-                                                gomauristours@gmail.com
+                                            <a href="https://{{ $siteSettings->contact_email }}" style="color:white; text-decoration: none;">
+                                                {{ $siteSettings->contact_email }}
                                             </a>
                                         </span>
                                     </div>

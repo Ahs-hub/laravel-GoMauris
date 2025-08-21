@@ -10,6 +10,7 @@ class Tour extends Model
     use HasFactory;
 
     protected $fillable = [
+        'is_active',
         'name',
         'name_en',
         'name_fr',
@@ -34,6 +35,12 @@ class Tour extends Model
         'main_image',
         'is_group_priced',
         'group_price',
+        
+        'starting_promotion_price',
+        'transfer_promotion_price',
+        'group_price_promotion_price',
+
+
         'group_size',
         'location',
         'number_of_pictures',

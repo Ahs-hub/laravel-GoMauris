@@ -13,6 +13,7 @@ class TourController extends Controller
         $categories = TourCategory::all();
 
         $query = Tour::with('category');
+        ->where('is_active', true); // only active tours
 
         if ($request->has('category') && $request->category != 'all') {
             $query->whereHas('category', function ($q) use ($request) {

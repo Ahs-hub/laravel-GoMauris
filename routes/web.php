@@ -16,7 +16,11 @@ use App\Http\Controllers\WishlistController;
 
 use App\Http\Controllers\ContactController;
 
+use App\Http\Controllers\Admin\AdminSetupController;
+use App\Http\Controllers\Admin\AdminTourController;
+
 use App\Http\Controllers\TaxiBookingController;
+
 
 use App\Http\Controllers\CarController;
 
@@ -60,6 +64,42 @@ Route::middleware(['web', 'setlocale'])->group(function () {
         return view('contactpage', ['type' => $request->query('type')]);
     })->name('contact');
 
+    //Go to Wishlist page
+    Route::get('/wishlist', [WishlistController::class, 'showWishlistPage'])->name('wishlist');
+
+    //Go to Customize Tour page
+    Route::get('/customizeTour', [HomeController::class, 'customTour'])->name('customizeTour');
+
+    //Go to Car Rental
+    Route::get('/rent-cars', [CarController::class, 'index'])->name('cars.home');
+
+    //Go to car Fleet
+    Route::get('/fleet', [CarController::class, 'showFleetPage'])->name('fleet');
+
+    //Go to Car Faq page
+    Route::get('/faq', function () {
+        return view('carsite.faqpage');
+    })->name('faq'); 
+
+    //Go to reservation car page
+    Route::get('/reservation', [CarController::class, 'reservationPage'])->name('reservation');
+
+    
+    //Go to privacy policy
+    Route::get('/privacypolicy', function () {
+        return view('privacypolicy');
+    })->name('privacypolicy'); 
+
+    //Go to refund policy
+    Route::get('/refundpolicy', function () {
+        return view('refundpolicy');
+    })->name('refundpolicy');
+
+    //Go to cancellation policy
+    Route::get('/cancellationpolicy', function () {
+        return view('carsite.cancellationpolicy');
+    })->name('cancellationpolicy');
+
     Route::get('locale/{lang}', function ($lang) {
         if (in_array($lang, ['en','fr','es'])) {
             session(['locale' => $lang]);
@@ -92,10 +132,21 @@ Route::middleware('auth')->get('/admin/dashboard', function () {
 //Deletion of all data for admin
 Route::middleware('auth')->post('/delete-data', [AdminSetupController::class, 'deleteData']);
 
+//
+
+
 // Search bulk  deletion
 // API for preview counts
 Route::middleware('auth')->post('/admin/delete-preview', [AdminSetupController::class, 'previewDelete']);
 
+// Protected JSON tours route
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/tours/json', [AdminTourController::class, 'json'])
+        ->name('admin.tours.json');
+
+    Route::put('/admin/tours/{tour}', [AdminTourController::class, 'update'])
+        ->name('admin.tours.update');
+});
 
 // Go to Book Tour panel
 Route::middleware('auth')->get('/admin/booktour', function () {
@@ -118,6 +169,16 @@ Route::middleware('auth')->get('/admin/carrentalpanel', function () {
     return view('admin.rentalpanel');
 })->name('admin.carrentalpanel');
 
+// Go to discount panel
+Route::middleware('auth')->get('/admin/discountpanel', function () {
+    return view('admin.discountpanel');
+})->name('admin.discountpanel');
+
+// Go to profile panel
+Route::middleware('auth')->get('/admin/profilepanel', function () {
+    return view('admin.profilepanel');
+})->name('admin.profilepanel');
+
 // Go to taxi panel
 Route::middleware('auth')->get('/admin/taxipanel', function () {
     return view('admin.taxipanel');
@@ -133,10 +194,10 @@ Route::middleware('auth')->get('/admin/deletepanel', function () {
     return view('admin.deletepanel');
 })->name('admin.deletepanel');
 
-Route::get('/rent-cars', [CarController::class, 'index'])->name('cars.home');
+
 Route::get('/rentcar/{id}', [CarController::class, 'show'])->name('rentcar.show');
 
-Route::get('/reservation', [CarController::class, 'reservationPage'])->name('reservation');
+
 
 //save booking tour
 // Route::post('/tour-bookings', [TourBookingController::class, 'store'])->name('tour.bookings.store');
@@ -181,49 +242,11 @@ Route::middleware('auth')->group(function () {
 //Send contact to email
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
-//Go to Wishlist page
-Route::get('/wishlist', [WishlistController::class, 'showWishlistPage'])->name('wishlist');
-
-//Go to Service page
-// Route::get('/service', function () {
-//     return view('servicepage');
-// })->name('service'); 
-
-//Go to Customize Tour page
-Route::get('/customizeTour', [HomeController::class, 'customTour'])->name('customizeTour');
-
-//Go to car Fleet
-Route::get('/fleet', [CarController::class, 'showFleetPage'])->name('fleet');
-
-//Go to Car Faq page
-Route::get('/faq', function () {
-    return view('carsite.faqpage');
-})->name('faq'); 
-
-//Go to Taxi Page
-// Route::get('/taxi', function () {
-//     return view('taxipage');
-// })->name('taxi'); 
-
 //Go to Luxury taxi page
 Route::get('/luxurytransfer', function () {
     return view('luxurytransfer');
 })->name('luxurytransfer'); 
 
-//Go to privacy policy
-Route::get('/privacypolicy', function () {
-    return view('privacypolicy');
-})->name('privacypolicy'); 
-
-//Go to refund policy
-Route::get('/refundpolicy', function () {
-    return view('refundpolicy');
-})->name('refundpolicy');
-
-//Go to cancellation policy
-Route::get('/cancellationpolicy', function () {
-    return view('carsite.cancellationpolicy');
-})->name('cancellationpolicy');
 
 //Go to rental policy
 Route::get('/rentalpolicy', function () {
@@ -232,14 +255,11 @@ Route::get('/rentalpolicy', function () {
 
 
 //tours
-// Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
 
 Route::get('/north-coast', function () {
     return view('north-coast-sightseeing');
 })->name('north-coast');
 
-//go to correspond tour page
-//Route::get('/tours/{slug}', [TourController::class, 'show'])->name('tours.show');
 
 //Save the tour in database
 Route::post('/tour-bookings', [TourBookingController::class, 'store']);

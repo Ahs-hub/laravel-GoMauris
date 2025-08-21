@@ -22,8 +22,8 @@
                 <!-- Title Section -->
                 <div class="col-lg-6 mb-4 mb-lg-0">
                     <div class="hero-image-text d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%;">
-                        <h1 class="display-4 fw-bold mb-2">Rent A Car</h1>
-                        <h2 class="mb-0">in Mauritius</h2>
+                        <h1 class="display-4 fw-bold mb-2">{{ __('messages.rent_a_car') }}</h1>
+                        <h2 class="mb-0">{{ __('messages.in_mauritius') }}</h2>
                     </div>
                 </div>
 
@@ -32,7 +32,7 @@
                     <div class="booking-box p-4 text-white rounded shadow booking-form" style="width: 100%; max-width: 400px; right:0px;">
                         <div>
                             <div class="mb-3 form-group">
-                            <label class="fw-bold">Pick Up</label>
+                            <label class="fw-bold">{{ __('messages.pick_up') }}</label>
                         
                                 <!-- <select v-model="pickupLocation" class="form-control" required>
                                     <option disabled value="">Select pick up location</option>
@@ -47,7 +47,7 @@
                                             type="button" data-bs-toggle="dropdown">
                                             <div>
                                                 <i class='bx bx-map me-2'></i> 
-                                                @{{ pickupLocation || 'Select pick up location' }}
+                                                @{{ pickupLocation || defaultPickupText }}
                                             </div>
                                     </button>
                                     <ul class="dropdown-menu w-100">
@@ -64,7 +64,7 @@
                                             <i class='bx bx-map'></i> Grand Baie
                                         </li>
                                         <li class="dropdown-item" @click="openMap('pickup')">
-                                            <i class='bx bx-map-pin'></i> Choose on map
+                                            <i class='bx bx-map-pin'></i> {{ __('messages.choose_on_map') }}
                                         </li>
                                     </ul>
                                 </div>
@@ -73,12 +73,12 @@
 
                             <div class="form-check mb-3">
                                 <input class="form-check-input" type="checkbox" id="sameLocation" v-model="sameLocation">
-                                <label class="form-check-label" for="sameLocation">Return to the same location</label>
+                                <label class="form-check-label" for="sameLocation">{{ __('messages.return_to_same_location') }}</label>
                             </div>
 
                             <transition name="fade">
                                 <div class="mb-3 form-group" v-if="!sameLocation">
-                                    <label class="fw-bold">Return</label>
+                                    <label class="fw-bold">{{ __('messages.return') }}</label>
                                     <!-- <select v-model="returnLocation" class="form-control" required>
                                         <option disabled value="">Select pick up location</option>
                                         <option>Mahebourg</option>
@@ -91,7 +91,7 @@
                                                 type="button" data-bs-toggle="dropdown">
                                                 <div>
                                                     <i class='bx bx-map me-2'></i> 
-                                                    @{{ returnLocation || 'Select return up location' }}
+                                                    @{{ returnLocation || defaultReturnText }}
                                                 </div>
                                         </button>
                                         <ul class="dropdown-menu w-100">
@@ -108,7 +108,7 @@
                                                 <i class='bx bx-map'></i> Grand Baie
                                             </li>
                                             <li class="dropdown-item" @click="openMap('return')">
-                                                <i class='bx bx-map-pin'></i> Choose on map
+                                                <i class='bx bx-map-pin'></i> {{ __('messages.choose_on_map') }}
                                             </li>
                                         </ul>
                                     </div>
@@ -117,18 +117,18 @@
                             </transition>
 
                             <div class="mb-3 form-group">
-                            <label class="fw-bold">Pick-up Date</label>
+                            <label class="fw-bold">{{ __('messages.pick_up-date') }}</label>
                             <input type="datetime-local" v-model="pickupDate" :min="minDateTime" class="form-control" required>
                             </div>
 
                             <div class="mb-3 form-group">
-                            <label class="fw-bold">Return Date</label>
+                            <label class="fw-bold">{{ __('messages.return_date') }}</label>
                             <input type="datetime-local" v-model="returnDate" :min="minDateTime" class="form-control" required>
                             </div>
 
                             <div class="d-flex justify-content-between">
-                                <button @click.prevent="handleContinue" class="btn btn-primary w-50 me-2 py-2 ">FIND A VEHICLE</button>
-                                <button  @click="clearForm" class="btn btn-secondary w-50 py-2 ">Clear Data</button>
+                                <button @click.prevent="handleContinue" class="btn btn-primary w-50 me-2 py-2 ">{{ __('messages.find_a_vehicle') }}</button>
+                                <button  @click="clearForm" class="btn btn-secondary w-50 py-2 ">{{ __('messages.clear_data') }}</button>
                             </div>
                         </div>
                     </div>
@@ -141,7 +141,7 @@
         <section class="featured-section">
             <div class="container">
                 <div class="section-header text-start">
-                    <h2 class="section-heading" style="color:rgb(58, 58, 58);">Featured Vehicles</h2>
+                    <h2 class="section-heading" style="color:rgb(58, 58, 58);">{{ __('messages.fearures_vehicles') }}</h2>
                 </div>
 
                 <div class="car-grid">
@@ -155,11 +155,11 @@
                                 <div class="car-header">
                                     <div>
                                         <h3 class="car-title">{{ $car->name }}</h3>
-                                        <p class="car-subtitle">{{ $car->transmission }} • {{ $car->fuel_type }}</p>
+                                        {{ __('messages.' . strtolower($car->transmission)) }} • {{ __('messages.' . strtolower($car->fuel_type)) }}
                                     </div>
                                     <div class="car-price">
                                         <span class="price-amount">€{{ $car->price_per_day }}</span>
-                                        <span class="price-period">Per day</span>
+                                        <span class="price-period">{{ __('messages.per_day') }}</span>
                                     </div>
                                 </div>
 
@@ -167,31 +167,31 @@
                                     @if($car->fuel_type)
                                         <div class="spec-item">
                                             <i class='bx bx-gas-pump spec-icon'></i>
-                                            <span>{{ $car->fuel_type }}</span>
+                                            <span>{{ __('messages.' . strtolower($car->fuel_type)) }}</span>
                                         </div>
                                     @endif
                                     @if($car->transmission)
                                         <div class="spec-item">
                                             <i class='bx bx-cog spec-icon'></i>
-                                            <span>{{ $car->transmission }}</span>
+                                            <span>{{ __('messages.' . strtolower($car->transmission)) }}</span>
                                         </div>
                                     @endif
                                     @if($car->seats)
                                         <div class="spec-item">
                                             <i class='bx bxs-user spec-icon'></i>
-                                            <span>{{ $car->seats }} Seats</span>
+                                            <span>{{ $car->seats }} {{ __('messages.seats') }}</span>
                                         </div>
                                     @endif
                                     @if($car->climate_control)
                                         <div class="spec-item">
                                             <i class='bx bx-wind spec-icon'></i>
-                                            <span>Climate Control</span>
+                                            <span>{{ __('messages.climate_control') }}</span>
                                         </div>
                                     @endif
                                 </div>
 
                                 <div class="car-actions">
-                                        <button class="btn btn-primary" @click="bookNow({{ $car->id }}, '{{ route('reservation') }}')">Book Now</button>
+                                        <button class="btn btn-primary" @click="bookNow({{ $car->id }}, '{{ route('reservation') }}')">{{ __('messages.book_now') }}</button>
                                 </div>  
                             </div>
                         </div>
@@ -205,7 +205,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5>Select Location on Map</h5>
+                    <h5>{{ __('messages.select_location_on_map') }}</h5>
                     <button type="button" class="btn-close" @click="showMapModal = false"></button>
                 </div>
                 <div class="modal-body" style="height: 400px;">
@@ -213,7 +213,7 @@
                 </div>
                 <div class="modal-footer d-flex justify-content-end">
                      <span style="width: 500px;"></span>
-                     <button class="btn btn-primary"  @click="confirmLocation">Select</button>
+                     <button class="btn btn-primary"  @click="confirmLocation">{{ __('messages.select') }}</button>
                 </div>
                 </div>
             </div>
@@ -229,7 +229,7 @@
         <div class="container">
             <!-- <h2 class="section-title">Why Choose Us</h2> -->
             <div class="section-header text-center mx-auto">
-                <h2 class="section-heading" style="color:rgb(58, 58, 58);">Why Choose Us</h2>
+                <h2 class="section-heading" style="color:rgb(58, 58, 58);">{{ __('messages.why_choose_us_title') }}</h2>
                 <!-- <p class="section-subtitle">Discover our most popular vehicles with special offers</p> -->
             </div>
             
@@ -240,8 +240,8 @@
                             <i class='bx bx-like'></i>
                         </div>
                         <div class="feature-content">
-                            <h3>No Excess Deposit</h3>
-                            <p>Unlike others, we never pre-authorize or charge your credit card for an excess deposit on your car rental.</p>
+                            <h3>{{ __('messages.no_excess_deposit') }}</h3>
+                            <p>{{ __('messages.no_excess_deposit_des') }}</p>
                         </div>
                     </div>
                 </div>
@@ -252,8 +252,8 @@
                             <i class='bx bx-shield-quarter'></i>
                         </div>
                         <div class="feature-content">
-                            <h3>Premium Insurance (CDW)</h3>
-                            <p>Included with all rentals. Covers accidents (even if at fault), theft, fire, cracked windscreen, flood, and more.</p>
+                            <h3>{{ __('messages.premium_insurance_cdw') }}</h3>
+                            <p>{{ __('messages.premium_insurance_cdw_des') }}</p>
                         </div>
                     </div>
                 </div>
@@ -264,8 +264,8 @@
                             <i class='bx bx-infinite'></i>
                         </div>
                         <div class="feature-content">
-                            <h3>Unlimited Mileage</h3>
-                            <p>Drive as much as you want with no extra fees—enjoy unlimited mileage and explore Mauritius without limits.</p>
+                            <h3>{{ __('messages.unlimited_mileage') }}</h3>
+                            <p>{{ __('messages.unlimited_mileage_des') }}</p>
                         </div>
                     </div>
                 </div>
@@ -276,8 +276,8 @@
                             <i class='bx bx-child'></i>
                         </div>
                         <div class="feature-content">
-                            <h3>Baby Chairs/Booster Seats</h3>
-                            <p>You will have at your disposal Baby car seats or booster for safety of your child.</p>
+                            <h3>{{ __('messages.baby_chairs_booster_seats') }}</h3>
+                            <p>{{ __('messages.baby_chairs_booster_seats_des') }}</p>
                         </div>
                     </div>
                 </div>
@@ -300,8 +300,8 @@
                             <i class='bx bx-support'></i>
                         </div>
                         <div class="feature-content">
-                            <h3>24/7 Roadside Assistance</h3>
-                            <p>Enjoy peace of mind with 24/7 roadside assistance—wherever you are in Mauritius, we're always ready to help.</p>
+                            <h3>{{ __('messages.24_7_roadside_assistance') }}</h3>
+                            <p>{{ __('messages.24_7_roadside_assistance_des') }}</p>
                         </div>
                     </div>
                 </div>
@@ -315,6 +315,10 @@
         const app = Vue.createApp({
             data() {
                 return {
+                    defaultPickupText: "{{ __('messages.select_pick_up_location') }}",
+                    defaultReturnText: "{{ __('messages.select_return_up_location') }}",
+                    
+
                     pickupLocation: '',
                     pickupDate: '',
                     returnLocation: '',

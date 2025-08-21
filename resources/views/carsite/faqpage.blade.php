@@ -10,57 +10,57 @@
     <div class="faq-container">
         <!-- Header -->
         <div class="faq-header">
-            <h1 class="faq-title">Frequently Asked Questions</h1>
+            <h1 class="faq-title">{{ __('messages.frequently_asked_questions') }}</h1>
         </div>
         
         <!-- FAQ Items -->
         <div class="faq-item active">
             <a href="#" class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq1">
-                 What documents do I need to rent a car in Mauritius?
+            {{ __('messages.what_documents_do_ect') }}?
                 <i class='bx bx-plus faq-icon'></i>
             </a>
             <div class="faq-answer" id="faq1">
-            You will need a valid driver's license (held for at least one year), your passport, and a credit card for the security deposit.
+            {{ __('messages.you_will_need_a_valid_ect') }}.
             </div>
         </div>
         
         <div class="faq-item">
             <a href="#" class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq2">
-                How early should I book my car?
+            {{ __('messages.how_early_should_i_ect') }}?
                 <i class='bx bx-plus faq-icon'></i>
             </a>
             <div class="faq-answer" id="faq2">
-                It's recommended to book at least 1-2 weeks in advance, especially during peak tourist seasons (December–March, July–August).
+            {{ __('messages.it_recommended_to_book_at_ect') }}.
             </div>
         </div>
         
         <div class="faq-item">
             <a href="#" class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq3">
-                Can I drive anywhere in Mauritius?
+            {{ __('messages.can_i_drive_anywhere_ect') }}?
                 <i class='bx bx-plus faq-icon'></i>
             </a>
             <div class="faq-answer" id="faq3">
-            Yes! You can drive across the island. Most roads are well-maintained, and Google Maps works well. Just remember that driving is on the **left side**.
+            {{ __('messages.yes_you_can_drive_across_the_ect') }}.
             </div>
         </div>
         
         <div class="faq-item">
             <a href="#" class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq4">
-                Is fuel included in the rental price?
+            {{ __('messages.is_fuel_included_in_ect') }}?
                 <i class='bx bx-plus faq-icon'></i>
             </a>
             <div class="faq-answer" id="faq4">
-            No, fuel is not included. Cars are typically provided with a full tank and must be returned with the same level.
+            {{ __('messages.no_fuel_is_not_includes_ect') }}.
             </div>
         </div>
         
         <div class="faq-item">
             <a href="#" class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq5">
-                What about insurance and deposits?
+            {{ __('messages.what_about_insurence_and_ect') }}?
                 <i class='bx bx-plus faq-icon'></i>
             </a>
             <div class="faq-answer" id="faq5">
-            Basic insurance is usually included. A security deposit (refundable) is required. You can also opt for full coverage at an additional cost.
+            {{ __('messages.basic_insurance_is_usually_included_ect') }}.
             </div>
         </div>
     </div>

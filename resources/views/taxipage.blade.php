@@ -7,6 +7,13 @@
         <link rel="stylesheet" href="{{ asset('css/taxipage.css') }}">
     @endif
 
+    @php
+        // Remove spaces and plus signs
+        $whatsappNumber = isset($siteSettings->whatsapp) 
+            ? preg_replace('/[\s+]/', '', $siteSettings->whatsapp) 
+            : '';
+     @endphp
+
     <!-- for location map -->
     <link
         rel="stylesheet"
@@ -26,8 +33,8 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-10 col-xl-8 text-center">
                         <h5>{{ __('messages.call_hero_title') }}</h5>
-                        <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none;">
-                            <h1 style="color:var(--white); font-weight:500;">+230 55040167</h1>
+                        <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" class="whatsapp-link" style="text-decoration:none;">
+                            <h1 style="color:var(--white); font-weight:500;">{{ $siteSettings->whatsapp }}</h1>
                         </a>
                         
                     </div>

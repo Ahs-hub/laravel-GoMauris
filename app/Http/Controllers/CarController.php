@@ -40,6 +40,16 @@ class CarController extends Controller
                 'engine' => $car->engine, // e.g., 1500
                 'consumption' => $car->consumption, // e.g., 5.5
                 'policy' => $car->policy, // e.g., "Same to same"
+
+                // ✅ Add translated fields
+                'translated_type' => __('messages.' . strtolower($car->type)),
+                'translated_fuel_type' => __('messages.' . strtolower($car->fuel_type)),
+                'translated_transmission' => __('messages.' . strtolower($car->transmission)),
+                // ✅ Translate each color
+                'translated_colors' => collect(json_decode($car->available_colors))
+                ->map(fn($color) => __('messages.' . strtolower($color)))
+                ->toArray(),
+                
                 ];
         });
         return view('carsite.carreservationpage', compact('cars'));
@@ -67,6 +77,11 @@ class CarController extends Controller
                 'engine' => $car->engine, // e.g., 1500
                 'consumption' => $car->consumption, // e.g., 5.5
                 'policy' => $car->policy, // e.g., "Same to same"
+
+                // ✅ Add translated fields
+                'translated_type' => __('messages.' . strtolower($car->type)),
+                'translated_fuel_type' => __('messages.' . strtolower($car->fuel_type)),
+                'translated_transmission' => __('messages.' . strtolower($car->transmission)),
             ];
         });
 

@@ -50,70 +50,71 @@
 <div class="container py-5 privacy-policy">
     <div class="row">
         <div class="col-lg-10">
-            <h1>Customer Privacy Policy</h1>
+            <h1>{{ __('privacypolicy.customer_privacy_policy') }}</h1>
 
-            <p><strong>Last Updated:</strong> 30-Jul-2025<br>
-            <strong>Effective Date:</strong> 30-Jul-2025</p>
+            <p>
+                <strong>{{ __('privacypolicy.last_updated') }}:</strong> 30-Jul-2025<br>
+                <strong>{{ __('privacypolicy.effective_date') }}:</strong> 30-Jul-2025
+            </p>
 
-            <p>Protecting your personal data is important to us. We collect only the essential information needed to respond to your booking requests for tours or car rentals. This includes your name, contact details, and your requested services.</p>
+            <p>{{ __('privacypolicy.privacy_intro') }}</p>
 
-            <p>We do not process online payments on this website. Bookings are completed via WhatsApp or email after initial submission.</p>
+            <p>{{ __('privacypolicy.privacy_no_payment') }}</p>
 
             <hr>
 
-            <h4>1. Information We Collect</h4>
+            <h4>{{ __('privacypolicy.information_we_collect') }}</h4>
             <ul>
-                <li>Full Name</li>
-                <li>Email Address</li>
-                <li>Phone Number</li>
-                <li>Tour or Car Rental Preferences</li>
+                <li>{{ __('privacypolicy.info_full_name') }}</li>
+                <li>{{ __('privacypolicy.info_email') }}</li>
+                <li>{{ __('privacypolicy.info_phone') }}</li>
+                <li>{{ __('privacypolicy.info_preferences') }}</li>
             </ul>
 
-            <h4>2. How We Use Your Information</h4>
-            <p>We use your data to:</p>
+            <h4>{{ __('privacypolicy.how_we_use_info') }}</h4>
+            <p>{{ __('messages.we_use_your_data_to') ?? 'We use your data to:' }}</p>
             <ul>
-                <li>Respond to your quote or booking request</li>
-                <li>Provide service updates via email or WhatsApp</li>
-                <li>Maintain a record of customer inquiries</li>
+                <li>{{ __('privacypolicy.use_respond') }}</li>
+                <li>{{ __('privacypolicy.use_updates') }}</li>
+                <li>{{ __('privacypolicy.use_record') }}</li>
             </ul>
 
-            <h4>3. Data Retention</h4>
-            <p>We store your data securely and only as long as necessary, up to 2 years, unless legally required to retain it longer.</p>
+            <h4>{{ __('privacypolicy.data_retention') }}</h4>
+            <p>{{ __('privacypolicy.data_retention_text') }}</p>
 
-            <h4>4. Data Sharing</h4>
-            <p>We do not sell or share your data with third parties. Your data may be disclosed only to:</p>
+            <h4>{{ __('privacypolicy.data_sharing') }}</h4>
+            <p>{{ __('privacypolicy.data_sharing_text') }}</p>
             <ul>
-                <li>Meet legal obligations</li>
-                <li>Prevent fraud or misuse</li>
-                <li>Fulfill booking requests when required</li>
+                <li>{{ __('privacypolicy.data_sharing_legal') }}</li>
+                <li>{{ __('privacypolicy.data_sharing_fraud') }}</li>
+                <li>{{ __('privacypolicy.data_sharing_booking') }}</li>
             </ul>
 
-            <h4>5. Your Rights</h4>
-            <p>You may request to access, correct, or delete your personal data at any time. Contact us at 
-                <a href="https://mailto:gomauristours@gmail.com" style="color:blue; text-decoration: none;">
-                    gomauristours@gmail.com
-                </a>.</p>
+            <h4>{{ __('privacypolicy.your_rights') }}</h4>
+            <p>
+                {{ __('privacypolicy.your_rights_text') }}
+                <a href="mailto:{{ $siteSettings->contact_email }}" style="color:blue; text-decoration: none;">
+                {{ $siteSettings->contact_email }}
+                </a>.
+            </p>
 
-            <h4>6. Cookies</h4>
-            <p>We may use basic cookies to improve performance and analytics. You can disable cookies via your browser settings.</p>
+            <h4>{{ __('privacypolicy.cookies') }}</h4>
+            <p>{{ __('privacypolicy.cookies_text') }}</p>
 
-            <h4>7. External Links</h4>
-            <p>Our website may contain links to other websites. We are not responsible for their privacy practices. Please review their respective policies.</p>
+            <h4>{{ __('privacypolicy.external_links') }}</h4>
+            <p>{{ __('privacypolicy.external_links_text') }}</p>
 
-            <h4>8. Policy Updates</h4>
-            <p>We may update this policy without notice. The latest version will always be posted on this page.</p>
+            <h4>{{ __('privacypolicy.policy_updates') }}</h4>
+            <p>{{ __('privacypolicy.policy_updates_text') }}</p>
 
-            <h4>9. Contact Us</h4>
-            <p>For any privacy-related concerns:</p>
+            <h4>{{ __('privacypolicy.contact_us') }}</h4>
             <ul>
-                <li>Email:<a href="https://mailto:gomauristours@gmail.com" style="color:blue; text-decoration: none;">
-                                gomauristours@gmail.com
-                          </a></li>
-                <li>Phone: +230 55040167</li>
-                <li>Address: Royal Road, Port Louis, Mauritius</li>
+                <li>{{ __('privacypolicy.contact_email') }} {{ $siteSettings->contact_email }}</li>
+                <li>{{ __('privacypolicy.contact_phone') }} {{ $siteSettings->whatsapp }}</li>
+                <li>{{ __('privacypolicy.contact_address') }}</li>
             </ul>
 
-            <p class="text-muted mt-4 small">© 2025 GoMauris. All rights reserved.</p>
+            <p class="text-muted mt-4 small">{{ __('privacypolicy.copyright') }}</p>
         </div>
     </div>
 </div>

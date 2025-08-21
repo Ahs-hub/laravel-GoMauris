@@ -13,7 +13,7 @@
       <div class="hero-content">
         <!-- <h1 class="hero-title">Premium Car Rental Experience</h1>
         <p class="hero-subtitle">Choose from our exclusive fleet of luxury and economy vehicles</p> -->
-        <h1 class="hero-title">Our Fleet</h1>
+        <h1 class="hero-title">{{ __('messages.our_fleet') }}</h1>
       </div>
     </div>
   </section>
@@ -24,7 +24,7 @@
         <div class="content-section">
             <div class="container">
                 <div class="section-content" style="margin-bottom: 50px;">
-                    <h1 style="color:rgb(58, 58, 58);">Fleet</h1>
+                    <h1 style="color:rgb(58, 58, 58);">{{ __('messages.fleet') }}</h1>
                     <div class="search-box">
                             <div class="row align-items-center">
                                 <div class="col-md-6">
@@ -32,7 +32,7 @@
                                         <span class="input-group-text bg-transparent border-0">
                                             <i class="bx bx-search"></i>
                                         </span>
-                                        <input type="text" v-model="searchQuery" class="form-control border-0" placeholder="Search car...">
+                                        <input type="text" v-model="searchQuery" class="form-control border-0" placeholder="{{ __('messages.search_car') }}...">
                                     </div>
                                 </div>
                             </div>
@@ -52,35 +52,35 @@
                                 <div class="car-header">
                                     <div>
                                         <h3 class="car-title">@{{ car.name }}</h3>
-                                        <p class="car-subtitle">@{{ car.type }} • @{{ car.fuel_type }}</p>
+                                        <p class="car-subtitle"> @{{ car.translated_transmission }} • @{{ car.translated_fuel_type }}</p>
                                     </div>
                                     <div class="car-price">
                                         <span class="price-amount">€@{{ car.price_per_day }}</span>
-                                        <span class="price-period">Per day</span>
+                                        <span class="price-period">{{ __('messages.per_day') }}</span>
                                     </div>
                                 </div>
 
                                 <div class="car-specs">
                                     <div class="spec-item">
                                         <i class='bx bx-gas-pump spec-icon'></i>
-                                        <span>@{{ car.fuel_type }}</span>
+                                        <span>@{{car.translated_fuel_type  }}</span>
                                     </div>
                                     <div class="spec-item">
                                         <i class='bx bx-cog spec-icon'></i>
-                                        <span>@{{ car.type }}</span>
+                                        <span>@{{ car.translated_transmission }}</span>
                                     </div>
                                     <div class="spec-item">
                                         <i class='bx bxs-user spec-icon'></i>
-                                        <span>5 Seats</span>
+                                        <span>5 {{ __('messages.seats') }}</span>
                                     </div>
                                     <div class="spec-item">
                                         <i class='bx bx-wind spec-icon'></i>
-                                        <span>Climate Control</span>
+                                        <span>{{ __('messages.climate_control') }}</span>
                                     </div>
                                 </div>
 
                                 <div class="car-actions">
-                                    <button class="btn btn-primary" @click="selectCar(car.id, car.name); showSection('carsaddon')">Book Now</button>
+                                    <button class="btn btn-primary" @click="selectCar(car.id, car.name); showSection('carsaddon')">{{ __('messages.book_now') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
 
                     <!-- No results -->
                     <div v-if="filteredCars.length === 0" class="text-center text-muted mt-5">
-                        No cars match your search.
+                    {{ __('messages.no_cars_match_your_search') }}.
                     </div>
                 </div>
 

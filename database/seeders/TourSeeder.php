@@ -17,6 +17,7 @@ class TourSeeder extends Seeder
         //Catamaran Cruise To the Northern Isles
         Tour::create([
             'name' => 'Catamaran Cruise To the Northern Isles',
+            'name_en' => 'Catamaran Cruise To the Northern Isles',
             'name_fr' => 'Croisière en catamaran vers les îles du Nord',
             'name_es' => 'Crucero en catamarán a las Islas del Norte',
 

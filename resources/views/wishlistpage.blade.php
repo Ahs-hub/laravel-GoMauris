@@ -15,7 +15,7 @@
         <div class="hero-content">
             <!-- <h1 class="hero-title">Premium Car Rental Experience</h1>
             <p class="hero-subtitle">Choose from our exclusive fleet of luxury and economy vehicles</p> -->
-            <h3 class="section-heading">Your Wishlist</h3>
+            <h3 class="section-heading">{{ __('messages.your_wishlist') }}</h3>
         </div>
         </div>
     </section>
@@ -33,10 +33,10 @@
                     </div>
                     <div class="card-body">
                         <a :href="getTourUrl(item.slug)" style="text-decoration: none;">
-                            <h5>@{{ item.title }}</h5> 
+                        <h5>@{{ item.name }}</h5>
                         </a>
-                        <div class="card-price">€@{{ item.price }}/day</div>
-                        <div class="type">@{{ item.type }}</div>
+                        <div class="card-price">€@{{ item.price }}/{{ __('messages.day') }}</div>
+                        <!-- <div class="type">@{{ item.type }}</div> -->
                     </div>
                     <button class="remove-icon" @click="removeItem(item.id)">
                         <i class='bx bx-x'></i>
@@ -47,15 +47,15 @@
             <!-- Clear All Button -->
             <div class="clear-wishlist-section">
                 <button @click="clearWishlist" class="clear-btn">
-                    <i class='bx bx-trash'></i> Clear Wishlist
+                    <i class='bx bx-trash'></i> {{ __('messages.btn_clear_wishlist') }}
                 </button>
             </div>
         </div>
 
         <div v-else class="empty-wishlist">
             <i class='bx bx-heart'></i>
-            <h4>Your wishlist is empty</h4>
-            <p>Start exploring our tours to add items to your wishlist</p>
+            <h4>{{ __('messages.your_wishlist_is_empty') }}</h4>
+            <p>{{ __('messages.start_exploring_our_tours') }}</p>
         </div>
     </section>
 
@@ -68,9 +68,9 @@
             
             <!-- Left Side: Text Content -->
             <div class="col-md-6 mb-4 mb-md-0" style="color:white;">
-                <h2 class="fw-bold">Need a car?</h2>
-                <p class="lead">Rent now and get <strong>10% discount</strong> on all our vehicles. Perfect for tours, business trips, and more!</p>
-                <a href="#rent" class="btn btn-lg rounded-0" style="background-color: rgb(255, 166, 50); color:white;">Rent Car</a>
+                <h2 class="fw-bold">{{ __('messages.need_a_car') }}?</h2>
+                <p class="lead">{{ __('messages.banner_rent_car_one') }} <strong>10% {{ __('messages.discount') }}</strong> {{ __('messages.banner_rent_car_two') }}!</p>
+                <a href="#rent" class="btn btn-lg rounded-0" style="background-color: rgb(255, 166, 50); color:white;">{{ __('messages.btn_rent_car') }}</a>
             </div>
         
             <!-- Right Side: Image -->

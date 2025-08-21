@@ -296,7 +296,7 @@
                         <form @submit.prevent="submitForm">
                             <div class="form-header text-center">
                                 <h5>{{ __('messages.let_us_assist_you_with_your') }} catamaran cruise</h5>
-                                <h5>{{ __('messages.call_hero_title') }} <span style="color:var(--secondary-color); font-weight:500;">+230 55040167</span></h5>
+                                <h5>{{ __('messages.call_hero_title') }} <span style="color:var(--secondary-color); font-weight:500;">{{ $siteSettings->whatsapp }}</span></h5>
                             </div>
 
                             <h4 class="mt-4">{{ __('messages.enter_your_tour_details') }}:</h4>
@@ -426,34 +426,72 @@
             <div class="col-lg-4">
                 <div class="booking-card">
                     <div class="mb-3">
-                        @if ($tour->is_group_priced)
-                            <div class="mb-3">
+                     
+
+                    @if ($tour->is_group_priced)
+                        {{-- Group Price --}}
+                        <div class="mb-3">
+                            @if ($tour->group_price_promotion_price)
+                                <div class="text-muted text-decoration-line-through">
+                                    {{ __('messages.from') }} €{{ $tour->group_price }}
+                                </div>
+                                <div class="price text-danger">€{{ $tour->group_price_promotion_price }}</div>
+                            @else
                                 <span class="text-muted">{{ __('messages.from') }}</span>
                                 <div class="price">€{{ $tour->group_price }}</div>
-                                <div class="price-subtitle">{{ __('messages.per_group_of') }} {{ $tour->group_size }}</div>
-                            </div>
-                        @elseif (is_null($tour->transfer_price))
-                            <!-- Show this if transfer_price is null -->
-                            <div class="mb-3">
+                            @endif
+                            <div class="price-subtitle">{{ __('messages.per_group_of') }} {{ $tour->group_size }}</div>
+                        </div>
+                    
+                    @elseif (is_null($tour->transfer_price))
+                        {{-- Per Person (No Transfer Option) --}}
+                        <div class="mb-3">
+                            @if ($tour->starting_promotion_price)
+                                <div class="text-muted text-decoration-line-through">
+                                    {{ __('messages.from') }} €{{ $tour->starting_price }}
+                                </div>
+                                <div class="price text-danger">€{{ $tour->starting_promotion_price }}</div>
+                            @else
                                 <span class="text-muted">{{ __('messages.from') }}</span>
                                 <div class="price">€{{ $tour->starting_price }}</div>
-                                <div class="price-subtitle">{{ __('messages.per_person') }}</div>
-                            </div>
-                        @else
-                            <!-- Show this if transfer_price is not null -->
-                            <div class="mb-3">
-                                <span class="text-muted">{{ __('messages.price_options') }}</span>
-                                <div class="price">
+                            @endif
+                            <div class="price-subtitle">{{ __('messages.per_person') }}</div>
+                        </div>
+                    
+                    @else
+                        {{-- With / Without Transfer --}}
+                        <div class="mb-3">
+                            <span class="text-muted">{{ __('messages.price_options') }}</span>
+
+                            {{-- Without Transfer --}}
+                            <div class="price">
+                                @if ($tour->starting_promotion_price)
+                                    <span class="text-decoration-line-through text-muted">€{{ $tour->starting_price }}</span>
+                                    <span class="text-danger ms-2">€{{ $tour->starting_promotion_price }}</span>
+                                @else
                                     €{{ $tour->starting_price }}
-                                    <small class="text-muted" style="font-size: 1.25rem; font-weight: 600;">{{ __('messages.without_transfer') }}</small>
-                                </div>
-                                <div class="price">
-                                    €{{ $tour->transfer_price }}
-                                    <small class="text-muted" style="font-size: 1.25rem; font-weight: 600;">{{ __('messages.with_transfer') }}</small>
-                                </div>
-                                <div class="price-subtitle">{{ __('messages.per_person') }}</div>
+                                @endif
+                                <small class="text-muted" style="font-size: 1.25rem; font-weight: 600;">
+                                    {{ __('messages.without_transfer') }}
+                                </small>
                             </div>
-                        @endif
+
+                            {{-- With Transfer --}}
+                            <div class="price">
+                                @if ($tour->transfer_promotion_price ?? false)
+                                    <span class="text-decoration-line-through text-muted">€{{ $tour->transfer_price }}</span>
+                                    <span class="text-danger ms-2">€{{ $tour->transfer_promotion_price }}</span>
+                                @else
+                                    €{{ $tour->transfer_price }}
+                                @endif
+                                <small class="text-muted" style="font-size: 1.25rem; font-weight: 600;">
+                                    {{ __('messages.with_transfer') }}
+                                </small>
+                            </div>
+
+                            <div class="price-subtitle">{{ __('messages.per_person') }}</div>
+                        </div>
+                    @endif
 
                         
                         <a href="#check-availability-app"><button class="btn btn-primary w-100 mb-3" >{{ __('messages.book') }}</button></a>

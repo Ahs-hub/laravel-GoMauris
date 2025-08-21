@@ -47,48 +47,51 @@
     </style>
 
 
-<div class="container py-5">
-    <div class="privacy-policy">
-        <h1>Refund Policy</h1>
+    <div class="container py-5">
+        <div class="privacy-policy">
+            <h1>{{ __('refundpolicy.refund_policy') }}</h1>
 
-        <p>Welcome to GoMauris Mauritius! We aim to provide an exceptional and hassle-free experience for our valued customers. Our refund policy is designed to ensure fairness and transparency, making your booking experience with us smooth and worry-free. Please read the following guidelines carefully:</p>
+            <p>{{ __('refundpolicy.refund_intro') }} <a href="mailto:{{ $siteSettings->contact_email }}" style="color:var(--primary-color); text-decoration: none;">
+                {{ __('refundpolicy.contact_email') }}
+            </a></p>
 
-        <h4>Customer-Initiated Cancellations:</h4>
-        <ul>
-            <li><strong>Full Refund Eligibility:</strong> Customers who cancel their tour at least 24 hours before the scheduled commencement will receive a full refund. To initiate a cancellation, please send an email to 
-                <a href="https://mailto:gomauristours@gmail.com" style="color:var(--primary-color); text-decoration: none;">
-                    gomauristours@gmail.com
-                </a></li>
-            <li><strong>Effective Cancellation Notice:</strong> Your cancellation request will only be effective upon receipt of your email. Ensure to include your booking details for prompt processing.</li>
-        </ul>
+            <h4>{{ __('refundpolicy.customer_cancellations') }}</h4>
+            <ul>
+                <li><strong>{{ __('refundpolicy.full_refund_eligibility') }}:</strong> {{ __('refundpolicy.full_refund_eligibility_desc') }} 
+                    <a href="mailto:{{ $siteSettings->contact_email }}" style="color:var(--primary-color); text-decoration: none;">
+                        {{ __('refundpolicy.contact_email') }}
+                    </a>
+                </li>
+                <li><strong>{{ __('refundpolicy.effective_cancellation_notice') }}:</strong> {{ __('refundpolicy.effective_cancellation_notice_desc') }}</li>
+            </ul>
 
-        <h4>Weather-Related Cancellations:</h4>
-        <ul>
-            <li><strong>Full Refund Guarantee:</strong> If an activity is canceled due to adverse weather conditions, we guarantee a full refund to all affected customers.</li>
-            <li><strong>No Refund for Operational Activities:</strong> If the activity operates as scheduled and the customer decides not to participate, they will be charged for a last-minute cancellation.</li>
-        </ul>
+            <h4>{{ __('refundpolicy.weather_cancellations') }}</h4>
+            <ul>
+                <li><strong>{{ __('refundpolicy.full_refund_weather') }}:</strong> {{ __('refundpolicy.full_refund_weather_desc') }}</li>
+                <li><strong>{{ __('refundpolicy.no_refund_operational') }}:</strong> {{ __('refundpolicy.no_refund_operational_desc') }}</li>
+            </ul>
 
-        <h4>No Show and Late Arrivals:</h4>
-        <ul>
-            <li><strong>Strict No Show Policy:</strong> In case of a “No Show” or late arrival by a customer, the tour will depart on time as scheduled. Customers will be charged 100% of the tour cost.</li>
-        </ul>
+            <h4>{{ __('refundpolicy.no_show_late') }}</h4>
+            <ul>
+                <li><strong>{{ __('refundpolicy.strict_no_show') }}:</strong> {{ __('refundpolicy.strict_no_show_desc') }}</li>
+            </ul>
 
-        <h4>Refund Processing:</h4>
-        <ul>
-            <li><strong>Refund Request Processing:</strong> Once the refund request is submitted, our accounting team will process it within 2 working days.</li>
-            <li><strong>Bank Refund Time:</strong> After processing, it may take up to 7 days for the bank to issue the refund.</li>
-        </ul>
+            <h4>{{ __('refundpolicy.refund_processing') }}</h4>
+            <ul>
+                <li><strong>{{ __('refundpolicy.refund_request_processing') }}:</strong> {{ __('refundpolicy.refund_request_processing_desc') }}</li>
+                <li><strong>{{ __('refundpolicy.bank_refund_time') }}:</strong> {{ __('refundpolicy.bank_refund_time_desc') }}</li>
+            </ul>
 
-        <hr>
+            <hr>
 
-        <p>At GoMauris Mauritius, we strive to deliver exceptional service and unforgettable experiences. Our refund policy is designed to give you peace of mind, knowing your investment is secure. For inquiries, contact us at 
-           <a href="https://mailto:gomauristours@gmail.com" style="color:var(--primary-color); text-decoration: none;">
-                gomauristours@gmail.com
-            </a>
-        .
-        </p>
+            <p>{{ __('refundpolicy.closing_note') }} 
+            <a href="mailto:{{ __('refundpolicy.contact_email') }}" style="color:var(--primary-color); text-decoration: none;">
+                    {{ __('refundpolicy.contact_email') }}
+            </a>.
+            </p>
+        </div>
     </div>
-</div>
+
 
 
 

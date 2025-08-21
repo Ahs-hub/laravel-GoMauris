@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             TourCategorySeeder::class,
             TourSeeder::class,
             CarSeeder::class,
+            SiteSettingsSeeder::class,
         ]);
 
         User::create([

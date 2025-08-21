@@ -100,6 +100,13 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{ route('admin.discountpanel') }}">
+                       <i class='bx bx-cog'></i>
+                        Manage
+                    </a>
+                </li>
+
                 <li><a href="{{ route('admin.notificationpanel') }}"><i class='bx bx-bell'></i> Notification</a></li>
                 <li><a href="{{ route('admin.deletepanel') }}"><i class="bx bx-cog"></i> Settings</a></li>
                 
@@ -133,7 +140,7 @@
                             <i class="bx bx-user-circle"></i> Admin
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <!-- <li><a class="dropdown-item" href="#"><i class="bx bx-user"></i> Profile</a></li> -->
+                            <li><a class="dropdown-item" href="{{ route('admin.profilepanel') }}"><i class="bx bx-user"></i> Profile</a></li>
                             <li><a class="dropdown-item" href="{{ route('admin.deletepanel') }}"><i class="bx bx-cog"></i> Settings</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
@@ -181,6 +188,10 @@
                     notificationDismissed: false, // true after user closes the alert
                     playNotification: 0,
 
+
+                    modifiedmodaltour: false,
+                    editTour: {},      // Currently editing tour
+
                     //new notification receive  count,id
                     newnotifications: {
                         tour: {
@@ -226,6 +237,9 @@
                     blockedDates: [],
                     currentDate: new Date(),
                     weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+
+                    //view the tour to modidified(price promotion)
+                    tourstomodify: [],
 
                     loading: false,
                     loadingpage: false,
@@ -1335,7 +1349,49 @@
                         console.error('Error fetching DB usage:', err);
                         this.usage = { database: 'Error', used_mb: 0, limit_mb: 0, remaining_mb: 0 };
                     }
-                }
+                },
+
+                //#region Modified tour (promotion price ..ect)
+                    fetchToursToModify() {
+                        this.loading = true;
+                        axios.get("{{ route('admin.tours.json') }}")
+                            .then(res => {
+                                this.tourstomodify = res.data;
+                                this.modifiedmodaltour = true; // show the table
+                            })
+                            .catch(err => console.error(err))
+                            .finally(() => {
+                                    this.loading = false;
+                            });
+                    },
+
+                    openEditModal(tour) {
+                        this.editTour = {...tour}; // clone so we don’t edit directly
+                        new bootstrap.Modal(this.$refs.editModal).show();
+                    },
+
+                    closeEditModal() {
+                        bootstrap.Modal.getInstance(this.$refs.editModal).hide();
+                    },
+
+                    updateModifyTour() {
+                        this.loadingform = true;
+                        axios.put(`/admin/tours/${this.editTour.id}`, this.editTour, {
+                            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
+                        })
+                        .then(res => {
+                            const index = this.tourstomodify.findIndex(t => t.id === this.editTour.id);
+                            if (index !== -1) this.tourstomodify[index] = res.data;
+                            this.closeEditModal();
+                            alert('Tour updated successfully!');
+                        })
+                        .catch(err => console.error(err))
+                        .finally(() => {
+                                    this.loadingform = false;
+                        });
+                    },
+
+                //#endregion Modified tour (promotion price ..ect)
 
             },
             mounted() {

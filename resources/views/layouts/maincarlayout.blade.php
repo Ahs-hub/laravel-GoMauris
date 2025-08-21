@@ -30,6 +30,13 @@
     @else
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     @endif
+
+    @php
+        // Remove spaces and plus signs
+        $whatsappNumber = isset($siteSettings->whatsapp) 
+            ? preg_replace('/[\s+]/', '', $siteSettings->whatsapp) 
+            : '';
+    @endphp
     
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -47,8 +54,8 @@
                     <div class="header-item">
                         <i class='bx bx-phone'></i>
                         <span>
-                              <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
-                                    +230 55040167
+                              <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
+                              {{ $siteSettings->whatsapp }}
                               </a>
                         </span>
                     </div>
@@ -76,8 +83,8 @@
             <div class="header-item phone-appear" style="color:white;">
                 <i class='bx bx-phone'></i>
                 <span>
-                    <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
-                        +230 55040167
+                    <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
+                    {{ $siteSettings->whatsapp }}
                     </a>
                 </span>
             </div>
@@ -92,17 +99,17 @@
                         <a class="nav-link" href="{{ route('cars.home') }}"><i class='bx bxs-home'></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">Tours</a>
+                        <a class="nav-link" href="{{ route('home') }}">{{ __('messages.tours') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('fleet') }}">Our Fleet</a>
+                        <a class="nav-link" href="{{ route('fleet') }}">{{ __('messages.our_fleet') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('reservation') }}">Reservation</a>
+                        <a class="nav-link" href="{{ route('reservation') }}">{{ __('messages.reservation') }}</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('faq') }}">FAQ</a>
+                        <a class="nav-link" href="{{ route('faq') }}">{{ __('messages.faq') }}</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#about">About</a>
@@ -112,12 +119,12 @@
                     </li> -->         
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('contact', ['type' => 'car']) }}">Contact</a>
+                        <a class="nav-link" href="{{ route('contact', ['type' => 'car']) }}">{{ __('messages.contact') }}</a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#langCurrencyModal">
-                            <i class='bx bx-globe'></i> EN/EUR(€)
+                            <i class='bx bx-globe'></i> {{ __('messages.en') }}/EUR(€)
                         </a>
                         </li>
 
@@ -160,61 +167,82 @@
     </div>
   </div>
 
-   <!-- Language & Currency Modal -->
+    <!-- Language & Currency Modal -->
     <div class="modal fade" id="langCurrencyModal" tabindex="-1" aria-labelledby="langCurrencyModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content lang-modal">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content lang-modal">
 
-                <!-- Modal Header with Tabs -->
-                <div class="modal-header border-0">
-                    <ul class="nav nav-tabs nav-fill w-100" id="langCurrencyTabs" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="language-tab" data-bs-toggle="tab" data-bs-target="#language" type="button" role="tab">
-                                <i class='bx bx-globe'></i> Language
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="currency-tab" data-bs-toggle="tab" data-bs-target="#currency" type="button" role="tab">
-                                <i class='bx bx-dollar-circle'></i> Currency
-                            </button>
-                        </li>
-                    </ul>
-                    <button type="button" class="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <!-- Modal Body with Tab Content -->
-                <div class="modal-body tab-content">
-                    <!-- Language Tab -->
-                    <div class="tab-pane fade show active" id="language" role="tabpanel">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <ul class="list-unstyled lang-list">
-                                    <li class="active">English (United States) <i class='bx bx-check'></i></li>
-                                    <!-- <li>Russie</li>
-                                    <li>English (Australia)</li>
-                                    <li>Español (España)</li>
-                                    <li>Français</li>
-                                    <li>Chinese</li>
-                                    <li>Germany</li> -->
-                                </ul>
-                            </div>
-                        </div>
+                    <!-- Modal Header with Tabs -->
+                    <div class="modal-header border-0">
+                        <ul class="nav nav-tabs nav-fill w-100" id="langCurrencyTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="language-tab" data-bs-toggle="tab" data-bs-target="#language" type="button" role="tab">
+                                    <i class='bx bx-globe'></i> Language
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="currency-tab" data-bs-toggle="tab" data-bs-target="#currency" type="button" role="tab">
+                                    <i class='bx bx-dollar-circle'></i> Currency
+                                </button>
+                            </li>
+                        </ul>
+                        <button type="button" class="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <!-- Currency Tab -->
-                    <div class="tab-pane fade" id="currency" role="tabpanel">
-                        <div class="row gx-5">
-                            <div class="col-md-4">
-                                <ul class="list-unstyled currency-list">
-                                    <li class="active">Euro <span>€</span> <i class='bx bx-check'></i></li>
-                                </ul>
+                    <!-- Modal Body with Tab Content -->
+                    <div class="modal-body tab-content">
+                        <!-- Language Tab -->
+                        <!-- <div class="tab-pane fade show active" id="language" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled lang-list">
+                                        <li class="active">English (United States) <i class='bx bx-check'></i></li>
+                                        <a href="{{ route('setLocale', 'en') }}">English</a>
+                                        <li>Français</li> -->
+                                        <!-- <li>Russie</li>
+                                        <li>English (Australia)</li>
+                                        <li>Español (España)</li>
+                                        <li>Chinese</li>
+                                        <li>Germany</li> -->
+                                    <!-- </ul>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="tab-pane fade show active" id="language" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled lang-list">
+                                        @foreach(['en'=>'English','fr'=>'Français','es'=>'Español'] as $code => $label)
+                                        <li class="{{ app()->getLocale() === $code ? 'active' : '' }}">
+                                            <a href="{{ route('setLocale', $code) }}">
+                                                {{ $label }}
+                                                @if(app()->getLocale() === $code)
+                                                    <i class='bx bx-check'></i>
+                                                @endif
+                                            </a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div> <!-- /.modal-body -->
 
-            </div> <!-- ✅ closing .modal-content -->
-        </div> <!-- /.modal-dialog -->
+
+
+                        <!-- Currency Tab -->
+                        <div class="tab-pane fade" id="currency" role="tabpanel">
+                            <div class="row gx-5">
+                                <div class="col-md-4">
+                                    <ul class="list-unstyled currency-list">
+                                        <li class="active">Euro <span>€</span> <i class='bx bx-check'></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- /.modal-body -->
+
+                </div> <!-- ✅ closing .modal-content -->
+            </div> <!-- /.modal-dialog -->
     </div> <!-- /.modal -->
 
      <!-- Footer -->
@@ -251,11 +279,9 @@
                     </div>
                     <div class="col-lg-2 col-md-6">
                         <div class="footer-section">
-                            <h5>About </h5>
-                            <p  style="color:rgb(161, 161, 161);"> Planning a tour to the paradise island, business meeting,
-                             visiting family, we offer you a comfortable car adapted to your needs.
-                            To make sure you have an enjoyable stay in Mauritius we offer you a driving 
-                            seat every step of the way.
+                            <h5>{{ __('messages.car_about') }}</h5>
+                            <p  style="color:rgb(161, 161, 161);"> 
+                            {{ __('messages.car_about_detail') }}
                             </p>
 
                         </div>
@@ -264,14 +290,14 @@
                     <!-- Quick Links -->
                     <div class="col-lg-2 col-md-6">
                         <div class="footer-section"  >
-                            <h5>Quick Links</h5>
+                            <h5>{{ __('messages.quick_link') }}</h5>
                             <ul class="footer-links">
-                                <li><a href="{{ route('cars.home') }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Home</a></li>
-                                <li><a  href="{{ route('fleet') }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Our Fleet</a></li>
-                                <li><a href="{{ route('reservation') }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Reservation</a></li>
-                                <li><a href="{{ route('faq') }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>FAQ</a></li>
-                                <li><a href="{{ route('contact', ['type' => 'car']) }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Contact</a></li>
-                                <li><a href="{{ route('rentalpolicy') }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>Rental Policy</a></li>
+                                <li><a href="{{ route('cars.home') }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>{{ __('messages.home') }}</a></li>
+                                <li><a  href="{{ route('fleet') }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>{{ __('messages.our_fleet') }}</a></li>
+                                <li><a href="{{ route('reservation') }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>{{ __('messages.reservation') }}</a></li>
+                                <li><a href="{{ route('faq') }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>{{ __('messages.faq') }}</a></li>
+                                <li><a href="{{ route('contact', ['type' => 'car']) }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>{{ __('messages.contact') }}</a></li>
+                                <li><a href="{{ route('rentalpolicy') }}" style="color:rgb(161, 161, 161);"><i class='bx bx-chevron-right'></i>{{ __('messages.rental_policy') }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -286,10 +312,10 @@
                                         <i class='bx bx-phone'></i>
                                     </div>
                                     <div class="contact-text" >
-                                        <strong style="color:rgb(161, 161, 161);">Phone</strong>
+                                        <strong style="color:rgb(161, 161, 161);">{{ __('messages.phone') }}</strong>
                                         <span>
-                                            <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
-                                                    +230 55040167
+                                            <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
+                                            {{ $siteSettings->whatsapp }}
                                             </a>
                                         </span>
                                     </div>
@@ -300,10 +326,10 @@
                                         <i class='bx bx-envelope'></i>
                                     </div>
                                     <div class="contact-text">
-                                        <strong style="color:rgb(161, 161, 161);">Email</strong>
+                                        <strong style="color:rgb(161, 161, 161);">{{ __('messages.email') }}</strong>
                                         <span>
-                                            <a href="https://mailto:gomauristours@gmail.com" style="color:white; text-decoration: none;">
-                                                gomauristours@gmail.com
+                                            <a href="https://mailto:{{ $siteSettings->contact_email }}" style="color:white; text-decoration: none;">
+                                            {{ $siteSettings->contact_email }}
                                             </a>
                                         </span>
                                     </div>
@@ -314,8 +340,8 @@
                                         <i class='bx bx-map'></i>
                                     </div>
                                     <div class="contact-text" >
-                                        <strong style="color:rgb(161, 161, 161);">Location</strong>
-                                        <span>Mauritius Island</span>
+                                        <strong style="color:rgb(161, 161, 161);">{{ __('messages.location') }}</strong>
+                                        <span>{{ __('messages.mauritius_island') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -345,12 +371,12 @@
             <div class="container">
                 <div class="footer-bottom-content">
                     <div class="copyright">
-                        <p>&copy; Copyright © 2025 MyVacTour Mauritius Car Rental</p>
+                        <p>&copy; {{ __('messages.footer_end_car') }}</p>
                     </div>
                     <div class="footer-bottom-links">
-                        <a href="{{ route('privacypolicy', ['type' => 'car']) }}">Privacy Policy   </a>
+                        <a href="{{ route('privacypolicy', ['type' => 'car']) }}">{{ __('messages.privacy_policy') }}  </a>
                         |
-                        <a  href="{{ route('cancellationpolicy') }}"> Cancellation Policy</a>
+                        <a  href="{{ route('cancellationpolicy') }}">{{ __('messages.cancellation_policy') }} </a>
                     </div>
                 </div>
             </div>

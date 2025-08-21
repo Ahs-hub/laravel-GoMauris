@@ -312,10 +312,9 @@
             <!-- Category filter buttons -->
             <div class="d-flex flex-wrap justify-content-center my-3" >
                 <button class="btn button-text category-btn active" data-category="all">{{ __('messages.tour_all_tours_btn') }}</button>
-
                 @foreach ($categories as $category)
                     <button class="btn button-text category-btn" data-category="{{ $category->slug }}">
-                        {{ $category->name }}
+                        {{ __('messages.' . $category->slug) }}
                     </button>
                 @endforeach
             </div>
@@ -340,18 +339,38 @@
                                 @endif
                                 <span class="rating-text">{{ $tour->average_rating }} ({{ $tour->total_reviews }})</span>
                             </div>
-                            <p class="from-text">{{ __('messages.from') }}</p>
+
                             @if ($tour->is_group_priced)
-                                <p>
+                                {{-- Group price --}}
+                                @if ($tour->group_price_promotion_price)
+                                    <p class="from-text text-muted text-decoration-line-through">
+                                        {{ __('messages.from') }} €{{ $tour->group_price }}
+                                    </p>
+                                    <strong class="tour-price text-danger ms-1">
+                                        €{{ $tour->group_price_promotion_price }}
+                                    </strong>
+                                @else
+                                    <p class="from-text">{{ __('messages.from') }}</p>
                                     <strong class="tour-price">€{{ $tour->group_price }}</strong>
-                                    <span class="per-person">per group of {{ $tour->group_size }}</span>
-                                </p>
+                                @endif
+                                <span class="per-person">{{ __('messages.per_group_of') }} {{ $tour->group_size }}</span>
                             @else
-                                <p>
+                                {{-- Starting price --}}
+                                @if ($tour->starting_promotion_price)
+                                    <p class="from-text text-muted text-decoration-line-through">
+                                        {{ __('messages.from') }} €{{ $tour->starting_price }}
+                                    </p>
+                                    <strong class="tour-price text-danger ms-1">
+                                        €{{ $tour->starting_promotion_price }}
+                                    </strong>
+                                @else
+                                    <p class="from-text">{{ __('messages.from') }}</p>
                                     <strong class="tour-price">€{{ $tour->starting_price }}</strong>
-                                    <span class="per-person">{{ __('messages.per_person') }}</span>
-                                </p>
+                                @endif
+                                <span class="per-person">{{ __('messages.per_person') }}</span>
                             @endif
+                             
+
                         </div>
                     </div>
                 </a>

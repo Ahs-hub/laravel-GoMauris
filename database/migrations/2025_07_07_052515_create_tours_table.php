@@ -40,11 +40,19 @@ return new class extends Migration
             $table->decimal('group_price', 8, 2)->nullable();
             $table->integer('group_size')->nullable();
 
+            // ✅ Added promotion cost
+            $table->decimal('starting_promotion_price', 8, 2)->nullable(); 
+            $table->decimal('transfer_promotion_price', 8, 2)->nullable(); 
+            $table->decimal('group_price_promotion_price', 8, 2)->nullable(); 
+
             // Optional return location
             $table->string('location')->nullable();
 
             // Number of pictures (default 4)
             $table->integer('number_of_pictures')->default(4);
+
+            // ✅ Active / Suspended
+            $table->boolean('is_active')->default(true);
 
             $table->timestamps();
         });

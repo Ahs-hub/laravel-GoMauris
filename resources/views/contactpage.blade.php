@@ -7,6 +7,13 @@
         <link rel="stylesheet" href="{{ asset('css/contactpage.css') }}">
     @endif
 
+    @php
+        // Remove spaces and plus signs
+        $whatsappNumber = isset($siteSettings->whatsapp) 
+            ? preg_replace('/[\s+]/', '', $siteSettings->whatsapp) 
+            : '';
+    @endphp
+
 <!-- Hero Section -->
 <section class="hero-section">
     <div class="container">
@@ -115,8 +122,8 @@
                             </div>
                             <h5 class="fw-bold mb-2" >{{ __('messages.call_us') }}</h5>
                             <p class="paragraph-text text-muted mb-0">
-                                <a href="https://wa.me/23055040167" target="_blank" class="whatsapp-link" style="text-decoration:none;">
-                                    +230 55040167
+                                <a href="https://wa.me/{{ $whatsappNumber }}s" target="_blank" class="whatsapp-link" style="text-decoration:none;">
+                                {{ $siteSettings->whatsapp }}
                                 </a>
                             </p>
                         </div>
@@ -128,8 +135,8 @@
                             </div>
                             <h5 class="fw-bold mb-2" >{{ __('messages.email_us') }}</h5>
                             <p class="paragraph-text text-muted mb-0">
-                               <a href="https://mailto:gomauristours@gmail.com" style=" text-decoration: none;">
-                                    gomauristours@gmail.com
+                               <a href="https://mailto: {{ $siteSettings->contact_email }}" style=" text-decoration: none;">
+                               {{ $siteSettings->contact_email }}
                                 </a>
                             </p>
                            
