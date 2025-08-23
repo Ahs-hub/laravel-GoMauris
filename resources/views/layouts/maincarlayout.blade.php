@@ -272,9 +272,9 @@
                             <a href="#" class="social-link" title="WhatsApp">
                                 <i class='bx bxl-whatsapp'></i>
                             </a>
-                            <a href="#" class="social-link" title="TripAdvisor">
+                            <!-- <a href="#" class="social-link" title="TripAdvisor">
                                 <i class='bx bx-map'></i>
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-6">

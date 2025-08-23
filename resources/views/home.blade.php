@@ -23,11 +23,11 @@
           <h1 class="hero-title">{{ __('messages.hero_title') }}</h1>
       
           <div class="button-group">
-            <button class="btn btn-form" onclick="window.location.href='{{ route('tours.index') }}'"><i class='bx bx-map'></i>{{ __('messages.hero_btn_explore') }}</button>
+            <button class="btn btn-form" onclick="window.location.href='{{ route('tours.index') }}'"> <i class='bx bx-map'> </i> {{ __('messages.hero_btn_explore') }}</button>
             <!-- <button class="btn btn-form"><i class='bx bx-camera'></i> Sightseeing</button> -->
 
-            <button class="btn btn-form" onclick="window.location.href='{{ route('cars.home') }}'"><i class='bx bx-car'></i>{{ __('messages.hero_btn_car_rental') }}</button>
-            <button class="btn btn-form" onclick="window.location.href='{{ route('taxi') }}'"><i class='bx bx-car'></i>{{ __('messages.hero_btn_book_taxi') }}</button>
+            <button class="btn btn-form" onclick="window.location.href='{{ route('cars.home') }}'"> <i class='bx bx-car'> </i> {{ __('messages.hero_btn_car_rental') }}</button>
+            <button class="btn btn-form" onclick="window.location.href='{{ route('taxi') }}'"> <i class='bx bx-car'> </i> {{ __('messages.hero_btn_book_taxi') }}</button>
             
           </div>
       

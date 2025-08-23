@@ -237,8 +237,8 @@
                             </div> -->
 
                             <!-- Date picker (no auto check) -->
-                            <div class="date-button-wrapper" style="width:50%">
-                                <div class="custom-date-button">
+                            <div class="date-button-wrapper" style="width:50%; position:relative;">
+                                <button class="custom-date-button" @click="openDatePicker">
                                     <span>
                                         <i class='bx bx-calendar'></i>
                                         <span v-if="selectedDate">Date: @{{ formatFullDate(selectedDate) }}</span>
@@ -248,6 +248,7 @@
 
                                     <!-- With auto-check enabled -->
                                     <input 
+                                        ref="dateInput"
                                         v-if="enableAutoCheck"
                                         type="date" 
                                         class="custom-date-input" 
@@ -258,6 +259,7 @@
 
                                     <!-- Without auto-check -->
                                     <input 
+                                        ref="dateInput"
                                         v-else
                                         type="date" 
                                         class="custom-date-input" 
@@ -266,8 +268,10 @@
                                     />
 
 
-                                </div>
+                                 </button>
                             </div>
+
+
                         </div>
 
                         <!-- Button to check availability -->
@@ -684,6 +688,16 @@
                         }
                     }finally {
                         this.loading = false; // Always hide spinner after submission
+                    }
+                },
+
+                openDatePicker() {
+                    if (this.$refs.dateInput && this.$refs.dateInput.showPicker) {
+                    // Modern browsers (Chrome, Edge, Safari)
+                    this.$refs.dateInput.showPicker();
+                    } else if (this.$refs.dateInput) {
+                    // Fallback for browsers without showPicker
+                    this.$refs.dateInput.click();
                     }
                 },
 

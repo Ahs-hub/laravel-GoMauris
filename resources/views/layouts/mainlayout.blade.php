@@ -291,9 +291,9 @@
                             <a href="https://wa.me/{{ $whatsappNumber }}" class="social-link" title="WhatsApp" target="_blank">
                                 <i class='bx bxl-whatsapp'></i>
                             </a>
-                            <a href="#" class="social-link" title="TripAdvisor">
+                            <!-- <a href="#" class="social-link" title="TripAdvisor">
                                 <i class='bx bx-map'></i>
-                            </a>
+                            </a> -->
                         </div>
                     </div>
 

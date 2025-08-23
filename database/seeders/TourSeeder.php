@@ -569,6 +569,7 @@ class TourSeeder extends Seeder
         //Scenic South West
         Tour::create([
             'name' => 'Scenic South West',
+            'name_en' => 'Scenic South West',
             'name_fr' => 'Sud-Ouest pittoresque',
             'name_es' => 'Suroeste escénico',
 

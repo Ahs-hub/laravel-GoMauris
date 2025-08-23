@@ -70,7 +70,7 @@
             <div class="col-md-6 mb-4 mb-md-0" style="color:white;">
                 <h2 class="fw-bold">{{ __('messages.need_a_car') }}?</h2>
                 <p class="lead">{{ __('messages.banner_rent_car_one') }} <strong>10% {{ __('messages.discount') }}</strong> {{ __('messages.banner_rent_car_two') }}!</p>
-                <a href="#rent" class="btn btn-lg rounded-0" style="background-color: rgb(255, 166, 50); color:white;">{{ __('messages.btn_rent_car') }}</a>
+                <a href="{{ route('cars.home') }}" class="btn btn-lg rounded-0" style="background-color: rgb(255, 166, 50); color:white;">{{ __('messages.btn_rent_car') }}</a>
             </div>
         
             <!-- Right Side: Image -->
