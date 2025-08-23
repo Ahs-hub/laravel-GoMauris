@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\SiteSetting;
+
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash; // if you plan to check password later
 
@@ -159,4 +161,62 @@ class AdminSetupController extends Controller
             ], 500);
         }
     }
+
+    //return to view
+    public function getSettings()
+    {
+        $admin = SiteSetting::firstOrNew([]);
+        return response()->json($admin);
+    }
+   //update setting
+   public function updatesetting(Request $request)
+   {
+       $admin = SiteSetting::firstOrNew(['id' => 1]); // or just ->first()
+   
+       $admin->fill($request->only([
+           'contact_email',
+           'whatsapp',
+           'facebook',
+           'instagram',
+           'twitter',
+           'notification_emails',
+           'notification_phones',
+           'email_notifications_enabled',
+           'sms_notifications_enabled',
+       ]));
+   
+       $admin->save();
+   
+       return response()->json([
+           'message' => 'Settings updated successfully!',
+           'admin' => $admin
+       ]);
+   }
+
+//    public function showChangePasswordForm()
+//    {
+//        return view('admin.change-password');
+//    }
+
+   public function updatePassword(Request $request)
+   {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+            'g-recaptcha-response' => 'required|captcha'
+        ]);
+
+        $user = Auth::user();
+
+        // Check current password
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'Your current password is incorrect.']);
+        }
+
+        // Update password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return redirect()->route('admin.profilepanel')->with('success', 'Password updated successfully!');
+   }
 }

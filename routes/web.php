@@ -148,6 +148,17 @@ Route::middleware('auth')->group(function () {
         ->name('admin.tours.update');
 });
 
+//Get/Edit email,whatapp,social link
+Route::middleware(['auth', 'is_admin'])->group(function () {
+    Route::get('/admin/settings/json', [AdminSetupController::class, 'getSettings'])->name('admin.settings.json');
+    Route::post('/admin/settings', [AdminSetupController::class, 'updatesetting'])->name('admin.settings.update');
+
+    //Change password
+    Route::get('/admin/change-password', [AdminSetupController::class, 'showChangePasswordForm'])->name('admin.password.change');
+    Route::post('/admin/change-password', [AdminSetupController::class, 'updatePassword'])->name('admin.password.update');
+});
+
+
 // Go to Book Tour panel
 Route::middleware('auth')->get('/admin/booktour', function () {
     return view('admin.tourpanel');

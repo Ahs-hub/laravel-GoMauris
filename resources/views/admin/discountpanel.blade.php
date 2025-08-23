@@ -18,60 +18,122 @@
 
         <div v-if="modifiedmodaltour">
             <div class="container py-4">
-                <h2 class="mb-4"><i class='bx bx-ship'></i> Manage Tours</h2>
-
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Active</th>
-                                    <th>Base Price (€)</th>
-                                    <th>Promo Price (€)</th>
-                                    <th>Group Price (€)</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="tour in tourstomodify" :key="tour.id">
-                                    <td>@{{ tour.id }}</td>
-                                    <td>@{{ tour.name }}</td>
-                                    <td>
-                                        <span v-if="tour.is_active" class="badge bg-success">
-                                            <i class="bx bx-check-circle"></i> Active
-                                        </span>
-                                        <span v-else class="badge bg-danger">
-                                            <i class="bx bx-x-circle"></i> Inactive
-                                        </span>
-                                    </td>
-                                    <td>€ @{{ parseFloat(tour.starting_price).toFixed(2) }}</td>
-                                    <td>
-                                        <span v-if="tour.starting_promotion_price" class="text-danger fw-bold">
-                                            € @{{ parseFloat(tour.starting_promotion_price).toFixed(2) }}
-                                        </span>
-                                        <span v-else class="text-muted">—</span>
-                                    </td>
-                                    <td>
-                                        <span v-if="tour.group_price">€ @{{ parseFloat(tour.group_price).toFixed(2) }}</span>
-                                        <span v-else class="text-muted">—</span>
-                                    </td>
-                                    <td>
-                                    <button @click="openEditModal(tour)" class="btn btn-sm btn-outline-primary">
-                                        <i class='bx bx-edit'></i> Edit
-                                    </button>
-                                        <!-- <button @click="deleteTour(tour.id)" class="btn btn-sm btn-outline-danger">
-                                            <i class='bx bx-trash'></i>
-                                        </button> -->
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-            
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="mb-0"><i class='bx bx-ship'></i> Manage Tours</h2>
+                    <div class="btn-group" role="group">
+                        <button 
+                            type="button" 
+                            class="btn btn-sm" 
+                            :class="viewMode === 'table' ? 'btn-primary' : 'btn-outline-primary'"
+                            @click="viewMode = 'table'"
+                        >
+                            <i class='bx bx-table'></i>
+                        </button>
+                        <button 
+                            type="button" 
+                            class="btn btn-sm" 
+                            :class="viewMode === 'cards' ? 'btn-primary' : 'btn-outline-primary'"
+                            @click="viewMode = 'cards'"
+                        >
+                            <i class='bx bx-grid-alt'></i>
+                        </button>
                     </div>
                 </div>
+
+               <div v-if="viewMode === 'table'">
+                    <!-- TABLE VIEW -->
+
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Active</th>
+                                        <th>Base Price (€)</th>
+                                        <th>Promo Price (€)</th>
+                                        <th>Group Price (€)</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="tour in tourstomodify" :key="tour.id">
+                                        <td>@{{ tour.id }}</td>
+                                        <td>@{{ tour.name }}</td>
+                                        <td>
+                                            <span v-if="tour.is_active" class="badge bg-success">
+                                                <i class="bx bx-check-circle"></i> Active
+                                            </span>
+                                            <span v-else class="badge bg-danger">
+                                                <i class="bx bx-x-circle"></i> Inactive
+                                            </span>
+                                        </td>
+                                        <td>€ @{{ parseFloat(tour.starting_price).toFixed(2) }}</td>
+                                        <td>
+                                            <span v-if="tour.starting_promotion_price" class="text-danger fw-bold">
+                                                € @{{ parseFloat(tour.starting_promotion_price).toFixed(2) }}
+                                            </span>
+                                            <span v-else class="text-muted">—</span>
+                                        </td>
+                                        <td>
+                                            <span v-if="tour.group_price">€ @{{ parseFloat(tour.group_price).toFixed(2) }}</span>
+                                            <span v-else class="text-muted">—</span>
+                                        </td>
+                                        <td>
+                                        <button @click="openEditModal(tour)" class="btn btn-sm btn-outline-primary">
+                                            <i class='bx bx-edit'></i> Edit
+                                        </button>
+                                            <!-- <button @click="deleteTour(tour.id)" class="btn btn-sm btn-outline-danger">
+                                                <i class='bx bx-trash'></i>
+                                            </button> -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div v-else>
+                    <!-- CARD VIEW -->
+                    <div class="row">
+                        <div class="col-md-4 mb-3" v-for="tour in tourstomodify" :key="tour.id">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                            <h5 class="card-title">@{{ tour.name }}</h5>
+                            <p>
+                                <span v-if="tour.is_active" class="badge bg-success">Active</span>
+                                <span v-else class="badge bg-danger">Inactive</span>
+                            </p>
+                            <p><strong>Base Price:</strong> € @{{ parseFloat(tour.starting_price).toFixed(2) }}</p>
+                            <p>
+                                <strong>Promo:</strong>
+                                <span v-if="tour.starting_promotion_price" class="text-danger fw-bold">
+                                € @{{ parseFloat(tour.starting_promotion_price).toFixed(2) }}
+                                </span>
+                                <span v-else class="text-muted">—</span>
+                            </p>
+                            <p>
+                                <strong>Group:</strong>
+                                <span v-if="tour.group_price">€ @{{ parseFloat(tour.group_price).toFixed(2) }}</span>
+                                <span v-else class="text-muted">—</span>
+                            </p>
+                            <button @click="openEditModal(tour)" class="btn btn-sm btn-outline-primary">
+                                <i class='bx bx-edit'></i> Edit
+                            </button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         </div>
 

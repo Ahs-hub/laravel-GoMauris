@@ -26,6 +26,7 @@ return new class extends Migration
                 $table->string('consumption')->nullable();
                 $table->string('policy')->nullable();
                 $table->decimal('price_per_day', 8, 2)->nullable();
+                $table->decimal('promotion_price_per_day', 8, 2)->nullable();
                 $table->boolean('climate_control')->default(false);
                 $table->string('image_path')->nullable(); // ✅ Picture location
                 $table->timestamps();

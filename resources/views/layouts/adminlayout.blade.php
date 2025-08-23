@@ -175,7 +175,6 @@
 
     {{-- JS Libraries --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
 
     <script>
         const { createApp } = Vue;
@@ -221,6 +220,9 @@
                             
                         }
                     },
+
+                    //save setting(social link,phone,email)
+                    admin: [],
 
                     //notification page
                     notifications: [], // All notifications
@@ -1393,6 +1395,51 @@
 
                 //#endregion Modified tour (promotion price ..ect)
 
+                fetchAdminSetting() {
+                    this.loading = true;
+                    axios.get('/admin/settings/json') // endpoint returning JSON for SiteSetting
+                        .then(res => {
+                            console.log('Response received:', res); // full Axios response
+                            console.log('Data only:', res.data);   // actual data
+                            this.admin = res.data;
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            // fallback defaults
+                            this.admin = {
+                                contact_email: '',
+                                whatsapp: '',
+                                twitter: '',
+                                facebook: '',
+                                instagram: '',
+                            }
+                        })
+                        .finally(() => {
+                                this.loading = false;
+                        });
+                },
+                
+                saveSettings() {
+                    this.loadingform = true;
+                    axios.post('{{ route("admin.settings.update") }}', this.admin)
+                        .then(res => {
+                            alert(res.data.message);
+                            this.admin = res.data.admin;
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            alert('Failed to save settings.');
+                        })
+                        .finally(() => {
+                                this.loadingform = false;
+                        });
+                },
+
+                handleSubmitpassword(e) {
+                    this.loading = true;
+                    e.target.submit(); // actually submit the form after enabling spinner
+                },
+
             },
             mounted() {
                 const path = window.location.pathname;
@@ -1436,6 +1483,8 @@
                     this.loadPaginatedData('/api/custom', 'custom');
                     window.addEventListener('scroll', () => this.handleScroll('/api/taxi', 'taxi'));
                     
+                }else if (path.includes('/admin/profilepanel')) {
+                    this.fetchAdminSetting();
                 }else if (path.includes('/admin/deletepanel')) {
                     this.fetchUsage();//Space used
                 }else if (window.location.pathname.includes('/admin/notificationpanel')) {
