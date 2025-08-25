@@ -19,6 +19,8 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\AdminSetupController;
 use App\Http\Controllers\Admin\AdminTourController;
 
+use App\Http\Controllers\Admin\AdminCarController;
+
 use App\Http\Controllers\TaxiBookingController;
 
 
@@ -146,6 +148,15 @@ Route::middleware('auth')->group(function () {
 
     Route::put('/admin/tours/{tour}', [AdminTourController::class, 'update'])
         ->name('admin.tours.update');
+});
+
+// Protected JSON cars route
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/cars/json', [AdminCarController::class, 'json'])
+        ->name('admin.cars.json');
+
+    Route::put('/admin/cars/{car}', [AdminCarController::class, 'update'])
+        ->name('admin.cars.update');
 });
 
 //Get/Edit email,whatapp,social link

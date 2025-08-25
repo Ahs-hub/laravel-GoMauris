@@ -13,6 +13,7 @@
 
   /*#region    ---------Tour sectionn        ----------*/
 
+
 .category-btn {
     border-radius: 20px;
     margin: 5px;
@@ -137,3 +138,56 @@
 }
 
 /*#endregion    ---------Tour sectionn        ----------*/
+
+/*#region       taxi card category  */
+.vehicle-card {
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.vehicle-card.active {
+  border-color: var(--primary-color);
+}
+.vehicle-card img {
+  width: 80px;
+  height: auto;
+}
+.vehicle-info {
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+.vehicle-info i {
+  margin-right: 4px;
+}
+/* Show selected card */
+/* Hover effect */
+.vehicle-card:hover {
+  border-color: #0d6efd33;
+}
+
+/* Hide the radio input */
+.vehicle-card input[type="radio"] {
+  display: none;
+}
+
+/* Highlight the entire card when selected */
+.vehicle-card input[type="radio"]:checked + * {
+  border-color: #0d6efd; /* main blue border */
+}
+
+/* Trick: add blue border to entire card */
+.vehicle-card input[type="radio"]:checked {
+  border: none; /* input itself has no border */
+}
+.vehicle-card input[type="radio"]:checked ~ * {
+  border: none;
+}
+
+/* Better approach: use :has() if supported */
+.vehicle-card:has(input[type="radio"]:checked) {
+  border: 2px solid #0d6efd;
+}
+/*#endregion    taxi card category  */

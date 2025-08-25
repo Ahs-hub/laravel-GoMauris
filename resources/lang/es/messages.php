@@ -283,6 +283,11 @@ return [
 'btn_rent_car' => 'Alquilar un coche',
  
 // Car Rental page
+'economy' => 'Económica',
+'comfort' => 'Confort',
+'business' => 'Negocios',
+'minibus' => 'Minibús',
+
 'rent_a_car' => 'Alquilar un coche',
 'in_mauritius' => 'en Isla Mauricio',
 'pick_up' => 'Recogida',

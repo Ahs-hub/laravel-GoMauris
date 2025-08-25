@@ -284,6 +284,11 @@ return [
     'btn_rent_car' => 'Louer une voiture',
 
     // Car Rental page
+    'economy' => 'Économie',
+    'comfort' => 'Confort',
+    'business' => 'Affaires',
+    'minibus' => 'Minibus',
+
     'rent_a_car' => 'Louer une voiture',
     'in_mauritius' => 'à l’île Maurice',
     'pick_up' => 'Prise en charge',

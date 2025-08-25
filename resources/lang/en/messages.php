@@ -290,6 +290,11 @@ return [
     'btn_rent_car' => 'Rent Car',
 
     //Car Rental page
+    'economy' => 'Economy',
+    'comfort' => 'Comfort',
+    'business' => 'Business',
+    'minibus' => 'Minibus',
+    
     'rent_a_car' => 'Rent A Car',
     'in_mauritius' => 'in Mauritius',
     'pick_up' => 'Pick Up',

@@ -189,7 +189,8 @@
 
 
                     modifiedmodaltour: false,
-                    editTour: {},      // Currently editing tour
+                    modifiedmodalcar: false,
+                    editItem: {},      // Currently editing tour,car
 
                     //new notification receive  count,id
                     newnotifications: {
@@ -242,6 +243,7 @@
 
                     //view the tour to modidified(price promotion)
                     tourstomodify: [],
+                    carstomodify: [],
 
                     loading: false,
                     loadingpage: false,
@@ -1353,12 +1355,13 @@
                     }
                 },
 
-                //#region Modified tour (promotion price ..ect)
+                //#region Modified tour,car (promotion price ..ect)
                     fetchToursToModify() {
                         this.loading = true;
                         axios.get("{{ route('admin.tours.json') }}")
                             .then(res => {
                                 this.tourstomodify = res.data;
+                                this.modifiedmodalcar = false;
                                 this.modifiedmodaltour = true; // show the table
                             })
                             .catch(err => console.error(err))
@@ -1366,34 +1369,81 @@
                                     this.loading = false;
                             });
                     },
+                    fetchCarsToModify(){
+                        this.loading = true;
+                        axios.get("{{ route('admin.cars.json') }}")
+                            .then(res => {
+                                this.carstomodify = res.data;
+                                this.modifiedmodaltour = false;
+                                this.modifiedmodalcar = true; // show the table
+                            })
+                            .catch(err => console.error(err))
+                            .finally(() => {
+                                    this.loading = false;
+                            });
 
-                    openEditModal(tour) {
-                        this.editTour = {...tour}; // clone so we don’t edit directly
-                        new bootstrap.Modal(this.$refs.editModal).show();
                     },
 
-                    closeEditModal() {
-                        bootstrap.Modal.getInstance(this.$refs.editModal).hide();
+                    openEditModal(item, modalRef) {
+                       this.editItem = { ...item }; // or rename to editItem if shared
+                       new bootstrap.Modal(this.$refs[modalRef]).show();
+                    },
+                    
+                    closeEditModal(modalRef) {
+                        bootstrap.Modal.getInstance(this.$refs[modalRef]).hide();
                     },
 
-                    updateModifyTour() {
-                        this.loadingform = true;
-                        axios.put(`/admin/tours/${this.editTour.id}`, this.editTour, {
-                            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}
-                        })
-                        .then(res => {
-                            const index = this.tourstomodify.findIndex(t => t.id === this.editTour.id);
-                            if (index !== -1) this.tourstomodify[index] = res.data;
-                            this.closeEditModal();
-                            alert('Tour updated successfully!');
-                        })
-                        .catch(err => console.error(err))
-                        .finally(() => {
-                                    this.loadingform = false;
-                        });
-                    },
 
-                //#endregion Modified tour (promotion price ..ect)
+                //    openEditModal(tour) {
+                 //       this.editTour = {...tour}; // clone so we don’t edit directly
+                  //      new bootstrap.Modal(this.$refs.editModal).show();
+                 //   },
+
+                 //   openEditModal(car) {
+                  //      this.editTour = {...car}; // clone so we don’t edit directly
+                 //       new bootstrap.Modal(this.$refs.editModalcar).show();
+                 //   },
+
+                //    closeEditModal() {
+                 //       bootstrap.Modal.getInstance(this.$refs.editModal).hide();
+                 //   },
+                updateModifyTour() {
+                    this.loadingform = true;
+
+                    axios.put(`/admin/tours/${this.editItem.id}`, this.editItem, {
+                        headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
+                    })
+                    .then(res => {
+                        const index = this.tourstomodify.findIndex(t => t.id === this.editItem.id);
+                        if (index !== -1) this.tourstomodify[index] = res.data;
+                        this.closeEditModal('editModal');
+                        alert('Tour updated successfully!');
+                    })
+                    .catch(err => console.error(err))
+                    .finally(() => {
+                        this.loadingform = false;
+                    });
+                },
+
+                updateModifyCar() {
+                    this.loadingform = true;
+
+                    axios.put(`/admin/cars/${this.editItem.id}`, this.editItem, {
+                        headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
+                    })
+                    .then(res => {
+                        const index = this.carstomodify.findIndex(c => c.id === this.editItem.id);
+                        if (index !== -1) this.carstomodify[index] = res.data;
+                        this.closeEditModal('editModalcar');
+                        alert('Car updated successfully!');
+                    })
+                    .catch(err => console.error(err))
+                    .finally(() => {
+                        this.loadingform = false;
+                    });
+                },
+
+                //#endregion Modified tour,car (promotion price ..ect)
 
                 fetchAdminSetting() {
                     this.loading = true;

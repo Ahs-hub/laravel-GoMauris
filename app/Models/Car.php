@@ -19,8 +19,10 @@ class Car extends Model
         'consumption',
         'policy',
         'price_per_day',
+        'promotion_price_per_day',
         'climate_control',
         'image_path',
+        'is_active',
     ];
 
 

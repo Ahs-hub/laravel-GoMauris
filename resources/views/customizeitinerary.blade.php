@@ -30,7 +30,7 @@
                     <div class="section-title h4 mb-3" style="color:#2c3e50;">{{ __('messages.enter_your_tour_detail') }} :</div>
 
                     <div class="row mb-3">
-                        <div class="col-md-6 mb-3">
+                        <!-- <div class="col-md-6 mb-3">
                             <label class="form-label">{{ __('messages.vehicle_category') }} <span class="text-danger">*</span></label>
                             <select class="form-select" name="vehicle_category" required>
                                 <option value="">{{ __('messages.select_a_category') }}</option>
@@ -38,7 +38,7 @@
                                 <option value="accommodate">{{ __('messages.accommodate') }}</option>
                                 <option value="luxury">{{ __('messages.luxury') }}</option>
                             </select>
-                        </div>
+                        </div> -->
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">{{ __('messages.passengers') }} <span class="text-danger">*</span></label>
@@ -60,16 +60,76 @@
                             <input type="text" name="hotel_name" class="form-control" placeholder="{{ __('messages.enter_hotel_or_residence_name') }}">
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label class="form-label">{{ __('messages.preferred_tour') }}</label>
-                            <input type="text" name="preferred_tour" class="form-control" placeholder="e.g., South Tour, Catamaran">
-                        </div>
+                            <input type="text" name="preferred_tour" class="form-control" placeholder="e.g., South Tour, Catamaran">                            
+                        </div> 
+
+
                     </div>
 
                     <div class="mb-4">
                         <label class="form-label">{{ __('messages.preferred_itinerary_comments') }}</label>
                         <textarea name="comments" class="form-control" rows="3" placeholder="{{ __('messages.preferred_itinerary_desc') }}..."></textarea>
                     </div>
+
+                    <!-- Choose Ride Category  -->
+                    <div class="section-title h4 mb-3 form-label" style="color:#2c3e50;">{{ __('messages.choose_ride_category') }}:</div>
+                   
+                    <div class="row g-3">
+                        <!-- Economy -->
+                        <div class="col-6 col-md-3">
+                            <label class="vehicle-card w-100">
+                                <input type="radio" name="vehicle_category" value="economy" class="d-none">
+                                <img src="{{ asset('images/services/economy_small.png') }}" alt="{{ __('messages.economy') }}">
+                                <div class="fw-bold">{{ __('messages.economy') }}</div>
+                                <div class="vehicle-info">
+                                    <i class='bx bx-user'></i> x 3
+                                    <i class='bx bx-briefcase'></i> x 3
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Comfort -->
+                        <div class="col-6 col-md-3">
+                            <label class="vehicle-card w-100">
+                                <input type="radio" name="vehicle_category" value="comfort" class="d-none">
+                                <img src="{{ asset('images/services/comfort_small.png') }}" alt="{{ __('messages.comfort') }}">
+                                <div class="fw-bold">{{ __('messages.comfort') }}</div>
+                                <div class="vehicle-info">
+                                    <i class='bx bx-user'></i> x 3
+                                    <i class='bx bx-briefcase'></i> x 3
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Business -->
+                        <div class="col-6 col-md-3">
+                            <label class="vehicle-card w-100">
+                                <input type="radio" name="vehicle_category" value="business" class="d-none">
+                                <img src="{{ asset('images/services/business_small.png') }}" alt="{{ __('messages.business') }}">
+                                <div class="fw-bold">{{ __('messages.business') }}</div>
+                                <div class="vehicle-info">
+                                    <i class='bx bx-user'></i> x 3
+                                    <i class='bx bx-briefcase'></i> x 3
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Minibus -->
+                        <div class="col-6 col-md-3">
+                            <label class="vehicle-card w-100">
+                                <input type="radio" name="vehicle_category" value="minibus" class="d-none">
+                                <img src="{{ asset('images/services/minibus_small.png') }}" alt="{{ __('messages.minibus') }}">
+                                <div class="fw-bold">{{ __('messages.minibus') }}</div>
+                                <div class="vehicle-info">
+                                    <i class='bx bx-user'></i> x 16
+                                    <i class='bx bx-briefcase'></i> x 16
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
 
                     <!-- About You -->
                     <div class="section-title h4 mb-3" style="color:#2c3e50;">{{ __('messages.about_you') }}:</div>

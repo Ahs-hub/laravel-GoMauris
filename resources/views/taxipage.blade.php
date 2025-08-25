@@ -14,18 +14,21 @@
             : '';
      @endphp
 
-    <!-- for location map -->
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    <!-- Leaflet CSS -->
+    <link 
+        rel="stylesheet" 
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
     />
-   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Include Vue -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    
     <div style="overflow-y:hidden;">
         <!-- Hero Section -->
         <section class="row hero-section d-flex align-items-center" >
