@@ -45,6 +45,12 @@ return new class extends Migration
 
             $table->enum('payment_status', ['unpaid', 'paid' ,'refund'])->default('unpaid');
 
+            $table->decimal('total_amount', 10, 2)->default(0);   // total = per-day * days
+            $table->string('currency', 3)->default('EUR');        // default currency
+            $table->string('payment_method')->nullable();         // e.g., 'card', 'paypal'
+            $table->string('transaction_id')->nullable();         // gateway reference
+            $table->timestamp('paid_at')->nullable();             // when payment confirmed
+
             $table->text('admin_comment')->nullable(); // <- admin comment field
             
             $table->timestamps();
