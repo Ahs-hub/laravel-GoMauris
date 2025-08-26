@@ -384,7 +384,7 @@
                                     <label class="form-label">{{ __('messages.country') }} <span class="text-danger">*</span></label>
                                     <input 
                                         list="country-options" 
-                                        name="country" 
+                                        v-model="country" 
                                         class="form-control" 
                                         required 
                                         placeholder="{{ __('messages.select_your_country') }}"

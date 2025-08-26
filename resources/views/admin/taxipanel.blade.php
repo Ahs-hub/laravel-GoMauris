@@ -198,12 +198,12 @@
                         <tbody>
                             <tr  v-for="(taxis, index) in   filteredTaxis" :key="taxi.id">
                                 <td>
-                                    <!-- <span 
+                                    <span 
                                         style="position:absolute;"
                                         class="badge bg-primary notification-badge ms-2"
-                                        v-if="isnewitem( rental.id, 'CarBooking')">
+                                        v-if="isnewitem( taxis.id, 'TaxiBooking')">
                                         New
-                                    </span> -->
+                                    </span>
                                     <input type="checkbox" class="form-check-input" >
                                 </td>
                                 <td>

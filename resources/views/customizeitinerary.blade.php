@@ -234,14 +234,6 @@
                         {{ __('messages.send_a_quote') }}
                         </button>
 
-                        <div 
-                            id="customtourSpinner" 
-                            class="spinner-border text-primary ms-3" 
-                            style="display: none;" 
-                            role="status"
-                        >
-                            <span class="visually-hidden"> {{ __('messages.loading') }}...</span>
-                        </div>
                     </div>
                 </form>
                 
@@ -337,22 +329,6 @@
 
     </section>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('.custom-tour form');
-            const submitBtn = document.getElementById('customtourSubmitBtn');
-            const spinner = document.getElementById('customtourSpinner');
-
-            form.addEventListener('submit', function () {
-                // Disable the button
-                submitBtn.disabled = true;
-
-                // Hide the button and show the spinner
-                submitBtn.style.display = 'none';
-                spinner.style.display = 'inline-block';
-            });
-        });
-    </script>
 
     <script>
         const { createApp } = Vue;

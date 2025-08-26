@@ -1107,7 +1107,7 @@
                     //check if notification is new         
                     isNewNotification(notification) {
                         const typeMap = {
-                        TourBooking: 'tour',
+                        TourBooking: 'tours',
                         CustomBooking: 'custom',
                         TaxiBooking: 'taxi',
                         CarBooking: 'car',
@@ -1123,7 +1123,7 @@
                     isnewitem(item, itemtype) {
                         // Map contactbook types to newnotifications keys
                         const typeMap = {
-                            TourBooking: 'tour',
+                            TourBooking: 'tours',
                             CarBooking: 'car',
                             TaxiBooking: 'taxi',
                             ContactBooking: 'contact',

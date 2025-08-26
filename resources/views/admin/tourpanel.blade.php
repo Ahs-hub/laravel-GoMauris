@@ -220,12 +220,12 @@
                         <tbody>
                             <tr  v-for="(tourb, index) in   filteredTours" :key="tourb.id">
                                 <td>
-                                    <!-- <span 
+                                    <span 
                                         style="position:absolute;"
                                         class="badge bg-primary notification-badge ms-2"
-                                        v-if="isnewitem( rental.id, 'CarBooking')">
+                                        v-if="isnewitem( tourb.id, 'TourBooking')">
                                         New
-                                    </span> -->
+                                    </span>
                                     <input type="checkbox" class="form-check-input" >
                                 </td>
                                 <td>
