@@ -242,7 +242,25 @@
                                             </div>
                                         </div>
                                         <div class="text-end d-flex flex-column justify-content-between align-items-end">
-                                            <div class="price-text fw-semibold">{{ __('messages.from') }} €@{{ car.price_per_day }} /{{ __('messages.day') }}</div>
+                                             
+                                            <div class="price-text fw-semibold">
+                                                {{ __('messages.from') }} 
+                                                <template v-if="car.promotion_price_per_day">
+                                                    <!-- Normal price crossed out -->
+                                                    <small class="text-muted text-decoration-line-through">
+                                                        €@{{ car.price_per_day }}
+                                                    </small>
+                                                    <!-- Promotion price in red -->
+                                                    <span class="text-danger ms-1">
+                                                        €@{{ car.promotion_price_per_day }}
+                                                    </span>
+                                                </template>
+                                                <template v-else>
+                                                    €@{{ car.price_per_day }}
+                                                </template>
+                                                /{{ __('messages.day') }}
+                                            </div>
+
                                             <div class="button-container mt-2">
                                                  <button class="btn btn-primary" @click="selectCar(car.id,car.name); showSection('carsaddon')">{{ __('messages.book_now') }}</button>
                                             </div>
@@ -774,7 +792,11 @@
                 selectedCarId(newId) {
                     this.selectedCar = this.cars.find(car => car.id === newId);
 
-                    this.perDayRate = this.selectedCar ? Number(this.selectedCar.price_per_day) : 0;
+                    // Use promo price if available, otherwise normal price
+                    this.perDayRate = this.selectedCar
+                        ? Number(this.selectedCar.promotion_price_per_day ?? this.selectedCar.price_per_day)
+                        : 0;
+                        
                 },
                 showMapModal(Val) {
                     if (Val) {

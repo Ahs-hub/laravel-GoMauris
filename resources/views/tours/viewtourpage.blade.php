@@ -379,21 +379,29 @@
                             </div>
 
                             <div class="row mb-3">
+
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">{{ __('messages.country') }} <span class="required-field">*</span></label>
-                                    <select class="form-select" v-model="country" required>
-                                        <option value="">{{ __('messages.select_your_country') }}</option>
-                                        <option value="mauritius">Mauritius</option>
-                                        <option value="france">France</option>
-                                        <option value="uk">United Kingdom</option>
-                                        <option value="germany">Germany</option>
-                                        <option value="usa">United States</option>
-                                        <option value="canada">Canada</option>
-                                        <option value="australia">Australia</option>
-                                        <option value="south-africa">South Africa</option>
-                                        <option value="other">{{ __('messages.other') }}</option>
-                                    </select>
+                                    <label class="form-label">{{ __('messages.country') }} <span class="text-danger">*</span></label>
+                                    <input 
+                                        list="country-options" 
+                                        name="country" 
+                                        class="form-control" 
+                                        required 
+                                        placeholder="{{ __('messages.select_your_country') }}"
+                                    >
+
+                                    <datalist id="country-options">
+                                        <option value="Mauritius">
+                                        <option value="France">
+                                        <option value="United Kingdom">
+                                        <option value="Germany">
+                                        <option value="United States">
+                                        <option value="Canada">
+                                        <option value="Australia">
+                                        <option value="South Africa">
+                                    </datalist>
                                 </div>
+
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">{{ __('messages.mobile_number_whatsapp') }}<span class="required-field">*</span></label>
                                     <div class="input-group">

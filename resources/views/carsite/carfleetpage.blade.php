@@ -54,10 +54,25 @@
                                         <h3 class="car-title">@{{ car.name }}</h3>
                                         <p class="car-subtitle"> @{{ car.translated_transmission }} • @{{ car.translated_fuel_type }}</p>
                                     </div>
-                                    <div class="car-price">
-                                        <span class="price-amount">€@{{ car.price_per_day }}</span>
+                                    <div class="car-price text-end">
+                                        <!-- Check if promotion exists in Vue -->
+                                        <template v-if="car.promotion_price_per_day">
+                                            <!-- Normal price crossed out -->
+                                            <small class="text-muted text-decoration-line-through">
+                                                €@{{ car.price_per_day }}
+                                            </small>
+                                            <!-- Promotion price in red -->
+                                            <span class="price-amount text-danger ms-2">
+                                                €@{{ car.promotion_price_per_day }}
+                                            </span>
+                                        </template>
+                                        <template v-else>
+                                            <span class="price-amount">€@{{ car.price_per_day }}</span>
+                                        </template>
+
                                         <span class="price-period">{{ __('messages.per_day') }}</span>
                                     </div>
+
                                 </div>
 
                                 <div class="car-specs">
@@ -109,7 +124,7 @@
                 };
             },
             mounted() {
-                const saved = JSON.parse(localStorage.getItem('bookingForm'));
+                const saved = JSON.parse(sessionStorage.getItem('bookingForm'));
                 if (saved) {
                     this.pickupLocation = saved.pickupLocation || '';
                     this.tempPickupLocation =  saved.pickupLocation || '';
@@ -162,25 +177,25 @@
                         sameLocation: this.sameLocation,
                         carId: this.selectedCarId
                     };
-                    localStorage.setItem('bookingForm', JSON.stringify(data));
+                    sessionStorage.setItem('bookingForm', JSON.stringify(data));
                     alert("Search triggered and form data saved.");
                 },
                 showSection(sectionName) {
                     // this.activeSection = sectionName;
-                    localStorage.setItem('activeReservationSection', sectionName);
+                    sessionStorage.setItem('activeReservationSection', sectionName);
                 },
                 selectCar(id,name) {
                     this.selectedCarId = id;
-                    const saved = JSON.parse(localStorage.getItem('bookingForm')) || {};
+                    const saved = JSON.parse(sessionStorage.getItem('bookingForm')) || {};
                     saved.carId = id;
-                    localStorage.setItem('bookingForm', JSON.stringify(saved));
+                    sessionStorage.setItem('bookingForm', JSON.stringify(saved));
                     window.location.href = '/reservation';
                     // alert('Selected car: ' + name);
                 },
                 bookNow(carId) {
-                    const saved = JSON.parse(localStorage.getItem('bookingForm')) || {};
+                    const saved = JSON.parse(sessionStorage.getItem('bookingForm')) || {};
                     saved.carId = carId;
-                    localStorage.setItem('bookingForm', JSON.stringify(saved));
+                    sessionStorage.setItem('bookingForm', JSON.stringify(saved));
                     // Optional: redirect or change section
                     // this.showSection('addons');
                 }

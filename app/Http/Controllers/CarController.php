@@ -28,8 +28,12 @@ class CarController extends Controller
                 'fuel_type' => $car->fuel_type,
                 'transmission' => $car->transmission,
                 'price_per_day' => $car->price_per_day,
+                'promotion_price_per_day' => $car-> promotion_price_per_day,
+
                 'image_url' => asset($car->image_path),
                 'detail_url' => route('rentcar.show', $car->id),
+
+                'is_active' => $car -> is_active,
 
                 
                 // ➕ Add these extra fields
@@ -65,8 +69,11 @@ class CarController extends Controller
                 'fuel_type' => $car->fuel_type,
                 'transmission' => $car->transmission,
                 'price_per_day' => $car->price_per_day,
+                'promotion_price_per_day' => $car-> promotion_price_per_day,
                 'image_url' => asset($car->image_path),
                 'detail_url' => route('rentcar.show', $car->id),
+
+                'is_active' => $car -> is_active,
 
                 
                 // ➕ Add these extra fields

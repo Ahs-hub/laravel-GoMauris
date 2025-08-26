@@ -6,6 +6,10 @@
     @else
         <link rel="stylesheet" href="{{ asset('css/customizeitinerary.css') }}">
     @endif
+
+    <!-- Add Vue.js CDN once in your page (before </body>) -->
+   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
     <div class="d-flex justify-content-center align-items-center min-vh-100" style="margin-bottom:100px;">
         <div class="container" style="max-width: 800px; width: 100%;">
 
@@ -47,7 +51,13 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">{{ __('messages.tour_date') }}  <span class="text-danger">*</span></label>
-                            <input type="date" name="tour_date" class="form-control" required>
+                            <input 
+                                type="date" 
+                                name="tour_date" 
+                                class="form-control" 
+                                required 
+                                min="{{ \Carbon\Carbon::today()->format('Y-m-d') }}"
+                            >
                         </div>
 
                         <div class="col-md-6 mb-3">
@@ -60,10 +70,53 @@
                             <input type="text" name="hotel_name" class="form-control" placeholder="{{ __('messages.enter_hotel_or_residence_name') }}">
                         </div>
 
-                        <div class="col-md-12 mb-3">
+                        <div id="tour-app"  class="col-md-12 mb-3" style="position:relative">
                             <label class="form-label">{{ __('messages.preferred_tour') }}</label>
-                            <input type="text" name="preferred_tour" class="form-control" placeholder="e.g., South Tour, Catamaran">                            
+                            <!-- <input type="text" name="preferred_tour" class="form-control" placeholder="e.g., South Tour, Catamaran">    -->   
+                        
+                            <!-- Input field -->
+                            <input 
+                                type="text" 
+                                name="preferred_tour"   
+                                class="form-control"
+                                v-model="preferredTourString"
+                                @focus="showList = true"
+                                @blur="hideList"
+                                placeholder="e.g., South Tour, Catamaran"
+                            >
+
+                            <!-- Dropdown list -->
+                            <ul v-if="showList" 
+                                class="list-group mt-1 position-absolute w-100" 
+                                style="z-index: 1000; max-height: 200px;  overflow-y: auto;">
+                                <li 
+                                    v-for="(tour, index) in tours" 
+                                    :key="index" 
+                                    class="list-group-item list-group-item-action"
+                                    @mousedown.prevent="addTour(tour)" 
+                                    style="cursor: pointer;"
+                                >
+                                    @{{ tour }}
+                                </li>
+                            </ul>
+                      
                         </div> 
+                        <!-- <div class="col-md-12 mb-3">
+                            <label class="form-label">{{ __('messages.preferred_tour') }}</label>
+                            <input list="tour-options" 
+                                type="text" 
+                                name="preferred_tour" 
+                                class="form-control" 
+                                placeholder="e.g., South Tour, Catamaran">
+
+                            <datalist id="tour-options">
+                                <option value="South Tour">
+                                <option value="North Tour">
+                                <option value="Catamaran">
+                                <option value="Ile aux Cerfs">
+                                <option value="Port Louis City Tour">
+                            </datalist>
+                        </div> -->
 
 
                     </div>
@@ -147,18 +200,24 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">{{ __('messages.country') }} <span class="text-danger">*</span></label>
-                            <select name="country" class="form-select" required>
-                                <option value="">{{ __('messages.select_your_country') }}</option>
-                                <option value="mauritius">Mauritius</option>
-                                <option value="france">France</option>
-                                <option value="uk">United Kingdom</option>
-                                <option value="germany">Germany</option>
-                                <option value="usa">United States</option>
-                                <option value="canada">Canada</option>
-                                <option value="australia">Australia</option>
-                                <option value="south-africa">South Africa</option>
-                                <option value="other">{{ __('messages.other') }}</option>
-                            </select>
+                            <input 
+                                list="country-options" 
+                                name="country" 
+                                class="form-control" 
+                                required 
+                                placeholder="{{ __('messages.select_your_country') }}"
+                            >
+
+                            <datalist id="country-options">
+                                <option value="Mauritius">
+                                <option value="France">
+                                <option value="United Kingdom">
+                                <option value="Germany">
+                                <option value="United States">
+                                <option value="Canada">
+                                <option value="Australia">
+                                <option value="South Africa">
+                            </datalist>
                         </div>
 
                         <div class="col-md-6 mb-3">
@@ -193,7 +252,7 @@
     </div>
 
     <!-- Tours Section -->
-  <section id="tours" class="section-padding" style="">
+    <section id="tours" class="section-padding" style="">
      <div class="container text-center">
         <p class="section-heading mt-5">
         {{ __('messages.tours_activities') }}
@@ -294,4 +353,41 @@
             });
         });
     </script>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    selectedTours: [],
+                    tours: @json($tours->map(fn($t) => $t->{'name_' . app()->getLocale()})), // ✅ inject names from Laravel
+                    showList: false
+                }
+            },
+            computed: {
+                preferredTourString: {
+                    get() {
+                        return this.selectedTours.join(", ");
+                    },
+                    set(val) {
+                        this.selectedTours = val.split(",").map(v => v.trim()).filter(v => v !== "");
+                    }
+                }
+            },
+            methods: {
+                addTour(tour) {
+                    if (!this.selectedTours.includes(tour)) {
+                        this.selectedTours.push(tour);
+                    }
+                },
+                hideList() {
+                    setTimeout(() => { this.showList = false }, 200);
+                }
+            }
+        }).mount("#tour-app");
+    </script>
+
+
+
 @endsection

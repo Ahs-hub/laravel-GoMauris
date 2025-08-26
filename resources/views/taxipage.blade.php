@@ -254,8 +254,28 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3 text-start">
                                     <label class="form-label">{{ __('messages.country') }}</label>
-                                    <input type="text" class="form-control" v-model="form.country" required>
+                                    
+                                    <input 
+                                        list="country-options" 
+                                        class="form-control" 
+                                        v-model="form.country" 
+                                        name="country" 
+                                        required
+                                        placeholder="{{ __('messages.select_your_country') }}"
+                                    >
+
+                                    <datalist id="country-options">
+                                        <option value="Mauritius">
+                                        <option value="France">
+                                        <option value="United Kingdom">
+                                        <option value="Germany">
+                                        <option value="United States">
+                                        <option value="Canada">
+                                        <option value="Australia">
+                                        <option value="South Africa">
+                                    </datalist>
                                 </div>
+                                
                                 <div class="col-md-6 mb-3 text-start">
                                     <label class="form-label">{{ __('messages.mobile_number_whatsapp') }}</label>
                                     <input type="text" class="form-control" placeholder="Include country/area codes. eg. +23052514555" v-model="form.phone" required>

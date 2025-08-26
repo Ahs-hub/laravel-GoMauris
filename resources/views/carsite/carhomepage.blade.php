@@ -158,7 +158,19 @@
                                         {{ __('messages.' . strtolower($car->transmission)) }} • {{ __('messages.' . strtolower($car->fuel_type)) }}
                                     </div>
                                     <div class="car-price">
-                                        <span class="price-amount">€{{ $car->price_per_day }}</span>
+                                        @if($car->promotion_price_per_day)
+                                            <!-- Normal price crossed out -->
+                                            <small class=" text-muted text-decoration-line-through">
+                                                €{{ $car->price_per_day }}
+                                            </small>
+                                            <!-- Promotion price in red -->
+                                            <span class="price-amount text-danger ms-2">
+                                                €{{ $car->promotion_price_per_day }}
+                                            </span>
+                                        @else
+                                            <span class="price-amount">€{{ $car->price_per_day }}</span>
+                                        @endif
+
                                         <span class="price-period">{{ __('messages.per_day') }}</span>
                                     </div>
                                 </div>
