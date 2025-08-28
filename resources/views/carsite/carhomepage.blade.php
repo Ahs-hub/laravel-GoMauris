@@ -145,69 +145,69 @@
                 </div>
 
                 <div class="car-grid">
-                    @foreach($cars as $car)
-                        <div class="car-card">
-                            <div class="car-image">
-                                <img src="{{ asset($car->image_path) }}" alt="{{ $car->name }}">
-                            </div>
-
-                            <div class="car-info">
-                                <div class="car-header">
-                                    <div>
-                                        <h3 class="car-title">{{ $car->name }}</h3>
-                                        {{ __('messages.' . strtolower($car->transmission)) }} • {{ __('messages.' . strtolower($car->fuel_type)) }}
+                        @foreach($cars as $car)
+                                <div class="car-card" style="border: 2px solid #81879b;" >
+                                    <div class="car-image" >
+                                        <img style="background-color:white;"  src="{{ asset($car->image_path) }}" alt="{{ $car->name }}">
                                     </div>
-                                    <div class="car-price">
-                                        @if($car->promotion_price_per_day)
-                                            <!-- Normal price crossed out -->
-                                            <small class=" text-muted text-decoration-line-through">
-                                                €{{ $car->price_per_day }}
-                                            </small>
-                                            <!-- Promotion price in red -->
-                                            <span class="price-amount text-danger ms-2">
-                                                €{{ $car->promotion_price_per_day }}
-                                            </span>
-                                        @else
-                                            <span class="price-amount">€{{ $car->price_per_day }}</span>
-                                        @endif
 
-                                        <span class="price-period">{{ __('messages.per_day') }}</span>
+                                    <div class="car-info">
+                                        <div class="car-header">
+                                            <div>
+                                                <h3 class="car-title">{{ $car->name }}</h3>
+                                                {{ __('messages.' . strtolower($car->transmission)) }} • {{ __('messages.' . strtolower($car->fuel_type)) }}
+                                            </div>
+                                            <div class="car-price">
+                                                @if($car->promotion_price_per_day)
+                                                    <!-- Normal price crossed out -->
+                                                    <small class=" text-muted text-decoration-line-through">
+                                                        €{{ $car->price_per_day }}
+                                                    </small>
+                                                    <!-- Promotion price in red -->
+                                                    <span class="price-amount text-danger ms-2">
+                                                        €{{ $car->promotion_price_per_day }}
+                                                    </span>
+                                                @else
+                                                    <span class="price-amount">€{{ $car->price_per_day }}</span>
+                                                @endif
+
+                                                <span class="price-period">{{ __('messages.per_day') }}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="car-specs">
+                                            @if($car->fuel_type)
+                                                <div class="spec-item">
+                                                    <i class='bx bx-gas-pump spec-icon'></i>
+                                                    <span>{{ __('messages.' . strtolower($car->fuel_type)) }}</span>
+                                                </div>
+                                            @endif
+                                            @if($car->transmission)
+                                                <div class="spec-item">
+                                                    <i class='bx bx-cog spec-icon'></i>
+                                                    <span>{{ __('messages.' . strtolower($car->transmission)) }}</span>
+                                                </div>
+                                            @endif
+                                            @if($car->seats)
+                                                <div class="spec-item">
+                                                    <i class='bx bxs-user spec-icon'></i>
+                                                    <span>{{ $car->seats }} {{ __('messages.seats') }}</span>
+                                                </div>
+                                            @endif
+                                            @if($car->climate_control)
+                                                <div class="spec-item">
+                                                    <i class='bx bx-wind spec-icon'></i>
+                                                    <span>{{ __('messages.climate_control') }}</span>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        <div class="car-actions">
+                                                <button class="btn btn-primary" @click="bookNow({{ $car->id }}, '{{ route('reservation') }}')">{{ __('messages.book_now') }}</button>
+                                        </div>  
                                     </div>
                                 </div>
-
-                                <div class="car-specs">
-                                    @if($car->fuel_type)
-                                        <div class="spec-item">
-                                            <i class='bx bx-gas-pump spec-icon'></i>
-                                            <span>{{ __('messages.' . strtolower($car->fuel_type)) }}</span>
-                                        </div>
-                                    @endif
-                                    @if($car->transmission)
-                                        <div class="spec-item">
-                                            <i class='bx bx-cog spec-icon'></i>
-                                            <span>{{ __('messages.' . strtolower($car->transmission)) }}</span>
-                                        </div>
-                                    @endif
-                                    @if($car->seats)
-                                        <div class="spec-item">
-                                            <i class='bx bxs-user spec-icon'></i>
-                                            <span>{{ $car->seats }} {{ __('messages.seats') }}</span>
-                                        </div>
-                                    @endif
-                                    @if($car->climate_control)
-                                        <div class="spec-item">
-                                            <i class='bx bx-wind spec-icon'></i>
-                                            <span>{{ __('messages.climate_control') }}</span>
-                                        </div>
-                                    @endif
-                                </div>
-
-                                <div class="car-actions">
-                                        <button class="btn btn-primary" @click="bookNow({{ $car->id }}, '{{ route('reservation') }}')">{{ __('messages.book_now') }}</button>
-                                </div>  
-                            </div>
-                        </div>
-                    @endforeach
+                        @endforeach
                 </div>
             </div>
         </section>

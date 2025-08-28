@@ -44,9 +44,9 @@
                 <!-- Car Cards -->
                 <div class="row">
                     <div class="car-grid">
-                        <div v-for="car in filteredCars" :key="car.id" class="car-card">
+                        <div v-for="car in filteredCars" :key="car.id" class="car-card" style="border: 2px solid #81879b;" >
                             <div class="car-image">
-                                <img :src="car.image_url" :alt="car.name">
+                                <img style="background-color:white;" :src="car.image_url" :alt="car.name">
                             </div>
                             <div class="car-info">
                                 <div class="car-header">

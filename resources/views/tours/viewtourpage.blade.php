@@ -335,7 +335,7 @@
                             <!-- Hotel Info -->
                             <div class="mb-3">
                                 <label class="form-label">{{ __('messages.hotel_residence_name') }}</label>
-                                <input type="text" class="form-control" v-model="hotel_name" placeholder="{{ __('messages.hotel_enter_hotel_or_residence_name') }}">
+                                <input type="text" class="form-control" v-model="hotel_name" placeholder="{{ __('messages.enter_hotel_or_residence_name') }}">
                             </div>
 
                             <div class="mb-3">
