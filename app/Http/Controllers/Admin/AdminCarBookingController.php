@@ -65,6 +65,8 @@ class AdminCarBookingController extends Controller
                 'status' => $rental->status,
                 'payment_status' => $rental->payment_status,
 
+                'discount_amount' => $rental->discount_amount,
+
                 // Admin note
                 'admin_comment' => $rental->admin_comment,
 

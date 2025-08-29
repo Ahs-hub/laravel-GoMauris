@@ -521,6 +521,13 @@
                                         @{{ selectedItem.payment_status }}
                                     </span>
                                 </div>
+                                <div class="info-item">
+                                    <span class="info-label">Promotion Booking</span>
+                                    <span class="info-value">
+                                     €  @{{ selectedItem.discount_amount }}
+                                    </span>
+                                </div>
+
                             </div>
                         </div>
                     </div>

@@ -538,6 +538,19 @@
                                         @{{ selectedItem.payment_status }}
                                     </span>
                                 </div>
+
+                                <div class="info-item">
+                                    <span class="info-label">Promotion Type</span>
+                                    <span class="info-value">
+                                      @{{ selectedItem.promotion_type }}
+                                    </span>
+
+                                    <span class="info-label"> Price</span>
+                                    <span class="info-value">
+                                     €  @{{ selectedItem.discount_amount }}
+                                    </span>
+                                </div>
+
                             </div>
                         </div>
                     </div>
