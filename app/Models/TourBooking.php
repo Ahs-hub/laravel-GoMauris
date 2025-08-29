@@ -26,7 +26,9 @@ class TourBooking extends Model
         'phone',
         'status',
         'payment_status',
-        'admin_comment'
+        'admin_comment',
+        'promotion_type',
+        'discount_amount'
 
     ];
     

@@ -11,7 +11,7 @@ class CarBooking extends Model
         'pickup_location', 'pickup_date', 'return_location', 'return_date', 'same_location',
         'car_id', 'has_driver', 'child_seats',
         'status','admin_comment','payment_status',
-        'pickup_latitude','pickup_longitude','return_latitude','return_longitude'
+        'pickup_latitude','pickup_longitude','return_latitude','return_longitude','discount_amount'
     ];
     
     public function car()

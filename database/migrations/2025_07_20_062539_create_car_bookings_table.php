@@ -50,6 +50,9 @@ return new class extends Migration
 
             $table->enum('payment_status', ['unpaid', 'paid','refund'])->default('unpaid');
 
+            //Discount per day
+            $table->decimal('discount_amount', 8, 2)->default(0); // default = no discount
+
             // Price & Payment
             $table->decimal('total_amount', 10, 2)->default(0);   // total = per-day * days
             $table->string('currency', 3)->default('EUR');        // default currency

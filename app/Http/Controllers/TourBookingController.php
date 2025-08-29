@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TourBooking;
+use App\Models\Tour;
 
 //For notification
 use App\Models\AdminNotification;
@@ -31,8 +32,44 @@ class TourBookingController extends Controller
             'phone' => 'required|string|max:50',
         ]);
 
+        // 2️⃣ Load tour from DB
+        $tour = Tour::findOrFail($validated['tour_id']);
+
+        // 👇 Only check if promo exists
+        $promotionType = 'none';
+        $discountAmount = 0;
+
+        if ($tour->is_group_priced && $tour->group_price_promotion_price) {
+            $promotionType = 'group';
+            $discountAmount =  $tour->group_price_promotion_price;
+        } elseif ($validated['transport_required'] === 'yes' && $tour->transfer_promotion_price) {
+            $promotionType = 'transfer';
+            $discountAmount =  $tour->transfer_promotion_price;
+        } elseif ($tour->starting_promotion_price) {
+            $promotionType = 'starting';
+            $discountAmount = $tour->starting_promotion_price;
+        }
+
+        // ✅ Save booking once, with discount info
+        $booking = new TourBooking($validated);
+        $booking->promotion_type = $promotionType;
+        $booking->discount_amount = $discountAmount;
+
+        // \Log::info('Promotion check:', [
+        //     'is_group_priced' => $tour->is_group_priced,
+        //     'transport_required' => $validated['transport_required'],
+        //     'starting_promotion_price' => $tour->starting_promotion_price,
+        //     'transfer_promotion_price' => $tour->transfer_promotion_price,
+        //     'group_price_promotion_price' => $tour->group_price_promotion_price,
+        //     'promotion_type' => $promotionType,
+        //     'discount_amount' => $discountAmount,
+        // ]);
+
+
+        $booking->save();
+
         // ✅ Store the new booking
-        $booking = TourBooking::create($validated);
+       /// $booking = TourBooking::create($validated);
 
         AdminNotification::create([
             'type' => 'TourBooking',

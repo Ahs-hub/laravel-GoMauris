@@ -422,7 +422,11 @@ return [
 'basic_insurance_is_usually_included_ect' => 'Normalmente se incluye un seguro básico. Se requiere un depósito reembolsable. También puedes optar por una cobertura completa por un costo adicional',
 
 
-
+// Thank you page
+'thank_you' => 'Gracias',
+'your_request_has_been_received_sucess' => 'Su solicitud ha sido recibida con éxito',
+'our_team_will_get_back_to_you_ect' => 'Nuestro equipo se pondrá en contacto con usted en un plazo de 24 horas con la confirmación y más detalles',
+'back_to_home' => 'Volver al inicio',
     
     
 

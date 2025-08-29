@@ -90,16 +90,16 @@
                                             </div>
                                     </button>
                                     <ul class="dropdown-menu w-100">
-                                        <li @click="pickupLocation = 'SSR Airport'" class="dropdown-item">
+                                        <li @click="pickupLocation = 'SSR Airport'; pickupLat = -20.431997; pickupLng = 57.676868;" class="dropdown-item">
                                             <i class='bx bx-map'></i> SSR Airport
                                         </li>
-                                        <li @click="pickupLocation = 'Mahebourg'" class="dropdown-item">
+                                        <li @click="pickupLocation = 'Mahebourg'; pickupLat = -20.408056; pickupLng = 57.7;" class="dropdown-item">
                                             <i class='bx bx-map'></i> Mahebourg
                                         </li>
-                                        <li @click="pickupLocation = 'Port Louis'" class="dropdown-item">
+                                        <li @click="pickupLocation = 'Port Louis'; pickupLat = -20.160891; pickupLng = 57.501222;" class="dropdown-item">
                                             <i class='bx bx-map'></i> Port Louis
                                         </li>
-                                        <li @click="pickupLocation = 'Grand Baie'" class="dropdown-item">
+                                        <li @click="pickupLocation = 'Grand Baie'; pickupLat = -20.013053; pickupLng = 57.580440;" class="dropdown-item">
                                             <i class='bx bx-map'></i> Grand Baie
                                         </li>
                                         <li class="dropdown-item" @click="openMap('pickup')">
@@ -140,16 +140,16 @@
                                         </div>
                                 </button>
                                 <ul class="dropdown-menu w-100">
-                                    <li @click="returnLocation = 'SSR Airport'" class="dropdown-item">
+                                    <li @click="returnLocation = 'SSR Airport'; returnLat = -20.431997; returnLng = 57.676868;" class="dropdown-item">
                                         <i class='bx bx-map'></i> SSR Airport
                                     </li>
-                                    <li @click="returnLocation = 'Mahebourg'" class="dropdown-item">
+                                    <li @click="returnLocation = 'Mahebourg'; returnLat = -20.408056; returnLng = 57.7;" class="dropdown-item">
                                         <i class='bx bx-map'></i> Mahebourg
                                     </li>
-                                    <li @click="returnLocation = 'Port Louis'" class="dropdown-item">
+                                    <li @click="returnLocation = 'Port Louis'; returnLat = -20.160891; returnLng = 57.501222;" class="dropdown-item">
                                         <i class='bx bx-map'></i> Port Louis
                                     </li>
-                                    <li @click="returnLocation = 'Grand Baie'" class="dropdown-item">
+                                    <li @click="returnLocation = 'Grand Baie'; returnLat = -20.013053; returnLng =  57.580440;" class="dropdown-item">
                                         <i class='bx bx-map'></i> Grand Baie
                                     </li>
                                     <li class="dropdown-item" @click="openMap('return')">

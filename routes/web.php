@@ -102,6 +102,14 @@ Route::middleware(['web', 'setlocale'])->group(function () {
         return view('carsite.cancellationpolicy');
     })->name('cancellationpolicy');
 
+    //Go to rental policy
+    Route::get('/rentalpolicy', function () {
+        return view('carsite.rentalpolicy');
+    })->name('rentalpolicy');
+
+
+    Route::view('/thank-you', 'thankyou')->name('thankyou');
+
     Route::get('locale/{lang}', function ($lang) {
         if (in_array($lang, ['en','fr','es'])) {
             session(['locale' => $lang]);
@@ -270,10 +278,6 @@ Route::get('/luxurytransfer', function () {
 })->name('luxurytransfer'); 
 
 
-//Go to rental policy
-Route::get('/rentalpolicy', function () {
-    return view('carsite.rentalpolicy');
-})->name('rentalpolicy');
 
 
 //tours
@@ -289,7 +293,7 @@ Route::post('/tour-bookings', [TourBookingController::class, 'store']);
 //Save custom tour
 Route::post('/custom-tour', [CustomTourRequestController::class, 'store'])->name('custom-tour.store');
 
-Route::view('/thank-you', 'thankyou')->name('thankyou');
+
 
 
 

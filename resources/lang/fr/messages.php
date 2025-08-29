@@ -422,6 +422,10 @@ return [
     'what_about_insurence_and_ect' => 'Qu’en est-il de l’assurance et du dépôt',
     'basic_insurance_is_usually_included_ect' => 'Une assurance de base est généralement incluse. Un dépôt de garantie (remboursable) est requis. Vous pouvez également opter pour une couverture complète moyennant un coût supplémentaire',
 
-    
+    // Thank you page
+    'thank_you' => 'Merci',
+    'your_request_has_been_received_sucess' => 'Votre demande a été reçue avec succès',
+    'our_team_will_get_back_to_you_ect' => 'Notre équipe vous recontactera sous 24 heures avec une confirmation et plus de détails',
+    'back_to_home' => 'Retour à l’accueil',
 
 ];
