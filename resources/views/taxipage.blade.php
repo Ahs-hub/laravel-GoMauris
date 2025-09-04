@@ -165,14 +165,26 @@
                                         :min="minDate"
                                     >
                                 </div>
-                                <div class="flex-fill">
+                                <!-- <div class="flex-fill">
                                     <label class="form-label">{{ __('messages.return_time') }}</label>
                                     <input
                                         type="time"
                                         class="form-control"
                                         v-model="form.return_time"
                                     >
-                                </div>
+                                </div> -->
+                                <template>
+                                    <div class="flex-fill">
+                                        <label class="form-label">{{ __('messages.return_time') }}</label>
+                                        <VueTimepicker
+                                        v-model="form.return_time"
+                                        format="HH:mm"
+                                        manual-input
+                                        class="form-control"
+                                        />
+                                    </div>
+                                </template>
+
                             </div>
 
                             <div class="text-end">
@@ -658,6 +670,11 @@
             }
         }
     }).mount('#taxiApp');
+</script>
+
+<script setup>
+    import VueTimepicker from 'vue3-timepicker'
+    import 'vue3-timepicker/dist/vue3-timepicker.css'
 </script>
 
 @endsection

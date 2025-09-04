@@ -122,17 +122,19 @@ Route::middleware(['web', 'setlocale'])->group(function () {
 
 //admin login to form 
 // Show login form
-Route::get('/admin/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
+Route::get('/admin/secure-Df678pK3/login', [AuthController::class, 'showLoginForm'])->name('admin.login.form');
 
 // Handle login POST
-Route::post('/admin/login', [AuthController::class, 'login']);
+Route::post('/admin/secure-Df678pK3/login', [AuthController::class, 'login'])
+->middleware('throttle:5,1') // 5 attempts per minute
+->name('admin.login');
 
 //Handle logout POST
 Route::post('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();
     request()->session()->regenerateToken();
-    return redirect('/admin/login');
+    return redirect('/admin/secure-Df678pK3/login');
 })->name('logout');
 
 // Protected dashboard (only logged-in users can access)
