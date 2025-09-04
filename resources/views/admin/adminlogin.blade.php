@@ -62,12 +62,23 @@
         <i class='bx bx-lock-alt form-icon'></i>
         <input type="password" name="password" class="form-control" placeholder="Password" required>
       </div>
+
+      <div class="mb-3">
+          {!! NoCaptcha::display() !!}
+          @error('g-recaptcha-response')
+              <div class="text-danger">{{ $message }}</div>
+          @enderror
+      </div>
+      
       @error('email')
         <div class="text-danger mb-2">{{ $message }}</div>
       @enderror
       <button type="submit" class="btn btn-primary w-100">Login</button>
     </form>
   </div>
+
+  <!-- ForCapcha -->
+  {!! NoCaptcha::renderJs() !!}
 
 </body>
 </html>

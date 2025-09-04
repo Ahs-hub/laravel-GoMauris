@@ -14,10 +14,14 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+            'g-recaptcha-response' => 'required|captcha',
         ]);
+    
+        // Only pass email and password to Auth
+        $credentials = $request->only('email', 'password');
     
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
