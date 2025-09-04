@@ -23,7 +23,7 @@ return new class extends Migration
             $table->unsignedInteger('children')->default(0);
 
             // Relationship to tour (after id)
-            $table->unsignedBigInteger('tour_id')->after('id'); // or after whichever column you want
+            $table->unsignedBigInteger('tour_id'); // or after whichever column you want
             $table->foreign('tour_id')->references('id')->on('tours')->onDelete('cascade');
     
             // Transport
