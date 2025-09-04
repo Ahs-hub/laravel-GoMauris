@@ -132,10 +132,22 @@
                                     <label class="form-label">{{ __('messages.date') }}</label>
                                     <input type="date" class="form-control"  v-model="form.date" :min="minDate"  required>
                                 </div>
-                                <div class="flex-fill">
+                                <!-- <div class="flex-fill">
                                     <label class="form-label">{{ __('messages.time') }}</label>
                                     <input type="time" class="form-control" v-model="form.time" required>
+                                </div> -->
+                                <div class="flex-fill">
+                                    <label class="form-label">{{ __('messages.time') }}</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        v-model="form.time"
+                                        placeholder="HH:MM"
+                                        pattern="[0-9]{2}:[0-9]{2}"
+                                        required
+                                    >
                                 </div>
+
                                 <div class="flex-fill">
                                     <label class="form-label">{{ __('messages.passengers') }}</label>
                                     <input type="number" class="form-control" v-model="form.passengers" required>
@@ -173,17 +185,18 @@
                                         v-model="form.return_time"
                                     >
                                 </div> -->
-                                <template>
-                                    <div class="flex-fill">
-                                        <label class="form-label">{{ __('messages.return_time') }}</label>
-                                        <VueTimepicker
-                                        v-model="form.return_time"
-                                        format="HH:mm"
-                                        manual-input
+                                <div class="flex-fill">
+                                    <label class="form-label">{{ __('messages.return_time') }}</label>
+                                    <input
+                                        type="text"
                                         class="form-control"
-                                        />
-                                    </div>
-                                </template>
+                                        v-model="form.return_time"
+                                        placeholder="HH:MM"
+                                        pattern="[0-9]{2}:[0-9]{2}"
+                                        required
+                                    >
+                                </div>
+
 
                             </div>
 
@@ -672,9 +685,5 @@
     }).mount('#taxiApp');
 </script>
 
-<script setup>
-    import VueTimepicker from 'vue3-timepicker'
-    import 'vue3-timepicker/dist/vue3-timepicker.css'
-</script>
 
 @endsection

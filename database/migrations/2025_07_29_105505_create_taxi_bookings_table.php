@@ -24,7 +24,7 @@ return new class extends Migration
             $table->decimal('destination_longitude', 11, 8)->nullable();
       
             $table->date('date');
-            $table->time('time');
+            $table->string('time');
             $table->integer('passengers');
             $table->string('category');
             $table->string('name');
@@ -36,7 +36,7 @@ return new class extends Migration
             // 🚖 Return Ride fields
             $table->boolean('has_return_ride')->default(false); // Toggle for return trip
             $table->date('return_date')->nullable();
-            $table->time('return_time')->nullable();
+            $table->string('return_time')->nullable();
 
             // 🪑 Optional child seat
             $table->integer('child_seat')->default(0);
