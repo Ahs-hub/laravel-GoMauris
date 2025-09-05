@@ -17,6 +17,13 @@ return Application::configure(basePath: dirname(__DIR__))
             'setlocale' => \App\Http\Middleware\SetLocale::class,
             'is_admin' => \App\Http\Middleware\IsAdmin::class,
         ]);
+
+        // Add Sanctum SPA auth for API
+        $middleware->group('api', [
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ]);
+        
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

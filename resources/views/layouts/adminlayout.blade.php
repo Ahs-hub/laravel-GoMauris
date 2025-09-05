@@ -182,6 +182,8 @@
         createApp({
             data() {
                 return {
+                    selectAll: false,
+
                     showTourBook: true, // default to tourblock showing
                     newNotifications: 0,          // latest count from the server
                     notificationDismissed: false, // true after user closes the alert
@@ -534,7 +536,7 @@
                 //confirmed tour date
                 fetchTours() {
                     this.loading = true;
-                    axios.get('/api/optiontours')
+                    axios.get('/api/optiontours', { withCredentials: true })
                         .then(res => this.optiontours = res.data)
                         .catch(err => console.error(err))
                         .finally(() => this.loading = false);
@@ -549,7 +551,7 @@
 
                     this.loading = true;
 
-                    axios.get(`/api/admin/optiontours/blockedd-dates/${this.bookselectedTour}`)
+                    axios.get(`/api/admin/optiontours/blockedd-dates/${this.bookselectedTour}`, { withCredentials: true })
                         .then(res => {
                             console.log('Blocked Dates API response:', res.data);
                             this.blockedDates = res.data.blocked_dates || [];
@@ -584,7 +586,10 @@
                         await axios.post('/api/admin/optiontours/block-dates', {
                             tour_id: this.bookselectedTour,
                             blocked_dates: this.blockedDates
-                        });
+                        },
+                        { withCredentials: true } 
+
+                        );
                     } catch (error) {
                         alert("Something went wrong while saving.");
                         console.error(error);
@@ -613,89 +618,83 @@
                 //-----------------
 
                 /** Poll the server for the unseen-notification count */
-                checkNotifications() {
-                    fetch('/api/admin/notifications-count')
-                        .then(r => r.json())
-                        .then(({ count }) => {
+                async checkNotifications() {
+                    try {
+                        const res = await axios.get('/api/admin/notifications-count', { withCredentials: true });
+                        const { count } = res.data;
+
                         const storedCount = parseInt(localStorage.getItem('notificationCount')) || 0;
 
-                        // New batch detected ➜ reset dismissal flag + play sound once
                         if (count > storedCount) {
                             this.notificationDismissed = false;
                             localStorage.removeItem('notificationDismissed');
-                            
-                            // Only play sound if this is new increase
+
+                            // Only play sound if count increased
                             if (count > this.playNotification) {
                                 this.playNotificationSound();
                             }
 
-                            
                             this.playNotification = count;
-                            localStorage.setItem('playNotification', this.playNotification.toString());
-
+                            localStorage.setItem('playNotification', count.toString());
 
                             const newCount = count - storedCount;
-                             
-                            // 🔁 Call second function to fetch & update new notifications
+
+                            // 🔁 Fetch the new notifications
                             this.fetchNewNotifications(newCount, count);
-
-                        }else{
-                            localStorage.setItem('notificationCount', String(count));
-
                         }
 
+                        // Always update the stored count
+                        localStorage.setItem('notificationCount', count.toString());
+
                         this.newNotifications = count;
-                        })
-                        .catch(console.error);
+                    } catch (error) {
+                        console.error("Failed to fetch notifications:", error);
+                    }
                 },
 
-                fetchNewNotifications(limit, totalCount) {
-                    fetch(`/api/admin/notifications/latest?limit=${limit}`)
-                        .then(res => res.json())
-                        .then(({ data }) => {
-                            // Reset object
-                            this.newnotifications = {
-                                tour: { count: 0, ids: [], related_id: [] },
-                                car: { count: 0, ids: [], related_id: [] },
-                                taxi: { count: 0, ids: [], related_id: [] },
-                                contact: { count: 0, ids: [], related_id: [] },
-                                custom: { count: 0, ids: [], related_id: [] }
-                            };
-
-                            // Mapping from type string to internal key
-                            const typeMap = {
-                                TourBooking: 'tour',
-                                CustomBooking: 'custom',
-                                TaxiBooking: 'taxi',
-                                CarBooking: 'car',
-                                ContactBooking: 'contact'
-                            };
-
-                            // Group and count by normalized type
-                            data.forEach(({ id, type, related_id }) => {
-                                const key = typeMap[type]; // e.g., "tour"
-
-                          //      console.log('[fetchNewNotifications] Notification received:', { id, type, related_id });
-                         //       console.log('[fetchNewNotifications] Mapped key:', key);
-
-                                if (key && this.newnotifications[key]) {
-                                    this.newnotifications[key].count++;
-                                    this.newnotifications[key].ids.push(id);
-                                    this.newnotifications[key].related_id.push(related_id);
-
-                                    // console.log(`[fetchNewNotifications] Updated ${key}:`, {
-                                    //     count: this.newnotifications[key].count,
-                                    //     ids: this.newnotifications[key].ids,
-                                    //     related_ids: this.newnotifications[key].related_id
-                                    // });
-                                } else {
-                                    console.warn('[fetchNewNotifications] Unknown type or unmapped key:', type);
-                                }
-                            });
-                        })
-                        .catch(error => {
-                            console.error('[fetchNewNotifications] Error:', error);
+                async fetchNewNotifications(limit, totalCount) {
+                    try {
+                        const res = await axios.get(`/api/admin/notifications/latest`, {
+                            params: { limit }, // axios way to add ?limit=...
+                            withCredentials: true
                         });
+
+                        const { data } = res.data;
+
+                        // Reset object
+                        this.newnotifications = {
+                            tour: { count: 0, ids: [], related_id: [] },
+                            car: { count: 0, ids: [], related_id: [] },
+                            taxi: { count: 0, ids: [], related_id: [] },
+                            contact: { count: 0, ids: [], related_id: [] },
+                            custom: { count: 0, ids: [], related_id: [] }
+                        };
+
+                        // Mapping from type string to internal key
+                        const typeMap = {
+                            TourBooking: 'tour',
+                            CustomBooking: 'custom',
+                            TaxiBooking: 'taxi',
+                            CarBooking: 'car',
+                            ContactBooking: 'contact'
+                        };
+
+                        // Group and count by normalized type
+                        data.forEach(({ id, type, related_id }) => {
+                            const key = typeMap[type]; // e.g., "tour"
+
+                            if (key && this.newnotifications[key]) {
+                                this.newnotifications[key].count++;
+                                this.newnotifications[key].ids.push(id);
+                                this.newnotifications[key].related_id.push(related_id);
+                            } else {
+                                console.warn('[fetchNewNotifications] Unknown type or unmapped key:', type);
+                            }
+                        });
+
+                    } catch (error) {
+                        console.error('[fetchNewNotifications] Error:', error);
+                    }
                 },
 
                 /** Close button logic */
@@ -714,7 +713,7 @@
                     loadStats(type) {
                         this.loading = true;
 
-                        fetch(`/api/admin/${type}-stats`)
+                        fetch(`/api/admin/${type}-stats`, { credentials: 'include' })
                             .then(res => res.json())
                             .then(data => {
                                 this.stats[type] = data;
@@ -723,30 +722,34 @@
                                 this.loading = false;
                             });
                     },
+                    
 
-                    loadPaginatedData(endpoint, targetArray) {
-                        
-
-                        //Check that and comment
+                    async loadPaginatedData(endpoint, targetArray) {
+                        // Prevent double loading or extra calls
                         if (this.loadingpage || !this.hasMore[targetArray]) return;
 
                         this.loadingpage = true;
 
-                        fetch(`${endpoint}?page=${this.page[targetArray]}`)
-                            .then(res => res.json())
-                            .then(data => {
-                               // console.log(`[loadPaginatedData] Fetched page ${this.page[targetArray]} for ${targetArray}:`, data);
-                                
-                                this[targetArray].push(...data.data); //contacts[] , tours[],carrentals[]
-
-                               // console.log(`[loadPaginatedData] Updated ${targetArray} array:`, this[targetArray]); // 👈 Debug this[targetArray]
-
-                                this.page[targetArray]++;
-                                this.hasMore[targetArray] = data.current_page < data.last_page;
-                            })
-                            .finally(() => {
-                                this.loadingpage = false;
+                        try {
+                            const res = await axios.get(endpoint, {
+                                params: { page: this.page[targetArray] },
+                                withCredentials: true
                             });
+
+                            const data = res.data;
+
+                            // Push new records into array
+                            this[targetArray].push(...data.data);
+
+                            // Update pagination state
+                            this.page[targetArray]++;
+                            this.hasMore[targetArray] = data.current_page < data.last_page;
+
+                        } catch (error) {
+                            console.error(`[loadPaginatedData] Error fetching ${targetArray}:`, error);
+                        } finally {
+                            this.loadingpage = false;
+                        }
                     },
 
                     handleScroll(endpoint, targetArray) {
@@ -773,65 +776,55 @@
                         }
                     },
 
-                    deleteItem(type, id, index) {
+                    async deleteItem(type, id, index) {
                         if (!confirm("Are you sure you want to delete this item?")) return;
 
                         this.loading = true;
 
-                        fetch(`/api/${type}/${id}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            }
-                        })
-                        .then(res => {
-                            if (!res.ok) throw new Error('Failed to delete item');
-                            this[type].splice(index, 1);  // Remove from list
-                        })
-                        .catch(err => {
-                            console.error(err);
+                        try {
+                            await axios.delete(`/api/${type}/${id}`, {
+                                withCredentials: true, // include Sanctum session cookie
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                }
+                            });
+
+                            // Remove the item locally
+                            this[type].splice(index, 1);
+
+                        } catch (error) {
+                            console.error('[deleteItem] Error:', error);
                             alert('An error occurred while deleting the item.');
-                        })
-                        .finally(() => {
+                        } finally {
                             this.loading = false;
-                        });
+                        }
                     },
 
-                    updateStatus(type, id, index, status) {
+                    async updateStatus(type, id, index, status) {
                         console.log('Updating status for item:', id, 'new status:', status, 'index:', index);
                         this.loading = true;
                         this.loadingform = true;
 
-                        fetch(`/api/${type}/${id}/update-status`, {
-                            method: 'PUT',
-                            headers: {
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ status: status })
-                        })
-                        .then(res => {
-                            if (!res.ok) throw new Error('Failed to update status');
-                            return res.json();
-                        })
-                        .then(() => {
-                            this[type][index].status = status;  // example: this.taxiBookings[2].status
-                        })
-                        .catch(err => {
-                            console.error(err);
+                        try {
+                            await axios.put(`/api/${type}/${id}/update-status`, 
+                                { status }, // request body
+                                { withCredentials: true } // include Sanctum session cookie
+                            );
+
+                            // Update local state
+                            this[type][index].status = status;
+
+                        } catch (error) {
+                            console.error('[updateStatus] Error:', error);
                             alert('Failed to update status.');
-                        })
-                        .finally(() => {
+                        } finally {
                             this.loading = false;
                             this.loadingform = false;
-                        });
+                        }
                     },
 
                     //Update all field
-                    updateItem(type, id, index, updatedData) {
+                    async updateItem(type, id, index, updatedData) {
                         this.loading = true;
                         this.loadingform = true;
 
@@ -842,32 +835,25 @@
                             updatedData
                         });
 
-                        fetch(`/api/${type}/${id}/update-data`, {
-                            method: 'PUT',
-                            headers: {
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(updatedData)
-                        })
-                        .then(res => {
-                            if (!res.ok) throw new Error('Failed to update item');
-                            return res.json();
-                        })
-                        .then(data => {
-                            this[type][index] = data; // Replace with full updated object
-                        })
-                        .catch(err => {
-                            console.error(err);
+                        try {
+                            const { data } = await axios.put(
+                                `/api/${type}/${id}/update-data`,
+                                updatedData,
+                                { withCredentials: true } // include Sanctum session cookie
+                            );
+
+                            // Replace local object with updated one
+                            this[type][index] = data;
+
+                        } catch (error) {
+                            console.error('[updateItem] Error:', error);
                             alert('Failed to update item.');
-                        })
-                        .finally(() => {
+                        } finally {
                             this.loading = false;
                             this.loadingform = false;
 
                             console.log('🔵 [updateItem] Done loading');
-                        });
+                        }
                     },
 
 
@@ -939,42 +925,32 @@
                         modal.show();
                     },
 
-                    saveComment(model) {
-                        if (this.commentItem) {
+                    async saveComment(model) {
+                        if (!this.commentItem) return;
 
-                            this.loadingform = true;
+                        this.loadingform = true;
 
-                            fetch(`/api/${model}/${this.commentItem.id}/update-comment`, {
-                                method: 'PUT',
-                                headers: {
-                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                                    'Accept': 'application/json',
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    admin_comment: this.tempComment
-                                })
-                            })
-                            .then(res => {
-                                if (!res.ok) throw new Error('Failed to save comment');
-                                return res.json();
-                            })
-                            .then(() => {
-                                this.commentItem.admin_comment = this.tempComment;
+                        try {
+                            await axios.put(
+                                `/api/${model}/${this.commentItem.id}/update-comment`,
+                                { admin_comment: this.tempComment },
+                                { withCredentials: true } // include Sanctum session cookie
+                            );
 
-                                // Close modal
-                                const modal = bootstrap.Modal.getInstance(document.getElementById('commentModal'));
-                                modal.hide();
+                            // Update local state
+                            this.commentItem.admin_comment = this.tempComment;
 
-                                alert('Comment saved successfully!');
-                            })
-                            .catch(err => {
-                                console.error(err);
-                                alert('Failed to save comment.');
-                            })
-                            .finally(() => {
-                                this.loadingform = false;
-                            });
+                            // Close modal
+                            const modal = bootstrap.Modal.getInstance(document.getElementById('commentModal'));
+                            modal.hide();
+
+                            alert('Comment saved successfully!');
+
+                        } catch (error) {
+                            console.error('[saveComment] Error:', error);
+                            alert('Failed to save comment.');
+                        } finally {
+                            this.loadingform = false;
                         }
                     },
 
@@ -1005,58 +981,69 @@
                 //#endregion load contact,tour,taxi ect
                 
                 //#region load notification
-                    fetchNotifications() {
+                    async fetchNotifications() {
                         this.loading = true;
-                        fetch('/api/admin/notifications') // ← You must create this API route in Laravel
-                            .then(res => res.json())
-                            .then(data => {
-                                this.notifications = data;
-                                this.unreadCount = data.filter(n => !n.seen).length;
-                            })
-                            .catch(console.error)
-                            .finally(() => this.loading = false);
+
+                        try {
+                            const res = await axios.get('/api/admin/notifications', { withCredentials: true });
+
+                            this.notifications = res.data;
+                            this.unreadCount = res.data.filter(n => !n.seen).length;
+
+                        } catch (error) {
+                            console.error('[fetchNotifications] Error:', error);
+                        } finally {
+                            this.loading = false;
+                        }
                     },
-                    deleteNotification(id) {
+
+                    async deleteNotification(id) {
                         if (!confirm("Are you sure you want to delete this notification?")) return;
+
                         this.loading = true;
-                        fetch(`/api/admin/notifications/${id}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            }
-                        }).then(() => {
+
+                        try {
+                            await axios.delete(`/api/admin/notifications/${id}`, { withCredentials: true });
+
+                            // Remove locally
                             this.notifications = this.notifications.filter(n => n.id !== id);
+
                             this.toastMessage = 'Notification deleted';
                             this.showToast = true;
-                        })
-                        .finally(() => this.loading = false);
+
+                        } catch (error) {
+                            console.error('[deleteNotification] Error:', error);
+                            alert('Failed to delete notification.');
+                        } finally {
+                            this.loading = false;
+                        }
                     },
 
-                    clearAllNotifications() {
+                    async clearAllNotifications() {
                         if (!confirm("Clear all notifications?")) return;
-                        this.loading = true;
-                        fetch('/api/admin/notifications/clear-all', {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                                'Accept': 'application/json',
-                            }
-                        }).then(() => {
-                            this.notifications = [];
 
-                            // Remove stored notification data
+                        this.loading = true;
+
+                        try {
+                            await axios.delete('/api/admin/notifications/clear-all', { withCredentials: true });
+
+                            // Clear local state and storage
+                            this.notifications = [];
                             localStorage.removeItem('notificationCount');
                             localStorage.removeItem('notificationDismissed');
                             localStorage.removeItem('playNotification');
 
                             this.toastMessage = 'All notifications cleared';
-
                             this.showToast = true;
-                        })
-                        .finally(() => this.loading = false);
+
+                        } catch (error) {
+                            console.error('[clearAllNotifications] Error:', error);
+                            alert('Failed to clear notifications.');
+                        } finally {
+                            this.loading = false;
+                        }
                     },
+
 
                     getNotificationTitle(type) {
                         switch(type) {
@@ -1159,16 +1146,20 @@
                     this.loading = true;
 
                     try {
-                        const res = await axios.get(`/api/admin/optiontours/bookings/${this.bookselectedTour}/${date}`);
+                        const res = await axios.get(
+                            `/api/admin/optiontours/bookings/${this.bookselectedTour}/${date}`,
+                            { withCredentials: true } // ensure session cookie is sent
+                        );
+
                         this.bookingsForSelectedDate = res.data;
+
                     } catch (error) {
-                        console.error(error);
+                        console.error('[selectDate] Error fetching bookings:', error);
                         this.bookingsForSelectedDate = [];
                     } finally {
                         this.loading = false;
                     }
                 },
-
 
                 //open map for car booking
                 openMapModal() {
@@ -1260,20 +1251,17 @@
                         this.loadingform = true;
 
                         try {
-                            const res = await fetch('/admin/delete-preview', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                                },
-                                body: JSON.stringify({
+                            const res = await axios.post(
+                                '/admin/delete-preview',
+                                {
                                     tables: this.deleteSelectedTables,
                                     status: this.deleteStatus,
                                     age: this.deleteAge
-                                })
-                            });
+                                },
+                                { withCredentials: true } // automatically sends session cookie
+                            );
 
-                            const data = await res.json();
+                            const data = res.data;
 
                             if (data.success) {
                                 this.previewCount = data.total || 0;
@@ -1281,9 +1269,10 @@
                             } else {
                                 alert(data.message || 'Unable to fetch preview data.');
                             }
+
                         } catch (err) {
-                            console.error("Preview fetch failed:", err);
-                            alert("Failed to fetch preview counts. Try again.");
+                            console.error('[showPasswordModal] Preview fetch failed:', err);
+                            alert('Failed to fetch preview counts. Try again.');
                         } finally {
                             this.loadingform = false;
                         }
@@ -1292,97 +1281,107 @@
                         modal.show();
                     },
 
-                    confirmDelete() {
+
+                    async confirmDelete() {
                         this.loadingform = true;
-                        fetch('/delete-data', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                            },
-                            body: JSON.stringify({
-                                tables: this.deleteSelectedTables,
-                                status: this.deleteStatus,
-                                age: this.deleteAge,
-                                password: this.deleteAdminPassword
-                            })
-                        })
-                        .then(res => res.json())
-                        .then(data => {
+
+                        try {
+                            const res = await axios.post(
+                                '/delete-data',
+                                {
+                                    tables: this.deleteSelectedTables,
+                                    status: this.deleteStatus,
+                                    age: this.deleteAge,
+                                    password: this.deleteAdminPassword
+                                },
+                                { withCredentials: true } // include Sanctum session cookie
+                            );
+
+                            const data = res.data;
+
                             if (data.success) {
                                 alert('Data deleted successfully!');
                                 this.resetDeleteForm();
-                                bootstrap.Modal.getInstance(document.getElementById('passwordModal')).hide();
+                                const modal = bootstrap.Modal.getInstance(document.getElementById('passwordModal'));
+                                modal.hide();
                             } else {
                                 alert(data.message || 'Password incorrect or deletion failed.');
                             }
-                        })
-                        .catch(() => alert('Error processing deletion.'))
-                        .finally(() => this.loadingform = false);
+
+                        } catch (error) {
+                            console.error('[confirmDelete] Error:', error);
+                            alert('Error processing deletion.');
+                        } finally {
+                            this.loadingform = false;
+                        }
                     },
+
                 //#endregion for deletion of data
                 async logout() {
-                    if (confirm("Do you want to log out?")) {
-                        this.loading = true;
-                        try {
-                            await fetch("/logout", {
-                                method: "POST",
-                                headers: {
-                                    "X-CSRF-TOKEN": document
-                                        .querySelector('meta[name="csrf-token"]')
-                                        .getAttribute("content"),
-                                    "Accept": "application/json",
-                                },
-                            });
-                            window.location.href = "/admin/login";
-                        } catch (error) {
-                            console.error("Logout failed", error);
-                        } finally {
-                            this.loading = false;
-                        }
+                    if (!confirm("Do you want to log out?")) return;
+
+                    this.loading = true;
+
+                    try {
+                        await axios.post(
+                            "/admin/logout",
+                            {},
+                            { withCredentials: true } // include Sanctum session cookie
+                        );
+
+                        window.location.href = "/admin/secure-Df678pK3/login";
+
+                    } catch (error) {
+                        console.error("[logout] Logout failed:", error);
+                        alert("Logout failed. Please try again.");
+                    } finally {
+                        this.loading = false;
                     }
                 },
+
 
                 //Fetch size memory
                 async fetchUsage() {
                     try {
-                        const res = await fetch('/api/db-usage');
-                        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-                        this.usage = await res.json();
+                        const res = await axios.get('/api/db-usage', { withCredentials: true });
+                        this.usage = res.data;
                     } catch (err) {
-                        console.error('Error fetching DB usage:', err);
+                        console.error('[fetchUsage] Error fetching DB usage:', err);
                         this.usage = { database: 'Error', used_mb: 0, limit_mb: 0, remaining_mb: 0 };
                     }
                 },
 
                 //#region Modified tour,car (promotion price ..ect)
-                    fetchToursToModify() {
+                    async fetchToursToModify() {
                         this.loading = true;
-                        axios.get("{{ route('admin.tours.json') }}")
-                            .then(res => {
-                                this.tourstomodify = res.data;
-                                this.modifiedmodalcar = false;
-                                this.modifiedmodaltour = true; // show the table
-                            })
-                            .catch(err => console.error(err))
-                            .finally(() => {
-                                    this.loading = false;
-                            });
-                    },
-                    fetchCarsToModify(){
-                        this.loading = true;
-                        axios.get("{{ route('admin.cars.json') }}")
-                            .then(res => {
-                                this.carstomodify = res.data;
-                                this.modifiedmodaltour = false;
-                                this.modifiedmodalcar = true; // show the table
-                            })
-                            .catch(err => console.error(err))
-                            .finally(() => {
-                                    this.loading = false;
-                            });
 
+                        try {
+                            const res = await axios.get("{{ route('admin.tours.json') }}", { withCredentials: true });
+                            this.tourstomodify = res.data;
+                            this.modifiedmodalcar = false;
+                            this.modifiedmodaltour = true; // show the table
+                        } catch (err) {
+                            console.error('[fetchToursToModify] Error fetching tours:', err);
+                        } finally {
+                            this.loading = false;
+                        }
                     },
+
+                    async fetchCarsToModify() {
+                        this.loading = true;
+
+                        try {
+                            const res = await axios.get("{{ route('admin.cars.json') }}", { withCredentials: true });
+                            this.carstomodify = res.data;
+                            this.modifiedmodaltour = false;
+                            this.modifiedmodalcar = true; // show the table
+                        } catch (err) {
+                            console.error('[fetchCarsToModify] Error fetching cars:', err);
+                        } finally {
+                            this.loading = false;
+                        }
+                    },
+
 
                     openEditModal(item, modalRef) {
                        this.editItem = { ...item }; // or rename to editItem if shared
@@ -1407,83 +1406,99 @@
                 //    closeEditModal() {
                  //       bootstrap.Modal.getInstance(this.$refs.editModal).hide();
                  //   },
-                updateModifyTour() {
+                 async updateModifyTour() {
                     this.loadingform = true;
 
-                    axios.put(`/admin/tours/${this.editItem.id}`, this.editItem, {
-                        headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
-                    })
-                    .then(res => {
+                    try {
+                        const res = await axios.put(
+                            `/admin/tours/${this.editItem.id}`,
+                            this.editItem,
+                            { withCredentials: true } // include Sanctum session cookie
+                        );
+
                         const index = this.tourstomodify.findIndex(t => t.id === this.editItem.id);
                         if (index !== -1) this.tourstomodify[index] = res.data;
+
                         this.closeEditModal('editModal');
                         alert('Tour updated successfully!');
-                    })
-                    .catch(err => console.error(err))
-                    .finally(() => {
+
+                    } catch (err) {
+                        console.error('[updateModifyTour] Error updating tour:', err);
+                        alert('Failed to update tour.');
+                    } finally {
                         this.loadingform = false;
-                    });
+                    }
                 },
 
-                updateModifyCar() {
+                async updateModifyCar() {
                     this.loadingform = true;
 
-                    axios.put(`/admin/cars/${this.editItem.id}`, this.editItem, {
-                        headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
-                    })
-                    .then(res => {
+                    try {
+                        const res = await axios.put(
+                            `/admin/cars/${this.editItem.id}`,
+                            this.editItem,
+                            { withCredentials: true } // include Sanctum session cookie
+                        );
+
                         const index = this.carstomodify.findIndex(c => c.id === this.editItem.id);
                         if (index !== -1) this.carstomodify[index] = res.data;
+
                         this.closeEditModal('editModalcar');
                         alert('Car updated successfully!');
-                    })
-                    .catch(err => console.error(err))
-                    .finally(() => {
+
+                    } catch (err) {
+                        console.error('[updateModifyCar] Error updating car:', err);
+                        alert('Failed to update car.');
+                    } finally {
                         this.loadingform = false;
-                    });
+                    }
                 },
 
                 //#endregion Modified tour,car (promotion price ..ect)
 
-                fetchAdminSetting() {
+                async fetchAdminSetting() {
                     this.loading = true;
-                    axios.get('/admin/settings/json') // endpoint returning JSON for SiteSetting
-                        .then(res => {
-                            console.log('Response received:', res); // full Axios response
-                            console.log('Data only:', res.data);   // actual data
-                            this.admin = res.data;
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            // fallback defaults
-                            this.admin = {
-                                contact_email: '',
-                                whatsapp: '',
-                                twitter: '',
-                                facebook: '',
-                                instagram: '',
-                            }
-                        })
-                        .finally(() => {
-                                this.loading = false;
-                        });
+
+                    try {
+                        const res = await axios.get('/admin/settings/json', { withCredentials: true });
+                        console.log('[fetchAdminSetting] Full response:', res);
+                        console.log('[fetchAdminSetting] Data only:', res.data);
+                        this.admin = res.data;
+                    } catch (err) {
+                        console.error('[fetchAdminSetting] Error fetching settings:', err);
+                        // fallback defaults
+                        this.admin = {
+                            contact_email: '',
+                            whatsapp: '',
+                            twitter: '',
+                            facebook: '',
+                            instagram: '',
+                        };
+                    } finally {
+                        this.loading = false;
+                    }
                 },
                 
-                saveSettings() {
+                async saveSettings() {
                     this.loadingform = true;
-                    axios.post('{{ route("admin.settings.update") }}', this.admin)
-                        .then(res => {
-                            alert(res.data.message);
-                            this.admin = res.data.admin;
-                        })
-                        .catch(err => {
-                            console.error(err);
-                            alert('Failed to save settings.');
-                        })
-                        .finally(() => {
-                                this.loadingform = false;
-                        });
+
+                    try {
+                        const res = await axios.post(
+                            '{{ route("admin.settings.update") }}',
+                            this.admin,
+                            { withCredentials: true } // include Sanctum session cookie
+                        );
+
+                        alert(res.data.message);
+                        this.admin = res.data.admin;
+                    } catch (err) {
+                        console.error('[saveSettings] Error saving settings:', err);
+                        alert('Failed to save settings.');
+                    } finally {
+                        this.loadingform = false;
+                    }
                 },
+
 
                 handleSubmitpassword(e) {
                     this.loading = true;
@@ -1492,8 +1507,10 @@
 
             },
             mounted() {
+
                 const path = window.location.pathname;
                 const mediaQuery = window.matchMedia("(max-width: 768px)");
+
 
                 // Initial check
                 if (mediaQuery.matches) {

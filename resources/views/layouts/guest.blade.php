@@ -28,15 +28,12 @@
 </head>
 <body>
     <div class="container d-flex align-items-center justify-content-center min-vh-100">
-        <div class="card p-5 text-center">
+        <div class=" p-5 text-center">
             <div class="icon-circle mx-auto">
                 <i class='bx bx-time bx-lg text-dark'></i>
             </div>
             <h4 class="mb-3">Session Expired</h4>
             <p class="text-muted">Your session has timed out due to inactivity. Please log in again to continue.</p>
-            <a href="{{ route('admin.login') }}" class="btn btn-warning mt-3">
-                <i class='bx bx-log-in-circle'></i> Login Again
-            </a>
         </div>
     </div>
 </body>

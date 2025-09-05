@@ -10,7 +10,13 @@ class IsAdmin
 {
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->check() || auth()->user()->role !== 'admin') {
+        $user = $request->user(); // works with both session and Sanctum
+
+        if (! $user || $user->role !== 'admin') {
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Forbidden'], 403);
+            }
+
             abort(403, 'Unauthorized.');
         }
 

@@ -129,102 +129,146 @@ Route::post('/admin/secure-Df678pK3/login', [AuthController::class, 'login'])
 ->middleware('throttle:5,1') // 5 attempts per minute
 ->name('admin.login');
 
-//Handle logout POST
-Route::post('/logout', function () {
-    Auth::logout();
-    request()->session()->invalidate();
-    request()->session()->regenerateToken();
-    return redirect('/admin/secure-Df678pK3/login');
-})->name('logout');
+
 
 // Protected dashboard (only logged-in users can access)
-Route::middleware('auth')->get('/admin/dashboard', function () {
-    return view('admin.dashboardpanel');
-})->name('admin.dashboard');
+// Route::middleware('auth')->get('/admin/dashboard', function () {
+//     return view('admin.dashboardpanel');
+// })->name('admin.dashboard');
 //Deletion of all data for admin
-Route::middleware('auth')->post('/delete-data', [AdminSetupController::class, 'deleteData']);
+//Route::middleware('auth')->post('/delete-data', [AdminSetupController::class, 'deleteData']);
 
 //
 
 
 // Search bulk  deletion
 // API for preview counts
-Route::middleware('auth')->post('/admin/delete-preview', [AdminSetupController::class, 'previewDelete']);
+//Route::middleware('auth')->post('/admin/delete-preview', [AdminSetupController::class, 'previewDelete']);
 
 // Protected JSON tours route
-Route::middleware('auth')->group(function () {
-    Route::get('/admin/tours/json', [AdminTourController::class, 'json'])
-        ->name('admin.tours.json');
+// Route::middleware('auth')->group(function () {
+//     Route::get('/admin/tours/json', [AdminTourController::class, 'json'])
+//         ->name('admin.tours.json');
 
-    Route::put('/admin/tours/{tour}', [AdminTourController::class, 'update'])
-        ->name('admin.tours.update');
-});
+//     Route::put('/admin/tours/{tour}', [AdminTourController::class, 'update'])
+//         ->name('admin.tours.update');
+// });
 
 // Protected JSON cars route
-Route::middleware('auth')->group(function () {
-    Route::get('/admin/cars/json', [AdminCarController::class, 'json'])
-        ->name('admin.cars.json');
+// Route::middleware('auth')->group(function () {
+//     Route::get('/admin/cars/json', [AdminCarController::class, 'json'])
+//         ->name('admin.cars.json');
 
-    Route::put('/admin/cars/{car}', [AdminCarController::class, 'update'])
-        ->name('admin.cars.update');
-});
+//     Route::put('/admin/cars/{car}', [AdminCarController::class, 'update'])
+//         ->name('admin.cars.update');
+// });
 
 //Get/Edit email,whatapp,social link
 Route::middleware(['auth', 'is_admin'])->group(function () {
+
+    //Dashboard (only logged-in users can access)
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboardpanel');
+    })->name('admin.dashboard');
+
+    Route::view('/admin/booktour', 'admin.tourpanel')->name('admin.tourpanel');
+    Route::view('/admin/contactpanel', 'admin.contactpanel')->name('admin.contactpanel');
+    Route::view('/admin/notificationpanel', 'admin.notificationpanel')->name('admin.notificationpanel');
+    Route::view('/admin/carrentalpanel', 'admin.rentalpanel')->name('admin.carrentalpanel');
+    Route::view('/admin/discountpanel', 'admin.discountpanel')->name('admin.discountpanel');
+    Route::view('/admin/profilepanel', 'admin.profilepanel')->name('admin.profilepanel');
+    Route::view('/admin/taxipanel', 'admin.taxipanel')->name('admin.taxipanel');
+    Route::view('/admin/custompanel', 'admin.custompanel')->name('admin.custompanel');
+    Route::view('/admin/deletepanel', 'admin.deletepanel')->name('admin.deletepanel');
+
+    //Search booktour to display in panel
+    Route::get('/admin/tours/bookings/{tourId}/{date}', [TourBookingController::class, 'getBookingsForDate']);
+
+    // Tours( Protected JSON tours)
+    Route::get('/admin/tours/json', [AdminTourController::class, 'json'])->name('admin.tours.json');
+    Route::put('/admin/tours/{tour}', [AdminTourController::class, 'update'])->name('admin.tours.update');
+    //Tour Blocking
+    Route::get('/tours/blocked-dates/{id}', [TourBlockedDateController::class, 'getBlockedDates']);
+    Route::post('/tours/block-dates', [TourBlockedDateController::class, 'saveBlockedDates']);
+
+    // Cars( Protected JSON cars)
+    Route::get('/admin/cars/json', [AdminCarController::class, 'json'])->name('admin.cars.json');
+    Route::put('/admin/cars/{car}', [AdminCarController::class, 'update'])->name('admin.cars.update');
+
+    // Deletion
+     //Deletion of all data for admin
+    Route::post('/delete-data', [AdminSetupController::class, 'deleteData']);
+     //Search bulk  deletion (API for preview counts)
+    Route::post('/admin/delete-preview', [AdminSetupController::class, 'previewDelete']);
+
+    //Setting
     Route::get('/admin/settings/json', [AdminSetupController::class, 'getSettings'])->name('admin.settings.json');
     Route::post('/admin/settings', [AdminSetupController::class, 'updatesetting'])->name('admin.settings.update');
+
+    //Profile
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //Change password
     Route::get('/admin/change-password', [AdminSetupController::class, 'showChangePasswordForm'])->name('admin.password.change');
     Route::post('/admin/change-password', [AdminSetupController::class, 'updatePassword'])->name('admin.password.update');
+
+    //Handle admin logout POST
+    Route::post('/admin/logout', function () {
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect('/admin/secure-Df678pK3/login');
+    })->name('logout');
 });
 
 
 // Go to Book Tour panel
-Route::middleware('auth')->get('/admin/booktour', function () {
-    return view('admin.tourpanel');
-})->name('admin.tourpanel');
+// Route::middleware('auth')->get('/admin/booktour', function () {
+//     return view('admin.tourpanel');
+// })->name('admin.tourpanel');
 
 // Go to contact panel
-Route::middleware('auth')->get('/admin/contactpanel', function () {
-    return view('admin.contactpanel');
-})->name('admin.contactpanel');
+// Route::middleware('auth')->get('/admin/contactpanel', function () {
+//     return view('admin.contactpanel');
+// })->name('admin.contactpanel');
 
 
 // Go to notification panel
-Route::middleware('auth')->get('/admin/notificationpanel', function () {
-    return view('admin.notificationpanel');
-})->name('admin.notificationpanel');
+// Route::middleware('auth')->get('/admin/notificationpanel', function () {
+//     return view('admin.notificationpanel');
+// })->name('admin.notificationpanel');
 
 // Go to car rental panel
-Route::middleware('auth')->get('/admin/carrentalpanel', function () {
-    return view('admin.rentalpanel');
-})->name('admin.carrentalpanel');
+// Route::middleware('auth')->get('/admin/carrentalpanel', function () {
+//     return view('admin.rentalpanel');
+// })->name('admin.carrentalpanel');
 
 // Go to discount panel
-Route::middleware('auth')->get('/admin/discountpanel', function () {
-    return view('admin.discountpanel');
-})->name('admin.discountpanel');
+// Route::middleware('auth')->get('/admin/discountpanel', function () {
+//     return view('admin.discountpanel');
+// })->name('admin.discountpanel');
 
 // Go to profile panel
-Route::middleware('auth')->get('/admin/profilepanel', function () {
-    return view('admin.profilepanel');
-})->name('admin.profilepanel');
+// Route::middleware('auth')->get('/admin/profilepanel', function () {
+//     return view('admin.profilepanel');
+// })->name('admin.profilepanel');
 
 // Go to taxi panel
-Route::middleware('auth')->get('/admin/taxipanel', function () {
-    return view('admin.taxipanel');
-})->name('admin.taxipanel');
+// Route::middleware('auth')->get('/admin/taxipanel', function () {
+//     return view('admin.taxipanel');
+// })->name('admin.taxipanel');
 
 // Go to custom panel
-Route::middleware('auth')->get('/admin/custompanel', function () {
-    return view('admin.custompanel');
-})->name('admin.custompanel');
+// Route::middleware('auth')->get('/admin/custompanel', function () {
+//     return view('admin.custompanel');
+// })->name('admin.custompanel');
 
 // Go to bulk deletion
-Route::middleware('auth')->get('/admin/deletepanel', function () {
-    return view('admin.deletepanel');
-})->name('admin.deletepanel');
+// Route::middleware('auth')->get('/admin/deletepanel', function () {
+//     return view('admin.deletepanel');
+// })->name('admin.deletepanel');
 
 
 Route::get('/rentcar/{id}', [CarController::class, 'show'])->name('rentcar.show');
@@ -235,10 +279,10 @@ Route::get('/rentcar/{id}', [CarController::class, 'show'])->name('rentcar.show'
 // Route::post('/tour-bookings', [TourBookingController::class, 'store'])->name('tour.bookings.store');
 
 
-Route::prefix('admin')->middleware(['auth'])->group(function () {
-    Route::get('/tours/blocked-dates/{id}', [TourBlockedDateController::class, 'getBlockedDates']);
-    Route::post('/tours/block-dates', [TourBlockedDateController::class, 'saveBlockedDates']);
-});
+// Route::prefix('admin')->middleware(['auth'])->group(function () {
+//     Route::get('/tours/blocked-dates/{id}', [TourBlockedDateController::class, 'getBlockedDates']);
+//     Route::post('/tours/block-dates', [TourBlockedDateController::class, 'saveBlockedDates']);
+// });
 
 // In web.php (with auth middleware) show tour in admin panel
 // Route::get('/admin/tours/block-dates', [TourBlockedDateController::class, 'showBlockTourDatesPage'])->middleware('auth');
@@ -260,33 +304,26 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
-//Go to Contact page
-// Route::get('/contact', function (Illuminate\Http\Request $request) {
-//     return view('contactpage', ['type' => $request->query('type')]);
-// })->name('contact');
+
 
 //Send contact to email
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 //Go to Luxury taxi page
-Route::get('/luxurytransfer', function () {
-    return view('luxurytransfer');
-})->name('luxurytransfer'); 
-
-
-
-
+// Route::get('/luxurytransfer', function () {
+//     return view('luxurytransfer');
+// })->name('luxurytransfer'); 
 //tours
 
-Route::get('/north-coast', function () {
-    return view('north-coast-sightseeing');
-})->name('north-coast');
+// Route::get('/north-coast', function () {
+//     return view('north-coast-sightseeing');
+// })->name('north-coast');
 
 
 //Save the tour in database
@@ -294,15 +331,6 @@ Route::post('/tour-bookings', [TourBookingController::class, 'store']);
 
 //Save custom tour
 Route::post('/custom-tour', [CustomTourRequestController::class, 'store'])->name('custom-tour.store');
-
-
-
-
-
-
-//Search booktour to display in panel
-Route::get('/admin/tours/bookings/{tourId}/{date}', [TourBookingController::class, 'getBookingsForDate']);
-
 
 
 //Send booking of car
