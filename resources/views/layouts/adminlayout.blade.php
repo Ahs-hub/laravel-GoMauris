@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoMauris Admin Panel</title>
-    <!-- Add icon -->
-    <link rel="icon" type="image/png" href="{{ secure_asset('favicon.png') }}">
 
     {{-- CSS Libraries --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
@@ -15,8 +13,14 @@
 
     @if (app()->environment('production'))
         <link rel="stylesheet" href="{{ secure_asset('css/adminpanel.css') }}">
+
+        <!-- Add icon -->
+        <link rel="icon" type="image/png" href="{{ secure_asset('favicon.png') }}">
     @else
         <link rel="stylesheet" href="{{ asset('css/adminpanel.css') }}">
+
+        <!-- Add icon -->
+        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     @endif
 
     <!-- for location map -->

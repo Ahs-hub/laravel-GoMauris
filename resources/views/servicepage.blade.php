@@ -3,12 +3,17 @@
 @section('content')
     @if (app()->environment('production'))
         <link rel="stylesheet" href="{{ secure_asset('css/servicepage.css') }}">
+
+        
+        <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     @else
         <link rel="stylesheet" href="{{ asset('css/servicepage.css') }}">
+
+        <!-- Vue.js -->
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     @endif
 
-    <!-- Vue.js -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
 
 
     <!-- Hero Section -->

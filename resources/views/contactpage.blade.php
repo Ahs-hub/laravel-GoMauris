@@ -69,7 +69,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="phone" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">{{ __('messages.phone_number') }}</label>
-                                <input type="tel" class="form-control" id="phone" name="phone">
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
                             </div>
                             <div class="col-12">
                                 <label for="service" class="form-label fw-semibold" style="color:rgb(49, 49, 49)">{{ __('messages.service_needed') }}</label>
@@ -122,7 +122,7 @@
                             </div>
                             <h5 class="fw-bold mb-2" >{{ __('messages.call_us') }}</h5>
                             <p class="paragraph-text text-muted mb-0">
-                                <a href="https://wa.me/{{ $whatsappNumber }}s" target="_blank" class="whatsapp-link" style="text-decoration:none;">
+                                <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" class="whatsapp-link" style="text-decoration:none;">
                                 {{ $siteSettings->whatsapp }}
                                 </a>
                             </p>
@@ -135,7 +135,8 @@
                             </div>
                             <h5 class="fw-bold mb-2" >{{ __('messages.email_us') }}</h5>
                             <p class="paragraph-text text-muted mb-0">
-                               <a href="https://mailto: {{ $siteSettings->contact_email }}" style=" text-decoration: none;">
+
+                               <a href="mailto:{{ $siteSettings->contact_email }}"  style=" text-decoration: none;">
                                {{ $siteSettings->contact_email }}
                                 </a>
                             </p>
@@ -182,21 +183,20 @@
             const submitBtn = document.getElementById('contactSubmitBtn');
             const spinner = document.getElementById('contactSpinner');
 
-            form.addEventListener('submit', function (e) {
-                // Disable the button
-                submitBtn.disabled = true;
+            if (form && submitBtn && spinner) {
+                form.addEventListener('submit', function (e) {
+                    submitBtn.disabled = true;
+                    submitBtn.style.display = 'none';
+                    spinner.style.display = 'inline-block';
 
-                // Hide the button and show the spinner
-                submitBtn.style.display = 'none';
-                spinner.style.display = 'inline-block';
-
-                // Timer to stop spinner after 5 seconds
-                setTimeout(() => {
-                    spinner.style.display = 'none';
-                    submitBtn.style.display = 'inline-block';
-                    submitBtn.disabled = false;
-                }, 5000); // 5000 ms = 5 seconds
-            });
+                    // Optional: Stop spinner after 5 seconds in case form hangs
+                    setTimeout(() => {
+                        spinner.style.display = 'none';
+                        submitBtn.style.display = 'inline-block';
+                        submitBtn.disabled = false;
+                    }, 5000);
+                });
+            }
         });
 </script>
 
