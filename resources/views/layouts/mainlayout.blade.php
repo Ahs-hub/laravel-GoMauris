@@ -78,10 +78,9 @@
         </div>
     </div>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="padding:0px; ">
+    <nav class="navbar-expand-lg navbar-light fixed-top navbar" style="padding:0px;">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home') }}">
-                <!-- <i class='bx bx-car'></i> -->
                 <img src="{{ asset('images/logo/logo3.png') }}" alt="Logo">
             </a>
             <div class="header-item phone-appear" style="color:white;">

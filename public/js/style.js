@@ -1,3 +1,71 @@
+//#region    shink nav bar styling
+document.addEventListener("scroll", function() {
+  const navbar = document.querySelector(".navbar");
+
+  // Only apply effect on desktop (lg and up)
+  if (window.innerWidth >= 992) {
+    if (window.scrollY > 50) {
+      navbar.classList.remove("shrink");
+    } else {
+      navbar.classList.add("shrink");
+    }
+  } else {
+    // Always reset navbar on mobile
+    navbar.classList.remove("shrink");
+  }
+});
+
+//#endregion shrink nav bar
+
+//#region count animation 
+  function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+  
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const duration = 2000; // total animation time in ms
+      const frameRate = 30;  // frames per second
+      const totalFrames = Math.round(duration / (1000 / frameRate));
+      let frame = 0;
+  
+      const counterInterval = setInterval(() => {
+        frame++;
+        const progress = frame / totalFrames;
+        const currentCount = Math.round(target * progress);
+  
+        counter.innerText = currentCount;
+  
+        if (frame === totalFrames) {
+          clearInterval(counterInterval);
+          counter.innerText = target; // exact target at end
+        }
+      }, 1000 / frameRate);
+    });
+  }
+  
+  const statsSection = document.querySelector('.stats-section');
+  
+  window.addEventListener('scroll', () => {
+    const sectionTop = statsSection.getBoundingClientRect().top;
+    const sectionBottom = statsSection.getBoundingClientRect().bottom;
+    const screenHeight = window.innerHeight;
+  
+    // When section is visible -> animate
+    if (sectionTop < screenHeight && sectionBottom > 0) {
+      const counters = document.querySelectorAll('.stat-number');
+      counters.forEach(c => {
+        if (c.innerText === "0") { // prevent re-triggering mid animation
+          animateCounters();
+        }
+      });
+    } else {
+      // When section is out of view -> reset to 0
+      const counters = document.querySelectorAll('.stat-number');
+      counters.forEach(c => c.innerText = "0");
+    }
+  });
+//#endregion count animation
+
 //#region filter tour 
 document.addEventListener("DOMContentLoaded", function () {
         const buttons = document.querySelectorAll(".category-btn");

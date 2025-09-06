@@ -547,7 +547,13 @@
 .stat-number {
     font-size: 3rem;
     font-weight: 700;
-    display: block;
+
+}
+.stat-plus-sign{
+  font-size: 3rem;
+  font-weight: 700;
+  display: block;
+  
 }
 
 .stat-label {

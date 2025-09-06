@@ -273,24 +273,24 @@
 
 
     <!-- Stats Section -->
-       <section class="stats-section section-padding" style=" height: auto; background-size: cover; background-position: center;">
+    <section class="stats-section section-padding" style=" height: auto; background-size: cover; background-position: center;">
         <div class="container" >
             <div class="row text-center">
                 <div class="col-lg-4 col-md-6">
                     <div class="stat-item">
-                        <span class="stat-number">10+</span>
+                        <div class="stat-plus-sign"><span class="stat-number" data-target="10">0</span><span >+</span></div>
                         <div class="stat-label">{{ __('messages.stat_reviews') }}</div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="stat-item">
-                        <span class="stat-number">10+</span>
+                        <div class="stat-plus-sign"><span class="stat-number" data-target="10">0</span><span >+</span></div>
                         <div class="stat-label">{{ __('messages.stat_vehicles_available') }}</div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="stat-item">
-                        <span class="stat-number">15+</span>
+                        <div class="stat-plus-sign"><span class="stat-number" data-target="15">0</span><span >+</span></div>
                         <div class="stat-label">{{ __('messages.stat_tour_packages') }}</div>
                     </div>
                 </div>

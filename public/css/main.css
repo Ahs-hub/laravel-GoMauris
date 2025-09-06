@@ -109,7 +109,7 @@ body {
 
 /*#region Navigation */
 .navbar {
-     padding: 0px;
+    padding: 0px;
     /* padding: 1rem 0; */
     position: sticky;
 
@@ -121,6 +121,11 @@ body {
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 20px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
+
+    height:200px;
+}
+.navbar.shrink {
+  height: 70px;
 }
 
 .navbar-brand {
@@ -555,6 +560,7 @@ body {
      }
      .navbar{
          position: fixed;
+         height:auto;
      }
     .phone-appear{
      display: flex;
