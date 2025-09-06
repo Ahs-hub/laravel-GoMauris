@@ -3,12 +3,17 @@
 @section('content')
     @if (app()->environment('production'))
         <link rel="stylesheet" href="{{ secure_asset('css/customizeitinerary.css') }}">
+
+        <!-- Add Vue.js CDN once in your page (before </body>) -->
+        <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
     @else
         <link rel="stylesheet" href="{{ asset('css/customizeitinerary.css') }}">
+
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     @endif
 
-    <!-- Add Vue.js CDN once in your page (before </body>) -->
-   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
 
     <div class="d-flex justify-content-center align-items-center min-vh-100" style="margin-bottom:100px;">
         <div class="container" style="max-width: 800px; width: 100%;">

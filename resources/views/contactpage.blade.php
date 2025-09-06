@@ -97,14 +97,14 @@
                                 </button>
 
                                 <!-- Spinner (hidden by default) -->
-                                <!-- <div 
+                                <div 
                                     id="contactSpinner" 
                                     class="spinner-border text-primary ms-3" 
                                     style="display: none;" 
                                     role="status"
                                 >
                                     <span class="visually-hidden">{{ __('messages.loading') }}...</span>
-                                </div> -->
+                                </div> 
 
                             </div>
                         </div>
@@ -177,20 +177,27 @@
 </section>
 
 <script>
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     const form = document.querySelector('.contact-form form');
-    //     const submitBtn = document.getElementById('contactSubmitBtn');
-    //     const spinner = document.getElementById('contactSpinner');
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('.contact-form form');
+            const submitBtn = document.getElementById('contactSubmitBtn');
+            const spinner = document.getElementById('contactSpinner');
 
-    //     form.addEventListener('submit', function () {
-    //         // Disable the button
-    //         submitBtn.disabled = true;
+            form.addEventListener('submit', function (e) {
+                // Disable the button
+                submitBtn.disabled = true;
 
-    //         // Hide the button and show the spinner
-    //         submitBtn.style.display = 'none';
-    //         spinner.style.display = 'inline-block';
-    //     });
-    // });
+                // Hide the button and show the spinner
+                submitBtn.style.display = 'none';
+                spinner.style.display = 'inline-block';
+
+                // Timer to stop spinner after 5 seconds
+                setTimeout(() => {
+                    spinner.style.display = 'none';
+                    submitBtn.style.display = 'inline-block';
+                    submitBtn.disabled = false;
+                }, 5000); // 5000 ms = 5 seconds
+            });
+        });
 </script>
 
 @endsection

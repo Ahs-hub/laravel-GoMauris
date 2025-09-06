@@ -4,15 +4,23 @@
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Vue + Axios -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
 
     @if (app()->environment('production'))
         <link rel="stylesheet" href="{{ secure_asset('css/tourdetailed.css') }}">
+
+        <!-- Production build of Vue 3 -->
+        <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     @else
         <link rel="stylesheet" href="{{ asset('css/tourdetailed.css') }}">
+
+        <!-- Vue -->
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     @endif
+
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <style>
         /* remove delay for vue  heart icon*/

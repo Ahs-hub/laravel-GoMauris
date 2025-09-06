@@ -16,8 +16,7 @@
     <!-- Google Fonts poppins,lato,Open_sans,Roboto-->
     <link href="https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
-    <!-- Vue CDN -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
 
      <!-- Swiper CSS -->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -27,8 +26,13 @@
 
     @if (app()->environment('production'))
         <link rel="stylesheet" href="{{ secure_asset('css/main.css') }}">
+
+        <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     @else
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+
+        <!-- Vue CDN -->
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     @endif
 
     @php

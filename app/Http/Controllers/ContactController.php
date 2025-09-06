@@ -18,7 +18,7 @@ class ContactController extends Controller
             'firstName' => 'required|string|max:100',
             'lastName' => 'required|string|max:100',
             'email' => 'required|email',
-            'phone' => 'nullable|string|max:20',
+            'phone'     => 'required|string|max:20',
             'service' => 'required|string',
             'message' => 'nullable|string|max:1000',
         ]);

@@ -3,8 +3,15 @@
 @section('content')
     @if (app()->environment('production'))
         <link rel="stylesheet" href="{{ secure_asset('css/taxipage.css') }}">
+        
+        <!-- Include Vue -->
+        <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
     @else
         <link rel="stylesheet" href="{{ asset('css/taxipage.css') }}">
+
+        <!-- Include Vue -->
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     @endif
 
     @php
@@ -26,8 +33,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Include Vue -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
     
     <div style="overflow-y:hidden;">
         <!-- Hero Section -->
