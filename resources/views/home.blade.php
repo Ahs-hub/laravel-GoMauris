@@ -40,7 +40,7 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="section-padding">
+    <section id="services" class="section-padding" data-aos="fade-up">
 
         <div class="container">    
             <div class="row" style="margin-bottom:10px;">
@@ -177,7 +177,7 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="section-padding py-5" style="background: var(--gray-light);">
+    <section id="about" class="section-padding py-5" style="background: var(--gray-light);" data-aos="fade-up">
         <div class="container">
             <div class="row align-items-center gy-4">
                 <!-- Image Column -->
@@ -273,7 +273,7 @@
 
 
     <!-- Stats Section -->
-    <section class="stats-section section-padding" style=" height: auto; background-size: cover; background-position: center;">
+    <section class="stats-section section-padding" style=" height: auto; background-size: cover; background-position: center;" data-aos="fade-up">
         <div class="container" >
             <div class="row text-center">
                 <div class="col-lg-4 col-md-6">
@@ -299,7 +299,7 @@
     </section>
 
     <!-- Tours Section -->
-    <section id="tours" class="section-padding" style="">
+    <section id="tours" class="section-padding" style="" data-aos="fade-up">
      <div class="container text-center">
         <p class="section-heading mt-5">
            {{ __('messages.tour_mauritius_title') }}
@@ -389,7 +389,7 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="section-padding py-5" style="background: var(--gray-light);">
+    <section id="about" class="section-padding py-5" style="background: var(--gray-light);" data-aos="fade-up">
         <div class="container">
             <div class="row align-items-center gy-4 ">
 
@@ -423,7 +423,7 @@
     </section>
 
     <!-- Why Choose us -->
-    <section id="whychooseus" >
+    <section id="whychooseus" data-aos="fade-up">
         <div class="container text-center" style="margin-bottom:30px;">
             <p class="section-heading mt-5">
             {{ __('messages.why_choose_us_title') }}

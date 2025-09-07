@@ -138,7 +138,7 @@
         </section>
 
         <!-- Featured Cars Section -->
-        <section class="featured-section">
+        <section class="featured-section" data-aos="fade-up">
             <div class="container">
                 <div class="section-header text-start">
                     <h2 class="section-heading" style="color:rgb(58, 58, 58);">{{ __('messages.fearures_vehicles') }}</h2>
@@ -237,7 +237,7 @@
 
 
     <!-- Why choose us-->
-    <section class="why-choose-section" style="background-color: rgb(208, 212, 231);">
+    <section class="why-choose-section" style="background-color: rgb(208, 212, 231);" data-aos="fade-up">
         <div class="container">
             <!-- <h2 class="section-title">Why Choose Us</h2> -->
             <div class="section-header text-center mx-auto">

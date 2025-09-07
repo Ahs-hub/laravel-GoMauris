@@ -18,52 +18,54 @@ document.addEventListener("scroll", function() {
 //#endregion shrink nav bar
 
 //#region count animation 
-  function animateCounters() {
-    const counters = document.querySelectorAll('.stat-number');
-  
-    counters.forEach(counter => {
-      const target = +counter.getAttribute('data-target');
-      const duration = 2000; // total animation time in ms
-      const frameRate = 30;  // frames per second
-      const totalFrames = Math.round(duration / (1000 / frameRate));
-      let frame = 0;
-  
-      const counterInterval = setInterval(() => {
-        frame++;
-        const progress = frame / totalFrames;
-        const currentCount = Math.round(target * progress);
-  
-        counter.innerText = currentCount;
-  
-        if (frame === totalFrames) {
-          clearInterval(counterInterval);
-          counter.innerText = target; // exact target at end
-        }
-      }, 1000 / frameRate);
-    });
-  }
-  
-  const statsSection = document.querySelector('.stats-section');
-  
-  window.addEventListener('scroll', () => {
-    const sectionTop = statsSection.getBoundingClientRect().top;
-    const sectionBottom = statsSection.getBoundingClientRect().bottom;
-    const screenHeight = window.innerHeight;
-  
-    // When section is visible -> animate
-    if (sectionTop < screenHeight && sectionBottom > 0) {
-      const counters = document.querySelectorAll('.stat-number');
-      counters.forEach(c => {
-        if (c.innerText === "0") { // prevent re-triggering mid animation
-          animateCounters();
-        }
-      });
-    } else {
-      // When section is out of view -> reset to 0
-      const counters = document.querySelectorAll('.stat-number');
-      counters.forEach(c => c.innerText = "0");
+    function animateCounters() {
+        const counters = document.querySelectorAll('.stat-number');
+    
+        counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const duration = 2000; // total animation time in ms
+        const frameRate = 30;  // frames per second
+        const totalFrames = Math.round(duration / (1000 / frameRate));
+        let frame = 0;
+    
+        const counterInterval = setInterval(() => {
+            frame++;
+            const progress = frame / totalFrames;
+            const currentCount = Math.round(target * progress);
+    
+            counter.innerText = currentCount;
+    
+            if (frame === totalFrames) {
+            clearInterval(counterInterval);
+            counter.innerText = target; // add plus sign at the end
+            }
+        }, 1000 / frameRate);
+        });
     }
-  });
+    
+    const statsSection = document.querySelector('.stats-section');
+    
+    if (statsSection) {
+        window.addEventListener('scroll', () => {
+        const sectionTop = statsSection.getBoundingClientRect().top;
+        const sectionBottom = statsSection.getBoundingClientRect().bottom;
+        const screenHeight = window.innerHeight;
+    
+        // When section is visible -> animate
+        if (sectionTop < screenHeight && sectionBottom > 0) {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(c => {
+            if (c.innerText === "0") { // prevent re-triggering mid animation
+                animateCounters();
+            }
+            });
+        } else {
+            // When section is out of view -> reset to 0
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(c => c.innerText = "0");
+        }
+        });
+    }
 //#endregion count animation
 
 //#region filter tour 
@@ -300,3 +302,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //#endregion gallery swiper tour detailed
 
+//#region    animation on scroll(use library aos)
+  AOS.init({
+    duration: 1000, // animation duration
+    once: false,     // whether animation happens only once
+  });
+//#endregion animation on scroll(use library)
