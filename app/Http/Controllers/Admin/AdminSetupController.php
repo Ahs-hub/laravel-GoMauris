@@ -139,22 +139,27 @@ class AdminSetupController extends Controller
     {
         try {
             $dbName = DB::getDatabaseName();
-
-            // Get DB size (bytes)
-            $usedBytes = DB::selectOne("SELECT pg_database_size(?) AS size", [$dbName])->size;
+    
+            // Get DB size (bytes) for MySQL
+            $result = DB::selectOne("
+                SELECT SUM(data_length + index_length) AS size
+                FROM information_schema.tables
+                WHERE table_schema = ?
+            ", [$dbName]);
+    
+            $usedBytes = $result->size ?? 0;
             $usedMB = round($usedBytes / 1024 / 1024, 2);
-
-            // Example limit: 1 GB (change this to match your plan)
+    
+            // Example limit: 1 GB (you should set this according to your hosting plan)
             $limitMB = 1024;
             $remainingMB = max($limitMB - $usedMB, 0);
-
+    
             return response()->json([
                 'database' => $dbName,
                 'used_mb' => $usedMB,
                 'limit_mb' => $limitMB,
                 'remaining_mb' => $remainingMB
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage()
