@@ -500,7 +500,8 @@
 
                                 <!-- Button -->
                                 <div class="mt-4">
-                                    <button class="btn w-100 fw-bold text-white" style="background-color: green;" @click="showSection('summary')">
+                                    <!-- <button class="btn w-100 fw-bold text-white" style="background-color: green;" @click="showSection('summary')" > -->
+                                    <button class="btn w-100 fw-bold text-white" style="background-color: green;"  @click="validateSection('summary')">
                                     {{ __('messages.continue') }}
                                     </button>
                                 </div>
@@ -888,7 +889,9 @@
                     const dropoff = new Date(this.tempReturnDate);
                     const now = new Date();
 
- 
+                    this.tempPickupLocation =  this.pickupLocation;
+                    this.tempReturnLocation = this.returnLocation;
+
 
                     if (pickup < now) {
                         alert("Pick-up date/time cannot be in the past.");
@@ -915,6 +918,11 @@
                     // ✅ Basic null or empty checks
                     if (!this.tempPickupLocation || !this.tempReturnLocation || !this.tempPickupDate || !this.tempReturnDate) {
                         alert("Please fill in all required fields.");
+                        console.log("tempPickupLocation:", this.tempPickupLocation);
+                        console.log("tempReturnLocation:", this.tempReturnLocation);
+                        console.log("tempPickupDate:", this.tempPickupDate);
+                        console.log("tempReturnDate:", this.tempReturnDate);
+
                         return;
                     }
 
@@ -951,6 +959,27 @@
                     this.activeSection = sectionName;
                     sessionStorage.setItem('activeReservationSection', sectionName);
                 },
+                validateSection(sectionName) {
+                    // Check itinerary step
+                    if (!this.pickupLocation || !this.tempPickupDate || !this.tempReturnDate) {
+                        this.showSection('itinerary');
+                        return;
+                    }
+                    if (!this.sameLocation && !this.returnLocation) {
+                        this.showSection('itinerary');
+                        return;
+                    }
+
+                    // Check cars step
+                    if (!this.selectedCar) {
+                        this.showSection('cars');
+                        return;
+                    }
+
+                    // ✅ If all good, go where requested
+                    this.showSection(sectionName);
+                },
+
                 clearForm() {
                     this.pickupLocation = null;
                     this.pickupDate = null;
