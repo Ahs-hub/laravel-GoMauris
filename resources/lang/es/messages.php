@@ -46,6 +46,7 @@ return [
 // Hero Section
 'hero_title' => 'Deje que sus vacaciones en Isla Mauricio sean su próxima escapada',
 'hero_btn_explore' => 'Explorar Isla Mauricio',
+'hero_btn_book_a_tour' => 'Reservar un tour',
 'hero_btn_car_rental' => 'Alquiler de coches',
 'hero_btn_book_taxi' => 'Reservar un taxi',
 'hero_btn_customize' => 'Personalizar sus excursiones',

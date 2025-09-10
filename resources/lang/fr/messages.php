@@ -46,6 +46,7 @@ return [
     // Hero Section
     'hero_title' => 'Laissez vos vacances à l’île Maurice être votre prochaine évasion',
     'hero_btn_explore' => 'Explorer l’île Maurice',
+    'hero_btn_book_a_tour' => 'Réserver une visite',
     'hero_btn_car_rental' => 'Location de voiture',
     'hero_btn_book_taxi' => 'Réserver un taxi',
     'hero_btn_customize' => 'Personnaliser vos excursions',

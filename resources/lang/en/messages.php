@@ -49,6 +49,7 @@ return [
     // Hero Section
     'hero_title' => 'Let Mauritius Vacation Be Your Next Escape',
     'hero_btn_explore' => 'Explore Mauritius',
+    'hero_btn_book_a_tour' => 'Book a Tour',
     'hero_btn_car_rental' => 'Car Rental',
     'hero_btn_book_taxi' => 'Book Taxi',
     'hero_btn_customize' => 'Customize Tours',
