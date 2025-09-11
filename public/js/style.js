@@ -17,6 +17,46 @@ document.addEventListener("scroll", function() {
 
 //#endregion shrink nav bar
 
+//#region    toogle the sound button hero 
+document.addEventListener("DOMContentLoaded", () => {
+    const video = document.getElementById("heroVideo");
+    const button = document.getElementById("muteToggle");
+  
+    // Only proceed if both video and button exist
+    if (video && button) {
+      const icon = button.querySelector("i");
+  
+      // Start video muted on load
+      video.muted = true;
+      video.play().then(() => {
+        video.muted = false;
+        icon.classList.remove("bx-volume-mute");
+        icon.classList.add("bx-volume-full");
+      }).catch((err) => {
+        console.warn("⚠️ Autoplay failed:", err);
+      });
+  
+      // Mute/unmute button
+      button.addEventListener("click", () => {
+        console.log("🎯 Button clicked");
+  
+        video.muted = !video.muted;
+
+  
+        if (video.muted) {
+          icon.classList.remove("bx-volume-full");
+          icon.classList.add("bx-volume-mute");
+        } else {
+          icon.classList.remove("bx-volume-mute");
+          icon.classList.add("bx-volume-full");
+        }
+      });
+    } else {
+      console.log("ℹ️ No hero video or mute button found on this page, skipping JS");
+    }
+  });
+//#endregion toogle the sound button hero 
+
 //#region count animation 
     function animateCounters() {
         const counters = document.querySelectorAll('.stat-number');
