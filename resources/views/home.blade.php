@@ -13,8 +13,7 @@
      <section id="home" class="hero">
         <div class="video-background">
             <iframe id="heroVideo"
-                src="https://www.youtube.com/embed/4LkjWzUTEu8?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&enablejsapi=1&playlist=4LkjWzUTEu8"
-                frameborder="0"
+                src="https://www.youtube.com/embed/4LkjWzUTEu8?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&playsinline=1&enablejsapi=1&playlist=4LkjWzUTEu8"
                 allow="autoplay; encrypted-media"
                 allowfullscreen>
             </iframe>
