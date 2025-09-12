@@ -331,7 +331,7 @@
     padding: 2rem;
 }
 
-/* .video-background {
+.video-background {
     position: absolute;
     top: 0; left: 0;
     width: 100%;
@@ -348,9 +348,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-} */
+}
 
-.video-background {
+/* .video-background {
   position: absolute;
   top: 0; 
   left: 0;
@@ -370,9 +370,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  object-fit: cover; /* makes sure video covers the whole screen */
-  z-index: -2; /* video stays at the very back */
-}
+  object-fit: cover; 
+  z-index: -2; 
+} */
 
 .mute-btn {
   position: absolute;

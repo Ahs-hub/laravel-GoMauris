@@ -11,20 +11,21 @@
 
      <!-- Hero Section -->
      <section id="home" class="hero">
-        <!-- <div class="video-background">
-          <iframe src="https://www.youtube.com/embed/mzsCU3pGGdo?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&modestbranding=1&playlist=mzsCU3pGGdo"
-            frameborder="0"
-            allow="autoplay; encrypted-media"
-            allowfullscreen>
-          </iframe>
-        </div> -->
         <div class="video-background">
+            <iframe id="heroVideo"
+                src="https://www.youtube.com/embed/4LkjWzUTEu8?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&enablejsapi=1&playlist=4LkjWzUTEu8"
+                frameborder="0"
+                allow="autoplay; encrypted-media"
+                allowfullscreen>
+            </iframe>
+        </div>
+        <!-- <div class="video-background">
             <video  id="heroVideo" autoplay loop playsinline muted>
                 <source src="{{ asset('videos/newvideoo.mp4') }}" type="video/mp4">
-                <!-- <source src="videos/background.webm" type="video/webm"> -->
+                <source src="videos/background.webm" type="video/webm">
                 Your browser does not support the video tag.
             </video>
-        </div>
+        </div> -->
       
         <div class="container content hero-content">
           <h1 class="hero-title">{{ __('messages.hero_title') }}</h1>
@@ -498,5 +499,10 @@
             </div>
         </div>
     </section>
+
+
+    
+    <!-- You tube API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
 
 @endsection
