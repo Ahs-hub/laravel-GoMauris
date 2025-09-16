@@ -32,15 +32,16 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
   console.log("✅ YouTube player ready");
 
-  // Try to unmute by default
-  player.unMute();
+  player.mute(); // force mute to ensure autoplay works
+  
+  player.playVideo();
 
   // Update button icon
   const button = document.getElementById("muteToggle");
   if (button) {
     const icon = button.querySelector("i");
-    icon.classList.remove("bx-volume-mute");
-    icon.classList.add("bx-volume-full");
+    icon.classList.add("bx-volume-mute");
+    icon.classList.remove("bx-volume-full");
 
     button.addEventListener("click", () => {
       if (player.isMuted()) {
