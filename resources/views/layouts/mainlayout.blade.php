@@ -158,9 +158,9 @@
                         </a>
                       </li> -->
 
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="#contact">Profile</a>
-                    </li>
+                    </li> -->
                     <!-- <li class="nav-item" style="display: flex;  align-items: center;">
                        <button class="btn btn-outline-primary">Profile</button>
                     </li> -->
