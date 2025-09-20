@@ -283,18 +283,18 @@
 
             <!-- Active toggle -->
             <div class="col-md-6">
-            <label class="form-label">Status</label>
-            <div class="mb-2">
-                <span 
-                class="badge" 
-                :class="editItem.is_active ? 'bg-success' : 'bg-danger'">
-                @{{ editItem.is_active ? 'Active' : 'Inactive' }}
-                </span>
-            </div>
-            <select class="form-select" v-model="editItem.is_active">
-                <option :value="1">Active</option>
-                <option :value="0">Inactive</option>
-            </select>
+                    <label class="form-label">Status</label>
+                    <span 
+                    class="badge" 
+                    :class="editItem.is_active ? 'bg-success' : 'bg-danger'">
+
+                    @{{ editItem.is_active ? 'Active' : 'Inactive' }}
+                    </span>
+
+                    <select class="form-select" v-model="editItem.is_active">
+                        <option :value="1">Active</option>
+                        <option :value="0">Inactive</option>
+                    </select>
             </div>
 
             <!-- Base Price -->
@@ -303,26 +303,27 @@
               <input type="number" step="0.01" class="form-control" v-model="editItem.starting_price">
             </div>
 
+            <!-- Promo Price Fields -->
+            <div class="col-md-6">
+              <label class="form-label">Starting Promo Price (€)</label>
+              <input type="number" step="0.01" class="form-control" v-model="editItem.starting_promotion_price">
+            </div>
+
             <!-- Group Price -->
             <div class="col-md-6">
               <label class="form-label">Group Price (€)</label>
               <input type="number" step="0.01" class="form-control" v-model="editItem.group_price">
             </div>
 
-            <!-- Promo Price Fields -->
             <div class="col-md-6">
-            <label class="form-label">Starting Promo Price (€)</label>
-            <input type="number" step="0.01" class="form-control" v-model="editItem.starting_promotion_price">
+              <label class="form-label">Group Promo Price (€)</label>
+              <input type="number" step="0.01" class="form-control" v-model="editItem.group_price_promotion_price">
             </div>
 
-            <div class="col-md-6">
-            <label class="form-label">Transfer Promo Price (€)</label>
-            <input type="number" step="0.01" class="form-control" v-model="editItem.transfer_promotion_price">
-            </div>
 
             <div class="col-md-6">
-            <label class="form-label">Group Promo Price (€)</label>
-            <input type="number" step="0.01" class="form-control" v-model="editItem.group_price_promotion_price">
+              <label class="form-label">Transfer Promo Price (€)</label>
+              <input type="number" step="0.01" class="form-control" v-model="editItem.transfer_promotion_price">
             </div>
 
 
@@ -375,17 +376,17 @@
             <!-- Active toggle -->
             <div class="col-md-6">
             <label class="form-label">Status</label>
-            <div class="mb-2">
                 <span 
-                class="badge" 
-                :class="editItem.is_active ? 'bg-success' : 'bg-danger'">
-                @{{ editItem.is_active ? 'Active' : 'Inactive' }}
+                    class="badge" 
+                    :class="editItem.is_active ? 'bg-success' : 'bg-danger'">
+
+                    @{{ editItem.is_active ? 'Active' : 'Inactive' }}
                 </span>
-            </div>
-            <select class="form-select" v-model="editItem.is_active">
-                <option :value="1">Active</option>
-                <option :value="0">Inactive</option>
-            </select>
+
+                <select class="form-select" v-model="editItem.is_active">
+                    <option :value="1">Active</option>
+                    <option :value="0">Inactive</option>
+                </select>
             </div>
 
             <!-- Base Price -->

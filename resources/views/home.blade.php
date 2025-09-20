@@ -314,12 +314,12 @@
 
     <!-- Tours Section -->
     <section id="tours" class="section-padding" style="" data-aos="fade-up">
-     <div class="container text-center">
-        <p class="section-heading mt-5">
-           {{ __('messages.tour_mauritius_title') }}
-        </p>
-        <div style="width: 60px; height: 3px; background-color: #274993; margin: 0 auto 16px;"></div>
-     </div>
+        <div class="container text-center">
+            <p class="section-heading mt-5">
+            {{ __('messages.tour_mauritius_title') }}
+            </p>
+            <div style="width: 60px; height: 3px; background-color: #274993; margin: 0 auto 16px;"></div>
+        </div>
     
         <div class="container text-center my-5">
          

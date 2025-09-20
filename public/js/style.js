@@ -131,6 +131,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         card.style.display = "none";
                     }
                 });
+
+                    
+                // Refresh AOS so newly visible cards animate correctly
+                if (AOS) {
+                    AOS.refresh();
+                }
             });
         });
     });

@@ -247,6 +247,7 @@
                                     >
                                         <option value="paid">paid</option>
                                         <option value="unpaid">unpaid</option>
+                                        <option value="refund">refund</option>
                                     </select>
                                 </td>
                                 <td>

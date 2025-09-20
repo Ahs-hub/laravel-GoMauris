@@ -151,7 +151,7 @@ class AdminSetupController extends Controller
             $usedMB = round($usedBytes / 1024 / 1024, 2);
     
             // Example limit: 1 GB (you should set this according to your hosting plan)
-            $limitMB = 1024;
+            $limitMB = 50 * 1024; // 50 GB in MB
             $remainingMB = max($limitMB - $usedMB, 0);
     
             return response()->json([
