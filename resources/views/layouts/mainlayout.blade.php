@@ -194,13 +194,15 @@
                     {{ __('messages.hello_how_we_we_help_you') }}
                 </div>
                 
-                    <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" id="openChatBtn" class="whatsapp-link open-chat-btn" style="text-decoration:none; color:white;">
-                           <i class='bx bx-paper-plane'></i>
-                           {{ __('messages.open_chat') }}
-                    </a>
+                <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" id="openChatBtn" class="whatsapp-link open-chat-btn" style="text-decoration:none; color:white;">
+                        <i class='bx bx-paper-plane'></i>
+                        {{ __('messages.open_chat') }}
+                </a>
 
             </div>
+
         </div>
+        
     </div>
 
     <!-- Profile Modal -->
