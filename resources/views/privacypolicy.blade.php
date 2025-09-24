@@ -72,7 +72,7 @@
             </ul>
 
             <h4>{{ __('privacypolicy.how_we_use_info') }}</h4>
-            <p>{{ __('messages.we_use_your_data_to') ?? 'We use your data to:' }}</p>
+            <p>{{ __('privacypolicy.we_use_your_data_to') ?? 'We use your data to:' }}</p>
             <ul>
                 <li>{{ __('privacypolicy.use_respond') }}</li>
                 <li>{{ __('privacypolicy.use_updates') }}</li>

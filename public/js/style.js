@@ -85,6 +85,7 @@ function onPlayerReady(event) {
             closeChatPopup();
         });
 
+
         // Close popup when clicking outside
         document.addEventListener('click', function(e) {
             if (isPopupOpen && !chatPopup.contains(e.target) && !whatsappIcon.contains(e.target)) {

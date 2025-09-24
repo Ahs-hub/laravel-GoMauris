@@ -194,12 +194,11 @@
                     {{ __('messages.hello_how_we_we_help_you') }}
                 </div>
                 
-                <button class="open-chat-btn" id="openChatBtn">
-                    <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
+                    <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" id="openChatBtn" class="whatsapp-link open-chat-btn" style="text-decoration:none; color:white;">
                            <i class='bx bx-paper-plane'></i>
                            {{ __('messages.open_chat') }}
                     </a>
-                </button>
+
             </div>
         </div>
     </div>

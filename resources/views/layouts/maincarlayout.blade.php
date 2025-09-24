@@ -176,13 +176,12 @@
                 <div class="chat-message">
                     {{ __('messages.hello_how_we_we_help_you') }}
                 </div>
+            
+                <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" class="whatsapp-link open-chat-btn" id="openChatBtn" style="text-decoration:none; color:white;">
+                        <i class='bx bx-paper-plane'></i>
+                        {{ __('messages.open_chat') }}
+                </a>
                 
-                <button class="open-chat-btn" id="openChatBtn">
-                    <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
-                           <i class='bx bx-paper-plane'></i>
-                           {{ __('messages.open_chat') }}
-                    </a>
-                </button>
             </div>
         </div>
     </div>

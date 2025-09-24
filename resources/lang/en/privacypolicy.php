@@ -15,6 +15,7 @@ return [
     'info_preferences' => 'Tour or Car Rental Preferences',
     
     'how_we_use_info' => '2. How We Use Your Information',
+    'we_use_your_data_to' => 'We use your data to:',
     'use_respond' => 'Respond to your quote or booking request',
     'use_updates' => 'Provide service updates via email or WhatsApp',
     'use_record' => 'Maintain a record of customer inquiries',
