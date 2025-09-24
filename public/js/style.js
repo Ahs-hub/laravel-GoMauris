@@ -58,6 +58,73 @@ function onPlayerReady(event) {
 }
 //#endregion toogle the sound button hero 
 
+//#region    What chat icon 
+    const whatsappIcon = document.getElementById('whatsappIcon');
+    const chatPopup = document.getElementById('chatPopup');
+    const closeChat = document.getElementById('closeChat');
+    const openChatBtn = document.getElementById('openChatBtn');
+
+    let isPopupOpen = false;
+
+    
+    if (whatsappIcon && chatPopup && closeChat) {
+    
+        // Toggle chat popup when icon is clicked
+        whatsappIcon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (isPopupOpen) {
+                closeChatPopup();
+            } else {
+                openChatPopup();
+            }
+        });
+
+        // Close chat when close button is clicked
+        closeChat.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeChatPopup();
+        });
+
+        // Close popup when clicking outside
+        document.addEventListener('click', function(e) {
+            if (isPopupOpen && !chatPopup.contains(e.target) && !whatsappIcon.contains(e.target)) {
+                closeChatPopup();
+            }
+        });
+
+        function openChatPopup() {
+            chatPopup.classList.add('show');
+            whatsappIcon.classList.remove('show');
+            isPopupOpen = true;
+        }
+
+        function closeChatPopup() {
+            whatsappIcon.classList.add('show');
+            chatPopup.classList.remove('show');
+            isPopupOpen = false;
+        }
+
+        // Add escape key functionality
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && isPopupOpen) {
+                closeChatPopup();
+            }
+        });
+
+        // Optional: Add a subtle floating animation
+        let floatDirection = 1;
+
+        setInterval(() => {
+            if (!whatsappIcon.matches(':hover') && !isPopupOpen) {
+                whatsappIcon.style.transform += ` translateY(${floatDirection * 1}px)`;
+                floatDirection *= -1;
+            }
+        }, 3000);
+        
+    }
+
+//#endregion  What chat icon 
+
 //#region count animation 
     function animateCounters() {
         const counters = document.querySelectorAll('.stat-number');

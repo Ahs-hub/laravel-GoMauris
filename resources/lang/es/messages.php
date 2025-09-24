@@ -53,6 +53,11 @@ return [
 
 'btn_more' => 'Ver más',
 
+ //Whatapp message form
+'join_whatsapp' => 'Unirse a WhatsApp',
+'hello_how_we_we_help_you' => '¡Hola! ¿Cómo podemos ayudarte?',
+'open_chat' => 'Abrir chat',
+
 // Services
 'service_title' => 'Nuestros servicios',
 

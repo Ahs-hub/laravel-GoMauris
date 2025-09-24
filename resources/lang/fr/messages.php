@@ -51,6 +51,11 @@ return [
     'hero_btn_book_taxi' => 'Réserver un taxi',
     'hero_btn_customize' => 'Personnaliser vos excursions',
 
+     //Whatapp message form
+    'join_whatsapp' => 'Rejoindre WhatsApp',
+    'hello_how_we_we_help_you' => 'Bonjour ! Comment pouvons-nous vous aider ?',
+    'open_chat' => 'Ouvrir le chat',
+
     'btn_more' => 'Voir plus',
 
     // Services

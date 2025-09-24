@@ -154,9 +154,38 @@
 
      @yield('content')
 
+     <!--What app Icon -->
+     <div class="whatsapp-widget">
+        <div class="whatsapp-icon show" id="whatsappIcon">
+            <i class='bx bxl-whatsapp'></i>
+            <div class="whatsapp-label">{{ __('messages.join_whatsapp') }}</div>
+        </div>
 
-
-   
+        <div class="whatsapp-chat-popup" id="chatPopup">
+            <div class="chat-header">
+                <div class="chat-header-content">
+                    <i class='bx bxl-whatsapp'></i>
+                    <span class="chat-title">WhatsApp</span>
+                </div>
+                <button class="close-chat" id="closeChat">
+                    <i class='bx bx-x'></i>
+                </button>
+            </div>
+            
+            <div class="chat-body">
+                <div class="chat-message">
+                    {{ __('messages.hello_how_we_we_help_you') }}
+                </div>
+                
+                <button class="open-chat-btn" id="openChatBtn">
+                    <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" class="whatsapp-link" style="text-decoration:none; color:white;">
+                           <i class='bx bx-paper-plane'></i>
+                           {{ __('messages.open_chat') }}
+                    </a>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Profile Modal -->
   <div class="modal fade " id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">

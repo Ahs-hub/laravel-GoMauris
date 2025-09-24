@@ -15,6 +15,11 @@ return [
     'faq' => 'FAQ',
     'en' => 'EN',
 
+    //Whatapp message form
+    'join_whatsapp' => 'Join WhatsApp',
+    'hello_how_we_we_help_you' => 'Hello! How can we help you?',
+    'open_chat' => 'Open chat',
+
     // Footer
     'quick_link' => 'Quick Links',
     'services' => 'Services',
