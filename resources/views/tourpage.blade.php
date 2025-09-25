@@ -155,6 +155,6 @@
         </div>
     </section> -->
 
-    <script src="{{ asset('js/style.js') }}"></script>
+    <!-- <script src="{{ asset('js/style.js') }}"></script> -->
 
 @endsection

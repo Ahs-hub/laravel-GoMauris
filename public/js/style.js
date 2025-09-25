@@ -418,8 +418,15 @@ document.addEventListener("DOMContentLoaded", function () {
 //#endregion gallery swiper tour detailed
 
 //#region    animation on scroll(use library aos)
-  AOS.init({
-    duration: 1000, // animation duration
-    once: false,     // whether animation happens only once
+  document.addEventListener("DOMContentLoaded", () => {
+    if (typeof AOS !== "undefined") {
+      AOS.init({
+        duration: 1000,
+        once: false
+      });
+      console.log("✅ AOS initialized");
+    } else {
+      console.log("ℹ️ Skipping AOS (not loaded on this page).");
+    }
   });
 //#endregion animation on scroll(use library)

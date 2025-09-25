@@ -35,7 +35,7 @@
 
 
     
-    <div style="overflow-y:hidden;">
+    <div style="overflow:hidden;">
         <!-- Hero Section -->
         <section class="row hero-section d-flex align-items-center" >
             <div class="container">
@@ -442,254 +442,254 @@
 
     </div>
 
-<script>
-    const { createApp } = Vue;
+    <script>
+        const { createApp } = Vue;
 
-    createApp({
-        data() {
-            return {
-                rideOptions: [
-                    { value: "economy", label: "{{ __('messages.economy') }}", img: "{{ asset('images/services/economy_small.png') }}", passengers: 3, luggage: 3 },
-                    { value: "comfort", label: "{{ __('messages.comfort') }}", img: "{{ asset('images/services/comfort_small.png') }}", passengers: 3, luggage: 3 },
-                    { value: "business", label: "{{ __('messages.business') }}", img: "{{ asset('images/services/business_small.png') }}", passengers: 3, luggage: 3 },
-                    { value: "minibus", label: "{{ __('messages.minibus') }}", img: "{{ asset('images/services/minibus_small.png') }}", passengers: 16, luggage: 16 }
-                ],
-                step: 1,
-                loading: false,
-                defaultPickupText: "{{ __('messages.select_pick_up_location') }}",
-                defaultReturnText: "{{ __('messages.select_return_up_location') }}",
-                form: {
-                    pickup: '',
-                    destination: '',
-                    date: '',
-                    time: '',
-                    passengers: 1,
-                    category: 'Economy',
-                    name: '',
-                    email: '',
-                    country: '',
-                    phone: '',
-                    comments: '',
-                    child_seat: '',
-                    has_return_ride: false, 
-                    return_date: '',
-                    return_time: '',
-                    
-                    //location map
-                    pickup_latitude: null,
-                    pickup_longitude: null,
-                    destination_latitude: null,
-                    destination_longitude: null
-                },
-
-                showMapModal: false,
-                selectedLatLng: null,
-                mapInstance: null,
-                marker: null,
-                mapTarget: '', // can be 'pickup' or 'return'
-
-                minDate: ''
-            };
-        },
-        mounted() {
-            const today = new Date().toISOString().split('T')[0];
-            this.minDate = today;
-        },
-        watch: {
-            showMapModal(Val) {
-                if (Val) {
-                this.$nextTick(() => {
-                    this.initMap();
-                });
-                }
-            }
-        },
-        methods: {
-            goToNext() {
-                if (this.step < 3) {
-                    this.step++;
-                }
-            },
-            submitForm() {
-                this.loading = true;
-                
-                fetch("{{ route('taxi.booking.submit') }}", {
-                    method: "POST",
-                    headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        createApp({
+            data() {
+                return {
+                    rideOptions: [
+                        { value: "economy", label: "{{ __('messages.economy') }}", img: "{{ asset('images/services/economy_small.png') }}", passengers: 3, luggage: 3 },
+                        { value: "comfort", label: "{{ __('messages.comfort') }}", img: "{{ asset('images/services/comfort_small.png') }}", passengers: 3, luggage: 3 },
+                        { value: "business", label: "{{ __('messages.business') }}", img: "{{ asset('images/services/business_small.png') }}", passengers: 3, luggage: 3 },
+                        { value: "minibus", label: "{{ __('messages.minibus') }}", img: "{{ asset('images/services/minibus_small.png') }}", passengers: 16, luggage: 16 }
+                    ],
+                    step: 1,
+                    loading: false,
+                    defaultPickupText: "{{ __('messages.select_pick_up_location') }}",
+                    defaultReturnText: "{{ __('messages.select_return_up_location') }}",
+                    form: {
+                        pickup: '',
+                        destination: '',
+                        date: '',
+                        time: '',
+                        passengers: 1,
+                        category: 'Economy',
+                        name: '',
+                        email: '',
+                        country: '',
+                        phone: '',
+                        comments: '',
+                        child_seat: '',
+                        has_return_ride: false, 
+                        return_date: '',
+                        return_time: '',
+                        
+                        //location map
+                        pickup_latitude: null,
+                        pickup_longitude: null,
+                        destination_latitude: null,
+                        destination_longitude: null
                     },
-                    body: JSON.stringify(this.form)
-                })
-                .then(async response => {
-                    if (!response.ok) {
-                    const text = await response.text();
-                    console.error("Server response (not ok):", text);
-                    alert("Submission failed. See console for details.");
-                    throw new Error("Submission failed");
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.redirect) {
-                        window.location.href = data.redirect;
-                    }
-                })
-                .catch(error => {
-                    console.error("Fetch error:", error);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
-            },
-            resetForm() {
-                this.step = 1;
-                this.form = {
-                    pickup: '',
-                    destination: '',
-                    date: '',
-                    time: '',
-                    passengers: 1,
-                    category: 'Economy',
-                    name: '',
-                    email: '',
-                    country: '',
-                    phone: '',
-                    comments: '',
-                    child_seat: '',
-                    has_return_ride: '',
-                    return_date: '',
-                    return_time: '',
-                    pickup_latitude: null,
-                    pickup_longitude: null,
-                    destination_latitude: null,
-                    destination_longitude: null
+
+                    showMapModal: false,
+                    selectedLatLng: null,
+                    mapInstance: null,
+                    marker: null,
+                    mapTarget: '', // can be 'pickup' or 'return'
+
+                    minDate: ''
                 };
             },
-            openMap(target) {
-                this.mapTarget = target; // 'pickup' or 'return'
-                this.showMapModal = true;
+            mounted() {
+                const today = new Date().toISOString().split('T')[0];
+                this.minDate = today;
             },
-            initMap() {
-                // If already created, destroy it cleanly
-                if (this.mapInstance) {
-                this.mapInstance.off();         // Remove all event listeners
-                this.mapInstance.remove();      // Remove the map instance
-                this.mapInstance = null;
+            watch: {
+                showMapModal(Val) {
+                    if (Val) {
+                    this.$nextTick(() => {
+                        this.initMap();
+                    });
+                    }
                 }
-
-                // Clear previous selection
-                this.selectedLatLng = null;
-                this.marker = null;
-
-                // Initialize new map
-                this.mapInstance = L.map('map').setView([-20.2, 57.5], 10);
-
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors'
-                }).addTo(this.mapInstance);
-
-                // Add marker on click
-                this.mapInstance.on('click', (e) => {
-                const { lat, lng } = e.latlng;
-                this.selectedLatLng = { lat, lng };
-
-                if (this.marker) {
-                    this.marker.setLatLng(e.latlng);
-                } else {
-                    this.marker = L.marker(e.latlng).addTo(this.mapInstance);
-                }
-                });
             },
+            methods: {
+                goToNext() {
+                    if (this.step < 3) {
+                        this.step++;
+                    }
+                },
+                submitForm() {
+                    this.loading = true;
+                    
+                    fetch("{{ route('taxi.booking.submit') }}", {
+                        method: "POST",
+                        headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify(this.form)
+                    })
+                    .then(async response => {
+                        if (!response.ok) {
+                        const text = await response.text();
+                        console.error("Server response (not ok):", text);
+                        alert("Submission failed. See console for details.");
+                        throw new Error("Submission failed");
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.redirect) {
+                            window.location.href = data.redirect;
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Fetch error:", error);
+                    })
+                    .finally(() => {
+                        this.loading = false;
+                    });
+                },
+                resetForm() {
+                    this.step = 1;
+                    this.form = {
+                        pickup: '',
+                        destination: '',
+                        date: '',
+                        time: '',
+                        passengers: 1,
+                        category: 'Economy',
+                        name: '',
+                        email: '',
+                        country: '',
+                        phone: '',
+                        comments: '',
+                        child_seat: '',
+                        has_return_ride: '',
+                        return_date: '',
+                        return_time: '',
+                        pickup_latitude: null,
+                        pickup_longitude: null,
+                        destination_latitude: null,
+                        destination_longitude: null
+                    };
+                },
+                openMap(target) {
+                    this.mapTarget = target; // 'pickup' or 'return'
+                    this.showMapModal = true;
+                },
+                initMap() {
+                    // If already created, destroy it cleanly
+                    if (this.mapInstance) {
+                    this.mapInstance.off();         // Remove all event listeners
+                    this.mapInstance.remove();      // Remove the map instance
+                    this.mapInstance = null;
+                    }
 
-            getCurrentLocationFor(field) {
-                if (!navigator.geolocation) {
-                alert("Geolocation is not supported by your browser.");
-                return;
-                }
+                    // Clear previous selection
+                    this.selectedLatLng = null;
+                    this.marker = null;
 
-                navigator.geolocation.getCurrentPosition(
-                async (pos) => {
-                    const { latitude, longitude } = pos.coords;
+                    // Initialize new map
+                    this.mapInstance = L.map('map').setView([-20.2, 57.5], 10);
+
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(this.mapInstance);
+
+                    // Add marker on click
+                    this.mapInstance.on('click', (e) => {
+                    const { lat, lng } = e.latlng;
+                    this.selectedLatLng = { lat, lng };
+
+                    if (this.marker) {
+                        this.marker.setLatLng(e.latlng);
+                    } else {
+                        this.marker = L.marker(e.latlng).addTo(this.mapInstance);
+                    }
+                    });
+                },
+
+                getCurrentLocationFor(field) {
+                    if (!navigator.geolocation) {
+                    alert("Geolocation is not supported by your browser.");
+                    return;
+                    }
+
+                    navigator.geolocation.getCurrentPosition(
+                    async (pos) => {
+                        const { latitude, longitude } = pos.coords;
+
+                        try {
+                        // Call reverse geocoding (Nominatim)
+                        const response = await fetch(
+                            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+                        );
+                        const data = await response.json();
+
+                        // Pick a nice readable name (city/town/village/road)
+                        const place =
+                            data.address.city ||
+                            data.address.town ||
+                            data.address.village ||
+                            data.address.suburb ||
+                            data.display_name ||
+                            "Unknown Location";
+
+                        // Dynamically assign pickup or destination
+                        this.form[field] = place;
+                        this.form[`${field}_latitude`] = latitude;
+                        this.form[`${field}_longitude`] = longitude;
+
+                        } catch (e) {
+                        alert("Failed to fetch location name.");
+                        }
+                    },
+                    (err) => {
+                        alert("Could not get your location: " + err.message);
+                    },
+                    { enableHighAccuracy: true, timeout: 10000 }
+                    );
+                },
+
+                async confirmLocation() {
+                    if (this.selectedLatLng) {
+                        const { lat, lng } = this.selectedLatLng;
+                        const address = await this.reverseGeocodeWithNominatim(lat, lng);
+
+                        if (this.mapTarget === 'pickup') {
+                            this.form.pickup = address;
+                            this.form.pickup_latitude = lat;
+                            this.form.pickup_longitude = lng;
+                        } else if (this.mapTarget === 'destination') {
+                            this.form.destination = address;
+                            this.form.destination_latitude = lat;
+                            this.form.destination_longitude = lng;
+                        }
+
+                        this.showMapModal = false;
+                    } else {
+                        alert('Please select a location on the map');
+                    }
+                },
+
+                async reverseGeocodeWithNominatim(lat, lng) {
+                    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
 
                     try {
-                    // Call reverse geocoding (Nominatim)
-                    const response = await fetch(
-                        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-                    );
-                    const data = await response.json();
+                        const response = await fetch(url);
+                        const data = await response.json();
 
-                    // Pick a nice readable name (city/town/village/road)
-                    const place =
-                        data.address.city ||
-                        data.address.town ||
-                        data.address.village ||
-                        data.address.suburb ||
-                        data.display_name ||
-                        "Unknown Location";
-
-                    // Dynamically assign pickup or destination
-                    this.form[field] = place;
-                    this.form[`${field}_latitude`] = latitude;
-                    this.form[`${field}_longitude`] = longitude;
-
-                    } catch (e) {
-                    alert("Failed to fetch location name.");
-                    }
-                },
-                (err) => {
-                    alert("Could not get your location: " + err.message);
-                },
-                { enableHighAccuracy: true, timeout: 10000 }
-                );
-            },
-
-            async confirmLocation() {
-                if (this.selectedLatLng) {
-                    const { lat, lng } = this.selectedLatLng;
-                    const address = await this.reverseGeocodeWithNominatim(lat, lng);
-
-                    if (this.mapTarget === 'pickup') {
-                        this.form.pickup = address;
-                        this.form.pickup_latitude = lat;
-                        this.form.pickup_longitude = lng;
-                    } else if (this.mapTarget === 'destination') {
-                        this.form.destination = address;
-                        this.form.destination_latitude = lat;
-                        this.form.destination_longitude = lng;
-                    }
-
-                    this.showMapModal = false;
-                } else {
-                    alert('Please select a location on the map');
-                }
-            },
-
-            async reverseGeocodeWithNominatim(lat, lng) {
-                const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
-
-                try {
-                    const response = await fetch(url);
-                    const data = await response.json();
-
-                    if (data && data.address) {
-                        const addr = data.address;
-                        const village = addr.village || addr.town || addr.suburb || '';
-                        const county = addr.county || '';
-                        const road = addr.road || '';
-                        const parts = [village, county, road].filter(Boolean);
-                        return parts.join(', ');
-                    } else {
+                        if (data && data.address) {
+                            const addr = data.address;
+                            const village = addr.village || addr.town || addr.suburb || '';
+                            const county = addr.county || '';
+                            const road = addr.road || '';
+                            const parts = [village, county, road].filter(Boolean);
+                            return parts.join(', ');
+                        } else {
+                            return 'Unknown location';
+                        }
+                    } catch (error) {
+                        console.error('Reverse geocoding failed:', error);
                         return 'Unknown location';
                     }
-                } catch (error) {
-                    console.error('Reverse geocoding failed:', error);
-                    return 'Unknown location';
                 }
             }
-        }
-    }).mount('#taxiApp');
-</script>
+        }).mount('#taxiApp');
+    </script>
 
 
 @endsection

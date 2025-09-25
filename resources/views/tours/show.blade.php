@@ -42,6 +42,6 @@
         <a href="{{ url('/') }}" class="btn btn-primary mt-3">Go Back Home</a>
      </div>
 
-    <script src="{{ asset('js/style.js') }}"></script>
+    <!-- <script src="{{ asset('js/style.js') }}"></script> -->
 
 @endsection
